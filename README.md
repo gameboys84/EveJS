@@ -1,142 +1,257 @@
 # EveJS
 
-# 说明
+🌐 **Language**: **简体中文** | [English](README.en.md)
 
-本项目是基于[JohnElysian / evejs](https://github.com/JohnElysian/evejs) 和 [Discord](https://discord.gg/KMuJrMDEBa) 社区整理，仅用于学习node.js管理大型项目之用，如果涉及版权问题，请直接email联系，或者提交Issue，我将在收到后删除相应的内容。
+---
 
-具体使用方法可以参考此文档中的内容或者不同版本中的README文件。
+## 说明
 
+本项目是基于 [JohnElysian / evejs](https://github.com/JohnElysian/evejs) 和 [Discord 社区](https://discord.gg/KMuJrMDEBa) 整理，仅用于学习 node.js 管理大型项目之用。如果涉及版权问题，请直接 email 联系，或者提交 Issue，我将在收到后删除相应的内容。
 
+本项目是一个本地 EVE Online 服务器模拟器，目标客户端版本 **EVE 24.01 build 3396210**。
 
-# 参考来源
+加入项目 Discord 社区：[https://discord.gg/KMuJrMDEBa](https://discord.gg/KMuJrMDEBa)
 
-说明和协议许可均参考自evejs和社区项目
+---
 
-**A local EVE Online emulator for research, preservation, and New Eden tinkering.**
+## 参考来源
 
-[![Windows](https://camo.githubusercontent.com/c9241e3646895eda4d75b17737b18311434204867c60d0d617165b65de65dff4/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f57696e646f77732d313025323025324625323031312d3030373844343f6c6f676f3d77696e646f7773266c6f676f436f6c6f723d7768697465)](https://github.com/JohnElysian/evejs?tab=readme-ov-file#quick-start) [![Node.js](https://camo.githubusercontent.com/0edc0dc67faf119c207b45c70b1676fc89d6611cf80a1c9882f093bdf336aa51/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4e6f64652e6a732d4c54532d3546413034453f6c6f676f3d6e6f6465646f746a73266c6f676f436f6c6f723d7768697465)](https://github.com/JohnElysian/evejs?tab=readme-ov-file#quick-start) [![License: AGPL-3.0](https://camo.githubusercontent.com/c77148b2545a6460d987db4f36a4e1c7e4641c3d9f8ab7b25b0afbdfaddb2061/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c6963656e73652d4147504c2d2d332e302d626c75652e737667)](https://github.com/JohnElysian/evejs/blob/main/LICENSE) [![EVE 24.01](https://camo.githubusercontent.com/f0259782874c07af857ef95d0c6c90f736b1224d8928ceaa9fec4a5cd4d003bc/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4556452d32342e30312532306275696c64253230333339363231302d384132424532)](https://github.com/JohnElysian/evejs?tab=readme-ov-file#compatibility) [![Setup](https://camo.githubusercontent.com/eaa3b1a585a55d5cb607d86e6770ae5c4ddeaf94ed8efaf90a5cf86572653f28/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f53657475702d4f6e652d2d436c69636b2d73756363657373)](https://github.com/JohnElysian/evejs?tab=readme-ov-file#quick-start) [![Discord](https://camo.githubusercontent.com/ff2de568b26d9e957b4d3d5cd68f275a0d089c3d8a02deeb08328f137255aaf3/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f446973636f72642d4a6f696e253230746865253230636f6d6d756e6974792d3538363546323f6c6f676f3d646973636f7264266c6f676f436f6c6f723d7768697465)](https://discord.gg/KMuJrMDEBa)
+本项目的开发和说明参考了以下来源：
 
-Note: This GitHub is V9 of Eve.JS. i'm proud of it.
+- **[JohnElysian/evejs](https://github.com/JohnElysian/evejs)** — EVE.js 原始项目仓库 (V9)，由 JohnElysian 开发，是本项目的主要参考来源
+- **[Discord 社区](https://discord.gg/KMuJrMDEBa)** — Farmer 等社区成员在 V9 基础上持续开发至 V12 版本，提供了大量的社区支持和更新
+- **特别感谢**: Icey、deer_hunter、JohnElysian 等社区成员对项目的贡献
 
-A hero/lovely guy named Farmer has started updating eve.js, presently at V12, You can find these on discord!
+> ⚠️ CCP 此前曾对 eve.js 发出过 DMCA 通知，相关仓库可能随时被下架。本项目仅用于学习研究目的。
 
-this repo wont be updated -- or supported! However, it is working for what it is! you can fight rats, mine, time dilation, full market, try out all the ships, explore the universe :)
+---
 
-thank you to Icey, deer_hunter & myself for this project existing today :)
+## 仅限本地运行
 
-CCP have issued a DMCA against eve.js before, this repo may vanish at any time.
+> **EVE.js 是一个仅限本地运行的项目。** 请在同一台计算机上运行服务器和 EVE 客户端。该项目未针对局域网、公共互联网、端口转发、共享托管或不受信任的用户进行加固。
 
-EvEJS lets you run a local research server against your own copied EVE Online client. It is built for people who want to explore how EVE works, preserve client/server behavior, test ideas, and help push emulator parity forward.
+支持的地址为 `127.0.0.1`。Docker 配置将所有必需的端口发布在 `127.0.0.1` 上，原生监听器默认也仅限回环地址。
 
-This project is unofficial, community-run, and not affiliated with CCP Games / Fenris Creations.
+---
 
-## Quick Start
+## 推荐方式：Docker 安装
 
-1. Download or clone this repository.
-2. Make a separate copy of your EVE Online client.
-3. Run `SetupEveJS.bat`.
-4. Select your copied EVE client when the setup wizard asks for it.
-5. Let setup *automatically* run `DatabaseCreator.bat` to build the complete local database.
-6. Run `StartServer.bat`.
-7. Choose option `2` to start the server and launch the client.
+Docker 是最简单的后端搭建方式，构建的 Linux 镜像包含：
 
-The setup flow installs the needed Node packages, creates the local EvEJS database, prepares local certificates, and opens the client setup wizard.
+- Node.js 游戏服务器
+- Rust 市场守护进程及 v1/v2 市场种子引擎
+- 首次运行时自动初始化静态游戏数据
+- 持久化的游戏和市场 SQLite 数据库
 
-## Compatibility
+Windows EVE 客户端仍在你的电脑上直接运行，不运行在 Linux 容器内。
 
-| Area              | Current target |
-| ----------------- | -------------- |
-| EVE version       | `24.01`        |
-| Client build      | `3396210`      |
-| Static-data point | June 16, 2026  |
-| Primary platform  | Windows        |
-| Runtime           | Node.js LTS    |
+### 环境要求
 
-Use a copied client folder. Do not point EvEJS at the same EVE install you use for Tranquility.
+- Windows + Docker Desktop（**Linux 容器**模式）
+- 完整的 EVE build `3396210` 客户端副本（必须包含 `EVE\tq`、`ResFiles` 和 `index_tranquility.txt`）
+- 空闲本地端口：`443`、`5222`、`26000`–`26002`、`40110`
+- 首次启动需要网络访问（下载镜像依赖和约 80MB 的 EVE SDE 数据）
 
-## What You Get
+请使用 EVE 客户端副本，不要对你正常游玩的客户端进行补丁修改。
 
-- One-click first-time setup with `SetupEveJS.bat`.
-- Complete local database generation with `DatabaseCreator.bat`.
-- Client setup wizard for copied-client configuration.
-- Local chat and public-gateway certificate generation.
-- Starter accounts: `test` and `test2`.
-- Built-in HyperNet seed support for local experimentation.
-- Optional market tooling and market daemon support.
-- A growing server codebase focused on EVE client parity.
+### 1. 构建 Linux 镜像
 
-## Database Creation
+在项目文件夹中打开 PowerShell，确认 Docker 使用 Linux 容器：
 
-EvEJS does not ship the generated database as loose JSON files. Instead, the repo includes a native database creator:
-
-```
-DatabaseCreator.bat
+```powershell
+docker info --format '{{.OSType}}'
 ```
 
-That launcher calls:
+应该输出 `linux`。构建本地镜像：
 
-```
-tools\DatabaseCreator\bin\DatabaseCreator.exe
-```
-
-The creator verifies your copied client, downloads or reuses the supported public EVE static-data export, and creates the local database. The finished database is written to:
-
-```
-_local\newDatabase\data
+```powershell
+docker compose build init
 ```
 
-If client setup has already saved your copied-client path, you can run `DatabaseCreator.bat` with no arguments. Otherwise pass it explicitly:
+### 2. 选择并构建市场
 
-```
-DatabaseCreator.bat --client-dir C:\Path\To\Copied\EVE\tq
-```
+有一个 Rust 市场守护进程和两种填充其 SQLite 数据库的方式。列出选项：
 
-## Daily Use
-
-After setup, the normal loop is simple:
-
-```
-StartServer.bat
+```powershell
+docker compose run --rm --no-deps market-tools engines
 ```
 
-Choose:
+推荐使用快速、可重复的合成市场 (v1)：
 
-- `1` for server only.
-- `2` for server plus client launch.
+```powershell
+docker compose run --rm --no-deps market-tools rebuild v1 --preset jita_new_caldari
+```
 
-## Client Files
+或使用最新的 EVE Ref Tranquility 站点市场快照 (v2)：
 
-EvEJS does not include a patched `blue.dll`, an EVE client, or any CCP/Fenris-owned client files. You must provide your own legally obtained EVE Online client.
+```powershell
+docker compose run --rm --no-deps market-tools rebuild v2 `
+  --order-filter market-scope-with-npc `
+  --market-solar-system-id 30000142
+```
 
-Client setup is designed for a copied client folder so your normal EVE install stays untouched.
+### 3. 启动后端
 
-## Documentation
+```powershell
+docker compose up --detach
+```
 
-- [Setup guide](https://github.com/JohnElysian/evejs/blob/main/doc/SETUP.md)
-- [Launcher guide](https://github.com/JohnElysian/evejs/blob/main/doc/LAUNCHERS.md)
-- [Optional market setup](https://github.com/JohnElysian/evejs/blob/main/doc/MARKET_SETUP.md)
-- [Market seeder guide](https://github.com/JohnElysian/evejs/blob/main/doc/MARKET_SEEDER.md)
-- [Troubleshooting](https://github.com/JohnElysian/evejs/blob/main/doc/TROUBLESHOOTING.md)
-- [Tools and admin basics](https://github.com/JohnElysian/evejs/blob/main/doc/TOOLS.md)
+查看启动进度：
 
-## Community
+```powershell
+docker compose logs --follow init market server
+```
 
-Questions, testing notes, weird discoveries, and useful bug reports are welcome. Join the Discord here:
+按 `Ctrl+C` 停止跟踪日志；容器继续运行。当 `docker compose ps --all` 显示 `market` 和 `server` 为 healthy 且 `init` 以退出码 `0` 结束时，后端就绪：
 
-https://discord.gg/KMuJrMDEBa
+```powershell
+docker compose ps --all
+```
 
-## Legal
+### 4. 准备 Windows 客户端
 
-EvEJS is independent and unofficial. EVE Online and related names, marks, assets, data, and client files belong to their respective owners. See [LEGAL.md](https://github.com/JohnElysian/evejs/blob/main/LEGAL.md), [NOTICE.md](https://github.com/JohnElysian/evejs/blob/main/NOTICE.md), [ACCEPTABLE_USE.md](https://github.com/JohnElysian/evejs/blob/main/ACCEPTABLE_USE.md), and [THIRD_PARTY_NOTICES.md](https://github.com/JohnElysian/evejs/blob/main/THIRD_PARTY_NOTICES.md).
+Docker 服务器就绪后，运行：
+
+```text
+tools\ClientSETUP\StartClientSetup.bat
+```
+
+选择副本 build `3396210` 的共享缓存文件夹。向导将补丁副本客户端，指向 `127.0.0.1`，并信任容器生成的同一本地 CA。
+
+### 5. 开始游戏
+
+保持 Docker 后端运行，然后在 Windows 上启动客户端：
+
+```text
+Play.bat
+```
+
+### 日常 Docker 使用
+
+```powershell
+# 启动或恢复后端
+docker compose up --detach
+
+# 检查健康状态
+docker compose ps
+
+# 跟踪服务器和市场日志
+docker compose logs --follow server market
+
+# 停止后端但保留所有数据
+docker compose down
+```
+
+拉取项目更新后，重建而不重置数据：
+
+```powershell
+docker compose up --build --detach
+```
+
+### 本地端口
+
+| 本地地址 | 用途 |
+|---------|------|
+| `127.0.0.1:26000` | 主游戏 TCP 服务器 |
+| `127.0.0.1:26001` | 图片服务器 |
+| `127.0.0.1:26002` | 本地 HTTP 代理和网关 |
+| `127.0.0.1:443` | 客户端使用的本地 HTTPS 资源 |
+| `127.0.0.1:5222` | XMPP 聊天 |
+| `127.0.0.1:40110` | Rust 市场健康和诊断 |
+
+---
+
+## 原生 Windows 安装
+
+仅在你不想使用 Docker 时使用此方式。需要更多主机工具和步骤。
+
+### 环境要求
+
+- Node.js 24 LTS
+- 完整的 EVE build `3396210` 客户端副本
+- 网络访问（npm、SDE、Rust 和构建工具下载）
+- 管理员权限（用于证书安装和原生构建工具）
+
+### 首次设置
+
+在项目根目录的 PowerShell 中：
+
+```powershell
+npm ci
+npm --prefix server ci
+```
+
+然后按顺序运行以下启动器：
+
+1. `tools\ClientSETUP\StartClientSetup.bat`
+2. `tools\DatabaseCreator\CreateDatabase.bat`
+3. `tools\InstallRustForMarket.bat`
+4. `BuildMarketSeed.bat` — 选择 **Jita + New Caldari**
+5. `StartMarketServer.bat` — 选择 release-server 选项
+6. `StartServer.bat` — 选择 **Server + Play**
+
+### 日常原生使用
+
+1. 运行 `StartMarketServer.bat` 并保持打开
+2. 运行 `StartServer.bat` 并选择 **Server + Play**
+3. 后端已运行时使用 `Play.bat`
+
+---
+
+## 项目结构
+
+```
+EveJS/
+├── README.md                   # 说明文档
+├── CLAUDE.md                   # AI 项目说明
+├── LICENSE                     # 许可证
+│
+├── Code/                       # 当前开发版本
+│   ├── server/                 # 服务器主目录
+│   ├── tools/                  # 工具
+│   └── ...
+│
+├── Doc/                        # 项目分析文档
+└── Issue/                      # 问题跟踪
+```
+
+---
+
+## 兼容性
+
+| 项目 | 当前目标 |
+|------|---------|
+| EVE 版本 | `24.01` |
+| 客户端构建 | `3396210` |
+| 静态数据时间点 | 2026年6月16日 |
+| 主要平台 | Windows |
+| 运行时 | Node.js LTS |
+
+---
+
+## 更多文档
+
+- [详细原生安装指南](Code/doc/SETUP.md)
+- [启动器指南](Code/doc/LAUNCHERS.md)
+- [市场设置](Code/doc/MARKET_SETUP.md)
+- [市场种子指南](Code/doc/MARKET_SEEDER.md)
+- [故障排除](Code/doc/TROUBLESHOOTING.md)
+- [工具和管理基础](Code/doc/TOOLS.md)
+- [非 Docker 安装审计报告](Code/doc/NON_DOCKER_SETUP_AUDIT.md)
+
+---
+
+## 法律声明
+
+EvEJS 是独立且非官方的。EVE Online 及相关名称、标记、资产、数据和客户端文件属于其各自所有者。
 
 ```
 AGPL-3.0-only
 
-This project is licensed under the GNU Affero General Public License version 3.
-See: https://www.gnu.org/licenses/agpl-3.0.en.html
+本项目基于 GNU Affero General Public License version 3 许可。
+参见: https://www.gnu.org/licenses/agpl-3.0.en.html
 
-No EVE Online client, CCP static data, CCP binaries, CCP artwork, CCP assets,
-patched DLLs, private keys, generated market databases, or generated runtime
-databases are licensed by this file.
+本文件不许可任何 EVE Online 客户端、CCP 静态数据、CCP 二进制文件、
+CCP 艺术作品、CCP 资产、修补的 DLL、私钥、生成的市场数据库或
+生成的运行时数据库。
 ```
-
