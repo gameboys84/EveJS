@@ -45,13 +45,16 @@ EveJS/
 │           └── staticTables/   # 静态数据表 (npcLootTables, npcProfiles 等)
 │
 ├── Doc/                        # 项目分析文档
-│   ├── EveJS_Project_Overview.md       # 项目概述、版本对比、流程、模块
-│   ├── Loot_Wreck_System_Analysis.md   # 掉落与残骸系统深度分析
-│   └── Service_Modules_Reference.md    # 服务模块参考手册
+│   ├── EveJS_Project_Overview.md        # 项目概述、版本对比、流程、模块
+│   ├── Loot_Wreck_System_Analysis.md    # 掉落与残骸系统深度分析
+│   ├── Service_Modules_Reference.md     # 服务模块参考手册
+│   ├── Mission_Agent_System_Analysis.md # 剧情任务/代理/史诗弧系统深度分析
+│   └── Debug_Commands_Reference.md      # 调试命令参考
 │
 └── Issue/                      # 问题跟踪
     ├── README.md               # 问题索引 + 报告模板
-    └── 001-wreck-loot-not-pickable.md  # 已知问题 #001
+    ├── 001-wreck-loot-not-pickable.md   # 已知问题 #001
+    └── 002-missing-storyline-missions.md# 已知问题 #002
 ```
 
 ### 版本管理约定
@@ -108,8 +111,22 @@ gameStore (统一 read/write/remove API)
 └── JSON 后端 (静态/SDE 数据)
     ├── npcLootTables, npcProfiles, npcLoadouts
     ├── npcSpawnPools, npcSpawnGroups
-    └── itemTypes (SDE)
+    ├── itemTypes (SDE)
+    ├── missionAuthority, agentAuthority, dungeonAuthority (← 任务/代理系统)
+    └── 运行时数据镜象 (_local/gameStore/data/)
 ```
+
+**运行时读取路径优先级**:
+1. `_local/gameStore/data/<表>/data.json`（`_local/` 被 `.gitignore`，是服务器实际读取的路径）
+2. `server/src/gameStore/data/<表>/data.json`（同样被 `.gitignore`）
+3. `tools/DatabaseCreator/staticTables/<表>/data.json`（静态源数据）
+
+> 运行时数据需通过 `tools/DatabaseCreator/CreateDatabase.bat` 从静态表重新生成。
+
+**⚠️ 剧情任务数据问题（v0.12.2 已知问题 #002）**:
+- `agentAuthority/data.json` 中所有 10,941 个 agent 的 `missionTemplateIDs` 为空（`missionTemplateCount: 0`）
+- Git 提交 `fc00f8d` ("supplement v0.12.1") 中包含 640 个模板 / 1.46M 引用的填充版本
+- 当前 HEAD 丢失了这部分数据，导致剧情任务不可用
 
 **写入机制**: 立即更新内存缓存 → 标记 dirty → 2秒防抖后异步写入磁盘
 
@@ -206,6 +223,89 @@ NPC 死亡 → destroyNativeNpcEntityWithWreck()
 | `loot_belt_normal_medium` | rule 模式 | 低品质/中型 |
 | `loot_belt_normal_large` | rule 模式 | 低品质/大型 |
 
+### 4.4 任务 / 代理系统（Mission/Agent）
+
+> **详细分析**: 见 `Doc/Mission_Agent_System_Analysis.md` | **已知问题**: `Issue/002-missing-storyline-missions.md`
+
+#### 核心服务（`server/src/services/agent/`）
+| 文件 | 功能 |
+|------|------|
+| `agentMgrService.js` | agentMgr 主服务：GetAvailableMissionsFromSupplier、GetMissionBriefingInfo、WarpToLocation |
+| `agentMissionRuntime.js` (~6060行) | 主任务运行时：offerMission、任务选择、掉落生成 |
+| `missionAuthority.js` | 任务权限 & 门控（listMissionIDsForAgent、isOrdinarySecurityAgent、sanitizePayload）|
+| `missionRuntimeState.js` | 角色任务进度：storylineProgress、epicArcProgress、退休清理 |
+| `storylineAgentSelector.js` | BFS 搜索最近同阵营剧情代理 |
+| `epicArcStatusService.js` | 史诗弧状态 |
+| `missionTrackerMgrService.js` | 任务日志 / 追踪器 |
+
+#### 相关服务（跨目录）
+| 文件 | 功能 |
+|------|------|
+| `services/campaign/loginRewardFacilitiesService.js` | 登录奖励 |
+| `services/campaign/loginCampaignService.js` | 登录活动 |
+| `services/campaign/crateService.js` | 箱子 / 战利品箱 |
+| `services/agency/customAgencyProviderService.js` | 自定义代理提供者 |
+| `services/account/tutorialSvcService.js` | 职业代理 (GetCareerAgents) |
+| `services/npe/tutorialRuntime.js` | AIR/NPE 教程运行时 |
+| `services/npe/tutorialHandoff.js` | 教程交接 |
+
+#### 任务提供流程
+```
+玩家访问 Agent NPC → agentMgrService.Handle_GetAvailableMissionsFromSupplier
+  → missionAuthority.listMissionIDsForAgent(agentRecord)
+    → isOrdinarySecurityAgent?  ← v0.12.2 新增 deny-by-default 门控
+      - YES: 仅 golden 任务 (4个 L1) + agent-specific 任务可通过
+      - NO:  走剧情/史诗弧/研究分支
+    → sanitizePayload() 清洗退休/禁用记录
+  → 每个 missionID 加入候选池
+  → 通过 storylineAgentSelector 发现剧情代理
+```
+
+#### 静态数据表（`tools/DatabaseCreator/staticTables/`）
+| 表 | 内容 | 剧情相关计数 | 版本差异 |
+|----|------|-------------|---------|
+| `missionAuthority/data.json` (15MB) | 2,878 个任务 | 1,249 storyline + 263 genericStoryline + 276 epicArc + 74 heraldry | 稳定 |
+| `agentAuthority/data.json` | 10,941 个代理 | 662 剧情代理 (agentTypeID=6/7) | ⚠️ HEAD: missionTemplateCount=0; fc00f8d: 640 模板 / 1.46M 引用 |
+| `dungeonAuthority/data.json` | dungeon 模板 | 5,981 模板 | 稳定 |
+
+> 运行时镜像: `_local/gameStore/data/<表>/data.json`（服务器实际读取的路径）
+> ⚠️ **已知问题 #002**: 当前 HEAD 的 `agentAuthority` 模板为空。Git 提交 `fc00f8d` 包含填充版本（640 模板）。
+
+#### 运行时数据表（SQLite，`server/src/gameStore/index.js`）
+| 表 | 内容 |
+|----|------|
+| `missionRuntimeState` | 角色活任务/提供/接受/完成记录 |
+| `dungeonRuntimeState` | 活 dungeon 实例 |
+
+#### 制造任务策略（v0.12.2 新增）
+配置文件: `server/src/config/productionMissionPolicy.json`
+| 字段 | 值 | 说明 |
+|------|----|------|
+| `goldenSecurityMissions` | 4 个 L1 任务 (1182/2504/2925/13735) | 普通安全代理仅可提供这些 |
+| `disabledMissions` | 1 个 (4743) | 禁用的 eve-survival 任务 |
+| `retiredTemplatePrefixes` | `["eve-survival:"]` | 退休模板前缀 — **会过滤几乎所有剧情模板** |
+| `generatedMissionIDRange` | 900000000–901000000 | 生成任务 ID 范围（视为合成/退休）|
+
+构建时清洗: `tools/DatabaseCreator/production-mission-policy.js` 会清空 agent 的 `missionTemplateIDs` 和 dungeon 模板池。
+
+#### 剧情任务数据标志（missionAuthority 中）
+```
+isStoryline / isGenericStoryline / isEpicArc / isHeraldry
+isResearch / isAgentInteraction / isTalkToAgent
+→ isScriptedMissionRecord() 判断是否为"脚本任务"
+```
+
+#### agentTypeID 含义
+| typeID | 含义 | 数量 |
+|--------|------|------|
+| 2 | 普通安全代理 | 8,751 |
+| 6 | 通用剧情 (GENERIC_STORYLINE) | 651 |
+| 7 | 剧情 (STORYLINE) | 11 |
+| 8 | 其他 | 696 |
+| 10 | 类剧情 | — |
+
+`importantMission: true` 当 `[6,7,10].includes(agentTypeID)`。
+
 ---
 
 ## 五、配置系统
@@ -259,6 +359,58 @@ NPC 死亡 → destroyNativeNpcEntityWithWreck()
 ### 6.4 静态数据 vs 运行时数据
 - **静态数据** (`tools/DatabaseCreator/staticTables/`): NPC 掉落表、配置文件、装备等，不随游戏变化
 - **运行时数据** (`_local/gameStore/`): NPC 实体、残骸、物品等，随游戏进行变化
+- **运行时读取路径**: `_local/gameStore/data/<tableKey>/data.json`（优先）→ `server/src/gameStore/data/<tableKey>/data.json`
+- **重要**: `_local/` 和 `server/src/gameStore/data/` 均被 `.gitignore` 排除 — 需通过 `tools/DatabaseCreator/CreateDatabase.bat` 重新生成
+
+### 6.5 版本对比排查方法论（回归分析通用流程）
+
+当某功能在版本间"消失"时，按以下顺序排查：
+
+**重要：本项目的 Git 版本说明**
+- Git 仓库创建于 **v0.12.2**（初始提交）
+- 之后通过 `fc00f8d` 提交了"supplement v0.12.1"来**补充** v0.12.1 的数据
+- 因此提交时间线上 v0.12.1 数据在 v0.12.2 之后，但内容为更早版本
+- **始终用 `git show <commit>:<file>` 验证具体内容，不要信任提交信息**
+
+**第一步：确认代码文件是否被删除**
+```bash
+# 文件对比
+git diff <commit_a> <commit_b> --name-only | grep -i <关键词>
+# 检查服务是否注册（服务通过 *Service.js 文件名自动加载，无白名单）
+grep -r "Service.js" server/index.js
+```
+
+**第二步：确认静态数据是否被删除/清空**
+```bash
+# 静态表 diff
+git diff <commit_a> <commit_b> --stat -- tools/DatabaseCreator/staticTables/
+# 检查运行时镜像是否 gitignored（需从静态表重新生成）
+cat .gitignore | grep gameStore
+# 直接检查具体提交的文件内容
+git show fc00f8d:tools/DatabaseCreator/staticTables/agentAuthority/data.json | grep missionTemplateCount
+```
+
+**第三步：定位运行时逻辑变化**
+```bash
+# 关注文件
+git diff <commit_a> <commit_b> --name-only | grep -iE "mission|agent|campaign|storyline|config"
+# 策略文件（v0.12.2 新增 deny-by-default 门控的核心）
+cat server/src/config/productionMissionPolicy.json
+```
+
+**第四步：检查构建时数据链路**
+```bash
+# 查看关键文件的 diff（了解模板清空的原因）
+git diff fc00f8d..HEAD -- tools/DatabaseCreator/database-creator.js
+git show HEAD:server/src/gameStore/index.js | grep -A5 "resolveDataDir\|LOCAL_DATA_DIR"
+```
+
+**关键原则**：
+- 服务"不工作"≠"被删除" — 可能是数据被清空、运行时门控过滤、模板池断裂
+- **数据/策略驱动** 比代码删除更常见（本项目的 `productionMissionPolicy.json` 就是例子）
+- 静态表可能被 `*-policy.js` 脚本清洗，需同时检查构建时和运行时逻辑
+- `_local/gameStore/data/` 中的运行时镜像是 gitignored 的，可能在提交间变化
+- **版本可用性判断首先要看 git 实际内容而非提交信息标签**
 
 ---
 
@@ -267,6 +419,7 @@ NPC 死亡 → destroyNativeNpcEntityWithWreck()
 | 编号 | 问题 | 状态 | 详情 |
 |------|------|------|------|
 | #001 | v0.12.2 残骸无法拾取物品 | 🔍 待验证 | 见 `Issue/001-wreck-loot-not-pickable.md` |
+| #002 | v0.12.2 剧情任务(Storyline)全部消失 | 🔍 已定位根因 | 见 `Issue/002-missing-storyline-missions.md` |
 
 ---
 
@@ -302,5 +455,103 @@ node server/scripts/verifyDestinyAuthorityCore.js
 | `Doc/EveJS_Project_Overview.md` | 完整项目概述、版本差异、启动流程、功能模块、掉落系统分析 |
 | `Doc/Loot_Wreck_System_Analysis.md` | 掉落表结构、掉落算法、残骸生命周期、拾取流程、bug 分析 |
 | `Doc/Service_Modules_Reference.md` | 全部服务模块参考、数据存储层、网络层、配置系统 |
+| `Doc/Mission_Agent_System_Analysis.md` | 任务/代理/史诗弧系统深度分析、v0.12.1→v0.12.2 变更、根因、修复方案 |
+| `Doc/Debug_Commands_Reference.md` | 调试命令参考 |
 | `Issue/README.md` | 问题跟踪索引、报告模板 |
-| `Issue/001-wreck-loot-not-pickable.md` | 已知问题详细分析 |
+| `Issue/001-wreck-loot-not-pickable.md` | 残骸无法拾取 (问题 #001) |
+| `Issue/002-missing-storyline-missions.md` | 剧情任务消失 (问题 #002) |
+
+---
+
+## 十、EVE 原版服务对照
+
+> 对比 EveJS 与 CCP 原版 EVE Online 的服务，帮助识别功能缺口。
+
+| 系统 | 原版服务名 | EveJS 实现 | 状态 |
+|------|-----------|-----------|------|
+| 任务代理 | `agentMgr` | `agent/agentMgrService.js` ✅ | 数据链路待修复 |
+| 任务日志 | `missionTrackerMgr` | `agent/missionTrackerMgrService.js` ✅ | 部分 |
+| 任务运行时 | 内嵌 | `agent/agentMissionRuntime.js` ✅ | 核心完整 |
+| 史诗弧 | `epicArcStatus` | `agent/epicArcStatusService.js` ✅ | 数据待修复 |
+| 职业代理 | `careerAgents` | `account/tutorialSvcService.js` | 未独立服务 |
+| 教程(AIR/NPE) | `tutorial` | `services/npe/tutorialRuntime.js` | 部分 |
+| 机会系统 | `opportunity` | ❌ 不存在 | 原版已退役，符合预期 |
+| 登录活动 | `loginCampaign` | `campaign/loginCampaignService.js` ✅ | 部分 |
+| 日志奖励 | `loginRewardFacilities` | `campaign/loginRewardFacilityService.js` ✅ | 部分 |
+| 活动箱子 | `crate` / `pkg` | `campaign/crateService.js` ✅ | 部分 |
+| 自定义代理 | `agency` | `agency/customAgencyProviderService.js` ✅ | 部分 |
+| 制造任务策略 | `lageErrorPacket` | `config/productionMissionPolicy.json` | v0.12.2 新增 |
+| 配置管理系统 | `config` | `src/config/index.js` (~2650行) ✅ | 完整 |
+
+**代理类型（原版 `agentTypeID`）**:
+| typeID | 原版含义 | EveJS 数量 |
+|--------|---------|-----------|
+| 1 | 研究 (Research) | — |
+| 2 | 普通安全 (Encounter) | 8,751 |
+| 3 |  Mining | — |
+| 4 | 顾问 (Consultant) | — |
+| 5 | 研究 (Research) | — |
+| 6 | 通用剧情 (Generic Storyline) | 651 |
+| 7 | 剧情 (Storyline) | 11 |
+| 8 | 其他 | 696 |
+| 9 | 故事代理 | — |
+| 10 | 类剧情 | 见 agentAuthority |
+
+---
+
+## 十一、Git 分支与提交速查
+
+### 版本说明
+```
+Git 仓库创建于 v0.12.2（a064ab9 Initial commit）
+之后通过 fc00f8d 提交 "supplement v0.12.1" 补充了 v0.12.1 的数据
+⚠️ 提交时间线上 v0.12.1 数据在 v0.12.2 之后，但内容为更早的 v0.12.1 版本
+```
+
+**本地提交 (从早到晚)**:
+```
+0e7dd95   Initial commit                     — 初始提交（基于 v0.12.2 代码）
+a064ab9   "UpdateVersion : v0.12.2"           — v0.12.2 标记；agentAuthority 模板为空
+fc00f8d   "supplement v0.12.1"                — 补充 v0.12.1 数据（640 模板 / 1.46M 引用）← 剧情任务可用版本
+711ee84   update README                      — 模板数据在此提交后丢失
+e6c3373   Add Debug_Commands doc (HEAD)       — 当前版本（agentAuthority 模板为空 = 问题 #002）
+```
+
+### 版本对比常用命令
+```bash
+# 查看提交历史（含日期，确认内容而非标签）
+git log --oneline --all --decorate
+
+# 两个提交间的文件差异
+git diff fc00f8d HEAD --stat
+git diff fc00f8d HEAD --name-only
+
+# 只看某个文件/目录的变化
+git diff fc00f8d HEAD -- server/src/services/agent/
+git diff fc00f8d HEAD -- tools/DatabaseCreator/staticTables/ --stat
+
+# 查看某个文件在不同提交的内容（找填充数据版本）
+git show fc00f8d:tools/DatabaseCreator/staticTables/agentAuthority/data.json | head -50
+git show HEAD:tools/DatabaseCreator/staticTables/agentAuthority/data.json | head -50
+
+# 恢复填充数据版本
+git show fc00f8d:tools/DatabaseCreator/staticTables/agentAuthority/data.json \
+  > tools/DatabaseCreator/staticTables/agentAuthority/data.json
+
+# 查看某提交的信息
+git show --stat a064ab9
+git show --stat fc00f8d
+
+# 重新生成运行时数据
+cd Code && tools/DatabaseCreator/CreateDatabase.bat
+```
+
+### 关键文件版本对照表
+```
+文件                                          fc00f8d (v0.12.1 补充)         HEAD (v0.12.2 当前)
+--------------------------------------------- ------------------------------  ------------------------------
+staticTables/agentAuthority/data.json         1,896,106 行 (640 模板)         423,082 行 (0 模板) ← 问题 #002 主因
+server/src/config/productionMissionPolicy.js  不存在                          存在
+server/src/services/agent/missionAuthority.js 无门控逻辑                      有 deny-by-default 门控
+missionRuntimeState.js                        无退休清理                      有 isRetiredMissionRuntimeRecord 清理
+```
