@@ -1,0 +1,23 @@
+# Example standalone EvEJS market daemon config.
+
+[network]
+host = "127.0.0.1"
+port = 40110
+
+[rpc]
+enabled = true
+host = "127.0.0.1"
+port = 40111
+
+[storage]
+database_path = "data/generated/market.sqlite"
+
+[runtime]
+cache_station_summaries = true
+cache_system_summaries = true
+station_summary_cache_capacity = 256
+system_summary_cache_capacity = 256
+order_book_cache_capacity = 2048
+
+[logging]
+log_level = "info"

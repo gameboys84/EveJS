@@ -1,0 +1,1665 @@
+{
+  "solarSystemID": 30002509,
+  "systemName": "Odatrik",
+  "props": [
+    {
+      "itemID": "-9223372035776191564",
+      "description": "TQ captured Liberation Games Firework Sentry ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64881,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2.2610874906244115e-36,
+      "flagsByte": 2,
+      "position": {
+        "x": 6.123375732466852e+256,
+        "y": 4.668401916305389e-305,
+        "z": 4.10173471401584e+102
+      },
+      "dunPosition": null,
+      "dunRotation": null,
+      "dungeonObjectID": null,
+      "dunObjectID": null,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000084",
+      "description": "TQ captured Battle of Fort Kavad Monument in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 59942,
+      "ownerID": 500002,
+      "groupID": 310,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1,
+      "flagsByte": 2,
+      "position": {
+        "x": -378820752001.9844,
+        "y": 18029813013.195557,
+        "z": 618712689293.248
+      },
+      "dunPosition": {
+        "x": -21121.984375,
+        "y": -746.804443359375,
+        "z": -30066.751953125
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1110916,
+      "dunObjectID": 1110916,
+      "dunObjectNameID": 585031,
+      "objectiveTargetGroup": null,
+      "nameID": 585031,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000096",
+      "description": "TQ captured Minmatar Sentry Gun (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64889,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 45,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937141131.4049,
+        "y": 1497389026605.334,
+        "z": -2729078942524.168
+      },
+      "dunPosition": {
+        "x": 1931.4049072265625,
+        "y": 11565.333984375,
+        "z": -35644.16796875
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137024,
+      "dunObjectID": 1137024,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000097",
+      "description": "TQ captured Fortified Minmatar Grandstand (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64888,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 300,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937124779.1045,
+        "y": 1497389018967.5762,
+        "z": -2729078907674.412
+      },
+      "dunPosition": {
+        "x": -14420.8955078125,
+        "y": 3927.576171875,
+        "z": -794.412109375
+      },
+      "dunRotation": [
+        109.99999237060547,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137042,
+      "dunObjectID": 1137042,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000098",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937132390.3877,
+        "y": 1497389028049.2734,
+        "z": -2729078904300.619
+      },
+      "dunPosition": {
+        "x": -6809.6123046875,
+        "y": 13009.2734375,
+        "z": 2579.380859375
+      },
+      "dunRotation": [
+        30.0914306640625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137078,
+      "dunObjectID": 1137078,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000099",
+      "description": "TQ captured Non-Interactable Minmatar Junction (Do not translate) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60337,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 200,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937169013.8516,
+        "y": 1497389034572.6875,
+        "z": -2729078921010.074
+      },
+      "dunPosition": {
+        "x": 29813.8515625,
+        "y": 19532.6875,
+        "z": -14130.07421875
+      },
+      "dunRotation": [
+        269.89642333984375,
+        3.094043424245463e-11,
+        -179.99996948242188
+      ],
+      "dungeonObjectID": 1136988,
+      "dunObjectID": 1136988,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000100",
+      "description": "TQ captured Minmatar Sentry Gun (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64889,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 45,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937139705.4062,
+        "y": 1497389026605.334,
+        "z": -2729078942524.168
+      },
+      "dunPosition": {
+        "x": 505.40625,
+        "y": 11565.333984375,
+        "z": -35644.16796875
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137025,
+      "dunObjectID": 1137025,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000101",
+      "description": "TQ captured Fortified Minmatar Battery (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64886,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937134930.5288,
+        "y": 1497389028290.6836,
+        "z": -2729078900861.0176
+      },
+      "dunPosition": {
+        "x": -4269.47119140625,
+        "y": 13250.68359375,
+        "z": 6018.982421875
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137043,
+      "dunObjectID": 1137043,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000102",
+      "description": "TQ captured Minmatar Border Security Outpost in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64887,
+      "ownerID": 500002,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 918,
+      "flagsByte": 224,
+      "position": {
+        "x": 986937139200,
+        "y": 1497389018902.4082,
+        "z": -2729078927603.508
+      },
+      "dunPosition": null,
+      "dunRotation": null,
+      "dungeonObjectID": null,
+      "dunObjectID": null,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000103",
+      "description": "TQ captured Liberation Games Firework Sentry ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64881,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 476,
+      "flagsByte": 192,
+      "position": {
+        "x": 986937140418.4016,
+        "y": 1497389025888.7148,
+        "z": -2729078942524.168
+      },
+      "dunPosition": {
+        "x": 1218.401611328125,
+        "y": 10848.71484375,
+        "z": -35644.16796875
+      },
+      "dunRotation": [
+        292.58758544921875,
+        -0.33192962408065796,
+        0.764668345451355
+      ],
+      "dungeonObjectID": 1136989,
+      "dunObjectID": 1136989,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000104",
+      "description": "TQ captured Fortified Minmatar Barrier ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64882,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 622,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937140646.9684,
+        "y": 1497389025907.2305,
+        "z": -2729078941984.7383
+      },
+      "dunPosition": {
+        "x": 1446.9683837890625,
+        "y": 10867.23046875,
+        "z": -35104.73828125
+      },
+      "dunRotation": [
+        247.742431640625,
+        0.31901395320892334,
+        -0.10942811518907547
+      ],
+      "dungeonObjectID": 1137026,
+      "dunObjectID": 1137026,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000105",
+      "description": "TQ captured Fortified Minmatar Battery (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64886,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937114462.0254,
+        "y": 1497389021339.3867,
+        "z": -2729078927938.578
+      },
+      "dunPosition": {
+        "x": -24737.974609375,
+        "y": 6299.38671875,
+        "z": -21058.578125
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137044,
+      "dunObjectID": 1137044,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000106",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937115012.7461,
+        "y": 1497389028049.2734,
+        "z": -2729078921859.6875
+      },
+      "dunPosition": {
+        "x": -24187.25390625,
+        "y": 13009.2734375,
+        "z": -14979.6875
+      },
+      "dunRotation": [
+        353.9060974121094,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137080,
+      "dunObjectID": 1137080,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000107",
+      "description": "TQ captured Fortified Minmatar Barrier ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64882,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 622,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937140196.9944,
+        "y": 1497389025904.2207,
+        "z": -2729078943055.0312
+      },
+      "dunPosition": {
+        "x": 996.994384765625,
+        "y": 10864.220703125,
+        "z": -36175.03125
+      },
+      "dunRotation": [
+        247.742431640625,
+        0.31901395320892334,
+        -0.10942811518907547
+      ],
+      "dungeonObjectID": 1137027,
+      "dunObjectID": 1137027,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000108",
+      "description": "TQ captured Fortified Minmatar Battery (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64886,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937142272.7402,
+        "y": 1497389021623.0898,
+        "z": -2729078958537.7617
+      },
+      "dunPosition": {
+        "x": 3072.740234375,
+        "y": 6583.08984375,
+        "z": -51657.76171875
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137045,
+      "dunObjectID": 1137045,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000109",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937124396.7695,
+        "y": 1497389028049.2734,
+        "z": -2729078953694.922
+      },
+      "dunPosition": {
+        "x": -14803.23046875,
+        "y": 13009.2734375,
+        "z": -46814.921875
+      },
+      "dunRotation": [
+        4.974475383758545,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137081,
+      "dunObjectID": 1137081,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000110",
+      "description": "TQ captured Dark Gray Cloud in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10128,
+      "ownerID": 500002,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 70000,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937146383.8638,
+        "y": 1497389034585.7754,
+        "z": -2729078912407.3623
+      },
+      "dunPosition": {
+        "x": 7183.86376953125,
+        "y": 19545.775390625,
+        "z": -5527.3623046875
+      },
+      "dunRotation": [
+        334.6112365722656,
+        -40.354190826416016,
+        146.3402862548828
+      ],
+      "dungeonObjectID": 1137207,
+      "dunObjectID": 1137207,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000111",
+      "description": "TQ captured Non-Interactable Minmatar Bunker (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64884,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 713,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937141101.9615,
+        "y": 1497389025939.7695,
+        "z": -2729078940913.004
+      },
+      "dunPosition": {
+        "x": 1901.9615478515625,
+        "y": 10899.76953125,
+        "z": -34033.00390625
+      },
+      "dunRotation": [
+        202.7477264404297,
+        -2.971522405914584e-7,
+        -5.3092378493602155e-8
+      ],
+      "dungeonObjectID": 1137028,
+      "dunObjectID": 1137028,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000112",
+      "description": "TQ captured Fortified Minmatar Battery (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64886,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937165196.1621,
+        "y": 1497389021581.9824,
+        "z": -2729078928669.289
+      },
+      "dunPosition": {
+        "x": 25996.162109375,
+        "y": 6541.982421875,
+        "z": -21789.2890625
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137046,
+      "dunObjectID": 1137046,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000113",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937158627.0703,
+        "y": 1497389028049.2734,
+        "z": -2729078951179.418
+      },
+      "dunPosition": {
+        "x": 19427.0703125,
+        "y": 13009.2734375,
+        "z": -44299.41796875
+      },
+      "dunRotation": [
+        7.7158708572387695,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137082,
+      "dunObjectID": 1137082,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000114",
+      "description": "TQ captured Dark Gray Cloud in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10128,
+      "ownerID": 500002,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 70000,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937125974.8828,
+        "y": 1497389020335.1035,
+        "z": -2729078950727.917
+      },
+      "dunPosition": {
+        "x": -13225.1171875,
+        "y": 5295.103515625,
+        "z": -43847.91796875
+      },
+      "dunRotation": [
+        277.3206787109375,
+        -10.327458381652832,
+        32.43550109863281
+      ],
+      "dungeonObjectID": 1137208,
+      "dunObjectID": 1137208,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000115",
+      "description": "TQ captured Non-Interactable Minmatar Bunker (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64884,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 713,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937139753.417,
+        "y": 1497389025927.5273,
+        "z": -2729078944138.2656
+      },
+      "dunPosition": {
+        "x": 553.4169921875,
+        "y": 10887.52734375,
+        "z": -37258.265625
+      },
+      "dunRotation": [
+        202.7477264404297,
+        -2.971522405914584e-7,
+        -5.3092378493602155e-8
+      ],
+      "dungeonObjectID": 1137029,
+      "dunObjectID": 1137029,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000116",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937169490.7559,
+        "y": 1497389028049.2734,
+        "z": -2729078931403.09
+      },
+      "dunPosition": {
+        "x": 30290.755859375,
+        "y": 13009.2734375,
+        "z": -24523.08984375
+      },
+      "dunRotation": [
+        339.23968505859375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137083,
+      "dunObjectID": 1137083,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000117",
+      "description": "TQ captured Non-Interactable Minmatar Bunker (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64884,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 713,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937138807.1611,
+        "y": 1497389025293.879,
+        "z": -2729078943200.9375
+      },
+      "dunPosition": {
+        "x": -392.8388671875,
+        "y": 10253.87890625,
+        "z": -36320.9375
+      },
+      "dunRotation": [
+        247.33059692382812,
+        0.2521669864654541,
+        0.3477572798728943
+      ],
+      "dungeonObjectID": 1137030,
+      "dunObjectID": 1137030,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000118",
+      "description": "TQ captured Fortified Minmatar Grandstand (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64888,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 300,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937125447.7246,
+        "y": 1497389019481.127,
+        "z": -2729078910005.291
+      },
+      "dunPosition": {
+        "x": -13752.275390625,
+        "y": 4441.126953125,
+        "z": -3125.291015625
+      },
+      "dunRotation": [
+        111.19356536865234,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137084,
+      "dunObjectID": 1137084,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000119",
+      "description": "TQ captured Non-Interactable Minmatar Bunker (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64884,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 713,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937141091.3024,
+        "y": 1497389025301.6133,
+        "z": -2729078944128.0547
+      },
+      "dunPosition": {
+        "x": 1891.3023681640625,
+        "y": 10261.61328125,
+        "z": -37248.0546875
+      },
+      "dunRotation": [
+        157.677490234375,
+        -2.9715312166445074e-7,
+        -5.309262363084599e-8
+      ],
+      "dungeonObjectID": 1137031,
+      "dunObjectID": 1137031,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000120",
+      "description": "TQ captured Fortified Minmatar Grandstand (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64888,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 300,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937120698.2598,
+        "y": 1497389020251.332,
+        "z": -2729078909153.6484
+      },
+      "dunPosition": {
+        "x": -18501.740234375,
+        "y": 5211.33203125,
+        "z": -2273.6484375
+      },
+      "dunRotation": [
+        159.86720275878906,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137085,
+      "dunObjectID": 1137085,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000121",
+      "description": "TQ captured Fortified Minmatar Barrier ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64882,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 622,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937140637.6725,
+        "y": 1497389025278.3047,
+        "z": -2729078943048.992
+      },
+      "dunPosition": {
+        "x": 1437.6724853515625,
+        "y": 10238.3046875,
+        "z": -36168.9921875
+      },
+      "dunRotation": [
+        202.67205810546875,
+        0.31901487708091736,
+        -0.1094287633895874
+      ],
+      "dungeonObjectID": 1137032,
+      "dunObjectID": 1137032,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000122",
+      "description": "TQ captured Fortified Minmatar Grandstand (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64888,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 300,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937123819.1289,
+        "y": 1497389021110.2227,
+        "z": -2729078908902.4766
+      },
+      "dunPosition": {
+        "x": -15380.87109375,
+        "y": 6070.22265625,
+        "z": -2022.4765625
+      },
+      "dunRotation": [
+        102.61778259277344,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137086,
+      "dunObjectID": 1137086,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000123",
+      "description": "TQ captured Non-Interactable Minmatar Bunker (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64884,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 713,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937142031.5317,
+        "y": 1497389025321.5273,
+        "z": -2729078941850.4883
+      },
+      "dunPosition": {
+        "x": 2831.53173828125,
+        "y": 10281.52734375,
+        "z": -34970.48828125
+      },
+      "dunRotation": [
+        247.33059692382812,
+        0.2521669864654541,
+        0.3477572798728943
+      ],
+      "dungeonObjectID": 1137033,
+      "dunObjectID": 1137033,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000125",
+      "description": "TQ captured Liberation Games Firework Sentry ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64881,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 476,
+      "flagsByte": 192,
+      "position": {
+        "x": 986937140418.2,
+        "y": 1497389025262.7988,
+        "z": -2729078942517.3203
+      },
+      "dunPosition": {
+        "x": 1218.199951171875,
+        "y": 10222.798828125,
+        "z": -35637.3203125
+      },
+      "dunRotation": [
+        247.51719665527344,
+        -0.3319314122200012,
+        0.764668345451355
+      ],
+      "dungeonObjectID": 1137034,
+      "dunObjectID": 1137034,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000126",
+      "description": "TQ captured Fortified Minmatar Barrier ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64882,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 622,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937140955.6442,
+        "y": 1497389025909.8125,
+        "z": -2729078942746.797
+      },
+      "dunPosition": {
+        "x": 1755.6441650390625,
+        "y": 10869.8125,
+        "z": -35866.796875
+      },
+      "dunRotation": [
+        337.3974609375,
+        0.2514495551586151,
+        0.31479156017303467
+      ],
+      "dungeonObjectID": 1136998,
+      "dunObjectID": 1136998,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000127",
+      "description": "TQ captured Non-Interactable Minmatar Bunker (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64884,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 713,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937142029.9038,
+        "y": 1497389025947.4453,
+        "z": -2729078943195.414
+      },
+      "dunPosition": {
+        "x": 2829.90380859375,
+        "y": 10907.4453125,
+        "z": -36315.4140625
+      },
+      "dunRotation": [
+        292.40087890625,
+        0.2521660029888153,
+        0.34775635600090027
+      ],
+      "dungeonObjectID": 1137016,
+      "dunObjectID": 1137016,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000128",
+      "description": "TQ captured Fortified Minmatar Barrier ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64882,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 622,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937139883.4858,
+        "y": 1497389025275.7832,
+        "z": -2729078942740.617
+      },
+      "dunPosition": {
+        "x": 683.48583984375,
+        "y": 10235.783203125,
+        "z": -35860.6171875
+      },
+      "dunRotation": [
+        292.3270568847656,
+        0.2514502704143524,
+        0.3147912919521332
+      ],
+      "dungeonObjectID": 1137035,
+      "dunObjectID": 1137035,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000129",
+      "description": "TQ captured Fortified Minmatar Lookout ( DO NOT TRANSLATE ) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64868,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1296,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937167639.918,
+        "y": 1497389031761.9082,
+        "z": -2729078921033.9453
+      },
+      "dunPosition": {
+        "x": 28439.91796875,
+        "y": 16721.908203125,
+        "z": -14153.9453125
+      },
+      "dunRotation": [
+        269.89642333984375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1136981,
+      "dunObjectID": 1136981,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000131",
+      "description": "TQ captured Non-Interactable Minmatar Bunker (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64884,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 713,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937139760.2959,
+        "y": 1497389025313.8555,
+        "z": -2729078940895.5117
+      },
+      "dunPosition": {
+        "x": 560.2958984375,
+        "y": 10273.85546875,
+        "z": -34015.51171875
+      },
+      "dunRotation": [
+        157.677490234375,
+        -2.9715312166445074e-7,
+        -5.309262363084599e-8
+      ],
+      "dungeonObjectID": 1137036,
+      "dunObjectID": 1137036,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000132",
+      "description": "TQ captured Indestructible Minmatar Starbase (DO NOT TRANSLATE ) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64869,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 3394,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937168948.5371,
+        "y": 1497389031848.205,
+        "z": -2729078921010.1836
+      },
+      "dunPosition": {
+        "x": 29748.537109375,
+        "y": 16808.205078125,
+        "z": -14130.18359375
+      },
+      "dunRotation": [
+        269.89642333984375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1136982,
+      "dunObjectID": 1136982,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000133",
+      "description": "TQ captured Defunct Minmatar Encounter Surveillance System (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64883,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1,
+      "flagsByte": 2,
+      "position": {
+        "x": 986937140421.1453,
+        "y": 1497389026394.3457,
+        "z": -2729078942533.883
+      },
+      "dunPosition": {
+        "x": 1221.145263671875,
+        "y": 11354.345703125,
+        "z": -35653.8828125
+      },
+      "dunRotation": [
+        90.63457489013672,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137000,
+      "dunObjectID": 1137000,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000134",
+      "description": "TQ captured Fortified Minmatar Barrier ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64882,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 622,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937140955.2408,
+        "y": 1497389025283.8965,
+        "z": -2729078942294.199
+      },
+      "dunPosition": {
+        "x": 1755.2408447265625,
+        "y": 10243.896484375,
+        "z": -35414.19921875
+      },
+      "dunRotation": [
+        292.3270568847656,
+        0.2514502704143524,
+        0.3147912919521332
+      ],
+      "dungeonObjectID": 1137037,
+      "dunObjectID": 1137037,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000135",
+      "description": "TQ captured Fortified Minmatar Barrier ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64882,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 622,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937140197.7234,
+        "y": 1497389025281.3145,
+        "z": -2729078941974.535
+      },
+      "dunPosition": {
+        "x": 997.723388671875,
+        "y": 10241.314453125,
+        "z": -35094.53515625
+      },
+      "dunRotation": [
+        202.67205810546875,
+        0.31901487708091736,
+        -0.1094287633895874
+      ],
+      "dungeonObjectID": 1137038,
+      "dunObjectID": 1137038,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000136",
+      "description": "TQ captured Non-Interactable Minmatar Elevator (Do not translate) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60336,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 765,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937166674.0977,
+        "y": 1497389031763.1504,
+        "z": -2729078920071.629
+      },
+      "dunPosition": {
+        "x": 27474.09765625,
+        "y": 16723.150390625,
+        "z": -13191.62890625
+      },
+      "dunRotation": [
+        269.89642333984375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1136984,
+      "dunObjectID": 1136984,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000137",
+      "description": "TQ captured Starbase Major Assembly Array (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64885,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1672,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937146573.126,
+        "y": 1497389019954.0352,
+        "z": -2729078906461.949
+      },
+      "dunPosition": {
+        "x": 7373.1259765625,
+        "y": 4914.03515625,
+        "z": 418.05078125
+      },
+      "dunRotation": [
+        52.7432746887207,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137039,
+      "dunObjectID": 1137039,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277293000000138",
+      "description": "TQ captured Fortified Minmatar Barricade ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64870,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 603,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937167147.1484,
+        "y": 1497389031774.5137,
+        "z": -2729078920533.625
+      },
+      "dunPosition": {
+        "x": 27947.1484375,
+        "y": 16734.513671875,
+        "z": -13653.625
+      },
+      "dunRotation": [
+        269.89642333984375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1136985,
+      "dunObjectID": 1136985,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000139",
+      "description": "TQ captured Fortified Minmatar Grandstand (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64888,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 300,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937123110.7695,
+        "y": 1497389017983.039,
+        "z": -2729078908716.125
+      },
+      "dunPosition": {
+        "x": -16089.23046875,
+        "y": 2943.0390625,
+        "z": -1836.125
+      },
+      "dunRotation": [
+        50.00000762939453,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137040,
+      "dunObjectID": 1137040,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000140",
+      "description": "TQ captured Fortified Minmatar Barricade ( DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64870,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 603,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937167155.4512,
+        "y": 1497389031774.5137,
+        "z": -2729078921543.504
+      },
+      "dunPosition": {
+        "x": 27955.451171875,
+        "y": 16734.513671875,
+        "z": -14663.50390625
+      },
+      "dunRotation": [
+        177.9742889404297,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1136986,
+      "dunObjectID": 1136986,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000141",
+      "description": "TQ captured Fortified Minmatar Grandstand (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64888,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 300,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937123212.4688,
+        "y": 1497389018509.0176,
+        "z": -2729078910900.871
+      },
+      "dunPosition": {
+        "x": -15987.53125,
+        "y": 3469.017578125,
+        "z": -4020.87109375
+      },
+      "dunRotation": [
+        80,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137041,
+      "dunObjectID": 1137041,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000142",
+      "description": "TQ captured Non-Interactable Minmatar Elevator (Do not translate) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60336,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 765,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937166709.584,
+        "y": 1497389031763.1504,
+        "z": -2729078922031.7695
+      },
+      "dunPosition": {
+        "x": 27509.583984375,
+        "y": 16723.150390625,
+        "z": -15151.76953125
+      },
+      "dunRotation": [
+        177.9742889404297,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1136987,
+      "dunObjectID": 1136987,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000143",
+      "description": "TQ captured Non-Interactable Minmatar Bunker (DO NOT TRANSLATE) in Odatrik.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64884,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 713,
+      "flagsByte": 64,
+      "position": {
+        "x": 986937138796.6445,
+        "y": 1497389025919.7969,
+        "z": -2729078941866.3867
+      },
+      "dunPosition": {
+        "x": -403.35546875,
+        "y": 10879.796875,
+        "z": -34986.38671875
+      },
+      "dunRotation": [
+        292.40087890625,
+        0.2521660029888153,
+        0.34775635600090027
+      ],
+      "dungeonObjectID": 1137023,
+      "dunObjectID": 1137023,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224015-136-TQBig",
+      "mode": "additive; no player-owned props"
+    }
+  }
+}

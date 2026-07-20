@@ -1,0 +1,276 @@
+{
+  "spawnGroups": [
+    {
+      "spawnGroupID": "blood_raider_roaming_pair",
+      "name": "Blood Raider Roaming Pair",
+      "description": "Small roaming Blood Raider pair for patrol and belt-style authoring.",
+      "aliases": [
+        "blood pair",
+        "blood patrol"
+      ],
+      "entityType": "npc",
+      "entries": [
+        {
+          "profileID": "generic_hostile",
+          "count": 1
+        },
+        {
+          "spawnPoolID": "blood_raiders",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "spawnGroupID": "blood_raider_gate_ambush",
+      "name": "Blood Raider Gate Ambush",
+      "description": "Authorable gate ambush group with light tackle and heavier follow-up hulls.",
+      "aliases": [
+        "blood ambush",
+        "raider gate"
+      ],
+      "entityType": "npc",
+      "entries": [
+        {
+          "profileID": "generic_hostile",
+          "count": 2
+        },
+        {
+          "profileID": "blood_raider_prophecy",
+          "count": 1
+        },
+        {
+          "spawnPoolID": "blood_raiders",
+          "minCount": 0,
+          "maxCount": 1
+        }
+      ]
+    },
+    {
+      "spawnGroupID": "npc_mining_ops_highsec",
+      "name": "NPC Mining Ops Highsec",
+      "description": "High-security mining composition guestimated from public references: a Venture-heavy miner wing backed by a couple of barges.",
+      "aliases": [
+        "mining highsec",
+        "npc mining highsec"
+      ],
+      "entityType": "npc",
+      "entries": [
+        {
+          "profileID": "ore_mining_venture",
+          "count": 3
+        },
+        {
+          "profileID": "ore_mining_retriever",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "spawnGroupID": "npc_mining_ops_lowsec",
+      "name": "NPC Mining Ops Lowsec",
+      "description": "Low-security mining composition guestimated from public references: mixed barges with a tougher exhumer escort on the mining line.",
+      "aliases": [
+        "mining lowsec",
+        "npc mining lowsec"
+      ],
+      "entityType": "npc",
+      "entries": [
+        {
+          "profileID": "ore_mining_venture",
+          "count": 1
+        },
+        {
+          "profileID": "ore_mining_retriever",
+          "count": 2
+        },
+        {
+          "profileID": "ore_mining_skiff",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "spawnGroupID": "npc_mining_ops_nullsec",
+      "name": "NPC Mining Ops Nullsec",
+      "description": "Null-security mining composition guestimated from public references: exhumer-biased fleets with a Hulk on the line and tougher supporting hulls.",
+      "aliases": [
+        "mining nullsec",
+        "npc mining nullsec"
+      ],
+      "entityType": "npc",
+      "entries": [
+        {
+          "profileID": "ore_mining_retriever",
+          "count": 1
+        },
+        {
+          "profileID": "ore_mining_skiff",
+          "count": 2
+        },
+        {
+          "profileID": "ore_mining_hulk",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "spawnGroupID": "concord_police_screen",
+      "name": "CONCORD Police Screen",
+      "description": "Baseline police screen for stations and light response authoring.",
+      "aliases": [
+        "concord screen",
+        "police screen"
+      ],
+      "entityType": "concord",
+      "entries": [
+        {
+          "profileID": "concord_response",
+          "count": 2
+        },
+        {
+          "profileID": "concord_police_cruiser",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "spawnGroupID": "concord_gate_checkpoint",
+      "name": "CONCORD Gate Checkpoint",
+      "description": "Checkpoint-style CONCORD gate presence with frigates and a random specialist escort.",
+      "aliases": [
+        "concord checkpoint",
+        "gate checkpoint"
+      ],
+      "entityType": "concord",
+      "entries": [
+        {
+          "profileID": "concord_response",
+          "count": 2
+        },
+        {
+          "spawnPoolID": "concord_special_ops",
+          "minCount": 0,
+          "maxCount": 1
+        },
+        {
+          "spawnPoolID": "concord_swat",
+          "minCount": 0,
+          "maxCount": 1
+        }
+      ]
+    },
+    {
+      "spawnGroupID": "concord_heavy_response",
+      "name": "CONCORD Heavy Response",
+      "description": "Heavy manual response composition for high-visibility stations and escalations.",
+      "aliases": [
+        "concord heavy",
+        "heavy response"
+      ],
+      "entityType": "concord",
+      "entries": [
+        {
+          "profileID": "concord_response",
+          "count": 2
+        },
+        {
+          "profileID": "concord_police_cruiser",
+          "count": 1
+        },
+        {
+          "profileID": "concord_police_battleship",
+          "count": 1
+        },
+        {
+          "spawnPoolID": "concord_special_ops",
+          "minCount": 0,
+          "maxCount": 1
+        }
+      ]
+    },
+    {
+      "spawnGroupID": "concord_crimewatch_response_5",
+      "name": "CONCORD Crimewatch Response 5",
+      "description": "Five-ship high-sec criminal response with guaranteed frigates and a heavy finisher.",
+      "entityType": "concord",
+      "entries": [
+        {
+          "profileID": "concord_crimewatch_police_frigate",
+          "count": 2
+        },
+        {
+          "profileID": "concord_crimewatch_special_ops_frigate",
+          "count": 1
+        },
+        {
+          "profileID": "concord_crimewatch_police_cruiser",
+          "count": 1
+        },
+        {
+          "profileID": "concord_crimewatch_police_battleship",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "spawnGroupID": "concord_crimewatch_response_6",
+      "name": "CONCORD Crimewatch Response 6",
+      "description": "Six-ship higher-sec criminal response with guaranteed frigates, cruiser support, and two heavy hulls.",
+      "entityType": "concord",
+      "entries": [
+        {
+          "profileID": "concord_crimewatch_police_frigate",
+          "count": 2
+        },
+        {
+          "profileID": "concord_crimewatch_special_ops_frigate",
+          "count": 1
+        },
+        {
+          "profileID": "concord_crimewatch_police_cruiser",
+          "count": 1
+        },
+        {
+          "profileID": "concord_crimewatch_police_battleship",
+          "count": 1
+        },
+        {
+          "profileID": "concord_crimewatch_special_ops_battleship",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "spawnGroupID": "concord_crimewatch_response_7",
+      "name": "CONCORD Crimewatch Response 7",
+      "description": "Seven-ship top-end high-sec criminal response with tackle frigates and three heavy execution hulls.",
+      "entityType": "concord",
+      "entries": [
+        {
+          "profileID": "concord_crimewatch_police_frigate",
+          "count": 2
+        },
+        {
+          "profileID": "concord_crimewatch_special_ops_frigate",
+          "count": 1
+        },
+        {
+          "profileID": "concord_crimewatch_swat_frigate",
+          "count": 1
+        },
+        {
+          "profileID": "concord_crimewatch_police_cruiser",
+          "count": 1
+        },
+        {
+          "profileID": "concord_crimewatch_police_battleship",
+          "count": 1
+        },
+        {
+          "profileID": "concord_crimewatch_special_ops_battleship",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

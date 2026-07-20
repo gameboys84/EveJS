@@ -1,0 +1,2920 @@
+{
+  "meta": {
+    "version": 2,
+    "description": "Cache-backed New Eden Store authority for classic store RPC, fast checkout, and local payment parity.",
+    "updatedAt": "2026-04-09T16:56:00.592Z",
+    "seedProfile": "official-observed-2026-03-26"
+  },
+  "config": {
+    "enabled": true,
+    "fastCheckoutEnabled": true,
+    "fakeCashPurchasesEnabled": true,
+    "fakeFastCheckoutResponse": "OK",
+    "fakeChinaFunnelEnabled": false,
+    "fakeBuyPlexOfferUrl": "",
+    "useShellExecuteToBuyPlexOffer": true,
+    "centsPerPlex": 100,
+    "defaultCashTaxRatePoints": 0,
+    "editorPort": 26008
+  },
+  "stores": {
+    "4": {
+      "storeID": 4,
+      "name": "New Eden Store",
+      "categories": [
+        {
+          "id": 9000000,
+          "name": "Featured",
+          "href": "/store/4/categories/featured",
+          "parent": null,
+          "tags": [
+            "featured"
+          ]
+        },
+        {
+          "id": 9000001,
+          "name": "Omega",
+          "href": "/store/4/categories/omega",
+          "parent": {
+            "id": 9000000
+          },
+          "tags": [
+            "omega",
+            "gametime"
+          ]
+        },
+        {
+          "id": 9000002,
+          "name": "PLEX",
+          "href": "/store/4/categories/plex",
+          "parent": {
+            "id": 9000000
+          },
+          "tags": [
+            "plex"
+          ]
+        },
+        {
+          "id": 9000003,
+          "name": "Account Services",
+          "href": "/store/4/categories/account-services",
+          "parent": {
+            "id": 9000000
+          },
+          "tags": [
+            "service"
+          ]
+        },
+        {
+          "id": 9000004,
+          "name": "Skill Management",
+          "href": "/store/4/categories/skill-management",
+          "parent": {
+            "id": 9000000
+          },
+          "tags": [
+            "skills"
+          ]
+        },
+        {
+          "id": 9000005,
+          "name": "Ship SKINs",
+          "href": "/store/4/categories/ship-skins",
+          "parent": {
+            "id": 9000000
+          },
+          "tags": [
+            "skins"
+          ]
+        },
+        {
+          "id": 9000006,
+          "name": "Apparel",
+          "href": "/store/4/categories/apparel",
+          "parent": {
+            "id": 9000000
+          },
+          "tags": [
+            "apparel"
+          ]
+        },
+        {
+          "id": 9000007,
+          "name": "Ships",
+          "href": "/store/4/categories/ships",
+          "parent": {
+            "id": 9000000
+          },
+          "tags": [
+            "ships"
+          ]
+        },
+        {
+          "id": 9000008,
+          "name": "Packs",
+          "href": "/store/4/categories/packs",
+          "parent": {
+            "id": 9000000
+          },
+          "tags": [
+            "packs"
+          ]
+        }
+      ],
+      "products": [
+        {
+          "id": 9100001,
+          "name": "Omega Clone State",
+          "href": "/store/4/products/omega-30-days"
+        },
+        {
+          "id": 9100002,
+          "name": "Multiple Character Training",
+          "href": "/store/4/products/mct-slot-30-days"
+        },
+        {
+          "id": 9100003,
+          "name": "Pilot's Body Resculpt Certificate",
+          "href": "/store/4/products/pilot-resculpt-certificate"
+        },
+        {
+          "id": 9100004,
+          "name": "Skill Extractor",
+          "href": "/store/4/products/skill-extractor-single"
+        },
+        {
+          "id": 9100005,
+          "name": "Daily Alpha Injector",
+          "href": "/store/4/products/daily-alpha-injector-single"
+        },
+        {
+          "id": 9100006,
+          "name": "Historic SOE SKINs Crate",
+          "href": "/store/4/products/historic-soe-skins-crate"
+        },
+        {
+          "id": 9100007,
+          "name": "Historic Gallente SKINs Crate",
+          "href": "/store/4/products/historic-gallente-skins-crate"
+        },
+        {
+          "id": 9100008,
+          "name": "Sunesis Capsuleer Day XXI SKIN",
+          "href": "/store/4/products/sunesis-capsuleer-day-xxi-skin"
+        },
+        {
+          "id": 9100009,
+          "name": "Pacifier Aurora Universalis SKIN",
+          "href": "/store/4/products/pacifier-aurora-universalis-skin"
+        },
+        {
+          "id": 9100010,
+          "name": "Men's & Women's Frostline Exploration Suit",
+          "href": "/store/4/products/frostline-exploration-suit"
+        },
+        {
+          "id": 9100011,
+          "name": "Men's 'Ascend' Boots (white/gold)",
+          "href": "/store/4/products/mens-ascend-boots-white-gold"
+        },
+        {
+          "id": 9100012,
+          "name": "Women's 'Avenue' Shirt (black)",
+          "href": "/store/4/products/womens-avenue-shirt-black"
+        },
+        {
+          "id": 9100013,
+          "name": "Sunesis",
+          "href": "/store/4/products/sunesis-hull"
+        },
+        {
+          "id": 9100014,
+          "name": "Drake",
+          "href": "/store/4/products/drake-hull"
+        },
+        {
+          "id": 9100015,
+          "name": "Explorer Career Crate",
+          "href": "/store/4/products/explorer-career-crate"
+        }
+      ],
+      "offers": [
+        {
+          "id": 9200001,
+          "storeOfferID": "omega_30_days",
+          "name": "Omega Clone State",
+          "description": "Activate Omega clone state access for 30 days.",
+          "href": "/store/4/offers/omega-30-days",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 500,
+              "basePrice": 500
+            }
+          ],
+          "imageUrl": "res:/UI/Texture/classes/PlexVault/UpgradeOmega.png",
+          "products": [
+            {
+              "id": 9100001,
+              "typeId": 0,
+              "quantity": 1,
+              "productName": "Omega Clone State",
+              "imageUrl": "res:/UI/Texture/classes/PlexVault/UpgradeOmega.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000001
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "omega",
+            "gametime"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#f7bc4d",
+            "secondary": "#5d3a00",
+            "foreground": "#fff8ec",
+            "badge": "OMEGA",
+            "title": "Omega Clone State",
+            "subtitle": "30 days of Omega access"
+          },
+          "fulfillment": {
+            "kind": "omega",
+            "durationDays": 30
+          }
+        },
+        {
+          "id": 9200002,
+          "storeOfferID": "mct_slot_30_days",
+          "name": "Multiple Character Training",
+          "description": "Unlock an additional training slot for 30 days.",
+          "href": "/store/4/offers/mct-slot-30-days",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 485,
+              "basePrice": 485
+            }
+          ],
+          "imageUrl": "res:/UI/Texture/Icons/multiple_training.png",
+          "products": [
+            {
+              "id": 9100002,
+              "typeId": 0,
+              "quantity": 1,
+              "productName": "Multiple Character Training",
+              "imageUrl": "res:/UI/Texture/Icons/multiple_training.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000003
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "service",
+            "mct"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#4ec6ff",
+            "secondary": "#15374c",
+            "foreground": "#f1fbff",
+            "badge": "SERVICE",
+            "title": "Multiple Character Training",
+            "subtitle": "30 days of training time"
+          },
+          "fulfillment": {
+            "kind": "mct",
+            "durationDays": 30,
+            "slotCount": 1
+          }
+        },
+        {
+          "id": 9200003,
+          "storeOfferID": "pilot_resculpt_certificate",
+          "name": "Pilot's Body Resculpt Certificate",
+          "description": "Change your capsuleer appearance with a body resculpt certificate.",
+          "href": "/store/4/offers/pilot-resculpt-certificate",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 100,
+              "basePrice": 100
+            }
+          ],
+          "imageUrl": "res:/UI/Texture/Icons/character_resculpt.png",
+          "products": [
+            {
+              "id": 9100003,
+              "typeId": 34132,
+              "quantity": 1,
+              "productName": "Pilot's Body Resculpt Certificate",
+              "imageUrl": "res:/UI/Texture/Icons/character_resculpt.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000003
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "service",
+            "appearance"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#4ec6ff",
+            "secondary": "#15374c",
+            "foreground": "#f1fbff",
+            "badge": "SERVICE",
+            "title": "Pilot's Body Resculpt Certificate",
+            "subtitle": "Change your capsuleer appearance with a body resculpt certificate."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 34132,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200004,
+          "storeOfferID": "skill_extractor_single",
+          "name": "Skill Extractor",
+          "description": "Extract 500,000 skill points from an eligible character.",
+          "href": "/store/4/offers/skill-extractor-single",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 70,
+              "basePrice": 70
+            }
+          ],
+          "imageUrl": "res:/UI/Texture/Icons/skillExtractor_64.png",
+          "products": [
+            {
+              "id": 9100004,
+              "typeId": 40519,
+              "quantity": 1,
+              "productName": "Skill Extractor",
+              "imageUrl": "res:/UI/Texture/Icons/skillExtractor_64.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000004
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "skills",
+            "extractor"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#b468ff",
+            "secondary": "#3b1f54",
+            "foreground": "#faf5ff",
+            "badge": "SKILL",
+            "title": "Skill Extractor",
+            "subtitle": "Extract 500,000 skill points from an eligible character."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 40519,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200005,
+          "storeOfferID": "daily_alpha_injector_single",
+          "name": "Daily Alpha Injector",
+          "description": "Add 50,000 skill points for an Alpha clone character.",
+          "href": "/store/4/offers/daily-alpha-injector-single",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 15,
+              "basePrice": 15
+            }
+          ],
+          "imageUrl": "res:/UI/Texture/Icons/Inventory/skillInjectorAlpha.png",
+          "products": [
+            {
+              "id": 9100005,
+              "typeId": 46375,
+              "quantity": 1,
+              "productName": "Daily Alpha Injector",
+              "imageUrl": "res:/UI/Texture/Icons/Inventory/skillInjectorAlpha.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000004
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "skills",
+            "alpha"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#b468ff",
+            "secondary": "#3b1f54",
+            "foreground": "#faf5ff",
+            "badge": "SKILL",
+            "title": "Daily Alpha Injector",
+            "subtitle": "Add 50,000 skill points for an Alpha clone character."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 46375,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200006,
+          "storeOfferID": "historic_soe_skins_crate",
+          "name": "Historic SOE SKINs Crate",
+          "description": "Grant a historic Sisters of EVE themed SKIN crate.",
+          "href": "/store/4/offers/historic-soe-skins-crate",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 110,
+              "basePrice": 110
+            }
+          ],
+          "imageUrl": "res:/UI/Texture/Icons/Inventory/Crate_ShipSkin_64.png",
+          "products": [
+            {
+              "id": 9100006,
+              "typeId": 90885,
+              "quantity": 1,
+              "productName": "Historic SOE SKINs Crate",
+              "imageUrl": "res:/UI/Texture/Icons/Inventory/Crate_ShipSkin_64.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000005
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "skins",
+            "crate"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#4ef2c8",
+            "secondary": "#123f38",
+            "foreground": "#effffb",
+            "badge": "SKIN",
+            "title": "Historic SOE SKINs Crate",
+            "subtitle": "Grant a historic Sisters of EVE themed SKIN crate."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 90885,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200007,
+          "storeOfferID": "historic_gallente_skins_crate",
+          "name": "Historic Gallente SKINs Crate",
+          "description": "Grant a historic Gallente themed SKIN crate.",
+          "href": "/store/4/offers/historic-gallente-skins-crate",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 110,
+              "basePrice": 110
+            }
+          ],
+          "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png",
+          "products": [
+            {
+              "id": 9100007,
+              "typeId": 91938,
+              "quantity": 1,
+              "productName": "Historic Gallente SKINs Crate",
+              "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000005
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "skins",
+            "crate"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#4ef2c8",
+            "secondary": "#123f38",
+            "foreground": "#effffb",
+            "badge": "SKIN",
+            "title": "Historic Gallente SKINs Crate",
+            "subtitle": "Grant a historic Gallente themed SKIN crate."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 91938,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200008,
+          "storeOfferID": "sunesis_capsuleer_day_xxi_skin",
+          "name": "Sunesis Capsuleer Day XXI SKIN",
+          "description": "Redeem a limited Sunesis SKIN.",
+          "href": "/store/4/offers/sunesis-capsuleer-day-xxi-skin",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 55,
+              "basePrice": 55
+            }
+          ],
+          "imageUrl": "res:/ui/texture/icons/7_64_15.png",
+          "products": [
+            {
+              "id": 9100008,
+              "typeId": 82081,
+              "quantity": 1,
+              "productName": "Sunesis Capsuleer Day XXI SKIN",
+              "imageUrl": "res:/ui/texture/icons/7_64_15.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000005
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "skins"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#4ef2c8",
+            "secondary": "#123f38",
+            "foreground": "#effffb",
+            "badge": "SKIN",
+            "title": "Sunesis Capsuleer Day XXI SKIN",
+            "subtitle": "Redeem a limited Sunesis SKIN."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 82081,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200009,
+          "storeOfferID": "pacifier_aurora_universalis_skin",
+          "name": "Pacifier Aurora Universalis SKIN",
+          "description": "Redeem a Pacifier Aurora Universalis SKIN.",
+          "href": "/store/4/offers/pacifier-aurora-universalis-skin",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 65,
+              "basePrice": 65
+            }
+          ],
+          "imageUrl": "res:/ui/texture/icons/7_64_15.png",
+          "products": [
+            {
+              "id": 9100009,
+              "typeId": 86121,
+              "quantity": 1,
+              "productName": "Pacifier Aurora Universalis SKIN",
+              "imageUrl": "res:/ui/texture/icons/7_64_15.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000005
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "skins"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#4ef2c8",
+            "secondary": "#123f38",
+            "foreground": "#effffb",
+            "badge": "SKIN",
+            "title": "Pacifier Aurora Universalis SKIN",
+            "subtitle": "Redeem a Pacifier Aurora Universalis SKIN."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 86121,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200010,
+          "storeOfferID": "frostline_exploration_suit",
+          "name": "Men's & Women's Frostline Exploration Suit",
+          "description": "Add a Frostline Exploration Suit to your apparel collection.",
+          "href": "/store/4/offers/frostline-exploration-suit",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 65,
+              "basePrice": 65
+            }
+          ],
+          "imageUrl": "res:/UI/Texture/Icons/RewardTrack/crateWinterExplorationSuit.png",
+          "products": [
+            {
+              "id": 9100010,
+              "typeId": 49803,
+              "quantity": 1,
+              "productName": "Men's & Women's Frostline Exploration Suit",
+              "imageUrl": "res:/UI/Texture/Icons/RewardTrack/crateWinterExplorationSuit.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000006
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "apparel"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#ff6c6c",
+            "secondary": "#4b1c24",
+            "foreground": "#fff4f4",
+            "badge": "APPAREL",
+            "title": "Men's & Women's Frostline Exploration Suit",
+            "subtitle": "Add a Frostline Exploration Suit to your apparel collection."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 49803,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200011,
+          "storeOfferID": "mens_ascend_boots_white_gold",
+          "name": "Men's 'Ascend' Boots (white/gold)",
+          "description": "Add a high-contrast pair of Ascend boots.",
+          "href": "/store/4/offers/mens-ascend-boots-white-gold",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 30,
+              "basePrice": 30
+            }
+          ],
+          "imageUrl": "res:/UI/Asset/mannequin/feet/33776_male_Feet_BootsALM01_Types_BootsALM01_WhiteGold.png",
+          "products": [
+            {
+              "id": 9100011,
+              "typeId": 33776,
+              "quantity": 1,
+              "productName": "Men's 'Ascend' Boots (white/gold)",
+              "imageUrl": "res:/UI/Asset/mannequin/feet/33776_male_Feet_BootsALM01_Types_BootsALM01_WhiteGold.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000006
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "apparel"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#ff6c6c",
+            "secondary": "#4b1c24",
+            "foreground": "#fff4f4",
+            "badge": "APPAREL",
+            "title": "Men's 'Ascend' Boots (white/gold)",
+            "subtitle": "Add a high-contrast pair of Ascend boots."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 33776,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200012,
+          "storeOfferID": "womens_avenue_shirt_black",
+          "name": "Women's 'Avenue' Shirt (black)",
+          "description": "Add a black Avenue shirt to your apparel collection.",
+          "href": "/store/4/offers/womens-avenue-shirt-black",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 30,
+              "basePrice": 30
+            }
+          ],
+          "imageUrl": "res:/UI/Asset/mannequin/topmiddle/4216_female_TopMiddle_TanktopF01_Types_TanktopF01_black.png",
+          "products": [
+            {
+              "id": 9100012,
+              "typeId": 4216,
+              "quantity": 1,
+              "productName": "Women's 'Avenue' Shirt (black)",
+              "imageUrl": "res:/UI/Asset/mannequin/topmiddle/4216_female_TopMiddle_TanktopF01_Types_TanktopF01_black.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000006
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "apparel"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#ff6c6c",
+            "secondary": "#4b1c24",
+            "foreground": "#fff4f4",
+            "badge": "APPAREL",
+            "title": "Women's 'Avenue' Shirt (black)",
+            "subtitle": "Add a black Avenue shirt to your apparel collection."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 4216,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200013,
+          "storeOfferID": "sunesis_hull",
+          "name": "Sunesis",
+          "description": "Deliver a Sunesis hull to the active character.",
+          "href": "/store/4/offers/sunesis-hull",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 95,
+              "basePrice": 95
+            }
+          ],
+          "imageUrl": "res:/ui/texture/icons/7_64_15.png",
+          "products": [
+            {
+              "id": 9100013,
+              "typeId": 42685,
+              "quantity": 1,
+              "productName": "Sunesis",
+              "imageUrl": "res:/ui/texture/icons/7_64_15.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000007
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "ship",
+            "hull"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#81a8ff",
+            "secondary": "#1e325b",
+            "foreground": "#f2f7ff",
+            "badge": "HULL",
+            "title": "Sunesis",
+            "subtitle": "Deliver a Sunesis hull to the active character."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 42685,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200014,
+          "storeOfferID": "drake_hull",
+          "name": "Drake",
+          "description": "Deliver a Drake hull to the active character.",
+          "href": "/store/4/offers/drake-hull",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 1200,
+              "basePrice": 1200
+            }
+          ],
+          "imageUrl": "res:/ui/texture/icons/7_64_15.png",
+          "products": [
+            {
+              "id": 9100014,
+              "typeId": 24698,
+              "quantity": 1,
+              "productName": "Drake",
+              "imageUrl": "res:/ui/texture/icons/7_64_15.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000007
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "ship",
+            "hull"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#81a8ff",
+            "secondary": "#1e325b",
+            "foreground": "#f2f7ff",
+            "badge": "HULL",
+            "title": "Drake",
+            "subtitle": "Deliver a Drake hull to the active character."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 24698,
+            "quantity": 1
+          }
+        },
+        {
+          "id": 9200015,
+          "storeOfferID": "explorer_career_crate",
+          "name": "Explorer Career Crate",
+          "description": "Deliver an Explorer Career Crate to the active character.",
+          "href": "/store/4/offers/explorer-career-crate",
+          "offerPricings": [
+            {
+              "currency": "PLX",
+              "price": 120,
+              "basePrice": 120
+            }
+          ],
+          "imageUrl": "res:/ui/texture/icons/inventory/CareerPortal/loot_crate64_explorer.png",
+          "products": [
+            {
+              "id": 9100015,
+              "typeId": 81167,
+              "quantity": 1,
+              "productName": "Explorer Career Crate",
+              "imageUrl": "res:/ui/texture/icons/inventory/CareerPortal/loot_crate64_explorer.png"
+            }
+          ],
+          "categories": [
+            {
+              "id": 9000008
+            }
+          ],
+          "label": null,
+          "thirdpartyinfo": null,
+          "canPurchase": true,
+          "singlePurchase": false,
+          "tags": [
+            "pack",
+            "career"
+          ],
+          "preview": {
+            "imageMode": "generated",
+            "accent": "#66f28d",
+            "secondary": "#173f22",
+            "foreground": "#f2fff5",
+            "badge": "PACK",
+            "title": "Explorer Career Crate",
+            "subtitle": "Deliver an Explorer Career Crate to the active character."
+          },
+          "fulfillment": {
+            "kind": "item",
+            "typeID": 81167,
+            "quantity": 1
+          }
+        }
+      ]
+    }
+  },
+  "publicOffers": {
+    "omega_30_days": {
+      "storeOfferID": "omega_30_days",
+      "name": "Omega Clone State",
+      "description": "Activate Omega clone state access for 30 days.",
+      "tags": [
+        "omega",
+        "gametime"
+      ],
+      "imageUrl": "res:/UI/Texture/classes/PlexVault/UpgradeOmega.png",
+      "plexPriceInCents": 50000,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f7bc4d",
+        "secondary": "#5d3a00",
+        "foreground": "#fff8ec",
+        "badge": "OMEGA",
+        "title": "Omega Clone State",
+        "subtitle": "30 days of Omega access"
+      },
+      "fulfillment": {
+        "kind": "omega",
+        "durationDays": 30
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "mct_slot_30_days": {
+      "storeOfferID": "mct_slot_30_days",
+      "name": "Multiple Character Training",
+      "description": "Unlock an additional training slot for 30 days.",
+      "tags": [
+        "service",
+        "mct"
+      ],
+      "imageUrl": "res:/UI/Texture/Icons/multiple_training.png",
+      "plexPriceInCents": 48500,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#4ec6ff",
+        "secondary": "#15374c",
+        "foreground": "#f1fbff",
+        "badge": "SERVICE",
+        "title": "Multiple Character Training",
+        "subtitle": "30 days of training time"
+      },
+      "fulfillment": {
+        "kind": "mct",
+        "durationDays": 30,
+        "slotCount": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "pilot_resculpt_certificate": {
+      "storeOfferID": "pilot_resculpt_certificate",
+      "name": "Pilot's Body Resculpt Certificate",
+      "description": "Change your capsuleer appearance with a body resculpt certificate.",
+      "tags": [
+        "service",
+        "appearance"
+      ],
+      "imageUrl": "res:/UI/Texture/Icons/character_resculpt.png",
+      "plexPriceInCents": 10000,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#4ec6ff",
+        "secondary": "#15374c",
+        "foreground": "#f1fbff",
+        "badge": "SERVICE",
+        "title": "Pilot's Body Resculpt Certificate",
+        "subtitle": "Change your capsuleer appearance with a body resculpt certificate."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 34132,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "skill_extractor_single": {
+      "storeOfferID": "skill_extractor_single",
+      "name": "Skill Extractor",
+      "description": "Extract 500,000 skill points from an eligible character.",
+      "tags": [
+        "skills",
+        "extractor"
+      ],
+      "imageUrl": "res:/UI/Texture/Icons/skillExtractor_64.png",
+      "plexPriceInCents": 7000,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#b468ff",
+        "secondary": "#3b1f54",
+        "foreground": "#faf5ff",
+        "badge": "SKILL",
+        "title": "Skill Extractor",
+        "subtitle": "Extract 500,000 skill points from an eligible character."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 40519,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "daily_alpha_injector_single": {
+      "storeOfferID": "daily_alpha_injector_single",
+      "name": "Daily Alpha Injector",
+      "description": "Add 50,000 skill points for an Alpha clone character.",
+      "tags": [
+        "skills",
+        "alpha"
+      ],
+      "imageUrl": "res:/UI/Texture/Icons/Inventory/skillInjectorAlpha.png",
+      "plexPriceInCents": 1500,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#b468ff",
+        "secondary": "#3b1f54",
+        "foreground": "#faf5ff",
+        "badge": "SKILL",
+        "title": "Daily Alpha Injector",
+        "subtitle": "Add 50,000 skill points for an Alpha clone character."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 46375,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "historic_soe_skins_crate": {
+      "storeOfferID": "historic_soe_skins_crate",
+      "name": "Historic SOE SKINs Crate",
+      "description": "Grant a historic Sisters of EVE themed SKIN crate.",
+      "tags": [
+        "skins",
+        "crate"
+      ],
+      "imageUrl": "res:/UI/Texture/Icons/Inventory/Crate_ShipSkin_64.png",
+      "plexPriceInCents": 11000,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#4ef2c8",
+        "secondary": "#123f38",
+        "foreground": "#effffb",
+        "badge": "SKIN",
+        "title": "Historic SOE SKINs Crate",
+        "subtitle": "Grant a historic Sisters of EVE themed SKIN crate."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 90885,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "historic_gallente_skins_crate": {
+      "storeOfferID": "historic_gallente_skins_crate",
+      "name": "Historic Gallente SKINs Crate",
+      "description": "Grant a historic Gallente themed SKIN crate.",
+      "tags": [
+        "skins",
+        "crate"
+      ],
+      "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png",
+      "plexPriceInCents": 11000,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#4ef2c8",
+        "secondary": "#123f38",
+        "foreground": "#effffb",
+        "badge": "SKIN",
+        "title": "Historic Gallente SKINs Crate",
+        "subtitle": "Grant a historic Gallente themed SKIN crate."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 91938,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "sunesis_capsuleer_day_xxi_skin": {
+      "storeOfferID": "sunesis_capsuleer_day_xxi_skin",
+      "name": "Sunesis Capsuleer Day XXI SKIN",
+      "description": "Redeem a limited Sunesis SKIN.",
+      "tags": [
+        "skins"
+      ],
+      "imageUrl": "res:/ui/texture/icons/7_64_15.png",
+      "plexPriceInCents": 5500,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#4ef2c8",
+        "secondary": "#123f38",
+        "foreground": "#effffb",
+        "badge": "SKIN",
+        "title": "Sunesis Capsuleer Day XXI SKIN",
+        "subtitle": "Redeem a limited Sunesis SKIN."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 82081,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "pacifier_aurora_universalis_skin": {
+      "storeOfferID": "pacifier_aurora_universalis_skin",
+      "name": "Pacifier Aurora Universalis SKIN",
+      "description": "Redeem a Pacifier Aurora Universalis SKIN.",
+      "tags": [
+        "skins"
+      ],
+      "imageUrl": "res:/ui/texture/icons/7_64_15.png",
+      "plexPriceInCents": 6500,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#4ef2c8",
+        "secondary": "#123f38",
+        "foreground": "#effffb",
+        "badge": "SKIN",
+        "title": "Pacifier Aurora Universalis SKIN",
+        "subtitle": "Redeem a Pacifier Aurora Universalis SKIN."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 86121,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "frostline_exploration_suit": {
+      "storeOfferID": "frostline_exploration_suit",
+      "name": "Men's & Women's Frostline Exploration Suit",
+      "description": "Add a Frostline Exploration Suit to your apparel collection.",
+      "tags": [
+        "apparel"
+      ],
+      "imageUrl": "res:/UI/Texture/Icons/RewardTrack/crateWinterExplorationSuit.png",
+      "plexPriceInCents": 6500,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#ff6c6c",
+        "secondary": "#4b1c24",
+        "foreground": "#fff4f4",
+        "badge": "APPAREL",
+        "title": "Men's & Women's Frostline Exploration Suit",
+        "subtitle": "Add a Frostline Exploration Suit to your apparel collection."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 49803,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "mens_ascend_boots_white_gold": {
+      "storeOfferID": "mens_ascend_boots_white_gold",
+      "name": "Men's 'Ascend' Boots (white/gold)",
+      "description": "Add a high-contrast pair of Ascend boots.",
+      "tags": [
+        "apparel"
+      ],
+      "imageUrl": "res:/UI/Asset/mannequin/feet/33776_male_Feet_BootsALM01_Types_BootsALM01_WhiteGold.png",
+      "plexPriceInCents": 3000,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#ff6c6c",
+        "secondary": "#4b1c24",
+        "foreground": "#fff4f4",
+        "badge": "APPAREL",
+        "title": "Men's 'Ascend' Boots (white/gold)",
+        "subtitle": "Add a high-contrast pair of Ascend boots."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 33776,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "womens_avenue_shirt_black": {
+      "storeOfferID": "womens_avenue_shirt_black",
+      "name": "Women's 'Avenue' Shirt (black)",
+      "description": "Add a black Avenue shirt to your apparel collection.",
+      "tags": [
+        "apparel"
+      ],
+      "imageUrl": "res:/UI/Asset/mannequin/topmiddle/4216_female_TopMiddle_TanktopF01_Types_TanktopF01_black.png",
+      "plexPriceInCents": 3000,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#ff6c6c",
+        "secondary": "#4b1c24",
+        "foreground": "#fff4f4",
+        "badge": "APPAREL",
+        "title": "Women's 'Avenue' Shirt (black)",
+        "subtitle": "Add a black Avenue shirt to your apparel collection."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 4216,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "sunesis_hull": {
+      "storeOfferID": "sunesis_hull",
+      "name": "Sunesis",
+      "description": "Deliver a Sunesis hull to the active character.",
+      "tags": [
+        "ship",
+        "hull"
+      ],
+      "imageUrl": "res:/ui/texture/icons/7_64_15.png",
+      "plexPriceInCents": 9500,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#81a8ff",
+        "secondary": "#1e325b",
+        "foreground": "#f2f7ff",
+        "badge": "HULL",
+        "title": "Sunesis",
+        "subtitle": "Deliver a Sunesis hull to the active character."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 42685,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "drake_hull": {
+      "storeOfferID": "drake_hull",
+      "name": "Drake",
+      "description": "Deliver a Drake hull to the active character.",
+      "tags": [
+        "ship",
+        "hull"
+      ],
+      "imageUrl": "res:/ui/texture/icons/7_64_15.png",
+      "plexPriceInCents": 120000,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#81a8ff",
+        "secondary": "#1e325b",
+        "foreground": "#f2f7ff",
+        "badge": "HULL",
+        "title": "Drake",
+        "subtitle": "Deliver a Drake hull to the active character."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 24698,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "explorer_career_crate": {
+      "storeOfferID": "explorer_career_crate",
+      "name": "Explorer Career Crate",
+      "description": "Deliver an Explorer Career Crate to the active character.",
+      "tags": [
+        "pack",
+        "career"
+      ],
+      "imageUrl": "res:/ui/texture/icons/inventory/CareerPortal/loot_crate64_explorer.png",
+      "plexPriceInCents": 12000,
+      "currencyCode": null,
+      "currencyAmountInCents": null,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#66f28d",
+        "secondary": "#173f22",
+        "foreground": "#f2fff5",
+        "badge": "PACK",
+        "title": "Explorer Career Crate",
+        "subtitle": "Deliver an Explorer Career Crate to the active character."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 81167,
+        "quantity": 1
+      },
+      "source": {
+        "kind": "seeded-local",
+        "observedAt": "2026-03-26",
+        "url": "https://support.eveonline.com/hc/en-us/categories/200554022-Account-Subscription"
+      }
+    },
+    "cash_omega_30_days": {
+      "storeOfferID": "cash_omega_30_days",
+      "name": "1 Month Omega + Bonus items",
+      "description": "30 days Omega, 100,000 free skill points, Advanced 'Boost' Cerebral Accelerator, and Basic Glamourex Booster.",
+      "tags": [
+        "omega",
+        "pack",
+        "featured"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/99_64_9.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 2000,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f7bc4d",
+        "secondary": "#5d3a00",
+        "foreground": "#fff8ec",
+        "badge": "OMEGA",
+        "title": "1 Month Omega + Bonus items",
+        "subtitle": "30 days Omega, 100,000 free skill points, Advanced 'Boost' Cerebral Accelerator, and Basic Glamourex Booster."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "omega",
+            "durationDays": 30
+          },
+          {
+            "kind": "skill_points",
+            "points": 100000
+          },
+          {
+            "kind": "item",
+            "typeID": 72240,
+            "quantity": 1
+          },
+          {
+            "kind": "item",
+            "typeID": 64724,
+            "quantity": 1
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/"
+      }
+    },
+    "cash_omega_90_days": {
+      "storeOfferID": "cash_omega_90_days",
+      "name": "3 Months Omega",
+      "description": "90 days of Omega clone state.",
+      "tags": [
+        "omega"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/classes/PlexVault/UpgradeOmega.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 4800,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f7bc4d",
+        "secondary": "#5d3a00",
+        "foreground": "#fff8ec",
+        "badge": "OMEGA",
+        "title": "3 Months Omega",
+        "subtitle": "90 days of Omega clone state."
+      },
+      "fulfillment": {
+        "kind": "omega",
+        "durationDays": 90
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/"
+      }
+    },
+    "cash_omega_180_days": {
+      "storeOfferID": "cash_omega_180_days",
+      "name": "6 Months Omega",
+      "description": "180 days of Omega clone state.",
+      "tags": [
+        "omega"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/classes/PlexVault/UpgradeOmega.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 8400,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f7bc4d",
+        "secondary": "#5d3a00",
+        "foreground": "#fff8ec",
+        "badge": "OMEGA",
+        "title": "6 Months Omega",
+        "subtitle": "180 days of Omega clone state."
+      },
+      "fulfillment": {
+        "kind": "omega",
+        "durationDays": 180
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/"
+      }
+    },
+    "cash_omega_365_days": {
+      "storeOfferID": "cash_omega_365_days",
+      "name": "12 Months Omega",
+      "description": "365 days of Omega clone state.",
+      "tags": [
+        "omega"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/classes/PlexVault/UpgradeOmega.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 14400,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f7bc4d",
+        "secondary": "#5d3a00",
+        "foreground": "#fff8ec",
+        "badge": "OMEGA",
+        "title": "12 Months Omega",
+        "subtitle": "365 days of Omega clone state."
+      },
+      "fulfillment": {
+        "kind": "omega",
+        "durationDays": 365
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/"
+      }
+    },
+    "cash_omega_730_days": {
+      "storeOfferID": "cash_omega_730_days",
+      "name": "24 Months Omega",
+      "description": "730 days of Omega clone state.",
+      "tags": [
+        "omega"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/classes/PlexVault/UpgradeOmega.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 26400,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f7bc4d",
+        "secondary": "#5d3a00",
+        "foreground": "#fff8ec",
+        "badge": "OMEGA",
+        "title": "24 Months Omega",
+        "subtitle": "730 days of Omega clone state."
+      },
+      "fulfillment": {
+        "kind": "omega",
+        "durationDays": 730
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/"
+      }
+    },
+    "cash_plex_100_usd": {
+      "storeOfferID": "cash_plex_100_usd",
+      "name": "100 PLEX",
+      "description": "Add 100 PLEX to the character vault.",
+      "tags": [
+        "plex"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/Plex/plex_128_gradient_yellow.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 500,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f0992d",
+        "secondary": "#533217",
+        "foreground": "#fff7ed",
+        "badge": "PLEX",
+        "title": "100 PLEX",
+        "subtitle": "Add 100 PLEX to the character vault."
+      },
+      "fulfillment": {
+        "kind": "grant_plex",
+        "plexAmount": 100
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/fr/product/6-000-plex/verm-7980"
+      }
+    },
+    "cash_plex_200_usd": {
+      "storeOfferID": "cash_plex_200_usd",
+      "name": "200 PLEX",
+      "description": "Add 200 PLEX to the character vault.",
+      "tags": [
+        "plex"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/Plex/plex_128_gradient_yellow.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 1000,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f0992d",
+        "secondary": "#533217",
+        "foreground": "#fff7ed",
+        "badge": "PLEX",
+        "title": "200 PLEX",
+        "subtitle": "Add 200 PLEX to the character vault."
+      },
+      "fulfillment": {
+        "kind": "grant_plex",
+        "plexAmount": 200
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/fr/product/6-000-plex/verm-7980"
+      }
+    },
+    "cash_plex_500_usd": {
+      "storeOfferID": "cash_plex_500_usd",
+      "name": "500 PLEX",
+      "description": "Add 500 PLEX to the character vault.",
+      "tags": [
+        "plex",
+        "popular"
+      ],
+      "label": "Popular",
+      "imageUrl": "res:/UI/Texture/Plex/plex_128_gradient_yellow.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 2500,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f0992d",
+        "secondary": "#533217",
+        "foreground": "#fff7ed",
+        "badge": "PLEX",
+        "title": "500 PLEX",
+        "subtitle": "Add 500 PLEX to the character vault."
+      },
+      "fulfillment": {
+        "kind": "grant_plex",
+        "plexAmount": 500
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/fr/product/6-000-plex/verm-7980"
+      }
+    },
+    "cash_plex_1000_gallente": {
+      "storeOfferID": "cash_plex_1000_gallente",
+      "name": "1,000 PLEX + 1 Historic Gallente SKINs Crate",
+      "description": "1,000 PLEX plus one Historic Gallente SKINs Crate.",
+      "tags": [
+        "plex",
+        "skins",
+        "bundle"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 4500,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f0992d",
+        "secondary": "#533217",
+        "foreground": "#fff7ed",
+        "badge": "PLEX",
+        "title": "1,000 PLEX + 1 Historic Gallente SKINs Crate",
+        "subtitle": "1,000 PLEX plus one Historic Gallente SKINs Crate."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "grant_plex",
+            "plexAmount": 1000
+          },
+          {
+            "kind": "item",
+            "typeID": 91938,
+            "quantity": 1
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/fr/product/6-000-plex/verm-7980"
+      }
+    },
+    "cash_plex_1500_gallente": {
+      "storeOfferID": "cash_plex_1500_gallente",
+      "name": "1,500 PLEX + 2 Historic Gallente SKINs Crates",
+      "description": "1,500 PLEX plus two Historic Gallente SKINs Crates.",
+      "tags": [
+        "plex",
+        "skins",
+        "bundle"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 6500,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f0992d",
+        "secondary": "#533217",
+        "foreground": "#fff7ed",
+        "badge": "PLEX",
+        "title": "1,500 PLEX + 2 Historic Gallente SKINs Crates",
+        "subtitle": "1,500 PLEX plus two Historic Gallente SKINs Crates."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "grant_plex",
+            "plexAmount": 1500
+          },
+          {
+            "kind": "item",
+            "typeID": 91938,
+            "quantity": 2
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/fr/product/6-000-plex/verm-7980"
+      }
+    },
+    "cash_plex_3000_gallente": {
+      "storeOfferID": "cash_plex_3000_gallente",
+      "name": "3,000 PLEX + 3 Historic Gallente SKINs Crates",
+      "description": "3,000 PLEX plus three Historic Gallente SKINs Crates.",
+      "tags": [
+        "plex",
+        "skins",
+        "bundle"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 12500,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f0992d",
+        "secondary": "#533217",
+        "foreground": "#fff7ed",
+        "badge": "PLEX",
+        "title": "3,000 PLEX + 3 Historic Gallente SKINs Crates",
+        "subtitle": "3,000 PLEX plus three Historic Gallente SKINs Crates."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "grant_plex",
+            "plexAmount": 3000
+          },
+          {
+            "kind": "item",
+            "typeID": 91938,
+            "quantity": 3
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/fr/product/6-000-plex/verm-7980"
+      }
+    },
+    "cash_plex_6000_gallente": {
+      "storeOfferID": "cash_plex_6000_gallente",
+      "name": "6,000 PLEX + 4 Historic Gallente SKINs Crates",
+      "description": "6,000 PLEX plus four Historic Gallente SKINs Crates.",
+      "tags": [
+        "plex",
+        "skins",
+        "bundle"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 24000,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f0992d",
+        "secondary": "#533217",
+        "foreground": "#fff7ed",
+        "badge": "PLEX",
+        "title": "6,000 PLEX + 4 Historic Gallente SKINs Crates",
+        "subtitle": "6,000 PLEX plus four Historic Gallente SKINs Crates."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "grant_plex",
+            "plexAmount": 6000
+          },
+          {
+            "kind": "item",
+            "typeID": 91938,
+            "quantity": 4
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/fr/product/6-000-plex/verm-7980"
+      }
+    },
+    "cash_plex_12000_gallente": {
+      "storeOfferID": "cash_plex_12000_gallente",
+      "name": "12,000 PLEX + 5 Historic Gallente SKINs Crates",
+      "description": "12,000 PLEX plus five Historic Gallente SKINs Crates.",
+      "tags": [
+        "plex",
+        "skins",
+        "bundle"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 42000,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f0992d",
+        "secondary": "#533217",
+        "foreground": "#fff7ed",
+        "badge": "PLEX",
+        "title": "12,000 PLEX + 5 Historic Gallente SKINs Crates",
+        "subtitle": "12,000 PLEX plus five Historic Gallente SKINs Crates."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "grant_plex",
+            "plexAmount": 12000
+          },
+          {
+            "kind": "item",
+            "typeID": 91938,
+            "quantity": 5
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/fr/product/6-000-plex/verm-7980"
+      }
+    },
+    "cash_plex_20000_gallente": {
+      "storeOfferID": "cash_plex_20000_gallente",
+      "name": "20,000 PLEX + 6 Historic Gallente SKINs Crates",
+      "description": "20,000 PLEX plus six Historic Gallente SKINs Crates.",
+      "tags": [
+        "plex",
+        "skins",
+        "bundle"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 65000,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#f0992d",
+        "secondary": "#533217",
+        "foreground": "#fff7ed",
+        "badge": "PLEX",
+        "title": "20,000 PLEX + 6 Historic Gallente SKINs Crates",
+        "subtitle": "20,000 PLEX plus six Historic Gallente SKINs Crates."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "grant_plex",
+            "plexAmount": 20000
+          },
+          {
+            "kind": "item",
+            "typeID": 91938,
+            "quantity": 6
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/fr/product/6-000-plex/verm-7980"
+      }
+    },
+    "cash_mct_1": {
+      "storeOfferID": "cash_mct_1",
+      "name": "1 MCT Certificate",
+      "description": "30 days of additional training time.",
+      "tags": [
+        "mct"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/Icons/multiple_training.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 1000,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#4ec6ff",
+        "secondary": "#15374c",
+        "foreground": "#f1fbff",
+        "badge": "SERVICE",
+        "title": "1 MCT Certificate",
+        "subtitle": "30 days of additional training time."
+      },
+      "fulfillment": {
+        "kind": "mct",
+        "durationDays": 30,
+        "slotCount": 1
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/"
+      }
+    },
+    "cash_mct_2": {
+      "storeOfferID": "cash_mct_2",
+      "name": "2 MCT Certificates",
+      "description": "2 x 30 days of additional training time.",
+      "tags": [
+        "mct"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/Icons/multiple_training.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 1800,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#4ec6ff",
+        "secondary": "#15374c",
+        "foreground": "#f1fbff",
+        "badge": "SERVICE",
+        "title": "2 MCT Certificates",
+        "subtitle": "2 x 30 days of additional training time."
+      },
+      "fulfillment": {
+        "kind": "mct",
+        "durationDays": 30,
+        "slotCount": 2
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/"
+      }
+    },
+    "cash_mct_3": {
+      "storeOfferID": "cash_mct_3",
+      "name": "3 MCT Certificates",
+      "description": "3 x 30 days of additional training time.",
+      "tags": [
+        "mct"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/Icons/multiple_training.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 2400,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#4ec6ff",
+        "secondary": "#15374c",
+        "foreground": "#f1fbff",
+        "badge": "SERVICE",
+        "title": "3 MCT Certificates",
+        "subtitle": "3 x 30 days of additional training time."
+      },
+      "fulfillment": {
+        "kind": "mct",
+        "durationDays": 30,
+        "slotCount": 3
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/"
+      }
+    },
+    "cash_mct_6": {
+      "storeOfferID": "cash_mct_6",
+      "name": "6 MCT Certificates",
+      "description": "6 x 30 days of additional training time.",
+      "tags": [
+        "mct"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/Icons/multiple_training.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 4200,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#4ec6ff",
+        "secondary": "#15374c",
+        "foreground": "#f1fbff",
+        "badge": "SERVICE",
+        "title": "6 MCT Certificates",
+        "subtitle": "6 x 30 days of additional training time."
+      },
+      "fulfillment": {
+        "kind": "mct",
+        "durationDays": 30,
+        "slotCount": 6
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/"
+      }
+    },
+    "cash_daily_alpha_10": {
+      "storeOfferID": "cash_daily_alpha_10",
+      "name": "10 Daily Alpha Injectors",
+      "description": "10 Daily Alpha Injectors for Alpha clone skill progression.",
+      "tags": [
+        "skills",
+        "alpha"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/Icons/Inventory/skillInjectorAlpha.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 700,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#b468ff",
+        "secondary": "#3b1f54",
+        "foreground": "#faf5ff",
+        "badge": "SKILL",
+        "title": "10 Daily Alpha Injectors",
+        "subtitle": "10 Daily Alpha Injectors for Alpha clone skill progression."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 46375,
+        "quantity": 10
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/product/alpha-combo/verm-7990"
+      }
+    },
+    "cash_alpha_combo": {
+      "storeOfferID": "cash_alpha_combo",
+      "name": "Alpha Combo",
+      "description": "100 PLEX plus 5 Daily Alpha Injectors.",
+      "tags": [
+        "skills",
+        "plex",
+        "bundle"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/Icons/Inventory/skillInjectorAlpha.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 900,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#b468ff",
+        "secondary": "#3b1f54",
+        "foreground": "#faf5ff",
+        "badge": "SKILL",
+        "title": "Alpha Combo",
+        "subtitle": "100 PLEX plus 5 Daily Alpha Injectors."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "grant_plex",
+            "plexAmount": 100
+          },
+          {
+            "kind": "item",
+            "typeID": 46375,
+            "quantity": 5
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/product/alpha-combo/verm-7990"
+      }
+    },
+    "cash_weekend_fleet_pack": {
+      "storeOfferID": "cash_weekend_fleet_pack",
+      "name": "Weekend Fleet Pack",
+      "description": "3 days Omega access and 50 PLEX.",
+      "tags": [
+        "omega",
+        "plex",
+        "pack"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/Plex/plex_128_gradient_yellow.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 375,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#66f28d",
+        "secondary": "#173f22",
+        "foreground": "#f2fff5",
+        "badge": "PACK",
+        "title": "Weekend Fleet Pack",
+        "subtitle": "3 days Omega access and 50 PLEX."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "omega",
+            "durationDays": 3
+          },
+          {
+            "kind": "grant_plex",
+            "plexAmount": 50
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/product/1m-omega-2-skin-shattered-paradigm/verm-8202"
+      }
+    },
+    "cash_apprentice_bundle": {
+      "storeOfferID": "cash_apprentice_bundle",
+      "name": "Apprentice Bundle",
+      "description": "250,000 free skill points and one Genius 'Boost' Cerebral Accelerator.",
+      "tags": [
+        "skills",
+        "pack"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/99_64_9.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 799,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#b468ff",
+        "secondary": "#3b1f54",
+        "foreground": "#faf5ff",
+        "badge": "SKILL",
+        "title": "Apprentice Bundle",
+        "subtitle": "250,000 free skill points and one Genius 'Boost' Cerebral Accelerator."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "skill_points",
+            "points": 250000
+          },
+          {
+            "kind": "item",
+            "typeID": 77919,
+            "quantity": 1
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/en/product/apprentice-bundle/verm-7459"
+      }
+    },
+    "cash_undock_boost_bundle": {
+      "storeOfferID": "cash_undock_boost_bundle",
+      "name": "Undock Boost Bundle",
+      "description": "648,000 free skill points and one Genius 'Boost' Cerebral Accelerator.",
+      "tags": [
+        "skills",
+        "pack"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/99_64_9.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 1600,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#b468ff",
+        "secondary": "#3b1f54",
+        "foreground": "#faf5ff",
+        "badge": "SKILL",
+        "title": "Undock Boost Bundle",
+        "subtitle": "648,000 free skill points and one Genius 'Boost' Cerebral Accelerator."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "skill_points",
+            "points": 648000
+          },
+          {
+            "kind": "item",
+            "typeID": 77919,
+            "quantity": 1
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/de/product/afterburn-boost-bundle/verm-8049"
+      }
+    },
+    "cash_afterburn_boost_bundle": {
+      "storeOfferID": "cash_afterburn_boost_bundle",
+      "name": "Afterburn Boost Bundle",
+      "description": "1,032,000 free skill points and one Genius 'Boost' Cerebral Accelerator.",
+      "tags": [
+        "skills",
+        "pack"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/99_64_9.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 4800,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#b468ff",
+        "secondary": "#3b1f54",
+        "foreground": "#faf5ff",
+        "badge": "SKILL",
+        "title": "Afterburn Boost Bundle",
+        "subtitle": "1,032,000 free skill points and one Genius 'Boost' Cerebral Accelerator."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "skill_points",
+            "points": 1032000
+          },
+          {
+            "kind": "item",
+            "typeID": 77919,
+            "quantity": 1
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/de/product/afterburn-boost-bundle/verm-8049"
+      }
+    },
+    "cash_warp_boost_bundle": {
+      "storeOfferID": "cash_warp_boost_bundle",
+      "name": "Warp Boost Bundle",
+      "description": "1,944,000 free skill points and one Genius 'Boost' Cerebral Accelerator.",
+      "tags": [
+        "skills",
+        "pack"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/99_64_9.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 9600,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#b468ff",
+        "secondary": "#3b1f54",
+        "foreground": "#faf5ff",
+        "badge": "SKILL",
+        "title": "Warp Boost Bundle",
+        "subtitle": "1,944,000 free skill points and one Genius 'Boost' Cerebral Accelerator."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "skill_points",
+            "points": 1944000
+          },
+          {
+            "kind": "item",
+            "typeID": 77919,
+            "quantity": 1
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/de/product/afterburn-boost-bundle/verm-8049"
+      }
+    },
+    "cash_jump_boost_bundle": {
+      "storeOfferID": "cash_jump_boost_bundle",
+      "name": "Jump Boost Bundle",
+      "description": "3,888,000 free skill points and two Genius 'Boost' Cerebral Accelerators.",
+      "tags": [
+        "skills",
+        "pack"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/99_64_9.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 19200,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#b468ff",
+        "secondary": "#3b1f54",
+        "foreground": "#faf5ff",
+        "badge": "SKILL",
+        "title": "Jump Boost Bundle",
+        "subtitle": "3,888,000 free skill points and two Genius 'Boost' Cerebral Accelerators."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "skill_points",
+            "points": 3888000
+          },
+          {
+            "kind": "item",
+            "typeID": 77919,
+            "quantity": 2
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/product/2026-level-5-mastery-pack/verm-8428"
+      }
+    },
+    "cash_level_2_mastery_pack": {
+      "storeOfferID": "cash_level_2_mastery_pack",
+      "name": "Level 2 Mastery Pack",
+      "description": "30 days Omega, 100 PLEX, and the Apprentice Bundle.",
+      "tags": [
+        "omega",
+        "plex",
+        "skills",
+        "pack"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/99_64_9.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 1000,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#66f28d",
+        "secondary": "#173f22",
+        "foreground": "#f2fff5",
+        "badge": "PACK",
+        "title": "Level 2 Mastery Pack",
+        "subtitle": "30 days Omega, 100 PLEX, and the Apprentice Bundle."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "omega",
+            "durationDays": 30
+          },
+          {
+            "kind": "grant_plex",
+            "plexAmount": 100
+          },
+          {
+            "kind": "skill_points",
+            "points": 250000
+          },
+          {
+            "kind": "item",
+            "typeID": 77919,
+            "quantity": 1
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/en/product/level-2-mastery-pack-special/verm-8420"
+      }
+    },
+    "cash_level_3_mastery_pack": {
+      "storeOfferID": "cash_level_3_mastery_pack",
+      "name": "Level 3 Mastery Pack",
+      "description": "60 days Omega, 500 PLEX, the Undock Boost Bundle, and one Genius 'Boost' Cerebral Accelerator.",
+      "tags": [
+        "omega",
+        "plex",
+        "skills",
+        "pack"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/99_64_9.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 5000,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#66f28d",
+        "secondary": "#173f22",
+        "foreground": "#f2fff5",
+        "badge": "PACK",
+        "title": "Level 3 Mastery Pack",
+        "subtitle": "60 days Omega, 500 PLEX, the Undock Boost Bundle, and one Genius 'Boost' Cerebral Accelerator."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "omega",
+            "durationDays": 60
+          },
+          {
+            "kind": "grant_plex",
+            "plexAmount": 500
+          },
+          {
+            "kind": "skill_points",
+            "points": 648000
+          },
+          {
+            "kind": "item",
+            "typeID": 77919,
+            "quantity": 2
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/product/2026-level-3-mastery-pack/verm-8426"
+      }
+    },
+    "cash_level_4_mastery_pack": {
+      "storeOfferID": "cash_level_4_mastery_pack",
+      "name": "Level 4 Mastery Pack",
+      "description": "90 days Omega, 1,000 PLEX, the Afterburn Boost Bundle, two MCT certificates, and two Skill Extractors.",
+      "tags": [
+        "omega",
+        "plex",
+        "skills",
+        "pack",
+        "mct"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/99_64_9.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 10000,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#66f28d",
+        "secondary": "#173f22",
+        "foreground": "#f2fff5",
+        "badge": "PACK",
+        "title": "Level 4 Mastery Pack",
+        "subtitle": "90 days Omega, 1,000 PLEX, the Afterburn Boost Bundle, two MCT certificates, and two Skill Extractors."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "omega",
+            "durationDays": 90
+          },
+          {
+            "kind": "grant_plex",
+            "plexAmount": 1000
+          },
+          {
+            "kind": "skill_points",
+            "points": 1032000
+          },
+          {
+            "kind": "item",
+            "typeID": 77919,
+            "quantity": 1
+          },
+          {
+            "kind": "mct",
+            "durationDays": 30,
+            "slotCount": 2
+          },
+          {
+            "kind": "item",
+            "typeID": 40519,
+            "quantity": 2
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/product/2026-level-5-mastery-pack/verm-8428"
+      }
+    },
+    "cash_level_5_mastery_pack": {
+      "storeOfferID": "cash_level_5_mastery_pack",
+      "name": "Level 5 Mastery Pack",
+      "description": "180 days Omega, 3,000 PLEX, the Warp Boost Bundle, six MCT certificates, and twenty Skill Extractors.",
+      "tags": [
+        "omega",
+        "plex",
+        "skills",
+        "pack",
+        "mct"
+      ],
+      "label": null,
+      "imageUrl": "res:/ui/texture/icons/99_64_9.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 25000,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#66f28d",
+        "secondary": "#173f22",
+        "foreground": "#f2fff5",
+        "badge": "PACK",
+        "title": "Level 5 Mastery Pack",
+        "subtitle": "180 days Omega, 3,000 PLEX, the Warp Boost Bundle, six MCT certificates, and twenty Skill Extractors."
+      },
+      "fulfillment": {
+        "kind": "bundle",
+        "grants": [
+          {
+            "kind": "omega",
+            "durationDays": 180
+          },
+          {
+            "kind": "grant_plex",
+            "plexAmount": 3000
+          },
+          {
+            "kind": "skill_points",
+            "points": 1944000
+          },
+          {
+            "kind": "item",
+            "typeID": 77919,
+            "quantity": 1
+          },
+          {
+            "kind": "mct",
+            "durationDays": 30,
+            "slotCount": 6
+          },
+          {
+            "kind": "item",
+            "typeID": 40519,
+            "quantity": 20
+          }
+        ]
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/product/2026-level-5-mastery-pack/verm-8428"
+      }
+    },
+    "cash_skill_extractor_50": {
+      "storeOfferID": "cash_skill_extractor_50",
+      "name": "50x Skill Extractors",
+      "description": "Fifty Skill Extractors delivered to the active character.",
+      "tags": [
+        "skills",
+        "extractor"
+      ],
+      "label": null,
+      "imageUrl": "res:/UI/Texture/Icons/skillExtractor_64.png",
+      "plexPriceInCents": null,
+      "currencyCode": "USD",
+      "currencyAmountInCents": 16500,
+      "preview": {
+        "imageMode": "generated",
+        "accent": "#b468ff",
+        "secondary": "#3b1f54",
+        "foreground": "#faf5ff",
+        "badge": "SKILL",
+        "title": "50x Skill Extractors",
+        "subtitle": "Fifty Skill Extractors delivered to the active character."
+      },
+      "fulfillment": {
+        "kind": "item",
+        "typeID": 40519,
+        "quantity": 50
+      },
+      "source": {
+        "kind": "official-store",
+        "observedAt": "2026-03-26",
+        "url": "https://store.eveonline.com/ko/product/50x-skill-extractors/verm-6866"
+      }
+    }
+  },
+  "fastCheckout": {
+    "offers": [
+      {
+        "id": 400100,
+        "storeOfferID": "cash_plex_100_usd",
+        "name": "100 PLEX",
+        "price": 5,
+        "currency": "USD",
+        "quantity": 100,
+        "baseQuantity": 100,
+        "tags": [
+          "plex"
+        ],
+        "label": null,
+        "preview": {
+          "imageMode": "generated",
+          "accent": "#f0992d",
+          "secondary": "#533217",
+          "foreground": "#fff7ed",
+          "badge": "PLEX",
+          "title": "100 PLEX",
+          "subtitle": "Add 100 PLEX to the character vault."
+        },
+        "imageUrl": "res:/UI/Texture/Plex/plex_128_gradient_yellow.png"
+      },
+      {
+        "id": 400200,
+        "storeOfferID": "cash_plex_200_usd",
+        "name": "200 PLEX",
+        "price": 10,
+        "currency": "USD",
+        "quantity": 200,
+        "baseQuantity": 100,
+        "tags": [
+          "plex"
+        ],
+        "label": null,
+        "preview": {
+          "imageMode": "generated",
+          "accent": "#f0992d",
+          "secondary": "#533217",
+          "foreground": "#fff7ed",
+          "badge": "PLEX",
+          "title": "200 PLEX",
+          "subtitle": "Add 200 PLEX to the character vault."
+        },
+        "imageUrl": "res:/UI/Texture/Plex/plex_128_gradient_yellow.png"
+      },
+      {
+        "id": 400300,
+        "storeOfferID": "cash_plex_500_usd",
+        "name": "500 PLEX",
+        "price": 25,
+        "currency": "USD",
+        "quantity": 500,
+        "baseQuantity": 100,
+        "tags": [
+          "plex",
+          "popular"
+        ],
+        "label": "Popular",
+        "preview": {
+          "imageMode": "generated",
+          "accent": "#f0992d",
+          "secondary": "#533217",
+          "foreground": "#fff7ed",
+          "badge": "PLEX",
+          "title": "500 PLEX",
+          "subtitle": "Add 500 PLEX to the character vault."
+        },
+        "imageUrl": "res:/UI/Texture/Plex/plex_128_gradient_yellow.png"
+      },
+      {
+        "id": 400400,
+        "storeOfferID": "cash_plex_1000_gallente",
+        "name": "1,000 PLEX + 1 Historic Gallente SKINs Crate",
+        "price": 45,
+        "currency": "USD",
+        "quantity": 1000,
+        "baseQuantity": 100,
+        "tags": [
+          "plex",
+          "skins",
+          "bundle"
+        ],
+        "label": null,
+        "preview": {
+          "imageMode": "generated",
+          "accent": "#f0992d",
+          "secondary": "#533217",
+          "foreground": "#fff7ed",
+          "badge": "PLEX",
+          "title": "1,000 PLEX + 1 Historic Gallente SKINs Crate",
+          "subtitle": "1,000 PLEX plus one Historic Gallente SKINs Crate."
+        },
+        "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png"
+      },
+      {
+        "id": 401400,
+        "storeOfferID": "cash_plex_1500_gallente",
+        "name": "1,500 PLEX + 2 Historic Gallente SKINs Crates",
+        "price": 65,
+        "currency": "USD",
+        "quantity": 1500,
+        "baseQuantity": 100,
+        "tags": [
+          "plex",
+          "skins",
+          "bundle"
+        ],
+        "label": null,
+        "preview": {
+          "imageMode": "generated",
+          "accent": "#f0992d",
+          "secondary": "#533217",
+          "foreground": "#fff7ed",
+          "badge": "PLEX",
+          "title": "1,500 PLEX + 2 Historic Gallente SKINs Crates",
+          "subtitle": "1,500 PLEX plus two Historic Gallente SKINs Crates."
+        },
+        "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png"
+      },
+      {
+        "id": 402900,
+        "storeOfferID": "cash_plex_3000_gallente",
+        "name": "3,000 PLEX + 3 Historic Gallente SKINs Crates",
+        "price": 125,
+        "currency": "USD",
+        "quantity": 3000,
+        "baseQuantity": 100,
+        "tags": [
+          "plex",
+          "skins",
+          "bundle"
+        ],
+        "label": null,
+        "preview": {
+          "imageMode": "generated",
+          "accent": "#f0992d",
+          "secondary": "#533217",
+          "foreground": "#fff7ed",
+          "badge": "PLEX",
+          "title": "3,000 PLEX + 3 Historic Gallente SKINs Crates",
+          "subtitle": "3,000 PLEX plus three Historic Gallente SKINs Crates."
+        },
+        "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png"
+      },
+      {
+        "id": 405900,
+        "storeOfferID": "cash_plex_6000_gallente",
+        "name": "6,000 PLEX + 4 Historic Gallente SKINs Crates",
+        "price": 240,
+        "currency": "USD",
+        "quantity": 6000,
+        "baseQuantity": 100,
+        "tags": [
+          "plex",
+          "skins",
+          "bundle"
+        ],
+        "label": null,
+        "preview": {
+          "imageMode": "generated",
+          "accent": "#f0992d",
+          "secondary": "#533217",
+          "foreground": "#fff7ed",
+          "badge": "PLEX",
+          "title": "6,000 PLEX + 4 Historic Gallente SKINs Crates",
+          "subtitle": "6,000 PLEX plus four Historic Gallente SKINs Crates."
+        },
+        "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png"
+      },
+      {
+        "id": 411900,
+        "storeOfferID": "cash_plex_12000_gallente",
+        "name": "12,000 PLEX + 5 Historic Gallente SKINs Crates",
+        "price": 420,
+        "currency": "USD",
+        "quantity": 12000,
+        "baseQuantity": 100,
+        "tags": [
+          "plex",
+          "skins",
+          "bundle"
+        ],
+        "label": null,
+        "preview": {
+          "imageMode": "generated",
+          "accent": "#f0992d",
+          "secondary": "#533217",
+          "foreground": "#fff7ed",
+          "badge": "PLEX",
+          "title": "12,000 PLEX + 5 Historic Gallente SKINs Crates",
+          "subtitle": "12,000 PLEX plus five Historic Gallente SKINs Crates."
+        },
+        "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png"
+      },
+      {
+        "id": 423900,
+        "storeOfferID": "cash_plex_20000_gallente",
+        "name": "20,000 PLEX + 6 Historic Gallente SKINs Crates",
+        "price": 650,
+        "currency": "USD",
+        "quantity": 20000,
+        "baseQuantity": 100,
+        "tags": [
+          "plex",
+          "skins",
+          "bundle"
+        ],
+        "label": null,
+        "preview": {
+          "imageMode": "generated",
+          "accent": "#f0992d",
+          "secondary": "#533217",
+          "foreground": "#fff7ed",
+          "badge": "PLEX",
+          "title": "20,000 PLEX + 6 Historic Gallente SKINs Crates",
+          "subtitle": "20,000 PLEX plus six Historic Gallente SKINs Crates."
+        },
+        "imageUrl": "res:/ui/texture/icons/inventory/CatalystBundleCrate.png"
+      }
+    ],
+    "tokensByID": {
+      "9000001": {
+        "tokenID": 9000001,
+        "creditCard": {
+          "alias": "************4242",
+          "expiry": "0529"
+        }
+      }
+    }
+  }
+}

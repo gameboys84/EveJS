@@ -1,0 +1,48 @@
+{
+  "solarSystemID": 30002187,
+  "systemName": "Amarr",
+  "props": [
+    {
+      "itemID": "9002277302000000612",
+      "description": "TQ captured Imperial Quartermaster Trader in Amarr.",
+      "kind": "authoredSpaceProp",
+      "typeID": 93547,
+      "ownerID": 500003,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 20000,
+      "flagsByte": 2,
+      "position": {
+        "x": -925559562240,
+        "y": 122880,
+        "z": -656930345440
+      },
+      "dunPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 20000
+      },
+      "dunRotation": [
+        0.000053814426792087033,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1492060,
+      "dunObjectID": 1492060,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224015-136-TQBig",
+      "mode": "additive; no player-owned props"
+    }
+  }
+}

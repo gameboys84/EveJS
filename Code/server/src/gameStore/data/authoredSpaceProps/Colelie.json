@@ -1,0 +1,1060 @@
+{
+  "solarSystemID": 30002682,
+  "systemName": "Colelie",
+  "props": [
+    {
+      "itemID": "9002277248000001425",
+      "description": "TQ captured Serpentis Den non interactable in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64137,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1800,
+      "flagsByte": 96,
+      "position": {
+        "x": 2085302480473.0513,
+        "y": -1289499873773.2793,
+        "z": 1193124619321.9429
+      },
+      "dunPosition": {
+        "x": 3673.05126953125,
+        "y": 19986.720703125,
+        "z": 1081.94287109375
+      },
+      "dunRotation": [
+        325.28448486328125,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139840,
+      "dunObjectID": 1139840,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277248000001426",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302493251.9004,
+        "y": -1289499871933.4004,
+        "z": 1193124629048.0508
+      },
+      "dunPosition": {
+        "x": 16451.900390625,
+        "y": 21826.599609375,
+        "z": 10808.05078125
+      },
+      "dunRotation": [
+        198.09207153320312,
+        -0.000013660514923685696,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139856,
+      "dunObjectID": 1139856,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001427",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302492437.9707,
+        "y": -1289499873773.2793,
+        "z": 1193124627145.8535
+      },
+      "dunPosition": {
+        "x": 15637.970703125,
+        "y": 19986.720703125,
+        "z": 8905.853515625
+      },
+      "dunRotation": [
+        354.03594970703125,
+        -0.000013660383046953939,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139841,
+      "dunObjectID": 1139841,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001428",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302493480.832,
+        "y": -1289499870964.1426,
+        "z": 1193124627009.0068
+      },
+      "dunPosition": {
+        "x": 16680.83203125,
+        "y": 22795.857421875,
+        "z": 8769.0068359375
+      },
+      "dunRotation": [
+        179.5897674560547,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139857,
+      "dunObjectID": 1139857,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001429",
+      "description": "TQ captured Dark Gray Cloud in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10128,
+      "ownerID": 500004,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 70000,
+      "flagsByte": 2,
+      "position": {
+        "x": 2085302481263.7708,
+        "y": -1289499863476.0273,
+        "z": 1193124617652.0908
+      },
+      "dunPosition": {
+        "x": 4463.77099609375,
+        "y": 30283.97265625,
+        "z": -587.9091796875
+      },
+      "dunRotation": [
+        334.6112060546875,
+        -40.35418701171875,
+        146.3402862548828
+      ],
+      "dungeonObjectID": 1139537,
+      "dunObjectID": 1139537,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277248000001431",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302492437.9707,
+        "y": -1289499873286.791,
+        "z": 1193124627145.8535
+      },
+      "dunPosition": {
+        "x": 15637.970703125,
+        "y": 20473.208984375,
+        "z": 8905.853515625
+      },
+      "dunRotation": [
+        319.32037353515625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139842,
+      "dunObjectID": 1139842,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001432",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302493480.832,
+        "y": -1289499871450.6309,
+        "z": 1193124627009.0068
+      },
+      "dunPosition": {
+        "x": 16680.83203125,
+        "y": 22309.369140625,
+        "z": 8769.0068359375
+      },
+      "dunRotation": [
+        214.30517578125,
+        -0.000013660520380653907,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139858,
+      "dunObjectID": 1139858,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001433",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302492439.0508,
+        "y": -1289499872726.7363,
+        "z": 1193124627143.546
+      },
+      "dunPosition": {
+        "x": 15639.05078125,
+        "y": 21033.263671875,
+        "z": 8903.5458984375
+      },
+      "dunRotation": [
+        319.32037353515625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139843,
+      "dunObjectID": 1139843,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001434",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 2085302472035.6562,
+        "y": -1289499868760,
+        "z": 1193124636509.6406
+      },
+      "dunPosition": {
+        "x": -4764.34375,
+        "y": 25000,
+        "z": 18269.640625
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1139859,
+      "dunObjectID": 1139859,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001435",
+      "description": "TQ captured Dark Gray Cloud in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10128,
+      "ownerID": 500004,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 70000,
+      "flagsByte": 2,
+      "position": {
+        "x": 2085302463857.4607,
+        "y": -1289499882782.8682,
+        "z": 1193124598469.3262
+      },
+      "dunPosition": {
+        "x": -12942.5390625,
+        "y": 10977.1318359375,
+        "z": -19770.673828125
+      },
+      "dunRotation": [
+        277.3207092285156,
+        -10.327497482299805,
+        32.43550109863281
+      ],
+      "dungeonObjectID": 1139539,
+      "dunObjectID": 1139539,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277248000001436",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302491397.7373,
+        "y": -1289499873290.5098,
+        "z": 1193124628914.4873
+      },
+      "dunPosition": {
+        "x": 14597.7373046875,
+        "y": 20469.490234375,
+        "z": 10674.4873046875
+      },
+      "dunRotation": [
+        10.249359130859375,
+        -0.000013660407603310887,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139844,
+      "dunObjectID": 1139844,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001437",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 2085302464696.3066,
+        "y": -1289499868760,
+        "z": 1193124610619.4521
+      },
+      "dunPosition": {
+        "x": -12103.693359375,
+        "y": 25000,
+        "z": -7620.5478515625
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1139860,
+      "dunObjectID": 1139860,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001438",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302491398.1309,
+        "y": -1289499872243.9668,
+        "z": 1193124628911.9707
+      },
+      "dunPosition": {
+        "x": 14598.130859375,
+        "y": 21516.033203125,
+        "z": 10671.970703125
+      },
+      "dunRotation": [
+        335.53369140625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139845,
+      "dunObjectID": 1139845,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001439",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 2085302460486.8623,
+        "y": -1289499868760,
+        "z": 1193124594343.045
+      },
+      "dunPosition": {
+        "x": -16313.1376953125,
+        "y": 25000,
+        "z": -23896.955078125
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1139861,
+      "dunObjectID": 1139861,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001440",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302491397.7373,
+        "y": -1289499872804.0215,
+        "z": 1193124628914.4873
+      },
+      "dunPosition": {
+        "x": 14597.7373046875,
+        "y": 20955.978515625,
+        "z": 10674.4873046875
+      },
+      "dunRotation": [
+        335.53369140625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139846,
+      "dunObjectID": 1139846,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001441",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 2085302477408.8745,
+        "y": -1289499868760,
+        "z": 1193124598059.7441
+      },
+      "dunPosition": {
+        "x": 608.87451171875,
+        "y": 25000,
+        "z": -20180.255859375
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1139862,
+      "dunObjectID": 1139862,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001442",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302494668.6191,
+        "y": -1289499873939.1758,
+        "z": 1193124627481.0898
+      },
+      "dunPosition": {
+        "x": 17868.619140625,
+        "y": 19820.82421875,
+        "z": 9241.08984375
+      },
+      "dunRotation": [
+        162.97598266601562,
+        -0.000013660510376212187,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139847,
+      "dunObjectID": 1139847,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001443",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 2085302484190.9658,
+        "y": -1289499868759.1172,
+        "z": 1193124618148.7969
+      },
+      "dunPosition": {
+        "x": 7390.9658203125,
+        "y": 25000.8828125,
+        "z": -91.203125
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1139863,
+      "dunObjectID": 1139863,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001444",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302494667.1172,
+        "y": -1289499872892.6328,
+        "z": 1193124627483.1387
+      },
+      "dunPosition": {
+        "x": 17867.1171875,
+        "y": 20867.3671875,
+        "z": 9243.138671875
+      },
+      "dunRotation": [
+        128.26046752929688,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139848,
+      "dunObjectID": 1139848,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001445",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302492931.5723,
+        "y": -1289499873375.4023,
+        "z": 1193124628577.9912
+      },
+      "dunPosition": {
+        "x": 16131.572265625,
+        "y": 20384.59765625,
+        "z": 10337.9912109375
+      },
+      "dunRotation": [
+        112.04732513427734,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139849,
+      "dunObjectID": 1139849,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001446",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302494668.6191,
+        "y": -1289499873452.6875,
+        "z": 1193124627481.0898
+      },
+      "dunPosition": {
+        "x": 17868.619140625,
+        "y": 20307.3125,
+        "z": 9241.08984375
+      },
+      "dunRotation": [
+        128.26046752929688,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139850,
+      "dunObjectID": 1139850,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001447",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302492933.584,
+        "y": -1289499874421.9453,
+        "z": 1193124628576.4355
+      },
+      "dunPosition": {
+        "x": 16133.583984375,
+        "y": 19338.0546875,
+        "z": 10336.435546875
+      },
+      "dunRotation": [
+        146.7627410888672,
+        -0.000013660494005307555,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139851,
+      "dunObjectID": 1139851,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001448",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 2085302443427.5078,
+        "y": -1289499868760,
+        "z": 1193124625623.5112
+      },
+      "dunPosition": {
+        "x": -33372.4921875,
+        "y": 25000,
+        "z": 7383.51123046875
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1139563,
+      "dunObjectID": 1139563,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001449",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302492933.584,
+        "y": -1289499873935.457,
+        "z": 1193124628576.4355
+      },
+      "dunPosition": {
+        "x": 16133.583984375,
+        "y": 19824.54296875,
+        "z": 10336.435546875
+      },
+      "dunRotation": [
+        112.04732513427734,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139852,
+      "dunObjectID": 1139852,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001450",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302493251.9004,
+        "y": -1289499871446.912,
+        "z": 1193124629048.0508
+      },
+      "dunPosition": {
+        "x": 16451.900390625,
+        "y": 22313.087890625,
+        "z": 10808.05078125
+      },
+      "dunRotation": [
+        163.37672424316406,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139853,
+      "dunObjectID": 1139853,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001451",
+      "description": "TQ captured Federation Navy Security Station in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72091,
+      "ownerID": 500004,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 5959,
+      "flagsByte": 224,
+      "position": {
+        "x": 2085302464881.29,
+        "y": -1289499876720.7637,
+        "z": 1193124615600.001
+      },
+      "dunPosition": {
+        "x": -11918.7099609375,
+        "y": 17039.236328125,
+        "z": -2639.9990234375
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1139837,
+      "dunObjectID": 1139837,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001452",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302493481.4941,
+        "y": -1289499870404.088,
+        "z": 1193124627011.463
+      },
+      "dunPosition": {
+        "x": 16681.494140625,
+        "y": 23355.912109375,
+        "z": 8771.462890625
+      },
+      "dunRotation": [
+        179.5897674560547,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139854,
+      "dunObjectID": 1139854,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001453",
+      "description": "TQ captured Serpentis Den non interactable in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64137,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1800,
+      "flagsByte": 96,
+      "position": {
+        "x": 2085302477858.3137,
+        "y": -1289499873773.2793,
+        "z": 1193124630351.7148
+      },
+      "dunPosition": {
+        "x": 1058.313720703125,
+        "y": 19986.720703125,
+        "z": 12111.71484375
+      },
+      "dunRotation": [
+        186.94847106933594,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139838,
+      "dunObjectID": 1139838,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277248000001454",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 2085302493251.8555,
+        "y": -1289499870886.8574,
+        "z": 1193124629050.5977
+      },
+      "dunPosition": {
+        "x": 16451.85546875,
+        "y": 22873.142578125,
+        "z": 10810.59765625
+      },
+      "dunRotation": [
+        163.37672424316406,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139855,
+      "dunObjectID": 1139855,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277248000001455",
+      "description": "TQ captured Serpentis Den non interactable in Colelie.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64137,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1800,
+      "flagsByte": 96,
+      "position": {
+        "x": 2085302483003.7676,
+        "y": -1289499873773.2793,
+        "z": 1193124625730.412
+      },
+      "dunPosition": {
+        "x": 6203.767578125,
+        "y": 19986.720703125,
+        "z": 7490.412109375
+      },
+      "dunRotation": [
+        256.3484191894531,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139839,
+      "dunObjectID": 1139839,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224015-136-TQBig",
+      "mode": "additive; no player-owned props"
+    }
+  }
+}

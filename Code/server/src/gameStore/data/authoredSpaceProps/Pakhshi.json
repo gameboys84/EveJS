@@ -1,0 +1,79 @@
+{
+  "solarSystemID": 30005198,
+  "systemName": "Pakhshi",
+  "props": [
+    {
+      "itemID": "9002277206000000748",
+      "description": "TQ captured Landmark Cloud in Pakhshi.",
+      "kind": "authoredSpaceProp",
+      "typeID": 54256,
+      "ownerID": 500002,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 500,
+      "flagsByte": 2,
+      "position": {
+        "x": 276166041600,
+        "y": -46430330880,
+        "z": -3976527421440
+      },
+      "dunPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1109912,
+      "dunObjectID": 1109912,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277206000000749",
+      "description": "TQ captured Pakhshi Stargate Construction Monument in Pakhshi.",
+      "kind": "authoredSpaceProp",
+      "typeID": 59457,
+      "ownerID": 500002,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 6000,
+      "flagsByte": 2,
+      "position": {
+        "x": 276166038640.0376,
+        "y": -46430331374.2832,
+        "z": -3976527390768.8926
+      },
+      "dunPosition": {
+        "x": -2959.96240234375,
+        "y": -494.283203125,
+        "z": 30671.107421875
+      },
+      "dunRotation": [
+        125.3468246459961,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1110093,
+      "dunObjectID": 1110093,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224015-136-TQBig",
+      "mode": "additive; no player-owned props"
+    }
+  }
+}

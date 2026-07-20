@@ -1,0 +1,1255 @@
+{
+  "solarSystemID": 30003545,
+  "systemName": "Yuhelia",
+  "props": [
+    {
+      "itemID": "9002277262000000685",
+      "description": "TQ captured Remote Cloaking Array in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65148,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 450,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266692654.8809,
+        "y": 4384557365234.498,
+        "z": 3838776964460.5117
+      },
+      "dunPosition": {
+        "x": -3025.119140625,
+        "y": 22514.498046875,
+        "z": -10899.48828125
+      },
+      "dunRotation": [
+        36.411800384521484,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137708,
+      "dunObjectID": 1137708,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000686",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 1278266719682.748,
+        "y": 4384557368961.8594,
+        "z": 3838776927669.8984
+      },
+      "dunPosition": {
+        "x": 24002.748046875,
+        "y": 26241.859375,
+        "z": -47690.1015625
+      },
+      "dunRotation": [
+        254.63848876953125,
+        2.993608561041583e-8,
+        1.0240247760862076e-8
+      ],
+      "dungeonObjectID": 1137760,
+      "dunObjectID": 1137760,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000687",
+      "description": "TQ captured Dark Gray Cloud in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10128,
+      "ownerID": 500003,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 70000,
+      "flagsByte": 2,
+      "position": {
+        "x": 1278266700143.771,
+        "y": 4384557374897.7563,
+        "z": 3838776968055.8115
+      },
+      "dunPosition": {
+        "x": 4463.77099609375,
+        "y": 32177.7578125,
+        "z": -7304.1884765625
+      },
+      "dunRotation": [
+        334.6112060546875,
+        -40.35418701171875,
+        146.3402862548828
+      ],
+      "dungeonObjectID": 1137709,
+      "dunObjectID": 1137709,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277262000000688",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 1278266671663.4238,
+        "y": 4384557357613.8604,
+        "z": 3838776933595.172
+      },
+      "dunPosition": {
+        "x": -24016.576171875,
+        "y": 14893.8603515625,
+        "z": -41764.828125
+      },
+      "dunRotation": [
+        254.63848876953125,
+        2.993608561041583e-8,
+        1.0240247760862076e-8
+      ],
+      "dungeonObjectID": 1137761,
+      "dunObjectID": 1137761,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000689",
+      "description": "TQ captured Amarr Cathedral in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65144,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 2787,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266715288.1895,
+        "y": 4384557356580.6797,
+        "z": 3838776941757.6562
+      },
+      "dunPosition": {
+        "x": 19608.189453125,
+        "y": 13860.6796875,
+        "z": -33602.34375
+      },
+      "dunRotation": [
+        254.63848876953125,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137710,
+      "dunObjectID": 1137710,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000690",
+      "description": "TQ captured Fortified Amarr Lookout in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266678574.2969,
+        "y": 4384557363292.338,
+        "z": 3838776963062.873
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 20572.337890625,
+        "z": -12297.126953125
+      },
+      "dunRotation": [
+        0,
+        0.003399999812245369,
+        0
+      ],
+      "dungeonObjectID": 1137723,
+      "dunObjectID": 1137723,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000691",
+      "description": "TQ captured Imperial Navy Security Cordon Outpost in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71481,
+      "ownerID": 500003,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 18000,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266696518.183,
+        "y": 4384557357065.4004,
+        "z": 3838776945815.951
+      },
+      "dunPosition": {
+        "x": 838.18310546875,
+        "y": 14345.400390625,
+        "z": -29544.048828125
+      },
+      "dunRotation": [
+        288.1512145996094,
+        7.35813046048861e-8,
+        -1.2127683746143703e-8
+      ],
+      "dungeonObjectID": 1137749,
+      "dunObjectID": 1137749,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000692",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 1278266694235.418,
+        "y": 4384557361215.875,
+        "z": 3838776916819.0273
+      },
+      "dunPosition": {
+        "x": -1444.58203125,
+        "y": 18495.875,
+        "z": -58540.97265625
+      },
+      "dunRotation": [
+        254.63848876953125,
+        2.993608561041583e-8,
+        1.0240247760862076e-8
+      ],
+      "dungeonObjectID": 1137762,
+      "dunObjectID": 1137762,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000693",
+      "description": "TQ captured Amarr Apartments in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266678054.9043,
+        "y": 4384557360967.0234,
+        "z": 3838776950433.121
+      },
+      "dunPosition": {
+        "x": -17625.095703125,
+        "y": 18247.0234375,
+        "z": -24926.87890625
+      },
+      "dunRotation": [
+        342.6128845214844,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137711,
+      "dunObjectID": 1137711,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000694",
+      "description": "TQ captured Fortified Amarr Elevator in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65152,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 350,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266714169.3672,
+        "y": 4384557362626.5293,
+        "z": 3838776935589.668
+      },
+      "dunPosition": {
+        "x": 18489.3671875,
+        "y": 19906.529296875,
+        "z": -39770.33203125
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137737,
+      "dunObjectID": 1137737,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000695",
+      "description": "TQ captured Fortified Amarr Elevator in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65152,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 350,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266678574.2969,
+        "y": 4384557362624.918,
+        "z": 3838776963062.826
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 19904.91796875,
+        "z": -12297.173828125
+      },
+      "dunRotation": [
+        0,
+        0.003399999812245369,
+        0
+      ],
+      "dungeonObjectID": 1137712,
+      "dunObjectID": 1137712,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000696",
+      "description": "TQ captured BH Sentry Gun in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65151,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 45,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266692298.1821,
+        "y": 4384557365510,
+        "z": 3838776964634.699
+      },
+      "dunPosition": {
+        "x": -3381.81787109375,
+        "y": 22790,
+        "z": -10725.30078125
+      },
+      "dunRotation": [
+        0,
+        0.003399999812245369,
+        0
+      ],
+      "dungeonObjectID": 1137725,
+      "dunObjectID": 1137725,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000697",
+      "description": "TQ captured Amarr Apartments in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266676980.1055,
+        "y": 4384557359967.0234,
+        "z": 3838776952192.328
+      },
+      "dunPosition": {
+        "x": -18699.89453125,
+        "y": 17247.0234375,
+        "z": -23167.671875
+      },
+      "dunRotation": [
+        342.6128845214844,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137713,
+      "dunObjectID": 1137713,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000698",
+      "description": "TQ captured Fortified Amarr Lookout in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266678574.2969,
+        "y": 4384557362241.135,
+        "z": 3838776935589.707
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 19521.134765625,
+        "z": -39770.29296875
+      },
+      "dunRotation": [
+        180.00001525878906,
+        0,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1137726,
+      "dunObjectID": 1137726,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000699",
+      "description": "TQ captured Preserved Amarr Outpost Platform in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65150,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 600,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266709312.1035,
+        "y": 4384557360932.961,
+        "z": 3838776931053.3516
+      },
+      "dunPosition": {
+        "x": 13632.103515625,
+        "y": 18212.9609375,
+        "z": -44306.6484375
+      },
+      "dunRotation": [
+        335.01824951171875,
+        89.94065856933594,
+        -0.01401398703455925
+      ],
+      "dungeonObjectID": 1137714,
+      "dunObjectID": 1137714,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000700",
+      "description": "TQ captured Amarr Apartments in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266682354.1045,
+        "y": 4384557364967.0234,
+        "z": 3838776943396.3086
+      },
+      "dunPosition": {
+        "x": -13325.8955078125,
+        "y": 22247.0234375,
+        "z": -31963.69140625
+      },
+      "dunRotation": [
+        342.6128845214844,
+        -1.5198905502222804e-12,
+        3.5271423368815613e-12
+      ],
+      "dungeonObjectID": 1137727,
+      "dunObjectID": 1137727,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000701",
+      "description": "TQ captured Fortified Amarr Lookout in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266714169.3672,
+        "y": 4384557362241.135,
+        "z": 3838776935589.707
+      },
+      "dunPosition": {
+        "x": 18489.3671875,
+        "y": 19521.134765625,
+        "z": -39770.29296875
+      },
+      "dunRotation": [
+        180.00001525878906,
+        0,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1137740,
+      "dunObjectID": 1137740,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000702",
+      "description": "TQ captured Fortified Amarr Elevator in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65152,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 350,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266678574.2969,
+        "y": 4384557362626.5293,
+        "z": 3838776935589.668
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 19906.529296875,
+        "z": -39770.33203125
+      },
+      "dunRotation": [
+        0,
+        0.003399999812245369,
+        0
+      ],
+      "dungeonObjectID": 1137753,
+      "dunObjectID": 1137753,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000703",
+      "description": "TQ captured Dark Gray Cloud in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10128,
+      "ownerID": 500003,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 70000,
+      "flagsByte": 2,
+      "position": {
+        "x": 1278266679734.7764,
+        "y": 4384557360647.0854,
+        "z": 3838776929735.25
+      },
+      "dunPosition": {
+        "x": -15945.2236328125,
+        "y": 17927.0859375,
+        "z": -45624.75
+      },
+      "dunRotation": [
+        277.3207092285156,
+        -10.327497482299805,
+        32.43550109863281
+      ],
+      "dungeonObjectID": 1137715,
+      "dunObjectID": 1137715,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277262000000704",
+      "description": "TQ captured Preserved Amarr Outpost Platform in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65150,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 600,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266711704.83,
+        "y": 4384557360932.961,
+        "z": 3838776932169.074
+      },
+      "dunPosition": {
+        "x": 16024.830078125,
+        "y": 18212.9609375,
+        "z": -43190.92578125
+      },
+      "dunRotation": [
+        331.4750061035156,
+        89.95154571533203,
+        -3.538665771484375
+      ],
+      "dungeonObjectID": 1137728,
+      "dunObjectID": 1137728,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000705",
+      "description": "TQ captured Fortified Amarr Elevator in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65152,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 350,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266710055.2617,
+        "y": 4384557362665.623,
+        "z": 3838776954223.3086
+      },
+      "dunPosition": {
+        "x": 14375.26171875,
+        "y": 19945.623046875,
+        "z": -21136.69140625
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137754,
+      "dunObjectID": 1137754,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000706",
+      "description": "TQ captured Fortified Amarr Lookout in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266710055.2617,
+        "y": 4384557363333.043,
+        "z": 3838776954223.3555
+      },
+      "dunPosition": {
+        "x": 14375.26171875,
+        "y": 20613.04296875,
+        "z": -21136.64453125
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137716,
+      "dunObjectID": 1137716,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000707",
+      "description": "TQ captured Amarr Statue Dome in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65147,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 3657,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266689797.9194,
+        "y": 4384557364280.326,
+        "z": 3838776959637.7363
+      },
+      "dunPosition": {
+        "x": -5882.08056640625,
+        "y": 21560.326171875,
+        "z": -15722.263671875
+      },
+      "dunRotation": [
+        36.41179275512695,
+        -1.307232935232605e-7,
+        1.3178339308694831e-8
+      ],
+      "dungeonObjectID": 1137729,
+      "dunObjectID": 1137729,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 12
+    },
+    {
+      "itemID": "9002277262000000708",
+      "description": "TQ captured Fortified Amarr Lookout in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266678574.2969,
+        "y": 4384557363293.949,
+        "z": 3838776935589.715
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 20573.94921875,
+        "z": -39770.28515625
+      },
+      "dunRotation": [
+        5.0481764601872925e-11,
+        0.003399999812245369,
+        0
+      ],
+      "dungeonObjectID": 1137755,
+      "dunObjectID": 1137755,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000709",
+      "description": "TQ captured Fortified Amarr Lookout in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266710055.2617,
+        "y": 4384557362280.2285,
+        "z": 3838776954223.3496
+      },
+      "dunPosition": {
+        "x": 14375.26171875,
+        "y": 19560.228515625,
+        "z": -21136.650390625
+      },
+      "dunRotation": [
+        180.00001525878906,
+        0,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1137717,
+      "dunObjectID": 1137717,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000710",
+      "description": "TQ captured Amarr Apartments in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266681279.3057,
+        "y": 4384557363967.0234,
+        "z": 3838776945155.5273
+      },
+      "dunPosition": {
+        "x": -14400.6943359375,
+        "y": 21247.0234375,
+        "z": -30204.47265625
+      },
+      "dunRotation": [
+        342.6128845214844,
+        -1.0402354178040696e-7,
+        6.988691581000239e-8
+      ],
+      "dungeonObjectID": 1137743,
+      "dunObjectID": 1137743,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000711",
+      "description": "TQ captured Fortified Amarr Lookout in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266678574.2969,
+        "y": 4384557362233.2207,
+        "z": 3838776963062.869
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 19513.220703125,
+        "z": -12297.130859375
+      },
+      "dunRotation": [
+        180.00001525878906,
+        0,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1137756,
+      "dunObjectID": 1137756,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000712",
+      "description": "TQ captured Fortified Amarr Lookout in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266714169.3672,
+        "y": 4384557363293.949,
+        "z": 3838776935589.715
+      },
+      "dunPosition": {
+        "x": 18489.3671875,
+        "y": 20573.94921875,
+        "z": -39770.28515625
+      },
+      "dunRotation": [
+        5.211020850937054e-11,
+        0.0034000002779066563,
+        0
+      ],
+      "dungeonObjectID": 1137718,
+      "dunObjectID": 1137718,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000713",
+      "description": "TQ captured Non-Interactable Amarr Starbase Control Tower (Do not translate) in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65143,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 3394,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266710510.0732,
+        "y": 4384557359528.205,
+        "z": 3838776931611.3086
+      },
+      "dunPosition": {
+        "x": 14830.0732421875,
+        "y": 16808.205078125,
+        "z": -43748.69140625
+      },
+      "dunRotation": [
+        335,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137731,
+      "dunObjectID": 1137731,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000715",
+      "description": "TQ captured BH Sentry Gun in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65151,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 45,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266692928.6099,
+        "y": 4384557365510,
+        "z": 3838776964169.168
+      },
+      "dunPosition": {
+        "x": -2751.39013671875,
+        "y": 22790,
+        "z": -11190.83203125
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137719,
+      "dunObjectID": 1137719,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000716",
+      "description": "TQ captured Fortified Amarr Chapel in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65145,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 800,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266716740.9941,
+        "y": 4384557357065.4004,
+        "z": 3838776942548.168
+      },
+      "dunPosition": {
+        "x": 21060.994140625,
+        "y": 14345.400390625,
+        "z": -32811.83203125
+      },
+      "dunRotation": [
+        254.63848876953125,
+        2.993608561041583e-8,
+        1.0240247760862076e-8
+      ],
+      "dungeonObjectID": 1137732,
+      "dunObjectID": 1137732,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000717",
+      "description": "TQ captured Amarr Apartments in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266680204.5098,
+        "y": 4384557362967.0234,
+        "z": 3838776946914.715
+      },
+      "dunPosition": {
+        "x": -15475.490234375,
+        "y": 20247.0234375,
+        "z": -28445.28515625
+      },
+      "dunRotation": [
+        342.6128845214844,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137745,
+      "dunObjectID": 1137745,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000718",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 1278266719682.748,
+        "y": 4384557350053.7393,
+        "z": 3838776947298.4375
+      },
+      "dunPosition": {
+        "x": 24002.748046875,
+        "y": 7333.7392578125,
+        "z": -28061.5625
+      },
+      "dunRotation": [
+        254.63848876953125,
+        2.993608561041583e-8,
+        1.0240247760862076e-8
+      ],
+      "dungeonObjectID": 1137758,
+      "dunObjectID": 1137758,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000719",
+      "description": "TQ captured Amarr Apartments in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": 1278266679129.709,
+        "y": 4384557361967.0234,
+        "z": 3838776948673.918
+      },
+      "dunPosition": {
+        "x": -16550.291015625,
+        "y": 19247.0234375,
+        "z": -26686.08203125
+      },
+      "dunRotation": [
+        342.6128845214844,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137720,
+      "dunObjectID": 1137720,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    },
+    {
+      "itemID": "9002277262000000720",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Yuhelia.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 1278266671663.4238,
+        "y": 4384557360739,
+        "z": 3838776963184.8906
+      },
+      "dunPosition": {
+        "x": -24016.576171875,
+        "y": 18019,
+        "z": -12175.109375
+      },
+      "dunRotation": [
+        254.63848876953125,
+        2.993608561041583e-8,
+        1.0240247760862076e-8
+      ],
+      "dungeonObjectID": 1137759,
+      "dunObjectID": 1137759,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2733
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224015-136-TQBig",
+      "mode": "additive; no player-owned props"
+    }
+  }
+}

@@ -1,0 +1,1250 @@
+{
+  "solarSystemID": 30000004,
+  "systemName": "Jark",
+  "props": [
+    {
+      "itemID": "9002277293000000930",
+      "description": "TQ captured Fortified Amarr Chapel in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65145,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 800,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964090784.8555,
+        "y": -1825146826576.7266,
+        "z": 3326434189664.129
+      },
+      "dunPosition": {
+        "x": 20575.14453125,
+        "y": 12463.2734375,
+        "z": -32415.87109375
+      },
+      "dunRotation": [
+        210.10166931152344,
+        2.993614245383469e-8,
+        1.0240276182571506e-8
+      ],
+      "dungeonObjectID": 1137798,
+      "dunObjectID": 1137798,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000931",
+      "description": "TQ captured Fortified Amarr Elevator in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65152,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 350,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964096984.7383,
+        "y": -1825146819094.377,
+        "z": 3326434211569.4756
+      },
+      "dunPosition": {
+        "x": 14375.26171875,
+        "y": 19945.623046875,
+        "z": -10510.5244140625
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137771,
+      "dunObjectID": 1137771,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000932",
+      "description": "TQ captured Amarr Cathedral in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65144,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 2787,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964091265.961,
+        "y": -1825146827061.4473,
+        "z": 3326434188081.699
+      },
+      "dunPosition": {
+        "x": 20094.0390625,
+        "y": 11978.552734375,
+        "z": -33998.30078125
+      },
+      "dunRotation": [
+        210.10166931152344,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137780,
+      "dunObjectID": 1137780,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000933",
+      "description": "TQ captured Amarr Apartments in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964103447.044,
+        "y": -1825146823198.0195,
+        "z": 3326434165584.535
+      },
+      "dunPosition": {
+        "x": 7912.9560546875,
+        "y": 15841.98046875,
+        "z": -56495.46484375
+      },
+      "dunRotation": [
+        239.87646484375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137789,
+      "dunObjectID": 1137789,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000934",
+      "description": "TQ captured Fortified Amarr Elevator in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65152,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 350,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964128465.7031,
+        "y": -1825146813715.5566,
+        "z": 3326434173373.586
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 25324.443359375,
+        "z": -48706.4140625
+      },
+      "dunRotation": [
+        0,
+        0.003399999812245369,
+        0
+      ],
+      "dungeonObjectID": 1137799,
+      "dunObjectID": 1137799,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000935",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": -1202964135376.5762,
+        "y": -1825146821021,
+        "z": 3326434201292.5996
+      },
+      "dunPosition": {
+        "x": -24016.576171875,
+        "y": 18019,
+        "z": -20787.400390625
+      },
+      "dunRotation": [
+        254.63848876953125,
+        2.993608561041583e-8,
+        1.0240247760862076e-8
+      ],
+      "dungeonObjectID": 1137772,
+      "dunObjectID": 1137772,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000936",
+      "description": "TQ captured Preserved Amarr Outpost Platform in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65150,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 600,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964097219.329,
+        "y": -1825146820827.039,
+        "z": 3326434205304.4883
+      },
+      "dunPosition": {
+        "x": 14140.6708984375,
+        "y": 18212.9609375,
+        "z": -16775.51171875
+      },
+      "dunRotation": [
+        238.61798095703125,
+        89.96043395996094,
+        0.011428014375269413
+      ],
+      "dungeonObjectID": 1137781,
+      "dunObjectID": 1137781,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000937",
+      "description": "TQ captured Fortified Amarr Lookout in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964096984.7383,
+        "y": -1825146818426.957,
+        "z": 3326434211569.5225
+      },
+      "dunPosition": {
+        "x": 14375.26171875,
+        "y": 20613.04296875,
+        "z": -10510.4775390625
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137790,
+      "dunObjectID": 1137790,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000938",
+      "description": "TQ captured Fortified Amarr Elevator in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65152,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 350,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964128465.7031,
+        "y": -1825146819135.082,
+        "z": 3326434209782.826
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 19904.91796875,
+        "z": -12297.173828125
+      },
+      "dunRotation": [
+        0,
+        0.003399999812245369,
+        0
+      ],
+      "dungeonObjectID": 1137800,
+      "dunObjectID": 1137800,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000939",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": -1202964126448.7656,
+        "y": -1825146824146.1396,
+        "z": 3326434180315.172
+      },
+      "dunPosition": {
+        "x": -15088.765625,
+        "y": 14893.8603515625,
+        "z": -41764.828125
+      },
+      "dunRotation": [
+        254.63848876953125,
+        2.993608561041583e-8,
+        1.0240247760862076e-8
+      ],
+      "dungeonObjectID": 1137773,
+      "dunObjectID": 1137773,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000940",
+      "description": "TQ captured Fortified Amarr Lookout in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964128465.7031,
+        "y": -1825146818467.662,
+        "z": 3326434209782.873
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 20572.337890625,
+        "z": -12297.126953125
+      },
+      "dunRotation": [
+        0,
+        0.003399999812245369,
+        0
+      ],
+      "dungeonObjectID": 1137782,
+      "dunObjectID": 1137782,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000941",
+      "description": "TQ captured Ammatar Fleet Security Cordon Outpost in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71482,
+      "ownerID": 500007,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 18000,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964110521.817,
+        "y": -1825146819616.4531,
+        "z": 3326434192535.951
+      },
+      "dunPosition": {
+        "x": 838.18310546875,
+        "y": 19423.546875,
+        "z": -29544.048828125
+      },
+      "dunRotation": [
+        262.4029846191406,
+        7.358165277082662e-8,
+        -1.2127773452164092e-8
+      ],
+      "dungeonObjectID": 1137791,
+      "dunObjectID": 1137791,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000942",
+      "description": "TQ captured Fortified Amarr Lookout in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964092870.6328,
+        "y": -1825146818466.0508,
+        "z": 3326434182309.715
+      },
+      "dunPosition": {
+        "x": 18489.3671875,
+        "y": 20573.94921875,
+        "z": -39770.28515625
+      },
+      "dunRotation": [
+        5.211020850937054e-11,
+        0.0034000002779066563,
+        0
+      ],
+      "dungeonObjectID": 1137792,
+      "dunObjectID": 1137792,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000943",
+      "description": "TQ captured Amarr Apartments in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964096052.2373,
+        "y": -1825146818198.0254,
+        "z": 3326434172765.5195
+      },
+      "dunPosition": {
+        "x": 15307.7626953125,
+        "y": 20841.974609375,
+        "z": -49314.48046875
+      },
+      "dunRotation": [
+        239.87646484375,
+        -1.519894778610753e-12,
+        3.5271501431372032e-12
+      ],
+      "dungeonObjectID": 1137801,
+      "dunObjectID": 1137801,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000944",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": -1202964087357.252,
+        "y": -1825146812798.1406,
+        "z": 3326434174389.8984
+      },
+      "dunPosition": null,
+      "dunRotation": null,
+      "dungeonObjectID": null,
+      "dunObjectID": null,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000945",
+      "description": "TQ captured Dark Gray Cloud in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10128,
+      "ownerID": 500007,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 70000,
+      "flagsByte": 2,
+      "position": {
+        "x": -1202964106896.229,
+        "y": -1825146806862.2422,
+        "z": 3326434214775.8115
+      },
+      "dunPosition": {
+        "x": 4463.77099609375,
+        "y": 32177.7578125,
+        "z": -7304.1884765625
+      },
+      "dunRotation": [
+        334.6112060546875,
+        -40.35418701171875,
+        146.3402862548828
+      ],
+      "dungeonObjectID": 1137783,
+      "dunObjectID": 1137783,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000946",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": -1202964087357.252,
+        "y": -1825146831706.2607,
+        "z": 3326434194018.4375
+      },
+      "dunPosition": {
+        "x": 24002.748046875,
+        "y": 7333.7392578125,
+        "z": -28061.5625
+      },
+      "dunRotation": [
+        254.63848876953125,
+        2.993608561041583e-8,
+        1.0240247760862076e-8
+      ],
+      "dungeonObjectID": 1137793,
+      "dunObjectID": 1137793,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000947",
+      "description": "TQ captured Fortified Amarr Lookout in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964128465.7031,
+        "y": -1825146819526.7793,
+        "z": 3326434209782.869
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 19513.220703125,
+        "z": -12297.130859375
+      },
+      "dunRotation": [
+        180.00001525878906,
+        0,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1137802,
+      "dunObjectID": 1137802,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000948",
+      "description": "TQ captured Preserved Amarr Outpost Platform in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65150,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 600,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964095842.4795,
+        "y": -1825146820827.039,
+        "z": 3326434203051.8906
+      },
+      "dunPosition": {
+        "x": 15517.5205078125,
+        "y": 18212.9609375,
+        "z": -19028.109375
+      },
+      "dunRotation": [
+        238.60214233398438,
+        89.9720230102539,
+        -179.7473602294922
+      ],
+      "dungeonObjectID": 1137775,
+      "dunObjectID": 1137775,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000949",
+      "description": "TQ captured Dark Gray Cloud in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10128,
+      "ownerID": 500007,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 70000,
+      "flagsByte": 2,
+      "position": {
+        "x": -1202964127305.2236,
+        "y": -1825146821112.914,
+        "z": 3326434176455.25
+      },
+      "dunPosition": {
+        "x": -15945.2236328125,
+        "y": 17927.0859375,
+        "z": -45624.75
+      },
+      "dunRotation": [
+        277.3207092285156,
+        -10.327497482299805,
+        32.43550109863281
+      ],
+      "dungeonObjectID": 1137784,
+      "dunObjectID": 1137784,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000950",
+      "description": "TQ captured Fortified Amarr Lookout in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964128465.7031,
+        "y": -1825146813048.1367,
+        "z": 3326434173373.633
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 25991.86328125,
+        "z": -48706.3671875
+      },
+      "dunRotation": [
+        5.0481764601872925e-11,
+        0.003399999812245369,
+        0
+      ],
+      "dungeonObjectID": 1137794,
+      "dunObjectID": 1137794,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000951",
+      "description": "TQ captured Remote Cloaking Array in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65148,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 450,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964113823.0032,
+        "y": -1825146816525.502,
+        "z": 3326434218256.8867
+      },
+      "dunPosition": {
+        "x": -2463.003173828125,
+        "y": 22514.498046875,
+        "z": -3823.113037109375
+      },
+      "dunRotation": [
+        70.14904022216797,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137767,
+      "dunObjectID": 1137767,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000952",
+      "description": "TQ captured Amarr Apartments in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964097531.205,
+        "y": -1825146819198.0176,
+        "z": 3326434171329.3164
+      },
+      "dunPosition": {
+        "x": 13828.794921875,
+        "y": 19841.982421875,
+        "z": -50750.68359375
+      },
+      "dunRotation": [
+        239.87646484375,
+        -1.0402384731378334e-7,
+        6.988709344568633e-8
+      ],
+      "dungeonObjectID": 1137776,
+      "dunObjectID": 1137776,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000953",
+      "description": "TQ captured Amarr Statue Dome in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65147,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 3657,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964118877.3223,
+        "y": -1825146817479.6738,
+        "z": 3326434215832.993
+      },
+      "dunPosition": {
+        "x": -7517.322265625,
+        "y": 21560.326171875,
+        "z": -6247.0068359375
+      },
+      "dunRotation": [
+        70.14904022216797,
+        -1.3072417459625285e-7,
+        1.3178348190479028e-8
+      ],
+      "dungeonObjectID": 1137785,
+      "dunObjectID": 1137785,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 12
+    },
+    {
+      "itemID": "9002277293000000954",
+      "description": "TQ captured Amarr Apartments in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964101968.082,
+        "y": -1825146822198.0195,
+        "z": 3326434167020.7383
+      },
+      "dunPosition": {
+        "x": 9391.91796875,
+        "y": 16841.98046875,
+        "z": -55059.26171875
+      },
+      "dunRotation": [
+        239.87646484375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137795,
+      "dunObjectID": 1137795,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000955",
+      "description": "TQ captured Fortified Amarr Lookout in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964096984.7383,
+        "y": -1825146819479.7715,
+        "z": 3326434211569.5166
+      },
+      "dunPosition": {
+        "x": 14375.26171875,
+        "y": 19560.228515625,
+        "z": -10510.4833984375
+      },
+      "dunRotation": [
+        180.00001525878906,
+        0,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1137768,
+      "dunObjectID": 1137768,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000956",
+      "description": "TQ captured Amarr Apartments in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964099010.167,
+        "y": -1825146820198.0176,
+        "z": 3326434169893.1367
+      },
+      "dunPosition": {
+        "x": 12349.8330078125,
+        "y": 18841.982421875,
+        "z": -52186.86328125
+      },
+      "dunRotation": [
+        239.87646484375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137777,
+      "dunObjectID": 1137777,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000957",
+      "description": "TQ captured Fortified Amarr Lookout in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964092870.6328,
+        "y": -1825146819518.8652,
+        "z": 3326434182309.707
+      },
+      "dunPosition": {
+        "x": 18489.3671875,
+        "y": 19521.134765625,
+        "z": -39770.29296875
+      },
+      "dunRotation": [
+        180.00001525878906,
+        0,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1137786,
+      "dunObjectID": 1137786,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000959",
+      "description": "TQ captured Non-Interactable Amarr Starbase Control Tower (Do not translate) in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65143,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 3394,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964096531.1885,
+        "y": -1825146822231.795,
+        "z": 3326434204179.7754
+      },
+      "dunPosition": {
+        "x": 14828.8115234375,
+        "y": 16808.205078125,
+        "z": -17900.224609375
+      },
+      "dunRotation": [
+        238.56512451171875,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137769,
+      "dunObjectID": 1137769,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000960",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": -1202964112804.582,
+        "y": -1825146820544.125,
+        "z": 3326434163539.0273
+      },
+      "dunPosition": {
+        "x": -1444.58203125,
+        "y": 18495.875,
+        "z": -58540.97265625
+      },
+      "dunRotation": [
+        254.63848876953125,
+        2.993608561041583e-8,
+        1.0240247760862076e-8
+      ],
+      "dungeonObjectID": 1137778,
+      "dunObjectID": 1137778,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000961",
+      "description": "TQ captured Fortified Amarr Lookout in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65153,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 637,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964128465.7031,
+        "y": -1825146814100.9512,
+        "z": 3326434173373.625
+      },
+      "dunPosition": {
+        "x": -17105.703125,
+        "y": 24939.048828125,
+        "z": -48706.375
+      },
+      "dunRotation": [
+        180.00001525878906,
+        0,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1137787,
+      "dunObjectID": 1137787,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000962",
+      "description": "TQ captured BH Sentry Gun in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65151,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 45,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964114022.896,
+        "y": -1825146816250,
+        "z": 3326434218599.841
+      },
+      "dunPosition": {
+        "x": -2662.89599609375,
+        "y": 22790,
+        "z": -3480.158935546875
+      },
+      "dunRotation": [
+        33.73701095581055,
+        0.0034000121522694826,
+        -2.0844083403748215e-10
+      ],
+      "dungeonObjectID": 1137797,
+      "dunObjectID": 1137797,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000963",
+      "description": "TQ captured Fortified Amarr Elevator in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65152,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 350,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964092870.6328,
+        "y": -1825146819133.4707,
+        "z": 3326434182309.668
+      },
+      "dunPosition": {
+        "x": 18489.3671875,
+        "y": 19906.529296875,
+        "z": -39770.33203125
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137770,
+      "dunObjectID": 1137770,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000964",
+      "description": "TQ captured BH Sentry Gun in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65151,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 45,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964113757.182,
+        "y": -1825146816250,
+        "z": 3326434217862.5815
+      },
+      "dunPosition": {
+        "x": -2397.181884765625,
+        "y": 22790,
+        "z": -4217.41845703125
+      },
+      "dunRotation": [
+        33.004417419433594,
+        0.08173356205224991,
+        0.23311462998390198
+      ],
+      "dungeonObjectID": 1137779,
+      "dunObjectID": 1137779,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    },
+    {
+      "itemID": "9002277293000000965",
+      "description": "TQ captured Amarr Apartments in Jark.",
+      "kind": "authoredSpaceProp",
+      "typeID": 65149,
+      "ownerID": 500007,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 570,
+      "flagsByte": 64,
+      "position": {
+        "x": -1202964100489.1143,
+        "y": -1825146821198.0195,
+        "z": 3326434168456.926
+      },
+      "dunPosition": {
+        "x": 10870.8857421875,
+        "y": 17841.98046875,
+        "z": -53623.07421875
+      },
+      "dunRotation": [
+        239.87646484375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137788,
+      "dunObjectID": 1137788,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2778
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224015-136-TQBig",
+      "mode": "additive; no player-owned props"
+    }
+  }
+}

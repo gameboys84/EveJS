@@ -1,0 +1,72 @@
+{
+  "startupRules": [
+    {
+      "startupRuleID": "jita_concord_gate_checkpoint_startup",
+      "name": "Jita Gate CONCORD Checkpoints",
+      "description": "Spawn passive CONCORD checkpoint groups on every Jita stargate when the solar-system scene is created.",
+      "aliases": [
+        "jita concord startup",
+        "jita gate concord",
+        "concord all gates"
+      ],
+      "enabled": false,
+      "systemIDs": [
+        30000142
+      ],
+      "entityType": "concord",
+      "operatorKind": "gateConcord",
+      "spawnGroupID": "concord_gate_checkpoint",
+      "respawnEnabled": true,
+      "respawnDelayMs": 15000,
+      "behaviorOverrides": {
+        "autoAggro": false,
+        "targetPreference": "none",
+        "autoActivateWeapons": false,
+        "allowPodKill": false,
+        "returnToHomeWhenIdle": true,
+        "idleAnchorOrbit": true
+      },
+      "anchorSelector": {
+        "kind": "stargate",
+        "mode": "each",
+        "distanceFromSurfaceMeters": 25000,
+        "spreadMeters": 6000,
+        "formationSpacingMeters": 2200
+      },
+      "groupsPerAnchor": 1
+    },
+    {
+      "startupRuleID": "tanoo_blood_gate_ambush_startup",
+      "name": "Tanoo Blood Raider Gate Ambushes",
+      "description": "Example hostile NPC startup rule for every stargate in Tanoo. Left disabled by default so the rule system is ready without changing normal testing unless enabled intentionally.",
+      "aliases": [
+        "tanoo blood startup",
+        "blood all gates"
+      ],
+      "enabled": false,
+      "systemIDs": [
+        30000001
+      ],
+      "entityType": "npc",
+      "operatorKind": "gateRats",
+      "spawnGroupID": "blood_raider_gate_ambush",
+      "respawnEnabled": true,
+      "respawnDelayMs": 25000,
+      "behaviorOverrides": {
+        "autoAggro": true,
+        "autoAggroTargetClasses": [
+          "player"
+        ],
+        "allowPodKill": false
+      },
+      "anchorSelector": {
+        "kind": "stargate",
+        "mode": "each",
+        "distanceFromSurfaceMeters": 22000,
+        "spreadMeters": 7000,
+        "formationSpacingMeters": 2000
+      },
+      "groupsPerAnchor": 1
+    }
+  ]
+}

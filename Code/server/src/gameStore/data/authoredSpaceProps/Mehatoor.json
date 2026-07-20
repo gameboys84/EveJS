@@ -1,0 +1,659 @@
+{
+  "solarSystemID": 30002974,
+  "systemName": "Mehatoor",
+  "props": [
+    {
+      "itemID": "9002277293000000338",
+      "description": "TQ captured Imperial Quartermaster Trader in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 93547,
+      "ownerID": 500003,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 20000,
+      "flagsByte": 2,
+      "position": {
+        "x": 248403763200,
+        "y": 122880,
+        "z": 81052528160
+      },
+      "dunPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 20000
+      },
+      "dunRotation": [
+        0.000053814426792087033,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1492060,
+      "dunObjectID": 1492060,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000377",
+      "description": "TQ captured Invisible Cloud Amarr HQ System (DO NOT TRANSLATE) in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 75292,
+      "ownerID": 500003,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 500,
+      "flagsByte": 2,
+      "position": {
+        "x": -68370063298.20038,
+        "y": 1586257954.6567383,
+        "z": -144333987816.19952
+      },
+      "dunPosition": {
+        "x": 61.79962158203125,
+        "y": 34.65673828125,
+        "z": 23.80047607421875
+      },
+      "dunRotation": [
+        184.36886596679688,
+        -9.884580612182617,
+        1.731475830078125
+      ],
+      "dungeonObjectID": 1159402,
+      "dunObjectID": 1159402,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000378",
+      "description": "TQ captured Amarr Gate State Medium in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 73843,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1,
+      "flagsByte": 2,
+      "position": {
+        "x": -68370064180.09277,
+        "y": 1586257631.714508,
+        "z": -144333987188.33398
+      },
+      "dunPosition": {
+        "x": -820.0927734375,
+        "y": -288.2854919433594,
+        "z": 651.666015625
+      },
+      "dunRotation": [
+        137.74623107910156,
+        -1.3330563319868816e-7,
+        -5.084809906463761e-9
+      ],
+      "dungeonObjectID": 1159404,
+      "dunObjectID": 1159404,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000379",
+      "description": "TQ captured Amarr Gate State Medium in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 73843,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1,
+      "flagsByte": 2,
+      "position": {
+        "x": 586844529667.9119,
+        "y": -13658480640.001953,
+        "z": 1959569067.418213
+      },
+      "dunPosition": {
+        "x": 1027.911865234375,
+        "y": -0.001953125,
+        "z": 1707.418212890625
+      },
+      "dunRotation": [
+        128.63844299316406,
+        -0.0000021414509774331236,
+        0.000001911544359245454
+      ],
+      "dungeonObjectID": 1159410,
+      "dunObjectID": 1159410,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000380",
+      "description": "TQ captured Invisible Cloud Amarr HQ System (DO NOT TRANSLATE) in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 75292,
+      "ownerID": 500003,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 500,
+      "flagsByte": 2,
+      "position": {
+        "x": 586844528610.63,
+        "y": -13658480647.56445,
+        "z": 1959567321.4437253
+      },
+      "dunPosition": {
+        "x": -29.370025634765625,
+        "y": -7.564453125,
+        "z": -38.5562744140625
+      },
+      "dunRotation": [
+        179.9982147216797,
+        0.00009036013943841681,
+        0.0013903691433370113
+      ],
+      "dungeonObjectID": 1159413,
+      "dunObjectID": 1159413,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000591",
+      "description": "TQ captured Amarr Navy Medium Structure 05a in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 73929,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 15000,
+      "flagsByte": 2,
+      "position": {
+        "x": 586839930897.9766,
+        "y": -13664405446.972656,
+        "z": 1949316811.9765625
+      },
+      "dunPosition": {
+        "x": 71697.9765625,
+        "y": -26566.97265625,
+        "z": 71371.9765625
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1172255,
+      "dunObjectID": 1172255,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000592",
+      "description": "TQ captured Amarr Navy Medium Structure 03a in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 73927,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 20000,
+      "flagsByte": 2,
+      "position": {
+        "x": 586839840370.3848,
+        "y": -13664400341.210938,
+        "z": 1949259271.0517578
+      },
+      "dunPosition": {
+        "x": -18829.615234375,
+        "y": -21461.2109375,
+        "z": 13831.0517578125
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1172256,
+      "dunObjectID": 1172256,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000593",
+      "description": "TQ captured Amarr Navy Station 01 in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 76453,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 50000,
+      "flagsByte": 2,
+      "position": {
+        "x": 586839975970.6484,
+        "y": -13664426711.988281,
+        "z": 1949304457.9257812
+      },
+      "dunPosition": {
+        "x": 116770.6484375,
+        "y": -47831.98828125,
+        "z": 59017.92578125
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1172039,
+      "dunObjectID": 1172039,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000594",
+      "description": "TQ captured Amarr Navy ring 35k 01c in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 73993,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 40000,
+      "flagsByte": 2,
+      "position": {
+        "x": 586839838981.7324,
+        "y": -13664403248.91211,
+        "z": 1949257897.5263672
+      },
+      "dunPosition": {
+        "x": -20218.267578125,
+        "y": -24368.912109375,
+        "z": 12457.5263671875
+      },
+      "dunRotation": [
+        315.3138122558594,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1172257,
+      "dunObjectID": 1172257,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000596",
+      "description": "TQ captured Amarr Navy Harbor M01a_4 in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 76348,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 45000,
+      "flagsByte": 2,
+      "position": {
+        "x": 586839749668.7812,
+        "y": -13664423009.792969,
+        "z": 1949253149.1513672
+      },
+      "dunPosition": {
+        "x": -109531.21875,
+        "y": -44129.79296875,
+        "z": 7709.1513671875
+      },
+      "dunRotation": [
+        345.33013916015625,
+        -7.860576881242587e-13,
+        -4.889949556385886e-12
+      ],
+      "dungeonObjectID": 1172047,
+      "dunObjectID": 1172047,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000597",
+      "description": "TQ captured Invisible Cloud Amarr HQ System (DO NOT TRANSLATE) in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 75292,
+      "ownerID": 500003,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 500,
+      "flagsByte": 2,
+      "position": {
+        "x": 586839838665.7598,
+        "y": -13664379357.279297,
+        "z": 1949265171.1562498
+      },
+      "dunPosition": {
+        "x": -20534.240234375,
+        "y": -477.279296875,
+        "z": 19731.15625
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1172657,
+      "dunObjectID": 1172657,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000598",
+      "description": "TQ captured Amarr Navy Harbor L01a_4 in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 76416,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 55000,
+      "flagsByte": 2,
+      "position": {
+        "x": 586839905581.2305,
+        "y": -13664424000.976562,
+        "z": 1949235353.8496094
+      },
+      "dunPosition": {
+        "x": 46381.23046875,
+        "y": -45120.9765625,
+        "z": -10086.150390625
+      },
+      "dunRotation": [
+        45.000003814697266,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1172231,
+      "dunObjectID": 1172231,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000599",
+      "description": "TQ captured Amarr Navy Harbor S01a_4 in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 76342,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 65000,
+      "flagsByte": 2,
+      "position": {
+        "x": 586839760560.7031,
+        "y": -13664392034.671875,
+        "z": 1949294234.2578125
+      },
+      "dunPosition": {
+        "x": -98639.296875,
+        "y": -13154.671875,
+        "z": 48794.2578125
+      },
+      "dunRotation": [
+        315.0000305175781,
+        -5.13825852525851e-13,
+        4.88242150702145e-13
+      ],
+      "dungeonObjectID": 1172042,
+      "dunObjectID": 1172042,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000600",
+      "description": "TQ captured acath06_enviroment_asset in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 56664,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 2787,
+      "flagsByte": 64,
+      "position": {
+        "x": 586839839961.0996,
+        "y": -13664401471.927734,
+        "z": 1949257915.7216797
+      },
+      "dunPosition": {
+        "x": -19238.900390625,
+        "y": -22591.927734375,
+        "z": 12475.7216796875
+      },
+      "dunRotation": [
+        277.5329895019531,
+        -5.138344177230136e-13,
+        4.882487643353972e-13
+      ],
+      "dungeonObjectID": 1172049,
+      "dunObjectID": 1172049,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 5
+    },
+    {
+      "itemID": "9002277293000000601",
+      "description": "TQ captured ENV_Amarr_01a in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64618,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1,
+      "flagsByte": 64,
+      "position": {
+        "x": 586839859200,
+        "y": -13664378880,
+        "z": 1949245440
+      },
+      "dunPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1172280,
+      "dunObjectID": 1172280,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000602",
+      "description": "TQ captured Amarr Navy Harbor XL01a_4 in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 76422,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 60000,
+      "flagsByte": 2,
+      "position": {
+        "x": 586839840877.2754,
+        "y": -13664412966.882812,
+        "z": 1949175257.859375
+      },
+      "dunPosition": {
+        "x": -18322.724609375,
+        "y": -34086.8828125,
+        "z": -70182.140625
+      },
+      "dunRotation": [
+        45.000003814697266,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1172232,
+      "dunObjectID": 1172232,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000611",
+      "description": "TQ captured Amarr Navy Harbor S01a_4 in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 76342,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 65000,
+      "flagsByte": 2,
+      "position": {
+        "x": 586839873808.1504,
+        "y": -13664392034.671875,
+        "z": 1949339049.3515625
+      },
+      "dunPosition": {
+        "x": 14608.150390625,
+        "y": -13154.671875,
+        "z": 93609.3515625
+      },
+      "dunRotation": [
+        43.83704376220703,
+        -5.138436334414798e-13,
+        4.882598774076652e-13
+      ],
+      "dungeonObjectID": 1172050,
+      "dunObjectID": 1172050,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000612",
+      "description": "TQ captured Amarr Navy Harbor M01a_4 in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 76348,
+      "ownerID": 500003,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 45000,
+      "flagsByte": 2,
+      "position": {
+        "x": 586839995231,
+        "y": -13664429016.839844,
+        "z": 1949221543.9121094
+      },
+      "dunPosition": {
+        "x": 136031,
+        "y": -50136.83984375,
+        "z": -23896.087890625
+      },
+      "dunRotation": [
+        135.1498565673828,
+        -0.00001854444417404011,
+        0.000014966614799050149
+      ],
+      "dungeonObjectID": 1172044,
+      "dunObjectID": 1172044,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277293000000656",
+      "description": "TQ captured Imperial Counter-Insurgency Outpost Hub in Mehatoor.",
+      "kind": "authoredSpaceProp",
+      "typeID": 78871,
+      "ownerID": 500003,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 20000,
+      "flagsByte": 2,
+      "position": {
+        "x": -7173294323.6953125,
+        "y": 172413580.11816406,
+        "z": 279478181021.5078
+      },
+      "dunPosition": {
+        "x": 71436.3046875,
+        "y": 12940.1181640625,
+        "z": 31901.5078125
+      },
+      "dunRotation": [
+        247.2989044189453,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1185589,
+      "dunObjectID": 1185589,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224015-136-TQBig",
+      "mode": "additive; no player-owned props"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+    "source":  {
+                   "cachePath":  "<generated>",
+                   "resourcePath":  "res:/staticdata/stationstandingsrestrictions.fsdbinary"
+               },
+    "counts":  {
+                   "ownerCount":  1,
+                   "ruleCount":  7
+               },
+    "version":  1,
+    "restrictionsByOwnerID":  {
+                                  "500026":  {
+                                                 "5":  3.0,
+                                                 "13":  -0.05,
+                                                 "14":  3.0,
+                                                 "17":  -0.05,
+                                                 "22":  -0.05,
+                                                 "23":  3.0,
+                                                 "24":  3.0
+                                             }
+                              },
+    "generatedAt":  "2026-06-16T22:42:57Z"
+}

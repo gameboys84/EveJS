@@ -1,0 +1,1331 @@
+// EveJS Elysian server config.
+// This file supports // comments.
+// Missing keys are re-added with defaults when the server loads it.
+{
+  // Automatically creates a missing account record on login using the hash the client just supplied.
+  // Valid values: true or false.
+  // Default: false.
+
+  "devAutoCreateAccounts": true,
+
+  // Skips password-hash validation during login so any password can access an existing non-banned account.
+  // Valid values: true or false.
+  // Default: false.
+
+  "devSkipPasswordValidation": true,
+
+  // Seeds empty/new characters with all published skills at level V instead of the normal racial starter skill bundle.
+  // Valid values: true or false.
+  // Default: false.
+
+  "devBootstrapPublishedSkills": false,
+
+  // Enables the AIR NPE / new-character tutorial gate for freshly created characters.
+  // When enabled, brand-new characters start with tutorial-active AIR NPE state and character selection respects skipTutorial for those new characters.
+  // Valid values: true or false.
+  // Default: false.
+
+  "newCharacterTutorialEnabled": false,
+
+  // Enables the AIR NPE intro-movie entry path for newly created characters without activating the full tutorial runtime.
+  // Use this when you want the cinematic handoff but still land in the normal station or hangar UI because full tutorial parity is not implemented yet.
+  // Valid values: true or false.
+  // Default: false.
+
+  "newCharacterIntroCinematicEnabled": false,
+
+  // How long a character must remain queued before biomass can finalize.
+  // Use 600 for retail parity; the default 5-minute value keeps local deletion testing fast.
+  // Valid values: Integer minutes greater than or equal to 1.
+  // Default: 5.
+
+  "characterDeletionDelayMinutes": 5,
+
+  // Seeds the packaged client connection service with a local access token during the signed login-handshake patch.
+  // This bypasses the client-side launcher-token gate for skill extraction when using EveJS Elysian launch scripts instead of the official CCP launcher.
+  // Valid values: true or false.
+  // Default: true.
+
+  "devHandshakeSeedSkillExtractorAccessToken": true,
+
+  // Global multiplier applied after the official CCP skill-training SP-per-minute formula is calculated.
+  // 1 = retail training speed, 2 = 2x speed, 10 = 10x speed.
+  // This scales the authoritative server values: actual SP accrual, the active skill's trainingEndTime, and the character-selection queueEndTime.
+  // To keep the client's locally-computed estimates honest, the learning attributes (Charisma/Intelligence/Memory/Perception/Willpower) reported to the client are scaled by the same factor, so the in-game Skill window's per-skill and Total Training Time estimates match the accelerated rate. As a side effect those attributes are shown multiplied in the Character Sheet; CCP SP thresholds are unchanged.
+  // Valid values: Positive number greater than 0.
+  // Default: 1.
+
+  "skillTrainingSpeed": 1,
+
+  // Enables client direct skillbook purchase through skillHandler.PurchaseSkills.
+  // Keep this enabled for TQ-style skill plan Buy Skill / Buy and Train flows.
+  // Valid values: true or false.
+  // Default: true.
+
+  "skillPurchaseEnabled": true,
+
+  // Enables Expert System item activation, active Expert System overlays, and the client expert_system_feature_enabled flag.
+  // Disable only when testing no-Expert-System retail edge cases; GM force installs still require explicit command/runtime force options.
+  // Valid values: true or false.
+  // Default: true.
+
+  "expertSystemsEnabled": true,
+
+  // Enables the modern client Local chat authority feature flag (eve-local-chat-authority).
+  // Keep this enabled so the client uses public-gateway Local membership notices and requests instead of falling back to legacy XMPP-only Local.
+  // Valid values: true or false.
+  // Default: true.
+
+  "localChatAuthorityEnabled": true,
+
+  // Enables the live wormhole runtime, wormholeMgr jump service, and automatic static wormhole seeding for eligible systems.
+  // Disable only when isolating unrelated space-runtime regressions.
+  // Valid values: true or false.
+  // Default: true.
+
+  "wormholesEnabled": true,
+
+  // Global multiplier applied to authoritative wormhole lifetimes after static data is loaded.
+  // 1 = retail lifetime, 0.5 = half lifetime, 2 = double lifetime.
+  // Valid values: Positive number greater than 0.
+  // Default: 1.
+
+  "wormholeLifetimeScale": 1,
+
+  // Delay before a collapsed static wormhole slot reseeds a fresh connection.
+  // Use 60 for quick dev parity iteration; increase only when calibrating live collapse/respawn behavior.
+  // Valid values: Non-negative number of seconds.
+  // Default: 60.
+
+  "wormholeStaticRespawnDelaySeconds": 60,
+
+  // Enables automatic maintenance of repo-owned wandering wormhole families during startup and runtime reconciliation.
+  // Disable only when isolating static-only wormhole behavior or tuning wandering-family authority.
+  // Valid values: true or false.
+  // Default: true.
+
+  "wormholeWanderingEnabled": true,
+
+  // Global multiplier applied to repo-owned wandering wormhole profile counts after authority is loaded.
+  // 1 = authored wandering volume, 0 = no automatic wandering connections, 2 = double authored volume.
+  // Valid values: Non-negative number.
+  // Default: 1.
+
+  "wormholeWanderingCountScale": 1,
+
+  // Delay before a collapsed wandering wormhole profile is eligible to replenish its global active count.
+  // Use 60 for quick parity iteration; raise only when calibrating live wandering replacement cadence.
+  // Valid values: Non-negative number of seconds.
+  // Default: 60.
+
+  "wormholeWanderingRespawnDelaySeconds": 60,
+
+  // Lets any session manage and deliver asset-safety wraps without ownership or corporation access checks.
+  // Valid values: true or false.
+  // Default: false.
+
+  "devBypassAssetSafetyWrapAccess": false,
+
+  // Allows GM/dev sessions to bypass Upwell docking, settings, and timer safety restrictions.
+  // Keep this disabled for stricter CCP parity and enable it only when iterating on structure lifecycle tests.
+  // Valid values: true or false.
+  // Default: false.
+
+  "upwellGmBypassRestrictions": false,
+
+  // Global multiplier applied to structure anchor, repair, and reinforcement timers.
+  // Use values below 1 to shorten GM/dev test cycles without hardcoding timer constants in commands.
+  // Valid values: Positive number such as 1, 0.1, or 0.01.
+  // Default: 1.
+
+  "upwellTimerScale": 1,
+
+  // Ship hull that /miner spawns in a docked character's hangar.
+  // Keep this aligned with a mining barge or exhumer that the selected mining module can validly fit.
+  // Valid values: Published ship name such as "Hulk".
+  // Default: "Hulk".
+
+  "miningCommandShipName": "Hulk",
+
+  // Mining module name that /miner fits to the spawned hull before it boards the ship.
+  // Valid values: Published module name such as "Modulated Strip Miner II".
+  // Default: "Modulated Strip Miner II".
+
+  "miningCommandModuleName": "Modulated Strip Miner II",
+
+  // How many copies of the configured mining module /miner attempts to fit.
+  // Valid values: Positive integer that does not exceed the hull's fitting layout.
+  // Default: 2.
+
+  "miningCommandModuleCount": 2,
+
+  // Optional low-slot support module that /miner fits to create enough cargo room for the full crystal set.
+  // Valid values: Published module name such as "Expanded Cargohold II".
+  // Default: "Expanded Cargohold II".
+
+  "miningCommandSupportModuleName": "Expanded Cargohold II",
+
+  // How many copies of the optional support module /miner attempts to fit.
+  // Valid values: Non-negative integer.
+  // Default: 3.
+
+  "miningCommandSupportModuleCount": 3,
+
+  // Optional rig that /miner fits to expand cargo capacity while keeping the fitting valid.
+  // Valid values: Published rig name such as "Medium Cargohold Optimization I".
+  // Default: "Medium Cargohold Optimization I".
+
+  "miningCommandRigName": "Medium Cargohold Optimization I",
+
+  // How many copies of the optional mining-command rig /miner attempts to fit.
+  // Valid values: Non-negative integer.
+  // Default: 2.
+
+  "miningCommandRigCount": 2,
+
+  // How many copies of each compatible mining crystal /miner places into the ship cargo hold.
+  // Valid values: Positive integer.
+  // Default: 1.
+
+  "miningCommandCrystalQuantityPerType": 1,
+
+  // Optional NPC profile, pool, or spawn-group query used by /npcminer when it creates the passive mining fleet. Blank falls back to security-band defaults.
+  // Valid values: Blank, or an NPC profile / pool / spawn-group ID such as "npc_mining_ops_highsec".
+  // Default: "".
+
+  "miningNpcFleetProfileOrPool": "",
+
+  // NPC profile, pool, or spawn-group query used for passive mining fleets in high-security systems when no explicit override is supplied.
+  // Valid values: NPC profile / pool / spawn-group ID such as "npc_mining_ops_highsec".
+  // Default: "npc_mining_ops_highsec".
+
+  "miningNpcFleetHighSecProfileOrPool": "npc_mining_ops_highsec",
+
+  // NPC profile, pool, or spawn-group query used for passive mining fleets in low-security systems when no explicit override is supplied.
+  // Valid values: NPC profile / pool / spawn-group ID such as "npc_mining_ops_lowsec".
+  // Default: "npc_mining_ops_lowsec".
+
+  "miningNpcFleetLowSecProfileOrPool": "npc_mining_ops_lowsec",
+
+  // NPC profile, pool, or spawn-group query used for passive mining fleets in null-security and wormhole systems when no explicit override is supplied.
+  // Valid values: NPC profile / pool / spawn-group ID such as "npc_mining_ops_nullsec".
+  // Default: "npc_mining_ops_nullsec".
+
+  "miningNpcFleetNullSecProfileOrPool": "npc_mining_ops_nullsec",
+
+  // Enables lazy normal pirate rat spawns when a player arrives at an asteroid belt. Disable to remove belt-rat spawning entirely.
+  // Valid values: true or false.
+  // Default: true.
+
+  "asteroidBeltNpcRatsEnabled": true,
+
+  // Chance that an eligible high-security belt arrival creates a normal pirate rat group when the belt has no active rat group.
+  // Valid values: Number from 0.0 to 1.0.
+  // Default: 0.25.
+
+  "asteroidBeltNpcRatHighSecChance": 0.25,
+
+  // Chance that an eligible low-security belt arrival creates a normal pirate rat group when the belt has no active rat group.
+  // Valid values: Number from 0.0 to 1.0.
+  // Default: 0.35.
+
+  "asteroidBeltNpcRatLowSecChance": 0.35,
+
+  // Chance that an eligible null-security belt arrival creates a normal pirate rat group when the belt has no active rat group.
+  // Valid values: Number from 0.0 to 1.0.
+  // Default: 0.45.
+
+  "asteroidBeltNpcRatNullSecChance": 0.45,
+
+  // Minimum time before the same empty belt can roll for another rat spawn after a player arrival check.
+  // Valid values: Non-negative duration in milliseconds.
+  // Default: 120000.
+
+  "asteroidBeltNpcRatRollCooldownMs": 120000,
+
+  // Minimum time before the same belt can spawn a replacement normal pirate rat group after its previous group was created.
+  // Valid values: Non-negative duration in milliseconds.
+  // Default: 1200000.
+
+  "asteroidBeltNpcRatRespawnCooldownMs": 1200000,
+
+  // Maximum active lazy normal pirate rat groups allowed at a single asteroid belt.
+  // Valid values: Positive integer.
+  // Default: 1.
+
+  "asteroidBeltNpcRatMaxActiveGroupsPerBelt": 1,
+
+  // Maximum distance from an asteroid belt anchor for login/arrival checks to count the player as being at that belt.
+  // Valid values: Positive distance in meters.
+  // Default: 250000.
+
+  "asteroidBeltNpcRatLandingRadiusMeters": 250000,
+
+  // Approximate anchor-relative distance used when placing lazy normal pirate rat groups around asteroid belts.
+  // Valid values: Positive distance in meters.
+  // Default: 30000.
+
+  "asteroidBeltNpcRatSpawnDistanceMeters": 30000,
+
+  // Enables rare asteroid-belt special spawns such as hauler, faction commander, and officer-style rats.
+  // Valid values: true or false.
+  // Default: true.
+
+  "asteroidBeltNpcRatSpecialsEnabled": true,
+
+  // Chance that an eligible empty-belt arrival creates a rare NPC hauler group instead of a normal pirate group.
+  // Valid values: Number from 0.0 to 1.0.
+  // Default: 0.02.
+
+  "asteroidBeltNpcRatHaulerChance": 0.02,
+
+  // Chance that an eligible empty-belt arrival creates a faction commander spawn instead of a normal pirate group.
+  // Valid values: Number from 0.0 to 1.0.
+  // Default: 0.015.
+
+  "asteroidBeltNpcRatCommanderChance": 0.015,
+
+  // Chance that an eligible deep nullsec pirate-home belt arrival creates an officer-style rare spawn.
+  // Valid values: Number from 0.0 to 1.0.
+  // Default: 0.0005.
+
+  "asteroidBeltNpcRatOfficerChance": 0.0005,
+
+  // Maximum true security status eligible for non-home-region officer-style asteroid-belt spawns.
+  // Valid values: Number from -1.0 to 1.0.
+  // Default: -0.7.
+
+  "asteroidBeltNpcRatOfficerMaxSecurity": -0.7,
+
+  // Restricts officer-style asteroid-belt spawns to the matching pirate faction's home region.
+  // Valid values: true or false.
+  // Default: true.
+
+  "asteroidBeltNpcRatOfficerRequireHomeRegion": true,
+
+  // Enables rare null-security asteroid-belt capital NPC spawns such as pirate dreadnoughts.
+  // Valid values: true or false.
+  // Default: true.
+
+  "asteroidBeltNpcRatCapitalEnabled": true,
+
+  // Chance that an eligible empty null-security belt arrival creates a rare pirate capital spawn instead of normal belt rats.
+  // Valid values: Number from 0.0 to 1.0.
+  // Default: 0.00025.
+
+  "asteroidBeltNpcRatCapitalChance": 0.00025,
+
+  // Maximum true security status eligible for rare asteroid-belt capital spawns. Capital spawns are still null-security only.
+  // Valid values: Number from -1.0 to 1.0.
+  // Default: 0.
+
+  "asteroidBeltNpcRatCapitalMaxSecurity": 0,
+
+  // Comma-separated capital classes allowed in rare asteroid-belt capital spawns.
+  // Valid values: "dreadnought" for CCP-style belt dreads, or a comma-separated list including dreadnought, titan, and supercarrier.
+  // Default: "dreadnought".
+
+  "asteroidBeltNpcRatCapitalClasses": "dreadnought",
+
+  // Maximum active rare asteroid-belt capital groups allowed in one solar-system scene. Use 0 for no system-wide cap.
+  // Valid values: Non-negative integer.
+  // Default: 1.
+
+  "asteroidBeltNpcRatCapitalMaxActiveGroupsPerSystem": 1,
+
+  // Default repetition count used by /npcminer when no explicit amount is provided. Pool/profile queries treat this as a hull count, while spawn-group queries repeat the full authored group.
+  // Valid values: Positive integer up to the GM command safety cap.
+  // Default: 1.
+
+  "miningNpcFleetDefaultCount": 1,
+
+  // Optional NPC profile, pool, or spawn-group query used for the transient hauler wing attached to mining fleets. Blank falls back to security-band defaults.
+  // Valid values: Blank, or an NPC profile / pool / spawn-group ID such as "npc_mining_hauler_highsec".
+  // Default: "".
+
+  "miningNpcHaulerProfileOrPool": "",
+
+  // NPC profile, pool, or spawn-group query used for transient mining haulers in high-security systems when no explicit override is supplied.
+  // Valid values: NPC profile / pool / spawn-group ID such as "npc_mining_hauler_highsec".
+  // Default: "npc_mining_hauler_highsec".
+
+  "miningNpcHaulerHighSecProfileOrPool": "npc_mining_hauler_highsec",
+
+  // NPC profile, pool, or spawn-group query used for transient mining haulers in low-security systems when no explicit override is supplied.
+  // Valid values: NPC profile / pool / spawn-group ID such as "npc_mining_hauler_lowsec".
+  // Default: "npc_mining_hauler_lowsec".
+
+  "miningNpcHaulerLowSecProfileOrPool": "npc_mining_hauler_lowsec",
+
+  // NPC profile, pool, or spawn-group query used for transient mining haulers in null-security and wormhole systems when no explicit override is supplied.
+  // Valid values: NPC profile / pool / spawn-group ID such as "npc_mining_hauler_nullsec".
+  // Default: "npc_mining_hauler_nullsec".
+
+  "miningNpcHaulerNullSecProfileOrPool": "npc_mining_hauler_nullsec",
+
+  // Default hauler hull count attached to /npcminer fleets and startup mining fleets.
+  // Valid values: Non-negative integer up to the GM command safety cap.
+  // Default: 1.
+
+  "miningNpcHaulerDefaultCount": 1,
+
+  // Radius around the target ship used when mining NPCs finish their warp-in.
+  // Valid values: Positive distance in meters.
+  // Default: 2500.
+
+  "miningNpcFleetLandingRadiusMeters": 2500,
+
+  // NPC profile or spawn-pool query used by /npcmineraggro when the response fleet is called.
+  // Valid values: NPC profile or pool ID such as "npc_laser_hostiles".
+  // Default: "npc_laser_hostiles".
+
+  "miningNpcResponseProfileOrPool": "npc_laser_hostiles",
+
+  // Fallback spawn-pool ID passed into the mining-response warp command when no query is supplied.
+  // Valid values: NPC pool ID such as "npc_laser_hostiles".
+  // Default: "npc_laser_hostiles".
+
+  "miningNpcResponseDefaultPoolID": "npc_laser_hostiles",
+
+  // Fallback profile ID used when the configured mining response pool cannot resolve a direct match.
+  // Valid values: NPC profile ID such as "generic_hostile".
+  // Default: "generic_hostile".
+
+  "miningNpcResponseFallbackProfileID": "generic_hostile",
+
+  // Default hull count used by /npcmineraggro when no explicit response amount is supplied.
+  // Valid values: Positive integer up to the GM command safety cap.
+  // Default: 8.
+
+  "miningNpcResponseDefaultCount": 8,
+
+  // Enables standings-aware response planning for transient mining NPC fleets when they are aggressed.
+  // Valid values: true or false.
+  // Default: true.
+
+  "miningNpcStandingsEnabled": true,
+
+  // Fallback hostile standing threshold used by mining NPC fleets when the NPC profile does not provide explicit response thresholds.
+  // Valid values: Number between -10 and 10.
+  // Default: -5.
+
+  "miningNpcHostileStandingThreshold": -5,
+
+  // Fallback friendly standing threshold used by mining NPC fleets when the NPC profile does not provide explicit response thresholds.
+  // Valid values: Number between -10 and 10.
+  // Default: 5.
+
+  "miningNpcFriendlyStandingThreshold": 5,
+
+  // Optional NPC profile or pool used when a mining fleet is aggressed by a character with friendly standings.
+  // Valid values: Blank for no armed response, or an NPC profile/pool ID such as "npc_laser_hostiles".
+  // Default: "".
+
+  "miningNpcFriendlyResponseProfileOrPool": "",
+
+  // Response hull count used for friendly-standing aggressors after a mining fleet retreats.
+  // Valid values: Non-negative integer.
+  // Default: 0.
+
+  "miningNpcFriendlyResponseCount": 0,
+
+  // NPC profile or pool used when a mining fleet is aggressed by a neutral-standing character.
+  // Valid values: NPC profile or pool ID such as "npc_laser_hostiles".
+  // Default: "npc_laser_hostiles".
+
+  "miningNpcNeutralResponseProfileOrPool": "npc_laser_hostiles",
+
+  // Response hull count used for neutral-standing aggressors after a mining fleet retreats.
+  // Valid values: Non-negative integer.
+  // Default: 8.
+
+  "miningNpcNeutralResponseCount": 8,
+
+  // NPC profile or pool used when a mining fleet is aggressed by a hostile-standing character.
+  // Valid values: NPC profile or pool ID such as "npc_laser_hostiles".
+  // Default: "npc_laser_hostiles".
+
+  "miningNpcHostileResponseProfileOrPool": "npc_laser_hostiles",
+
+  // Response hull count used for hostile-standing aggressors after a mining fleet retreats.
+  // Valid values: Non-negative integer.
+  // Default: 10.
+
+  "miningNpcHostileResponseCount": 10,
+
+  // Minimum delay between mining-fleet response deployments so repeat aggression during a single exchange does not spam extra wings.
+  // Valid values: Non-negative duration in milliseconds.
+  // Default: 60000.
+
+  "miningNpcResponseCooldownMs": 60000,
+
+  // How long mining fleets remember aggression on their miner or hauler hulls before the event is considered stale.
+  // Valid values: Non-negative duration in milliseconds.
+  // Default: 180000.
+
+  "miningNpcAggressionMemoryMs": 180000,
+
+  // How long the transient response wing remains deployed after the last aggression before it retreats or despawns.
+  // Valid values: Non-negative duration in milliseconds.
+  // Default: 120000.
+
+  "miningNpcResponseRetreatDelayMs": 120000,
+
+  // Warp ingress duration used by the mining NPC warp-in and retreat helpers.
+  // Valid values: Positive duration in milliseconds.
+  // Default: 2500.
+
+  "miningNpcWarpIngressDurationMs": 2500,
+
+  // Enables the mining runtime, asteroid depletion state, and mining scan service.
+  // Valid values: true or false.
+  // Default: true.
+
+  "miningEnabled": true,
+
+  // Maximum range used when the mining scan manager returns asteroid scan tuples to the client.
+  // Valid values: Positive distance in meters.
+  // Default: 250000.
+
+  "miningSurveyScanDistanceMeters": 250000,
+
+  // Radius-to-volume scale used when estimating authoritative asteroid quantities for generated belt rocks.
+  // Valid values: Positive number.
+  // Default: 0.08.
+
+  "miningBeltQuantityScale": 0.08,
+
+  // Minimum generated asteroid volume used by the mining runtime for generated belt rocks.
+  // Valid values: Positive number of cubic meters.
+  // Default: 15000.
+
+  "miningBeltMinimumAsteroidVolumeM3": 15000,
+
+  // Maximum generated asteroid volume used by the mining runtime for generated belt rocks.
+  // Valid values: Positive number of cubic meters.
+  // Default: 3000000.
+
+  "miningBeltMaximumAsteroidVolumeM3": 3000000,
+
+  // Adds deterministic runtime ice fields to space scenes so ice harvesters and ore-hold routing have live non-moon content to work against.
+  // Valid values: true or false.
+  // Default: true.
+
+  "miningGeneratedIceSitesEnabled": true,
+
+  // Adds deterministic runtime gas fields to space scenes so gas harvesters have authored-on-startup content without relying on GM commands.
+  // Valid values: true or false.
+  // Default: true.
+
+  "miningGeneratedGasSitesEnabled": true,
+
+  // Number of generated ice-field anchors created in each high-security system scene when ice runtime content is enabled.
+  // Valid values: Non-negative integer.
+  // Default: 1.
+
+  "miningIceSitesHighSecPerSystem": 1,
+
+  // Number of generated ice-field anchors created in each low-security system scene when ice runtime content is enabled.
+  // Valid values: Non-negative integer.
+  // Default: 1.
+
+  "miningIceSitesLowSecPerSystem": 1,
+
+  // Number of generated ice-field anchors created in each null-security system scene when ice runtime content is enabled.
+  // Valid values: Non-negative integer.
+  // Default: 1.
+
+  "miningIceSitesNullSecPerSystem": 1,
+
+  // Number of generated ice-field anchors created in each wormhole system scene when ice runtime content is enabled.
+  // Valid values: Non-negative integer.
+  // Default: 0.
+
+  "miningIceSitesWormholePerSystem": 0,
+
+  // Number of high-security systems that should carry generated ice fields in the universe-seeded Phase 3 mining pool.
+  // Valid values: Non-negative integer.
+  // Default: 36.
+
+  "miningIceTargetSystemsHighSec": 36,
+
+  // Number of low-security systems that should carry generated ice fields in the universe-seeded Phase 3 mining pool.
+  // Valid values: Non-negative integer.
+  // Default: 18.
+
+  "miningIceTargetSystemsLowSec": 18,
+
+  // Number of null-security systems that should carry generated ice fields in the universe-seeded Phase 3 mining pool.
+  // Valid values: Non-negative integer.
+  // Default: 84.
+
+  "miningIceTargetSystemsNullSec": 84,
+
+  // Number of wormhole systems that should carry generated ice fields in the universe-seeded Phase 3 mining pool.
+  // Valid values: Non-negative integer.
+  // Default: 0.
+
+  "miningIceTargetSystemsWormhole": 0,
+
+  // Lifetime in minutes for universe-seeded generated ice site slots before they rotate in place to the next deterministic field definition.
+  // Valid values: Positive integer minutes.
+  // Default: 1440.
+
+  "miningGeneratedIceSiteLifetimeMinutes": 1440,
+
+  // Number of generated gas-field anchors created in each high-security system scene when gas runtime content is enabled.
+  // Valid values: Non-negative integer.
+  // Default: 0.
+
+  "miningGasSitesHighSecPerSystem": 0,
+
+  // Number of generated gas-field anchors created in each low-security system scene when gas runtime content is enabled.
+  // Valid values: Non-negative integer.
+  // Default: 1.
+
+  "miningGasSitesLowSecPerSystem": 1,
+
+  // Number of generated gas-field anchors created in each null-security system scene when gas runtime content is enabled.
+  // Valid values: Non-negative integer.
+  // Default: 1.
+
+  "miningGasSitesNullSecPerSystem": 1,
+
+  // Number of generated gas-field anchors created in each wormhole system scene when gas runtime content is enabled.
+  // Valid values: Non-negative integer.
+  // Default: 2.
+
+  "miningGasSitesWormholePerSystem": 2,
+
+  // Distance applied when deterministic ice/gas site anchors are offset from their source belt or celestial.
+  // Valid values: Positive distance in meters.
+  // Default: 120000.
+
+  "miningGeneratedSiteAnchorOffsetMeters": 120000,
+
+  // Radius of the generated runtime ice and gas fields around each deterministic site anchor.
+  // Valid values: Positive distance in meters.
+  // Default: 18000.
+
+  "miningGeneratedSiteRadiusMeters": 18000,
+
+  // How many mineable ice chunks each generated ice field contains.
+  // Valid values: Positive integer.
+  // Default: 12.
+
+  "miningIceChunksPerSite": 12,
+
+  // How many mineable gas clouds each generated gas field contains.
+  // Valid values: Positive integer.
+  // Default: 14.
+
+  "miningGasCloudsPerSite": 14,
+
+  // Minimum radius ratio preserved while an asteroid is being depleted before it is removed from the scene.
+  // Valid values: Positive fraction such as 0.25.
+  // Default: 0.25.
+
+  "miningDepletedAsteroidRadiusRatio": 0.25,
+
+  // Lets /npcminer fleets automatically lock asteroids, approach, activate miners, and deplete rocks.
+  // Valid values: true or false.
+  // Default: true.
+
+  "miningNpcFleetAutoMineEnabled": true,
+
+  // Polling interval for the mining NPC fleet controller.
+  // Valid values: Positive duration in milliseconds.
+  // Default: 1000.
+
+  "miningNpcFleetThinkIntervalMs": 1000,
+
+  // How much margin NPC miners keep inside mining range before they stop approaching and start mining.
+  // Valid values: Non-negative distance in meters.
+  // Default: 500.
+
+  "miningNpcFleetMiningRangeBufferMeters": 500,
+
+  // Orbit distance used by NPC miners once they are in range of their asteroid target.
+  // Valid values: Positive distance in meters.
+  // Default: 1000.
+
+  "miningNpcFleetOrbitDistanceMeters": 1000,
+
+  // Distance-equivalent penalty applied when the mining fleet target picker compares an already-claimed asteroid against an unclaimed one.
+  // Higher values spread miners out more aggressively; lower values make them share nearby rocks sooner instead of marching across the belt.
+  // Valid values: Non-negative distance in meters.
+  // Default: 7500.
+
+  "miningNpcFleetTargetClaimPenaltyMeters": 7500,
+
+  // Fraction of miner cargo fill at which the transient NPC hauler choreography triggers.
+  // Valid values: Positive fraction between 0 and 1.
+  // Default: 0.85.
+
+  "miningNpcHaulThresholdRatio": 0.85,
+
+  // Landing radius used when mining fleet haulers warp to collect ore from the miner wing.
+  // Valid values: Positive distance in meters.
+  // Default: 750.
+
+  "miningNpcHaulerLandingRadiusMeters": 750,
+
+  // Delay budget used by the transient NPC hauler wing between arrival and hauling completion.
+  // Valid values: Positive duration in milliseconds.
+  // Default: 8000.
+
+  "miningNpcHaulerUnloadDurationMs": 8000,
+
+  // Minimum time before a newly spawned mining fleet becomes eligible for its first hauler run.
+  // The default is tuned to public player observations of roughly 90 minutes from fleet spawn to first hauler appearance.
+  // Valid values: Non-negative duration in milliseconds.
+  // Default: 5400000.
+
+  "miningNpcHaulerInitialDelayMs": 5400000,
+
+  // Minimum time between completed hauler runs for the same mining fleet.
+  // The default is tuned to public player observations of roughly 30-minute repeat windows.
+  // Valid values: Non-negative duration in milliseconds.
+  // Default: 1800000.
+
+  "miningNpcHaulerRepeatDelayMs": 1800000,
+
+  // Optional delay after /npcmineraggro or /npcminerpanic before transient mining fleets auto-resume mining.
+  // Valid values: Non-negative duration in milliseconds. Use 0 to require manual /npcminerresume.
+  // Default: 0.
+
+  "miningNpcFleetAutoResumeDelayMs": 0,
+
+  // Configured cargo-capacity budget used by the mining NPC controller when deciding when to call haulers.
+  // Valid values: Positive cargo capacity in cubic meters.
+  // Default: 35000.
+
+  "miningNpcMinerCargoCapacityM3": 35000,
+
+  // Configured cargo-capacity budget used by the transient mining NPC hauler wing.
+  // Valid values: Positive cargo capacity in cubic meters.
+  // Default: 65000.
+
+  "miningNpcHaulerCargoCapacityM3": 65000,
+
+  // Recreates transient mining fleets from config when matching solar-system scenes are created at startup/runtime.
+  // Valid values: true or false.
+  // Default: false.
+
+  "miningNpcStartupEnabled": false,
+
+  // Comma-separated solar system IDs that should receive transient startup mining fleets. Blank means all loaded scenes.
+  // Valid values: Comma-separated IDs such as "30000142,30002510".
+  // Default: "".
+
+  "miningNpcStartupSystemIDs": "",
+
+  // How many transient mining fleets to recreate per matching system scene during startup.
+  // Valid values: Non-negative integer.
+  // Default: 0.
+
+  "miningNpcStartupFleetCount": 0,
+
+  // Miner hull count per transient startup mining fleet.
+  // Valid values: Positive integer.
+  // Default: 3.
+
+  "miningNpcStartupFleetMinerCount": 3,
+
+  // Hauler hull count per transient startup mining fleet.
+  // Valid values: Non-negative integer.
+  // Default: 1.
+
+  "miningNpcStartupFleetHaulerCount": 1,
+
+  // NPC profile or pool used when config-driven transient startup mining fleets are recreated.
+  // Valid values: NPC profile or pool ID such as "npc_mining_ops".
+  // Default: "npc_mining_ops".
+
+  "miningNpcStartupFleetProfileOrPool": "npc_mining_ops",
+
+  // NPC profile or pool used for the transient hauler wing of startup mining fleets.
+  // Valid values: NPC profile or pool ID such as "npc_mining_ops".
+  // Default: "npc_mining_ops".
+
+  "miningNpcStartupHaulerProfileOrPool": "npc_mining_ops",
+
+  // Structure-side base reprocessing efficiency used by the mining industry services until per-structure rig bonuses are modeled.
+  // Valid values: Fraction between 0 and 1.
+  // Default: 0.5.
+
+  "miningStructureReprocessingEfficiency": 0.5,
+
+  // Structure-side base gas decompression efficiency used by structureCompressionMgr.
+  // Valid values: Fraction between 0 and 1.
+  // Default: 0.79.
+
+  "miningStructureGasDecompressionEfficiency": 0.79,
+
+  // Maximum range used by the in-space compression service when validating a compression facility ball.
+  // Valid values: Positive distance in meters.
+  // Default: 250000.
+
+  "miningInSpaceCompressionRangeMeters": 250000,
+
+  // Visibility delay applied to personal mining-ledger entries before characterMiningLedger returns them.
+  // This keeps delayed-ledger parity configurable without adding expensive per-cycle database work.
+  // Valid values: Non-negative duration in milliseconds. 600000 = 10 minutes.
+  // Default: 600000.
+
+  "miningCharacterLedgerDelayMs": 600000,
+
+  // Visibility delay applied to observer/corporation mining-ledger entries before corpMiningLedger exposes them.
+  // Use this to model CCP-style delayed observer data while keeping reads cache-first.
+  // Valid values: Non-negative duration in milliseconds. 3600000 = 1 hour.
+  // Default: 3600000.
+
+  "miningObserverLedgerDelayMs": 3600000,
+
+  // Flat system cost index applied to industry job install costs across manufacturing, research, copying, invention, and reactions.
+  // Live EVE derives this value per solar system and activity from rolling industry job volume; this emulator does not track that telemetry yet, so one static index stands in for the whole cluster.
+  // Job gross cost = estimated item value x this index x facility cost modifier. Facility tax and the SCC surcharge are still charged on the full estimated item value, matching the client industry cost breakdown.
+  // 0 reproduces the previous zero-index behavior (install cost equals the full estimated item value); raise toward live high-sec values, roughly 0.01 to 0.10, to keep install costs realistic.
+  // Valid values: Number from 0.0 to 1.0.
+  // Default: 0.04.
+
+  "industrySystemCostIndex": 0.04,
+
+  // Boot version reported to the client during the login handshake.
+  // Valid values: Number matching your client build, for example 24.01.
+  // Default: 24.01.
+
+  "clientVersion": 24.01,
+
+  // Client build number reported to the client during the login handshake.
+  // Valid values: Integer build number matching your client.
+  // Default: 3396210.
+
+  "clientBuild": 3396210,
+
+  // Birthday value used by the handshake version checks.
+  // Valid values: Integer matching your client build.
+  // Default: 170472.
+
+  "eveBirthday": 170472,
+
+  // MachoNet protocol version reported during session bootstrap.
+  // Valid values: Integer matching your client build.
+  // Default: 496.
+
+  "machoVersion": 496,
+
+  // Project codename reported to the client during startup.
+  // Valid values: String matching the client boot codename; leave the default unless your client build requires another value.
+  // Default: client compatibility codename.
+
+  "projectCodename": "EvEJS",
+
+  // Project region reported to the client during startup.
+  // Valid values: String. For the current client keep this as "ccp".
+  // Default: "ccp".
+
+  "projectRegion": "ccp",
+
+  // Full project version string reported to the client during startup.
+  // Valid values: String matching your client boot version, for example "V24.01@ccp".
+  // Default: "V24.01@ccp".
+
+  "projectVersion": "V24.01@ccp",
+
+  // UTC daily downtime start used by server-side startup reconciliation.
+  // Matches the target client's zcluster DowntimeStarts value format and falls back to 11:00:00 when unset.
+  // Valid values: UTC time in "HH:MM:SS" format.
+  // Default: "11:00:00".
+
+  "clusterDowntimeStarts": "11:00:00",
+
+  // Login-screen server status label returned by machoNet.GetServerStatus.
+  // Use CCP-style labels such as /Carbon/MachoNet/ServerStatus/OK, /Carbon/MachoNet/ServerStatus/StartingUp, /Carbon/MachoNet/ServerStatus/ShuttingDown, or /Carbon/MachoNet/ServerStatus/NotAcceptingConnections.
+  // Valid values: A known Carbon login-status label such as "/Carbon/MachoNet/ServerStatus/OK" or "/Carbon/MachoNet/ServerStatus/StartingUp".
+  // Default: "/Carbon/MachoNet/ServerStatus/OK".
+
+  "serverStatusLabel": "/Carbon/MachoNet/ServerStatus/OK",
+
+  // Progress/countdown value injected when serverStatusLabel is /Carbon/MachoNet/ServerStatus/StartingUp.
+  // Valid values: Non-negative integer seconds.
+  // Default: 0.
+
+  "serverStatusProgressSeconds": 0,
+
+  // Limit value injected when serverStatusLabel is /Carbon/MachoNet/ServerStatus/ProxyFullWithLimit.
+  // Valid values: Non-negative integer.
+  // Default: 0.
+
+  "serverStatusProxyLimit": 0,
+
+  // Cluster user count reported during login-status and handshake flows.
+  // Valid values: Non-negative integer.
+  // Default: 1.
+
+  "serverStatusClusterUserCount": 1,
+
+  // Logon queue position exposed during handshake.
+  // Values of 2 or greater trigger the retail client queue flow.
+  // Valid values: Non-negative integer.
+  // Default: 1.
+
+  "serverStatusQueuePosition": 1,
+
+  // Two-letter ISO country code injected into the initial user session when an account does not define one.
+  // HyperNet visibility checks read session.countryCode during early client startup, so this default keeps the feature available in local dev.
+  // Valid values: Two-letter ISO country code such as "GB", "DE", or "US".
+  // Default: "GB".
+
+  "defaultCountryCode": "GB",
+
+  // Exposes HyperNetKillSwitch through machoNet global config so the client can gate HyperNet availability.
+  // Valid values: true or false.
+  // Default: false.
+
+  "hyperNetKillSwitch": false,
+
+  // Fixed PLEX price exposed through machoNet global config for HyperNet token calculations.
+  // Using the same override on both client and server keeps token requirements deterministic in local development.
+  // Valid values: Positive integer ISK value such as 3500000.
+  // Default: 3500000.
+
+  "hyperNetPlexPriceOverride": 3500000,
+
+  // Local-development convenience toggle that auto-grants a starter HyperCore stack when a character first opens HyperNet.
+  // Disable this for stricter CCP parity once characters are provisioned with real HyperCores.
+  // Valid values: true or false.
+  // Default: true.
+
+  "hyperNetDevAutoGrantCores": true,
+
+  // Enables optional HyperNet startup seeding using GM Elysian's home-station hangar.
+  // This is kept separate from the persistent raffle core so seeded demo listings can be turned off cleanly.
+  // Valid values: true or false.
+  // Default: true.
+
+  "hyperNetSeedEnabled": true,
+
+  // Character ID used as the seller/source hangar for optional HyperNet startup seeding.
+  // Valid values: Positive character ID.
+  // Default: 140000004.
+
+  "hyperNetSeedOwnerId": 140000004,
+
+  // Allows the HyperNet seed manager to restock GM seed inventory before creating demo listings.
+  // Valid values: true or false.
+  // Default: true.
+
+  "hyperNetSeedRestockEnabled": true,
+
+  // Minimum number of seeded ship raffles the startup seed manager targets when HyperNet seeding is enabled.
+  // Valid values: Non-negative integer.
+  // Default: 2.
+
+  "hyperNetSeedMinShips": 2,
+
+  // Maximum number of seeded ship raffles the startup seed manager targets when HyperNet seeding is enabled.
+  // Valid values: Non-negative integer greater than or equal to hyperNetSeedMinShips.
+  // Default: 5.
+
+  "hyperNetSeedMaxShips": 5,
+
+  // Minimum number of seeded non-ship raffles the startup seed manager targets when HyperNet seeding is enabled.
+  // Valid values: Non-negative integer.
+  // Default: 2.
+
+  "hyperNetSeedMinItems": 2,
+
+  // Maximum number of seeded non-ship raffles the startup seed manager targets when HyperNet seeding is enabled.
+  // Valid values: Non-negative integer greater than or equal to hyperNetSeedMinItems.
+  // Default: 5.
+
+  "hyperNetSeedMaxItems": 5,
+
+  // Controls how much the server writes to the log output.
+  // Valid values: 0 = silent, 1 = normal server logging, 2 = verbose debug logging.
+  // Default: 1.
+
+  "logLevel": 2,
+
+  // When verbose debug logging is enabled, also dumps decoded packet payload previews and outgoing packet hex summaries on hot network paths.
+  // Valid values: true or false.
+  // Default: false.
+
+  "logPacketPayloadDetails": false,
+
+  // Local interface used by the main game TCP listener. Keep this on 127.0.0.1 unless a container or similarly isolated network boundary provides the external localhost-only restriction.
+  // Valid values: Bind address such as "127.0.0.1" or "0.0.0.0".
+  // Default: "127.0.0.1".
+
+  "gameServerBindHost": "127.0.0.1",
+
+  // TCP port used by the main game server listener.
+  // Valid values: Available TCP port number.
+  // Default: 26000.
+
+  "serverPort": 26000,
+
+  // Enables TCP keep-alive on accepted game client sockets so the OS reaps dead/half-open connections promptly.
+  // Without it an ungracefully dropped client lingers as a live session: the player keeps showing in local chat and station guest lists, and the duplicate-login guard blocks their reconnection until the dead socket finally times out.
+  // Valid values: true or false.
+  // Default: true.
+
+  "socketKeepAliveEnabled": true,
+
+  // Idle time before the OS starts sending TCP keep-alive probes on a game client socket.
+  // Valid values: Non-negative duration in milliseconds.
+  // Default: 30000.
+
+  "socketKeepAliveInitialDelayMs": 30000,
+
+  // Disables Nagle's algorithm on game client sockets so small RPC packets are sent immediately instead of being buffered.
+  // Lowers latency for the many small request/response packets the MachoNet protocol exchanges.
+  // Valid values: true or false.
+  // Default: true.
+
+  "socketNoDelayEnabled": true,
+
+  // Optional application-level idle timeout for game client sockets. When greater than 0 a socket with no activity for this long is destroyed.
+  // Left disabled (0) by default because keep-alive already reaps dead peers and a legitimately idle docked client sends no traffic.
+  // Valid values: Non-negative duration in milliseconds. 0 disables the idle timeout.
+  // Default: 0.
+
+  "socketIdleTimeoutMs": 0,
+
+  // How often the presence reconciler re-pushes authoritative who-is-here state so any missed live-presence delta self-heals.
+  // This is the safety net for the fire-and-forget presence broadcasts (local chat membership and station/structure guests). 0 disables the reconciler entirely.
+  // Valid values: Non-negative duration in milliseconds. 0 disables reconciliation.
+  // Default: 30000.
+
+  "presenceReconcileIntervalMs": 30000,
+
+  // Re-publishes the full authoritative local-chat membership snapshot to each character every reconcile tick.
+  // The snapshot is the same payload the client requests on demand, so re-pushing it is an idempotent full-list refresh.
+  // Valid values: true or false.
+  // Default: true.
+
+  "presenceReconcileChatEnabled": true,
+
+  // Re-asserts each character's XMPP MUC room presence every reconcile tick so chat-window rosters (local, corp, fleet, alliance, militia) self-heal a missed join.
+  // Sends idempotent available-only presence (no leave/rejoin flicker) and skips delayed-local rooms. Disable to cut reconcile traffic on large shards.
+  // Valid values: true or false.
+  // Default: true.
+
+  "presenceReconcileXmppEnabled": true,
+
+  // Controls what happens when a character is selected while an earlier session still holds it.
+  // true (default) makes the new login evict the prior session and take over, letting a player reconnect immediately after an ungraceful drop instead of waiting for keep-alive to reap the stale socket. false keeps the conservative reject — the new login is refused with 'already online'.
+  // Valid values: true or false.
+  // Default: true.
+
+  "loginTakeoverEnabled": true,
+
+  // Host name or IP address the client should use when connecting to the main game TCP listener.
+  // Valid values: Host name or IP string such as "127.0.0.1" or "203.0.113.10".
+  // Default: "127.0.0.1".
+
+  "gameServerHost": "127.0.0.1",
+
+  // Host name or IP address used by the main server to reach the standalone Rust market daemon RPC listener.
+  // Valid values: Host name or IP string such as "127.0.0.1" or "192.168.1.20".
+  // Default: "127.0.0.1".
+
+  "marketDaemonHost": "127.0.0.1",
+
+  // TCP port used by the main server when forwarding marketProxy calls to the standalone market daemon RPC listener.
+  // Valid values: Available TCP port number.
+  // Default: 40111.
+
+  "marketDaemonPort": 40111,
+
+  // How long the main server waits for the market daemon TCP connection to open before treating it as unavailable.
+  // Valid values: Positive integer duration in milliseconds.
+  // Default: 1500.
+
+  "marketDaemonConnectTimeoutMs": 1500,
+
+  // How long an individual forwarded market RPC call may take before the main server fails it.
+  // Valid values: Positive integer duration in milliseconds.
+  // Default: 15000.
+
+  "marketDaemonRequestTimeoutMs": 15000,
+
+  // Delay between background reconnect attempts when the main server is waiting for the standalone market daemon to come online.
+  // Valid values: Positive integer duration in milliseconds.
+  // Default: 2000.
+
+  "marketDaemonRetryDelayMs": 2000,
+
+  // Base URL sent to the client for image and icon requests.
+  // Valid values: Absolute URL string ending with a slash, for example "http://127.0.0.1:26001/".
+  // Default: "http://127.0.0.1:26001/".
+
+  "imageServerUrl": "http://127.0.0.1:26001/",
+
+  // Host or bind address the local image HTTP server listens on.
+  // Valid values: Host name or IP string such as "127.0.0.1" or "0.0.0.0".
+  // Default: "127.0.0.1".
+
+  "imageServerBindHost": "127.0.0.1",
+
+  // Base URL used to redirect supported microservice calls away from CCP.
+  // Valid values: Absolute URL string ending with a slash, for example "http://localhost:26002/".
+  // Default: "http://localhost:26002/".
+
+  "microservicesRedirectUrl": "http://localhost:26002/",
+
+  // Server-side HTTP base URL where the EveJS microservice and public-gateway bridge listens for forwarded helper traffic.
+  // Valid values: Absolute URL string ending with a slash, for example "http://127.0.0.1:26002/".
+  // Default: "http://127.0.0.1:26002/".
+
+  "microservicesPublicBaseUrl": "http://127.0.0.1:26002/",
+
+  // Host or bind address the EveJS microservice and public-gateway bridge listens on.
+  // Valid values: Host name or IP string such as "127.0.0.1" or "0.0.0.0".
+  // Default: "127.0.0.1".
+
+  "microservicesBindHost": "127.0.0.1",
+
+  // Host or bind address the Redshift TiDi monitor API listens on.
+  // Valid values: Host name or IP string such as "127.0.0.1" or "0.0.0.0".
+  // Default: "127.0.0.1".
+
+  "redshiftMonitorHost": "127.0.0.1",
+
+  // TCP port used by the Redshift TiDi monitor API.
+  // Valid values: Available TCP port number.
+  // Default: 26400.
+
+  "redshiftMonitorPort": 26400,
+
+  // Comma-separated hostnames or dot-prefix suffixes the local HTTP proxy should block instead of forwarding off-box.
+  // Valid values: Comma-separated host patterns, for example "api.ipify.org,sentry.io,.sentry.io,google-analytics.com,.google-analytics.com".
+  // Default: "api.ipify.org,sentry.io,.sentry.io,google-analytics.com,.google-analytics.com".
+
+  "proxyBlockedHosts": "api.ipify.org,sentry.io,.sentry.io",
+
+  // Comma-separated extra hostnames or suffix patterns the local HTTP proxy may forward off-box when they are not handled by the built-in EveJS gateway intercepts.
+  // Valid values: Comma-separated host patterns, for example "images.example.com,.examplecdn.net", or blank to allow only EveJS-handled endpoints.
+  // Default: "".
+
+  "proxyAllowedHosts": "",
+
+  // Controls what the local HTTP proxy does with proxied hosts that are neither EveJS-intercepted nor explicitly allow-listed. "block" is the safe default that suppresses telemetry and stray outbound traffic; "forward" restores the old transparent pass-through behavior.
+  // Valid values: "block" or "forward".
+  // Default: "block".
+
+  "proxyUnhandledHostPolicy": "block",
+
+  // Local interface used by the XMPP chat listener. Keep this on 127.0.0.1 unless a container or similarly isolated network boundary provides the external localhost-only restriction.
+  // Valid values: Bind address such as "127.0.0.1" or "0.0.0.0".
+  // Default: "127.0.0.1".
+
+  "xmppServerBindHost": "127.0.0.1",
+
+  // TCP port used by the local XMPP chat stub server.
+  // Valid values: Available TCP port number.
+  // Default: 5222.
+
+  "xmppServerPort": 5222,
+
+  // Host name or IP address returned to the client for the XMPP chat connection target.
+  // Valid values: Host name or IP string such as "localhost" or "chat.example.com".
+  // Default: "localhost".
+
+  "xmppConnectHost": "localhost",
+
+  // XMPP domain used for bare JIDs and chat identity values.
+  // Valid values: Domain or host string such as "localhost" or "chat.example.com".
+  // Default: "localhost".
+
+  "xmppDomain": "localhost",
+
+  // XMPP conference domain used for chat room JIDs.
+  // Valid values: Domain or host string such as "conference.localhost" or "conference.chat.example.com".
+  // Default: "conference.localhost".
+
+  "xmppConferenceDomain": "conference.localhost",
+
+  // Shared secret that gates the /playerconnect/* helper endpoints (health ping + CA download) used by the PlayerConnect bundle. When empty, those endpoints are disabled.
+  // Valid values: Any non-empty string, or empty to disable the PlayerConnect endpoints.
+  // Default: "".
+
+  "playerConnectToken": "test",
+
+  // Enables the stubbed omega-license path for modern eve_public flows.
+  // Valid values: true or false.
+  // Default: true.
+
+  "omegaLicenseEnabled": true,
+
+  // Enables the cache-backed New Eden Store, legacy storeManager catalog, and public payment surfaces.
+  // Valid values: true or false.
+  // Default: true.
+
+  "newEdenStoreEnabled": true,
+
+  // Enables the legacy FastCheckoutService path the client uses for in-game PLEX purchases.
+  // Valid values: true or false.
+  // Default: true.
+
+  "newEdenStoreFastCheckoutEnabled": true,
+
+  // Lets cash purchase attempts succeed locally and grant the selected offer without touching a real payment processor.
+  // Valid values: true or false.
+  // Default: true.
+
+  "newEdenStoreFakeCashPurchasesEnabled": true,
+
+  // Response string returned by FastCheckoutService.BuyOffer when the local fake purchase completes.
+  // Valid values: Non-empty string such as "OK".
+  // Default: "OK".
+
+  "newEdenStoreFakeFastCheckoutResponse": "OK",
+
+  // Forces the client down the China-funnel branch of fast checkout testing.
+  // Valid values: true or false.
+  // Default: false.
+
+  "newEdenStoreFakeChinaFunnelEnabled": false,
+
+  // Optional URL the client opens when testing the external buy-plex-offer path.
+  // Valid values: Absolute URL string, or blank to use the local default.
+  // Default: "".
+
+  "newEdenStoreFakeBuyPlexOfferUrl": "",
+
+  // Controls whether the client uses shell execute for external PLEX-offer purchase URLs during fast checkout tests.
+  // Valid values: true or false.
+  // Default: true.
+
+  "newEdenStoreUseShellExecuteToBuyPlexOffer": true,
+
+  // TCP port used by the local New Eden Store editor GUI under scripts/newedenstore.
+  // Valid values: Available TCP port number.
+  // Default: 26008.
+
+  "newEdenStoreEditorPort": 26008,
+
+  // Conversion rate used by the store purchase helpers when translating stored PLEX offer pricing into whole PLEX debits.
+  // Valid values: Positive integer such as 100.
+  // Default: 100.
+
+  "newEdenStoreCentsPerPlex": 100,
+
+  // Tax rate in basis points applied to fake cash CostRequest calculations for public payment flows.
+  // Valid values: Non-negative integer. 100 = 1%.
+  // Default: 0.
+
+  "newEdenStoreDefaultCashTaxRatePoints": 0,
+
+  // Maximum number of completed New Eden Store purchases retained in the cache-backed runtime log.
+  // Valid values: Positive integer.
+  // Default: 500.
+
+  "newEdenStorePurchaseLogLimit": 500,
+
+  // How long GM and testing space debris persists before cleanup.
+  // Valid values: Integer duration in milliseconds. 7200000 = 2 hours.
+  // Default: 7200000.
+
+  "spaceDebrisLifetimeMs": 7200000,
+
+  // Enables automatic tick-lateness-based time dilation scaling.
+  // Valid values: true or false.
+  // Default: true.
+
+  "tidiAutoscaler": false,
+
+  // Controls which solar-system scenes are created during server startup.
+  // 1 = current lazy/default boot: only Jita, New Caldari, and Manifest are preloaded so the existing startup behavior stays the same.
+  // 2 = preload every high-security system by checking the solar-system security data for displayed security `0.5+` at startup, so newly added systems are picked up automatically.
+  // 3 = preload every solar system in New Eden at startup.
+  // 4 = OnGoingLazy: preload only Jita, New Caldari, and Manifest, but keep every stargate active so destination systems load on demand when a player jumps through.
+  // Valid values: 1, 2, 3, or 4. Any other value falls back to 1.
+  // Default: 1.
+
+  "NewEdenSystemLoading": 4,
+
+  // Turns generated cosmetic asteroid-belt fields on or off when a solar-system scene is created.
+  // When this is off, belts still exist in static data, but the runtime does not populate the extra asteroid entities into space scenes.
+  // Valid values: true or false.
+  // Default: true.
+
+  "asteroidFieldsEnabled": true,
+
+  // Turns on generated default billboard props beside empire-space stargates (`0.1+`).
+  // These use PublicEveJS bubble-scoped static visibility, matching the existing generated CONCORD scene style.
+  // Valid values: true or false.
+  // Default: true.
+
+  "defaultStargateBillboardsEnabled": true,
+
+  // Turns on generated default sentry-gun props at empire-space stargates and NPC stations (`0.1+`).
+  // This is visual parity scaffolding for gate/station sentries; it does not replace Crimewatch CONCORD response.
+  // Valid values: true or false.
+  // Default: true.
+
+  "defaultEmpireSentryGunsEnabled": true,
+
+  // Turns on the startup rules we have written by hand in the local NPC data files.
+  // Plain-English meaning: if this is off, those custom NPC and CONCORD auto-spawns will not appear when a solar system scene is created.
+  // Valid values: true or false.
+  // Default: false.
+
+  "npcAuthoredStartupEnabled": false,
+
+  // Turns on generated default CONCORD gate coverage for high-security systems (`0.5+`).
+  // This is separate from npcAuthoredStartupEnabled, so generated default CONCORD can still appear even if authored startup is off.
+  // Valid values: true or false.
+  // Default: false.
+
+  "npcDefaultConcordStartupEnabled": true,
+
+  // When generated default CONCORD gate coverage is enabled, lets those gate checkpoint ships auto-aggro nearby NPC ships.
+  // This only affects generated default gate CONCORD; station screens stay passive and Crimewatch CONCORD response is unchanged.
+  // Valid values: true or false.
+  // Default: false.
+
+  "npcDefaultConcordGateAutoAggroNpcsEnabled": false,
+
+  // When generated default CONCORD coverage is on, also place passive CONCORD patrol groups near stations in `1.0` and `0.9` systems.
+  // Think of these as visible station security screens, not the separate Crimewatch punishment fleet that warps in after a criminal act.
+  // Valid values: true or false.
+  // Default: true.
+
+  "npcDefaultConcordStationScreensEnabled": false,
+
+  // Swaps Jita's generated generic gate scenery for the TQ-style EverMore/Villore Sec Ops gate presence.
+  // The EverMore style is Jita-only; other systems keep the generic empire gate sentry and billboard layout.
+  // Valid values: true or false.
+  // Default: true.
+
+  "npcDefaultEverMoreGatePresenceEnabled": true,
+
+  // Legacy comma-or-space-separated solarSystemIDs for generated EverMore gate presence.
+  // Only Jita is honored by the current parity helper, matching the TQ EverMore administration change observed in official gate logs.
+  // Valid values: Blank or a comma/space-separated list of numeric solarSystemIDs, for example "30000142".
+  // Default: "30000142".
+
+  "npcDefaultEverMoreGatePresenceSystemIDs": "30000142",
+
+  // Enables automatic Crimewatch-driven CONCORD response to criminal actions in high-security space.
+  // Valid values: true or false.
+  // Default: true.
+
+  "crimewatchConcordResponseEnabled": true,
+
+  // When automatic Crimewatch CONCORD response is enabled, lets that transient punishment wing continue onto a criminal capsule after the ship dies.
+  // This does not affect passive startup/default CONCORD presence.
+  // Valid values: true or false.
+  // Default: false.
+
+  "crimewatchConcordPodKillEnabled": false,
+
+  // Proxy node ID reported to the client and used when generating bound object IDs.
+  // Valid values: Integer node ID. 65450 matches the traditional 0xFFAA value.
+  // Default: 65450.
+
+  "proxyNodeId": 65450
+}

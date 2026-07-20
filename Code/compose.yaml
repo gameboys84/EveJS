@@ -1,0 +1,91 @@
+name: evejs
+
+services:
+  init:
+    image: evejs-local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["init"]
+    volumes:
+      - evejs-data:/var/lib/evejs
+    restart: "no"
+
+  market-tools:
+    image: evejs-local
+    pull_policy: never
+    profiles: ["tools"]
+    entrypoint:
+      - /usr/bin/tini
+      - -g
+      - --
+      - /app/docker/entrypoint.sh
+      - market-tools
+    command: ["help"]
+    volumes:
+      - evejs-data:/var/lib/evejs
+    restart: "no"
+
+  market:
+    image: evejs-local
+    pull_policy: never
+    command: ["market"]
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    volumes:
+      - evejs-data:/var/lib/evejs
+    ports:
+      - "127.0.0.1:40110:40110"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "--show-error", "http://127.0.0.1:40110/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    stop_grace_period: 30s
+
+  server:
+    image: evejs-local
+    pull_policy: never
+    command: ["server"]
+    depends_on:
+      market:
+        condition: service_healthy
+    environment:
+      EVEJS_GAMESTORE_DATA_DIR: /var/lib/evejs/gameStore/data
+      EVEJS_GAME_SERVER_BIND_HOST: 0.0.0.0
+      EVEJS_GAME_SERVER_HOST: 127.0.0.1
+      EVEJS_IMAGE_SERVER_BIND_HOST: 0.0.0.0
+      EVEJS_IMAGE_SERVER_URL: http://127.0.0.1:26001/
+      EVEJS_MARKET_DAEMON_HOST: market
+      EVEJS_MARKET_DAEMON_PORT: "40111"
+      EVEJS_MICROSERVICES_BIND_HOST: 0.0.0.0
+      EVEJS_MICROSERVICES_PUBLIC_BASE_URL: http://127.0.0.1:26002/
+      EVEJS_MICROSERVICES_REDIRECT_URL: http://127.0.0.1:26002/
+      EVEJS_PROXY_LOCAL_INTERCEPT: "1"
+      EVEJS_PROXY_LOOPBACK_CDN_LISTEN_PORT: "26003"
+      EVEJS_REDSHIFT_MONITOR_HOST: 0.0.0.0
+      EVEJS_XMPP_CONNECT_HOST: localhost
+      EVEJS_XMPP_SERVER_BIND_HOST: 0.0.0.0
+    volumes:
+      - evejs-data:/var/lib/evejs
+      - ./server/certs:/app/server/certs
+      - ./server/src/_secondary/express/certs:/app/server/src/_secondary/express/certs
+    ports:
+      - "127.0.0.1:443:26003"
+      - "127.0.0.1:5222:5222"
+      - "127.0.0.1:26000:26000"
+      - "127.0.0.1:26001:26001"
+      - "127.0.0.1:26002:26002"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail --silent --show-error http://127.0.0.1:26002/health >/dev/null && grep -q ':6590 .* 0A ' /proc/net/tcp"]
+      interval: 15s
+      timeout: 5s
+      retries: 40
+      start_period: 2m
+    stop_grace_period: 45s
+
+volumes:
+  evejs-data:
+    name: evejs-data

@@ -1,0 +1,73 @@
+{
+  "solarSystemID": 30100032,
+  "systemName": "Manifest",
+  "props": [
+    {
+      "itemID": "9002276977000000073",
+      "description": "TQ ENV_Oceanic_01a at Manifest V - AIR Laboratories Trade Center.",
+      "anchorItemID": 60015249,
+      "kind": "authoredSpaceProp",
+      "typeID": 95178,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1,
+      "flagsByte": 64,
+      "position": {
+        "x": 311989985280,
+        "y": -13069148160,
+        "z": 156646318080
+      },
+      "dunPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "dungeonObjectID": 1546511,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "forceDamageState": true,
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002276977000000072",
+      "description": "TQ VDB_Cloud_Vortex_05d at Manifest V - AIR Laboratories Trade Center.",
+      "anchorItemID": 60015249,
+      "kind": "authoredSpaceProp",
+      "typeID": 94180,
+      "ownerID": 500021,
+      "groupID": 4579,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 400,
+      "flagsByte": 0,
+      "position": {
+        "x": 311989865280,
+        "y": -13069948160,
+        "z": 156646218080
+      },
+      "dunPosition": {
+        "x": -120000,
+        "y": -800000,
+        "z": -100000
+      },
+      "dunRotation": [
+        320,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1546510,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "forceDamageState": true,
+      "staticVisibilityScope": "publicgrid"
+    }
+  ]
+}

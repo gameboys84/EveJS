@@ -1,0 +1,2222 @@
+{
+  "lootTables": [
+    {
+      "lootTableID": "generic_random_any",
+      "name": "Generic Random Any Item",
+      "minEntries": 1,
+      "maxEntries": 3,
+      "stackableMinQuantity": 1,
+      "stackableMaxQuantity": 25
+    },
+    {
+      "lootTableID": "loot_belt_normal_small",
+      "name": "Normal Belt Loot - Small Hulls",
+      "description": "Rule-backed low-tier loot for ordinary asteroid belt frigate and destroyer rats. Empty wrecks are possible but uncommon; faction/deadspace/officer items are excluded by runtime selectors.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0.22,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "tier": "low",
+          "sizeBand": "small",
+          "weight": 6,
+          "quantityMin": 20,
+          "quantityMax": 120
+        },
+        {
+          "kind": "module",
+          "tier": "low",
+          "sizeBand": "small",
+          "weight": 2
+        },
+        {
+          "kind": "utility",
+          "tier": "low",
+          "sizeBand": "small",
+          "weight": 2
+        },
+        {
+          "kind": "trash",
+          "tier": "low",
+          "weight": 1,
+          "quantityMin": 1,
+          "quantityMax": 3
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_belt_normal_medium",
+      "name": "Normal Belt Loot - Medium Hulls",
+      "description": "Rule-backed low-tier loot for ordinary asteroid belt cruiser and battlecruiser rats. Empty wrecks are possible but uncommon; faction/deadspace/officer items are excluded by runtime selectors.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0.18,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "tier": "low",
+          "sizeBand": "medium",
+          "weight": 6,
+          "quantityMin": 40,
+          "quantityMax": 200
+        },
+        {
+          "kind": "module",
+          "tier": "low",
+          "sizeBand": "medium",
+          "weight": 3
+        },
+        {
+          "kind": "utility",
+          "tier": "low",
+          "sizeBand": "medium",
+          "weight": 2
+        },
+        {
+          "kind": "trash",
+          "tier": "low",
+          "weight": 1,
+          "quantityMin": 1,
+          "quantityMax": 4
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_belt_normal_large",
+      "name": "Normal Belt Loot - Large Hulls",
+      "description": "Rule-backed low-tier loot for ordinary asteroid belt battleship rats. Empty wrecks are possible but uncommon; faction/deadspace/officer items are excluded by runtime selectors.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0.08,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "tier": "low",
+          "sizeBand": "large",
+          "weight": 6,
+          "quantityMin": 80,
+          "quantityMax": 400
+        },
+        {
+          "kind": "module",
+          "tier": "low",
+          "sizeBand": "large",
+          "weight": 4
+        },
+        {
+          "kind": "utility",
+          "tier": "low",
+          "sizeBand": "large",
+          "weight": 3
+        },
+        {
+          "kind": "trash",
+          "tier": "low",
+          "weight": 2,
+          "quantityMin": 1,
+          "quantityMax": 6
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_angel_belt_commander",
+      "name": "Angel Belt Commander Loot",
+      "description": "Rule-backed faction-grade loot for Angel Cartel asteroid commander rats. Uses Domination modules and charges instead of normal belt loot.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Domination"
+          ],
+          "weight": 5,
+          "quantityMin": 4,
+          "quantityMax": 24,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Domination"
+          ],
+          "weight": 3,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_blood_belt_commander",
+      "name": "Blood Raider Belt Commander Loot",
+      "description": "Rule-backed faction-grade loot for Blood Raider asteroid commander rats. Uses Dark Blood modules and charges instead of normal belt loot.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dark Blood"
+          ],
+          "weight": 5,
+          "quantityMin": 4,
+          "quantityMax": 24,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dark Blood"
+          ],
+          "weight": 3,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_guristas_belt_commander",
+      "name": "Guristas Belt Commander Loot",
+      "description": "Rule-backed faction-grade loot for Guristas asteroid commander rats. Uses Dread Guristas modules and charges instead of normal belt loot.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dread Guristas"
+          ],
+          "weight": 5,
+          "quantityMin": 4,
+          "quantityMax": 24,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dread Guristas"
+          ],
+          "weight": 3,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_sansha_belt_commander",
+      "name": "Sansha Belt Commander Loot",
+      "description": "Rule-backed faction-grade loot for Sansha asteroid commander rats. Uses True Sansha modules and charges instead of normal belt loot.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "True Sansha"
+          ],
+          "weight": 5,
+          "quantityMin": 4,
+          "quantityMax": 24,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "True Sansha"
+          ],
+          "weight": 3,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_serpentis_belt_commander",
+      "name": "Serpentis Belt Commander Loot",
+      "description": "Rule-backed faction-grade loot for Serpentis asteroid commander rats. Uses Shadow charges and Shadow Serpentis modules instead of normal belt loot.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Shadow"
+          ],
+          "weight": 5,
+          "quantityMin": 4,
+          "quantityMax": 24,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Shadow Serpentis"
+          ],
+          "weight": 3,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_rogue_drone_belt_normal",
+      "name": "Rogue Drone Belt Normal Loot",
+      "description": "Rule-backed component, salvage, and alloy loot for ordinary asteroid Rogue Drone rats. This avoids pirate weapon and ammo pools.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0.12,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "component",
+          "groupNames": [
+            "Rogue Drone Components"
+          ],
+          "weight": 4,
+          "quantityMin": 1,
+          "quantityMax": 3
+        },
+        {
+          "kind": "component",
+          "groupNames": [
+            "Salvaged Materials"
+          ],
+          "nameIncludes": [
+            "drone",
+            "neural",
+            "circuit",
+            "power",
+            "conductive",
+            "interface",
+            "nanite",
+            "trigger",
+            "current",
+            "logic",
+            "micro"
+          ],
+          "weight": 4,
+          "quantityMin": 1,
+          "quantityMax": 4
+        },
+        {
+          "kind": "material",
+          "groupNames": [
+            "Refinables"
+          ],
+          "weight": 3,
+          "quantityMin": 1,
+          "quantityMax": 8
+        },
+        {
+          "kind": "material",
+          "groupNames": [
+            "Materials and Compounds"
+          ],
+          "nameIncludes": [
+            "drone"
+          ],
+          "weight": 1,
+          "quantityMin": 1,
+          "quantityMax": 1
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_rogue_drone_deadspace",
+      "name": "Rogue Drone Deadspace and Commander Loot",
+      "description": "Rule-backed component, salvage, and alloy loot for Rogue Drone deadspace and sentient commander rats.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0.04,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "component",
+          "groupNames": [
+            "Rogue Drone Components"
+          ],
+          "weight": 5,
+          "quantityMin": 1,
+          "quantityMax": 4
+        },
+        {
+          "kind": "component",
+          "groupNames": [
+            "Salvaged Materials"
+          ],
+          "nameIncludes": [
+            "drone",
+            "neural",
+            "circuit",
+            "power",
+            "conductive",
+            "interface",
+            "nanite",
+            "trigger",
+            "current",
+            "logic",
+            "micro"
+          ],
+          "weight": 5,
+          "quantityMin": 1,
+          "quantityMax": 6
+        },
+        {
+          "kind": "material",
+          "groupNames": [
+            "Refinables"
+          ],
+          "weight": 4,
+          "quantityMin": 2,
+          "quantityMax": 12
+        },
+        {
+          "kind": "material",
+          "groupNames": [
+            "Materials and Compounds"
+          ],
+          "nameIncludes": [
+            "drone"
+          ],
+          "weight": 1,
+          "quantityMin": 1,
+          "quantityMax": 1
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_rogue_drone_officer",
+      "name": "Rogue Drone Officer Loot",
+      "description": "Rule-backed high-grade component and salvage loot for rare Rogue Drone officer units.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "component",
+          "groupNames": [
+            "Rogue Drone Components"
+          ],
+          "nameIncludes": [
+            "Elite Drone AI"
+          ],
+          "weight": 3,
+          "quantityMin": 1,
+          "quantityMax": 2
+        },
+        {
+          "kind": "component",
+          "groupNames": [
+            "Rogue Drone Components"
+          ],
+          "weight": 5,
+          "quantityMin": 1,
+          "quantityMax": 5
+        },
+        {
+          "kind": "component",
+          "groupNames": [
+            "Salvaged Materials"
+          ],
+          "nameIncludes": [
+            "drone",
+            "neural",
+            "circuit",
+            "power",
+            "conductive",
+            "interface",
+            "nanite",
+            "trigger",
+            "current",
+            "logic",
+            "micro"
+          ],
+          "weight": 4,
+          "quantityMin": 2,
+          "quantityMax": 8
+        },
+        {
+          "kind": "material",
+          "groupNames": [
+            "Refinables"
+          ],
+          "weight": 3,
+          "quantityMin": 4,
+          "quantityMax": 16
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_pirate_hauler_cargo",
+      "name": "Pirate Asteroid Hauler Cargo",
+      "description": "Rule-backed cargo-style loot for major pirate asteroid haulers. Uses minerals, ore, and light industrial filler rather than combat modules.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "cargo",
+          "groupNames": [
+            "Mineral"
+          ],
+          "nameIncludes": [
+            "Tritanium",
+            "Pyerite",
+            "Mexallon",
+            "Isogen",
+            "Nocxium",
+            "Zydrine",
+            "Megacyte"
+          ],
+          "weight": 6,
+          "quantityMin": 500,
+          "quantityMax": 5000
+        },
+        {
+          "kind": "ore",
+          "categoryIDs": [
+            25
+          ],
+          "nameExcludes": [
+            "Compressed",
+            "II-Grade",
+            "III-Grade",
+            "IV-Grade",
+            "Asteroid Mining Crystal"
+          ],
+          "weight": 5,
+          "quantityMin": 100,
+          "quantityMax": 1200
+        },
+        {
+          "kind": "cargo",
+          "groupNames": [
+            "Ice Product"
+          ],
+          "weight": 1,
+          "quantityMin": 50,
+          "quantityMax": 500
+        },
+        {
+          "kind": "cargo",
+          "groupNames": [
+            "Commodities"
+          ],
+          "nameIncludes": [
+            "Metal Scraps",
+            "Construction Tools",
+            "Excavation Equipment"
+          ],
+          "weight": 1,
+          "quantityMin": 1,
+          "quantityMax": 20
+        }
+      ]
+    },
+    {
+      "lootTableID": "loot_rogue_drone_hauler_cargo",
+      "name": "Rogue Drone Asteroid Hauler Cargo",
+      "description": "Rule-backed cargo-style loot for Rogue Drone asteroid haulers. Uses drone components, salvage, and drone alloy/refinable material instead of pirate cargo.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "material",
+          "groupNames": [
+            "Refinables"
+          ],
+          "weight": 5,
+          "quantityMin": 8,
+          "quantityMax": 40
+        },
+        {
+          "kind": "component",
+          "groupNames": [
+            "Rogue Drone Components"
+          ],
+          "weight": 4,
+          "quantityMin": 2,
+          "quantityMax": 8
+        },
+        {
+          "kind": "component",
+          "groupNames": [
+            "Salvaged Materials"
+          ],
+          "nameIncludes": [
+            "drone",
+            "neural",
+            "circuit",
+            "power",
+            "conductive",
+            "interface",
+            "nanite",
+            "trigger",
+            "current",
+            "logic",
+            "micro"
+          ],
+          "weight": 3,
+          "quantityMin": 3,
+          "quantityMax": 12
+        },
+        {
+          "kind": "material",
+          "groupNames": [
+            "Materials and Compounds"
+          ],
+          "nameIncludes": [
+            "drone"
+          ],
+          "weight": 1,
+          "quantityMin": 1,
+          "quantityMax": 4
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_pirate_hauler_pending_loot",
+      "name": "Pirate Hauler Pending Loot",
+      "description": "Explicitly empty placeholder for sourced pirate asteroid hauler NPC entities until cargo and loot parity are modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_rogue_drone_standard",
+      "name": "Rogue Drone Standard Pending Loot (Deprecated Compatibility Empty Rule)",
+      "description": "Deprecated compatibility row retained only so old Rogue Drone references do not fall back to random-any loot. Active Rogue Drone profiles use loot_rogue_drone_belt_normal, loot_rogue_drone_deadspace, or loot_rogue_drone_officer.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "deprecated_rogue_drone_compatibility",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_rogue_drone_deadspace",
+      "name": "Rogue Drone Deadspace Pending Loot (Deprecated Compatibility Empty Rule)",
+      "description": "Deprecated compatibility row retained only so old Rogue Drone references do not fall back to random-any loot. Active Rogue Drone profiles use loot_rogue_drone_belt_normal, loot_rogue_drone_deadspace, or loot_rogue_drone_officer.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "deprecated_rogue_drone_compatibility",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_rogue_drone_officer",
+      "name": "Rogue Drone Officer Pending Loot (Deprecated Compatibility Empty Rule)",
+      "description": "Deprecated compatibility row retained only so old Rogue Drone references do not fall back to random-any loot. Active Rogue Drone profiles use loot_rogue_drone_belt_normal, loot_rogue_drone_deadspace, or loot_rogue_drone_officer.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "deprecated_rogue_drone_compatibility",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_blood_raider_standard",
+      "name": "Blood Raiders Standard Loot (Deprecated Compatibility Empty Rule)",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "allowDuplicates": false,
+      "entries": [],
+      "description": "Deprecated compatibility row retained only so old references do not fall back to random-any loot. Active normal belt profiles use loot_belt_normal_small, loot_belt_normal_medium, or loot_belt_normal_large.",
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "deprecated_standard_compatibility",
+      "disableRandomLoot": true,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_blood_raider_deadspace",
+      "name": "Blood Raider Deadspace Loot",
+      "description": "Rule-backed deadspace loot for Blood Raider Deadspace NPCs. Uses faction ammo/trash as common filler and Corp deadspace modules as uncommon rewards.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0.12,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dark Blood"
+          ],
+          "weight": 6,
+          "quantityMin": 4,
+          "quantityMax": 32,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "trash",
+          "tier": "low",
+          "weight": 2,
+          "quantityMin": 1,
+          "quantityMax": 5
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dark Blood"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "deadspace",
+          "nameIncludes": [
+            "Corp"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_blood_raider_officer",
+      "name": "Blood Raider Officer Loot",
+      "description": "Rule-backed officer loot for Blood Raider Officer profiles. Officer-name module pools are the defining reward, with faction ammo, faction modules, and Corp deadspace modules as fallback flavor.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "module",
+          "grade": "officer",
+          "nameIncludes": [
+            "Ahremen",
+            "Draclira",
+            "Raysere",
+            "Tairei"
+          ],
+          "weight": 8,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dark Blood"
+          ],
+          "weight": 4,
+          "quantityMin": 8,
+          "quantityMax": 60,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dark Blood"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "deadspace",
+          "nameIncludes": [
+            "Corp"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_sansha_standard",
+      "name": "Sansha's Nation Standard Loot (Deprecated Compatibility Empty Rule)",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "allowDuplicates": false,
+      "entries": [],
+      "description": "Deprecated compatibility row retained only so old references do not fall back to random-any loot. Active normal belt profiles use loot_belt_normal_small, loot_belt_normal_medium, or loot_belt_normal_large.",
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "deprecated_standard_compatibility",
+      "disableRandomLoot": true,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_sansha_deadspace",
+      "name": "Sansha's Nation Deadspace Loot",
+      "description": "Rule-backed deadspace loot for Sansha's Nation Deadspace NPCs. Uses faction ammo/trash as common filler and Cent deadspace modules as uncommon rewards.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0.12,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "True Sansha"
+          ],
+          "weight": 6,
+          "quantityMin": 4,
+          "quantityMax": 32,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "trash",
+          "tier": "low",
+          "weight": 2,
+          "quantityMin": 1,
+          "quantityMax": 5
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "True Sansha"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "deadspace",
+          "nameIncludes": [
+            "Cent"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_sansha_officer",
+      "name": "Sansha's Nation Officer Loot",
+      "description": "Rule-backed officer loot for Sansha's Nation Officer profiles. Officer-name module pools are the defining reward, with faction ammo, faction modules, and Cent deadspace modules as fallback flavor.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "module",
+          "grade": "officer",
+          "nameIncludes": [
+            "Brokara",
+            "Chelm",
+            "Selynne",
+            "Vizan"
+          ],
+          "weight": 8,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "True Sansha"
+          ],
+          "weight": 4,
+          "quantityMin": 8,
+          "quantityMax": 60,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "True Sansha"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "deadspace",
+          "nameIncludes": [
+            "Cent"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_serpentis_standard",
+      "name": "Serpentis Standard Loot (Deprecated Compatibility Empty Rule)",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "allowDuplicates": false,
+      "entries": [],
+      "description": "Deprecated compatibility row retained only so old references do not fall back to random-any loot. Active normal belt profiles use loot_belt_normal_small, loot_belt_normal_medium, or loot_belt_normal_large.",
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "deprecated_standard_compatibility",
+      "disableRandomLoot": true,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_serpentis_deadspace",
+      "name": "Serpentis Deadspace Loot",
+      "description": "Rule-backed deadspace loot for Serpentis Deadspace NPCs. Uses faction ammo/trash as common filler and Core deadspace modules as uncommon rewards.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0.12,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Shadow"
+          ],
+          "weight": 6,
+          "quantityMin": 4,
+          "quantityMax": 32,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "trash",
+          "tier": "low",
+          "weight": 2,
+          "quantityMin": 1,
+          "quantityMax": 5
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Shadow Serpentis"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "deadspace",
+          "nameIncludes": [
+            "Core"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_serpentis_officer",
+      "name": "Serpentis Officer Loot",
+      "description": "Rule-backed officer loot for Serpentis Officer profiles. Officer-name module pools are the defining reward, with faction ammo, faction modules, and Core deadspace modules as fallback flavor.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "module",
+          "grade": "officer",
+          "nameIncludes": [
+            "Brynn",
+            "Cormack",
+            "Setele",
+            "Tuvan"
+          ],
+          "weight": 8,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Shadow"
+          ],
+          "weight": 4,
+          "quantityMin": 8,
+          "quantityMax": 60,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Shadow Serpentis"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "deadspace",
+          "nameIncludes": [
+            "Core"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_angel_standard",
+      "name": "Angel Cartel Standard Loot (Deprecated Compatibility Empty Rule)",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "allowDuplicates": false,
+      "entries": [],
+      "description": "Deprecated compatibility row retained only so old references do not fall back to random-any loot. Active normal belt profiles use loot_belt_normal_small, loot_belt_normal_medium, or loot_belt_normal_large.",
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "deprecated_standard_compatibility",
+      "disableRandomLoot": true,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_angel_deadspace",
+      "name": "Angel Cartel Deadspace Loot",
+      "description": "Rule-backed deadspace loot for Angel Cartel Deadspace NPCs. Uses faction ammo/trash as common filler and Gist deadspace modules as uncommon rewards.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0.12,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Domination"
+          ],
+          "weight": 6,
+          "quantityMin": 4,
+          "quantityMax": 32,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "trash",
+          "tier": "low",
+          "weight": 2,
+          "quantityMin": 1,
+          "quantityMax": 5
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Domination"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "deadspace",
+          "nameIncludes": [
+            "Gist"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_angel_officer",
+      "name": "Angel Cartel Officer Loot",
+      "description": "Rule-backed officer loot for Angel Cartel Officer profiles. Officer-name module pools are the defining reward, with faction ammo, faction modules, and Gist deadspace modules as fallback flavor.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "module",
+          "grade": "officer",
+          "nameIncludes": [
+            "Gotan",
+            "Hakim",
+            "Mizuro",
+            "Tobias",
+            "Sila",
+            "Ramaku"
+          ],
+          "weight": 8,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Domination"
+          ],
+          "weight": 4,
+          "quantityMin": 8,
+          "quantityMax": 60,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Domination"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "deadspace",
+          "nameIncludes": [
+            "Gist"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_guristas_standard",
+      "name": "Guristas Standard Loot (Deprecated Compatibility Empty Rule)",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "allowDuplicates": false,
+      "entries": [],
+      "description": "Deprecated compatibility row retained only so old references do not fall back to random-any loot. Active normal belt profiles use loot_belt_normal_small, loot_belt_normal_medium, or loot_belt_normal_large.",
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "deprecated_standard_compatibility",
+      "disableRandomLoot": true,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_guristas_deadspace",
+      "name": "Guristas Deadspace Loot",
+      "description": "Rule-backed deadspace loot for Guristas Deadspace NPCs. Uses faction ammo/trash as common filler and Pith deadspace modules as uncommon rewards.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0.12,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dread Guristas"
+          ],
+          "weight": 6,
+          "quantityMin": 4,
+          "quantityMax": 32,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "trash",
+          "tier": "low",
+          "weight": 2,
+          "quantityMin": 1,
+          "quantityMax": 5
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dread Guristas"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "deadspace",
+          "nameIncludes": [
+            "Pith"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_guristas_officer",
+      "name": "Guristas Officer Loot",
+      "description": "Rule-backed officer loot for Guristas Officer profiles. Officer-name module pools are the defining reward, with faction ammo, faction modules, and Pith deadspace modules as fallback flavor.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "module",
+          "grade": "officer",
+          "nameIncludes": [
+            "Estamel",
+            "Kaikka",
+            "Thon",
+            "Vepas",
+            "Hanaruwa",
+            "Panola"
+          ],
+          "weight": 8,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dread Guristas"
+          ],
+          "weight": 4,
+          "quantityMin": 8,
+          "quantityMax": 60,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Dread Guristas"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "deadspace",
+          "nameIncludes": [
+            "Pith"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege",
+            "Citadel",
+            "Giga",
+            "Quad Mega"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_mission_generic_pending_loot",
+      "name": "Mission Generic Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Mission Generic Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_mission_amarr_empire_pending_loot",
+      "name": "Mission Amarr Empire Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Mission Amarr Empire Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_mission_caldari_state_pending_loot",
+      "name": "Mission Caldari State Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Mission Caldari State Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_mission_gallente_federation_pending_loot",
+      "name": "Mission Gallente Federation Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Mission Gallente Federation Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_mission_minmatar_republic_pending_loot",
+      "name": "Mission Minmatar Republic Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Mission Minmatar Republic Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_storyline_mission_pending_loot",
+      "name": "Storyline Mission Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Storyline Mission Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_deadspace_overseer_pending_loot",
+      "name": "Deadspace Overseer Loot",
+      "description": "Rule-backed loot for sourced deadspace overseer ship and sentry profiles. Overseer personal effects are common, with faction/deadspace module and ammo rolls as uncommon flavor.",
+      "mode": "rule",
+      "minEntries": 2,
+      "maxEntries": 5,
+      "emptyChance": 0,
+      "allowDuplicates": false,
+      "selectors": [
+        {
+          "kind": "any",
+          "grade": "special",
+          "groupNames": [
+            "Overseer Personal Effects"
+          ],
+          "weight": 8,
+          "quantityMin": 1,
+          "quantityMax": 1
+        },
+        {
+          "kind": "ammo",
+          "grade": "faction",
+          "nameIncludes": [
+            "Domination",
+            "Dark Blood",
+            "Dread Guristas",
+            "True Sansha",
+            "Shadow"
+          ],
+          "weight": 3,
+          "quantityMin": 4,
+          "quantityMax": 32,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "faction",
+          "nameIncludes": [
+            "Domination",
+            "Dark Blood",
+            "Dread Guristas",
+            "True Sansha",
+            "Shadow Serpentis"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        },
+        {
+          "kind": "module",
+          "grade": "deadspace",
+          "nameIncludes": [
+            "Gist",
+            "Corp",
+            "Pith",
+            "Cent",
+            "Core"
+          ],
+          "weight": 1,
+          "nameExcludes": [
+            "Capital",
+            "XL",
+            "X-Large",
+            "10000MN",
+            "50000MN",
+            "Dual 1000mm",
+            "Quad 3500mm",
+            "Triple 2500mm",
+            "25000mm",
+            "Siege"
+          ]
+        }
+      ]
+    },
+    {
+      "lootTableID": "parity_homefront_operations_pending_loot",
+      "name": "Homefront Operations Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Homefront Operations Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_abyssal_entities_pending_loot",
+      "name": "Abyssal Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Abyssal Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_irregular_entities_pending_loot",
+      "name": "Irregular Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Irregular Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_advanced_pve_entities_pending_loot",
+      "name": "Advanced PVE Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Advanced PVE Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_faction_warfare_entities_pending_loot",
+      "name": "Faction Warfare Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Faction Warfare Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_ambient_pve_entities_pending_loot",
+      "name": "Ambient PVE Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Ambient PVE Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_destructible_sentry_guns_pending_loot",
+      "name": "Destructible Sentry Gun Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Destructible Sentry Gun Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_diamond_entities_pending_loot",
+      "name": "Diamond Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Diamond Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_insurgency_entities_pending_loot",
+      "name": "Insurgency Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Insurgency Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_law_enforcement_entities_pending_loot",
+      "name": "Law Enforcement Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Law Enforcement Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_warpath_entities_pending_loot",
+      "name": "Warpath Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Warpath Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_incursion_sansha_pending_loot",
+      "name": "Incursion Sansha Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Incursion Sansha Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_mission_special_entities_pending_loot",
+      "name": "Mission Special Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Mission Special Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_roaming_entities_pending_loot",
+      "name": "Roaming Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Roaming Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_special_encounter_entities_pending_loot",
+      "name": "Special Encounter Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Special Encounter Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_zero_damage_target_shell_entities_pending_loot",
+      "name": "Zero Damage Target Shell Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Zero Damage Target Shell Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    },
+    {
+      "lootTableID": "parity_residual_sde_rat_entities_pending_loot",
+      "name": "Residual SDE Rat Entity Hostiles Pending Loot",
+      "description": "Explicitly empty placeholder for sourced Residual SDE Rat Entity Hostiles NPC entities until loot parity is modeled separately.",
+      "minEntries": 0,
+      "maxEntries": 0,
+      "disableRandomLoot": true,
+      "entries": [],
+      "mode": "rule",
+      "emptyRule": true,
+      "emptyReason": "pending_sourced_family_rule",
+      "allowDuplicates": false,
+      "selectors": []
+    }
+  ]
+}

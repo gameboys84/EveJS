@@ -1,0 +1,945 @@
+{
+  "solarSystemID": 30003452,
+  "systemName": "Irgrus",
+  "props": [
+    {
+      "itemID": "9002277295000000725",
+      "description": "TQ captured Sharded Rock in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10785,
+      "ownerID": 500002,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1500,
+      "flagsByte": 64,
+      "position": {
+        "x": 2684707968146.078,
+        "y": -131821854720,
+        "z": -2202881972839.16
+      },
+      "dunPosition": {
+        "x": 46226.078125,
+        "y": 0,
+        "z": -47719.16015625
+      },
+      "dunRotation": [
+        34.1971549987793,
+        -23.067434310913086,
+        35.620357513427734
+      ],
+      "dungeonObjectID": 1110080,
+      "dunObjectID": 1110080,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277295000000726",
+      "description": "TQ captured Irgrus Stargate Construction Monument in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 59456,
+      "ownerID": 500002,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 6000,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684707931573.576,
+        "y": -131821854720,
+        "z": -2202881955797.375
+      },
+      "dunPosition": {
+        "x": 9653.576171875,
+        "y": 0,
+        "z": -30677.375
+      },
+      "dunRotation": [
+        40.99237060546875,
+        -0.13726742565631866,
+        0.4669562876224518
+      ],
+      "dungeonObjectID": 1110078,
+      "dunObjectID": 1110078,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277295000000727",
+      "description": "TQ captured Rock Formation - Branched & Twisted in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10137,
+      "ownerID": 500002,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 5825,
+      "flagsByte": 64,
+      "position": {
+        "x": 2684707957118.168,
+        "y": -131821854720,
+        "z": -2202881966694.4023
+      },
+      "dunPosition": {
+        "x": 35198.16796875,
+        "y": 0,
+        "z": -41574.40234375
+      },
+      "dunRotation": [
+        285.80914306640625,
+        0.5446999669075012,
+        2.239147901535034
+      ],
+      "dungeonObjectID": 1110081,
+      "dunObjectID": 1110081,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277295000000728",
+      "description": "TQ captured Landmark Cloud in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 54256,
+      "ownerID": 500002,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 500,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684707921920,
+        "y": -131821854720,
+        "z": -2202881925120
+      },
+      "dunPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1109911,
+      "dunObjectID": 1109911,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277295000000729",
+      "description": "TQ captured Minmatar Sentry Gun (DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64889,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 45,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708169611.405,
+        "y": -131821843154.66602,
+        "z": -2202882206524.168
+      },
+      "dunPosition": {
+        "x": 1931.4049072265625,
+        "y": 11565.333984375,
+        "z": -35644.16796875
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137024,
+      "dunObjectID": 1137024,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000730",
+      "description": "TQ captured Fortified Minmatar Grandstand (DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64888,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 300,
+      "flagsByte": 64,
+      "position": {
+        "x": 2684708153259.1045,
+        "y": -131821850792.42383,
+        "z": -2202882171674.412
+      },
+      "dunPosition": {
+        "x": -14420.8955078125,
+        "y": 3927.576171875,
+        "z": -794.412109375
+      },
+      "dunRotation": [
+        109.99999237060547,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137042,
+      "dunObjectID": 1137042,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277295000000731",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708160870.3877,
+        "y": -131821841710.72656,
+        "z": -2202882168300.619
+      },
+      "dunPosition": {
+        "x": -6809.6123046875,
+        "y": 13009.2734375,
+        "z": 2579.380859375
+      },
+      "dunRotation": [
+        30.0914306640625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137078,
+      "dunObjectID": 1137078,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000732",
+      "description": "TQ captured Non-Interactable Minmatar Junction (Do not translate) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60337,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 200,
+      "flagsByte": 64,
+      "position": {
+        "x": 2684708197493.8516,
+        "y": -131821835187.3125,
+        "z": -2202882185010.074
+      },
+      "dunPosition": {
+        "x": 29813.8515625,
+        "y": 19532.6875,
+        "z": -14130.07421875
+      },
+      "dunRotation": [
+        269.89642333984375,
+        3.094043424245463e-11,
+        -179.99996948242188
+      ],
+      "dungeonObjectID": 1136988,
+      "dunObjectID": 1136988,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277295000000733",
+      "description": "TQ captured Minmatar Sentry Gun (DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64889,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 45,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708168185.4062,
+        "y": -131821843154.66602,
+        "z": -2202882206524.168
+      },
+      "dunPosition": {
+        "x": 505.40625,
+        "y": 11565.333984375,
+        "z": -35644.16796875
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137025,
+      "dunObjectID": 1137025,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000734",
+      "description": "TQ captured Fortified Minmatar Battery (DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64886,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708163410.529,
+        "y": -131821841469.3164,
+        "z": -2202882164861.0176
+      },
+      "dunPosition": {
+        "x": -4269.47119140625,
+        "y": 13250.68359375,
+        "z": 6018.982421875
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137043,
+      "dunObjectID": 1137043,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000735",
+      "description": "TQ captured Minmatar Border Security Outpost in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64887,
+      "ownerID": 500002,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 918,
+      "flagsByte": 224,
+      "position": {
+        "x": 2684708167680,
+        "y": -131821850857.5918,
+        "z": -2202882191603.508
+      },
+      "dunPosition": {
+        "x": 0,
+        "y": 3862.408203125,
+        "z": -20723.5078125
+      },
+      "dunRotation": [
+        315.9259338378906,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137079,
+      "dunObjectID": 1137079,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000736",
+      "description": "TQ captured Liberation Games Firework Sentry ( DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64881,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 476,
+      "flagsByte": 192,
+      "position": {
+        "x": 2684708168898.4014,
+        "y": -131821843871.28516,
+        "z": -2202882206524.168
+      },
+      "dunPosition": {
+        "x": 1218.401611328125,
+        "y": 10848.71484375,
+        "z": -35644.16796875
+      },
+      "dunRotation": [
+        292.58758544921875,
+        -0.33192962408065796,
+        0.764668345451355
+      ],
+      "dungeonObjectID": 1136989,
+      "dunObjectID": 1136989,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277295000000737",
+      "description": "TQ captured Fortified Minmatar Barrier ( DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64882,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 622,
+      "flagsByte": 64,
+      "position": {
+        "x": 2684708169126.9683,
+        "y": -131821843852.76953,
+        "z": -2202882205984.7383
+      },
+      "dunPosition": {
+        "x": 1446.9683837890625,
+        "y": 10867.23046875,
+        "z": -35104.73828125
+      },
+      "dunRotation": [
+        247.742431640625,
+        0.31901395320892334,
+        -0.10942811518907547
+      ],
+      "dungeonObjectID": 1137026,
+      "dunObjectID": 1137026,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277295000000738",
+      "description": "TQ captured Fortified Minmatar Battery (DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64886,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708142942.0254,
+        "y": -131821848420.61328,
+        "z": -2202882191938.578
+      },
+      "dunPosition": {
+        "x": -24737.974609375,
+        "y": 6299.38671875,
+        "z": -21058.578125
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137044,
+      "dunObjectID": 1137044,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000739",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708143492.746,
+        "y": -131821841710.72656,
+        "z": -2202882185859.6875
+      },
+      "dunPosition": {
+        "x": -24187.25390625,
+        "y": 13009.2734375,
+        "z": -14979.6875
+      },
+      "dunRotation": [
+        353.9060974121094,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137080,
+      "dunObjectID": 1137080,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000740",
+      "description": "TQ captured Fortified Minmatar Barrier ( DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64882,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 622,
+      "flagsByte": 64,
+      "position": {
+        "x": 2684708168676.994,
+        "y": -131821843855.7793,
+        "z": -2202882207055.0312
+      },
+      "dunPosition": {
+        "x": 996.994384765625,
+        "y": 10864.220703125,
+        "z": -36175.03125
+      },
+      "dunRotation": [
+        247.742431640625,
+        0.31901395320892334,
+        -0.10942811518907547
+      ],
+      "dungeonObjectID": 1137027,
+      "dunObjectID": 1137027,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277295000000741",
+      "description": "TQ captured Fortified Minmatar Battery (DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64886,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708170752.74,
+        "y": -131821848136.91016,
+        "z": -2202882222537.7617
+      },
+      "dunPosition": {
+        "x": 3072.740234375,
+        "y": 6583.08984375,
+        "z": -51657.76171875
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137045,
+      "dunObjectID": 1137045,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000742",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708152876.7695,
+        "y": -131821841710.72656,
+        "z": -2202882217694.922
+      },
+      "dunPosition": {
+        "x": -14803.23046875,
+        "y": 13009.2734375,
+        "z": -46814.921875
+      },
+      "dunRotation": [
+        4.974475383758545,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137081,
+      "dunObjectID": 1137081,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000743",
+      "description": "TQ captured Dark Gray Cloud in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10128,
+      "ownerID": 500002,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 70000,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708174863.864,
+        "y": -131821835174.22461,
+        "z": -2202882176407.3623
+      },
+      "dunPosition": {
+        "x": 7183.86376953125,
+        "y": 19545.775390625,
+        "z": -5527.3623046875
+      },
+      "dunRotation": [
+        334.6112365722656,
+        -40.354190826416016,
+        146.3402862548828
+      ],
+      "dungeonObjectID": 1137207,
+      "dunObjectID": 1137207,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277295000000744",
+      "description": "TQ captured Non-Interactable Minmatar Bunker (DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64884,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 713,
+      "flagsByte": 64,
+      "position": {
+        "x": 2684708169581.9614,
+        "y": -131821843820.23047,
+        "z": -2202882204913.004
+      },
+      "dunPosition": {
+        "x": 1901.9615478515625,
+        "y": 10899.76953125,
+        "z": -34033.00390625
+      },
+      "dunRotation": [
+        202.7477264404297,
+        -2.971522405914584e-7,
+        -5.3092378493602155e-8
+      ],
+      "dungeonObjectID": 1137028,
+      "dunObjectID": 1137028,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000745",
+      "description": "TQ captured Fortified Minmatar Battery (DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64886,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708193676.162,
+        "y": -131821848178.01758,
+        "z": -2202882192669.289
+      },
+      "dunPosition": {
+        "x": 25996.162109375,
+        "y": 6541.982421875,
+        "z": -21789.2890625
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 1137046,
+      "dunObjectID": 1137046,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000746",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708187107.0703,
+        "y": -131821841710.72656,
+        "z": -2202882215179.418
+      },
+      "dunPosition": {
+        "x": 19427.0703125,
+        "y": 13009.2734375,
+        "z": -44299.41796875
+      },
+      "dunRotation": [
+        7.7158708572387695,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137082,
+      "dunObjectID": 1137082,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000747",
+      "description": "TQ captured Dark Gray Cloud in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10128,
+      "ownerID": 500002,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 70000,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708154454.8823,
+        "y": -131821849424.89648,
+        "z": -2202882214727.918
+      },
+      "dunPosition": {
+        "x": -13225.1171875,
+        "y": 5295.103515625,
+        "z": -43847.91796875
+      },
+      "dunRotation": [
+        277.3206787109375,
+        -10.327458381652832,
+        32.43550109863281
+      ],
+      "dungeonObjectID": 1137208,
+      "dunObjectID": 1137208,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277295000000748",
+      "description": "TQ captured Non-Interactable Minmatar Bunker (DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64884,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 713,
+      "flagsByte": 64,
+      "position": {
+        "x": 2684708168233.417,
+        "y": -131821843832.47266,
+        "z": -2202882208138.2656
+      },
+      "dunPosition": {
+        "x": 553.4169921875,
+        "y": 10887.52734375,
+        "z": -37258.265625
+      },
+      "dunRotation": [
+        202.7477264404297,
+        -2.971522405914584e-7,
+        -5.3092378493602155e-8
+      ],
+      "dungeonObjectID": 1137029,
+      "dunObjectID": 1137029,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000749",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 2684708197970.756,
+        "y": -131821841710.72656,
+        "z": -2202882195403.09
+      },
+      "dunPosition": {
+        "x": 30290.755859375,
+        "y": 13009.2734375,
+        "z": -24523.08984375
+      },
+      "dunRotation": [
+        339.23968505859375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137083,
+      "dunObjectID": 1137083,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000750",
+      "description": "TQ captured Non-Interactable Minmatar Bunker (DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64884,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 713,
+      "flagsByte": 64,
+      "position": {
+        "x": 2684708167287.161,
+        "y": -131821844466.1211,
+        "z": -2202882207200.9375
+      },
+      "dunPosition": {
+        "x": -392.8388671875,
+        "y": 10253.87890625,
+        "z": -36320.9375
+      },
+      "dunRotation": [
+        247.33059692382812,
+        0.2521669864654541,
+        0.3477572798728943
+      ],
+      "dungeonObjectID": 1137030,
+      "dunObjectID": 1137030,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2730
+    },
+    {
+      "itemID": "9002277295000000751",
+      "description": "TQ captured Fortified Minmatar Grandstand (DO NOT TRANSLATE) in Irgrus.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64888,
+      "ownerID": 500002,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 300,
+      "flagsByte": 64,
+      "position": {
+        "x": 2684708153927.7246,
+        "y": -131821850278.87305,
+        "z": -2202882174005.291
+      },
+      "dunPosition": {
+        "x": -13752.275390625,
+        "y": 4441.126953125,
+        "z": -3125.291015625
+      },
+      "dunRotation": [
+        111.19356536865234,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1137084,
+      "dunObjectID": 1137084,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224015-136-TQBig",
+      "mode": "additive; no player-owned props"
+    }
+  }
+}

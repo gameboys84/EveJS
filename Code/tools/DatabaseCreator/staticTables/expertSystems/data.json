@@ -1,0 +1,9470 @@
+{
+  "source": {
+    "provider": "Elysian EVE Expert Systems authority",
+    "authority": "ClientSDE expertsystems.jsonl + itemTypes metadata",
+    "generatedAt": "2026-06-01T00:33:39.504Z",
+    "notes": [
+      "Runtime rows are mirrored from the client expertsystems table so server activation matches the shipped client authority.",
+      "Item type metadata supplies names, group names, and published state; skill grants and associated ship types come from expertsystems.jsonl."
+    ]
+  },
+  "constants": {
+    "maxCharacterInstallations": 3,
+    "maxInstalledDurationToAllowTopUpDays": 30
+  },
+  "expertSystems": [
+    {
+      "typeID": 57190,
+      "name": "QA ES below starting skills Afterburner II",
+      "durationDays": 1,
+      "hidden": true,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 3450,
+          "level": 2
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4090,
+      "groupName": "QA Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 57191,
+      "name": "QA ES above starting below alpha max Archaeology II",
+      "durationDays": 1,
+      "hidden": true,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 13278,
+          "level": 2
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4090,
+      "groupName": "QA Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 57192,
+      "name": "QA ES omega only Archaeology IV",
+      "durationDays": 1,
+      "hidden": true,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 13278,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4090,
+      "groupName": "QA Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 57193,
+      "name": "QA ES ship unlock Gallente Battleship I",
+      "durationDays": 1,
+      "hidden": true,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 3336,
+          "level": 1
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4090,
+      "groupName": "QA Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 57194,
+      "name": "QA ES module unlock Medium Autocannon V and Specialization",
+      "durationDays": 1,
+      "hidden": true,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 3305,
+          "level": 5
+        },
+        {
+          "typeID": 12208,
+          "level": 1
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4090,
+      "groupName": "QA Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 57195,
+      "name": "QA ES ship attribute bonus max velocity Navigation IV",
+      "durationDays": 1,
+      "hidden": true,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 3449,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4090,
+      "groupName": "QA Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 57197,
+      "name": "QA ES test",
+      "durationDays": 30,
+      "hidden": true,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 3450,
+          "level": 5
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4090,
+      "groupName": "QA Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 57199,
+      "name": "QA ES Generic Debug",
+      "durationDays": 1,
+      "hidden": true,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 11084,
+          "level": 3
+        },
+        {
+          "typeID": 47870,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        644
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4090,
+      "groupName": "QA Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 57203,
+      "name": "Amarr HS Space Exploration Expert System",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 3
+        },
+        {
+          "typeID": 3331,
+          "level": 3
+        },
+        {
+          "typeID": 3392,
+          "level": 3
+        },
+        {
+          "typeID": 3393,
+          "level": 3
+        },
+        {
+          "typeID": 3394,
+          "level": 3
+        },
+        {
+          "typeID": 3402,
+          "level": 3
+        },
+        {
+          "typeID": 3412,
+          "level": 3
+        },
+        {
+          "typeID": 3413,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3426,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 3
+        },
+        {
+          "typeID": 3429,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3432,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 3
+        },
+        {
+          "typeID": 3450,
+          "level": 3
+        },
+        {
+          "typeID": 3451,
+          "level": 1
+        },
+        {
+          "typeID": 3452,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 3551,
+          "level": 3
+        },
+        {
+          "typeID": 13278,
+          "level": 3
+        },
+        {
+          "typeID": 21718,
+          "level": 3
+        },
+        {
+          "typeID": 22806,
+          "level": 1
+        },
+        {
+          "typeID": 22807,
+          "level": 1
+        },
+        {
+          "typeID": 22808,
+          "level": 1
+        },
+        {
+          "typeID": 22809,
+          "level": 1
+        },
+        {
+          "typeID": 25739,
+          "level": 3
+        },
+        {
+          "typeID": 25811,
+          "level": 3
+        },
+        {
+          "typeID": 33002,
+          "level": 3
+        },
+        {
+          "typeID": 33078,
+          "level": 1
+        }
+      ],
+      "associatedTypeIDs": [
+        29248
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 57204,
+      "name": "Caldari HS Space Exploration Expert System",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 3
+        },
+        {
+          "typeID": 3330,
+          "level": 3
+        },
+        {
+          "typeID": 3402,
+          "level": 3
+        },
+        {
+          "typeID": 3412,
+          "level": 3
+        },
+        {
+          "typeID": 3413,
+          "level": 4
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3417,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 3
+        },
+        {
+          "typeID": 3419,
+          "level": 3
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3425,
+          "level": 3
+        },
+        {
+          "typeID": 3426,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 3
+        },
+        {
+          "typeID": 3429,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3432,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 3
+        },
+        {
+          "typeID": 3450,
+          "level": 3
+        },
+        {
+          "typeID": 3451,
+          "level": 1
+        },
+        {
+          "typeID": 3452,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 3551,
+          "level": 3
+        },
+        {
+          "typeID": 11566,
+          "level": 1
+        },
+        {
+          "typeID": 12365,
+          "level": 1
+        },
+        {
+          "typeID": 12366,
+          "level": 1
+        },
+        {
+          "typeID": 12367,
+          "level": 1
+        },
+        {
+          "typeID": 13278,
+          "level": 3
+        },
+        {
+          "typeID": 21059,
+          "level": 3
+        },
+        {
+          "typeID": 21718,
+          "level": 3
+        },
+        {
+          "typeID": 25739,
+          "level": 3
+        },
+        {
+          "typeID": 25811,
+          "level": 3
+        },
+        {
+          "typeID": 33000,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [
+        605
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 57205,
+      "name": "Gallente HS Space Exploration Expert System",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 3
+        },
+        {
+          "typeID": 3328,
+          "level": 3
+        },
+        {
+          "typeID": 3392,
+          "level": 3
+        },
+        {
+          "typeID": 3393,
+          "level": 3
+        },
+        {
+          "typeID": 3394,
+          "level": 3
+        },
+        {
+          "typeID": 3402,
+          "level": 3
+        },
+        {
+          "typeID": 3412,
+          "level": 3
+        },
+        {
+          "typeID": 3413,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3426,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 3
+        },
+        {
+          "typeID": 3429,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3432,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 3
+        },
+        {
+          "typeID": 3450,
+          "level": 3
+        },
+        {
+          "typeID": 3451,
+          "level": 1
+        },
+        {
+          "typeID": 3452,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 3551,
+          "level": 3
+        },
+        {
+          "typeID": 13278,
+          "level": 3
+        },
+        {
+          "typeID": 21718,
+          "level": 3
+        },
+        {
+          "typeID": 22806,
+          "level": 1
+        },
+        {
+          "typeID": 22807,
+          "level": 1
+        },
+        {
+          "typeID": 22808,
+          "level": 1
+        },
+        {
+          "typeID": 22809,
+          "level": 1
+        },
+        {
+          "typeID": 25739,
+          "level": 3
+        },
+        {
+          "typeID": 25811,
+          "level": 3
+        },
+        {
+          "typeID": 32999,
+          "level": 3
+        },
+        {
+          "typeID": 33078,
+          "level": 1
+        }
+      ],
+      "associatedTypeIDs": [
+        607
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 57206,
+      "name": "Minmatar HS Space Exploration Expert System",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 3
+        },
+        {
+          "typeID": 3329,
+          "level": 3
+        },
+        {
+          "typeID": 3402,
+          "level": 3
+        },
+        {
+          "typeID": 3412,
+          "level": 3
+        },
+        {
+          "typeID": 3413,
+          "level": 4
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3417,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 3
+        },
+        {
+          "typeID": 3419,
+          "level": 3
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3425,
+          "level": 3
+        },
+        {
+          "typeID": 3426,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 3
+        },
+        {
+          "typeID": 3429,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3432,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 3
+        },
+        {
+          "typeID": 3450,
+          "level": 3
+        },
+        {
+          "typeID": 3451,
+          "level": 1
+        },
+        {
+          "typeID": 3452,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 3551,
+          "level": 3
+        },
+        {
+          "typeID": 11566,
+          "level": 1
+        },
+        {
+          "typeID": 12365,
+          "level": 1
+        },
+        {
+          "typeID": 12366,
+          "level": 1
+        },
+        {
+          "typeID": 12367,
+          "level": 1
+        },
+        {
+          "typeID": 13278,
+          "level": 3
+        },
+        {
+          "typeID": 21059,
+          "level": 3
+        },
+        {
+          "typeID": 21718,
+          "level": 3
+        },
+        {
+          "typeID": 25739,
+          "level": 3
+        },
+        {
+          "typeID": 25811,
+          "level": 3
+        },
+        {
+          "typeID": 33001,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [
+        586
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 57207,
+      "name": "Mining Barge Operations",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3386,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3410,
+          "level": 3
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 3
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3425,
+          "level": 3
+        },
+        {
+          "typeID": 3428,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 3
+        },
+        {
+          "typeID": 3437,
+          "level": 3
+        },
+        {
+          "typeID": 3438,
+          "level": 3
+        },
+        {
+          "typeID": 3442,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 12305,
+          "level": 3
+        },
+        {
+          "typeID": 16281,
+          "level": 3
+        },
+        {
+          "typeID": 17940,
+          "level": 4
+        },
+        {
+          "typeID": 22578,
+          "level": 3
+        },
+        {
+          "typeID": 23566,
+          "level": 3
+        },
+        {
+          "typeID": 23606,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 3
+        },
+        {
+          "typeID": 32999,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [
+        17476,
+        17478,
+        17480
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 57208,
+      "name": "Core Ship Operations",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3392,
+          "level": 5
+        },
+        {
+          "typeID": 3394,
+          "level": 5
+        },
+        {
+          "typeID": 3413,
+          "level": 5
+        },
+        {
+          "typeID": 3416,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3426,
+          "level": 5
+        },
+        {
+          "typeID": 3428,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 57309,
+      "name": "QA ES non ship skills",
+      "durationDays": 7,
+      "hidden": true,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 2406,
+          "level": 5
+        },
+        {
+          "typeID": 2495,
+          "level": 5
+        },
+        {
+          "typeID": 2505,
+          "level": 5
+        },
+        {
+          "typeID": 3359,
+          "level": 1
+        },
+        {
+          "typeID": 3363,
+          "level": 1
+        },
+        {
+          "typeID": 3380,
+          "level": 3
+        },
+        {
+          "typeID": 3387,
+          "level": 1
+        },
+        {
+          "typeID": 3397,
+          "level": 1
+        },
+        {
+          "typeID": 3405,
+          "level": 2
+        },
+        {
+          "typeID": 3406,
+          "level": 1
+        },
+        {
+          "typeID": 3411,
+          "level": 5
+        },
+        {
+          "typeID": 11445,
+          "level": 1
+        },
+        {
+          "typeID": 11452,
+          "level": 1
+        },
+        {
+          "typeID": 12196,
+          "level": 5
+        },
+        {
+          "typeID": 18580,
+          "level": 1
+        },
+        {
+          "typeID": 25235,
+          "level": 1
+        },
+        {
+          "typeID": 25530,
+          "level": 1
+        },
+        {
+          "typeID": 25538,
+          "level": 1
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4090,
+      "groupName": "QA Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 57578,
+      "name": "Expired Grand Prix Interceptors Expert System",
+      "durationDays": 4,
+      "hidden": false,
+      "retired": true,
+      "skillsGranted": [
+        {
+          "typeID": 3328,
+          "level": 5
+        },
+        {
+          "typeID": 3329,
+          "level": 5
+        },
+        {
+          "typeID": 3330,
+          "level": 5
+        },
+        {
+          "typeID": 3331,
+          "level": 5
+        },
+        {
+          "typeID": 12092,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        11176,
+        11178,
+        11184,
+        11186,
+        11196,
+        11198,
+        11200,
+        11202
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 59195,
+      "name": "Mining Blitz Expedition Frigates Expert System",
+      "durationDays": 4,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3386,
+          "level": 4
+        },
+        {
+          "typeID": 3410,
+          "level": 3
+        },
+        {
+          "typeID": 22578,
+          "level": 4
+        },
+        {
+          "typeID": 32918,
+          "level": 5
+        },
+        {
+          "typeID": 33856,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        32880,
+        33697,
+        37135
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 59404,
+      "name": "Gallente Federation Day Expert System",
+      "durationDays": 4,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 5
+        },
+        {
+          "typeID": 3304,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 4
+        },
+        {
+          "typeID": 3328,
+          "level": 5
+        },
+        {
+          "typeID": 3332,
+          "level": 3
+        },
+        {
+          "typeID": 3392,
+          "level": 5
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 5
+        },
+        {
+          "typeID": 3426,
+          "level": 5
+        },
+        {
+          "typeID": 3427,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 5
+        },
+        {
+          "typeID": 3429,
+          "level": 5
+        },
+        {
+          "typeID": 3431,
+          "level": 5
+        },
+        {
+          "typeID": 3433,
+          "level": 4
+        },
+        {
+          "typeID": 3435,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3437,
+          "level": 5
+        },
+        {
+          "typeID": 3442,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3452,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 11082,
+          "level": 1
+        },
+        {
+          "typeID": 12210,
+          "level": 1
+        },
+        {
+          "typeID": 12305,
+          "level": 4
+        },
+        {
+          "typeID": 12486,
+          "level": 1
+        },
+        {
+          "typeID": 19759,
+          "level": 4
+        },
+        {
+          "typeID": 19760,
+          "level": 4
+        },
+        {
+          "typeID": 19766,
+          "level": 4
+        },
+        {
+          "typeID": 22806,
+          "level": 4
+        },
+        {
+          "typeID": 22807,
+          "level": 4
+        },
+        {
+          "typeID": 22808,
+          "level": 4
+        },
+        {
+          "typeID": 22809,
+          "level": 4
+        },
+        {
+          "typeID": 23566,
+          "level": 4
+        },
+        {
+          "typeID": 23606,
+          "level": 4
+        },
+        {
+          "typeID": 23618,
+          "level": 4
+        },
+        {
+          "typeID": 24241,
+          "level": 5
+        },
+        {
+          "typeID": 32999,
+          "level": 5
+        },
+        {
+          "typeID": 33078,
+          "level": 3
+        },
+        {
+          "typeID": 33093,
+          "level": 4
+        },
+        {
+          "typeID": 33699,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        593,
+        594,
+        608,
+        609,
+        626,
+        627,
+        633,
+        16240,
+        32872
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 59519,
+      "name": "Minmatar Liberation Day Expert System",
+      "durationDays": 4,
+      "hidden": true,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3302,
+          "level": 5
+        },
+        {
+          "typeID": 3305,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 4
+        },
+        {
+          "typeID": 3319,
+          "level": 5
+        },
+        {
+          "typeID": 3320,
+          "level": 4
+        },
+        {
+          "typeID": 3321,
+          "level": 5
+        },
+        {
+          "typeID": 3324,
+          "level": 4
+        },
+        {
+          "typeID": 3329,
+          "level": 5
+        },
+        {
+          "typeID": 3333,
+          "level": 3
+        },
+        {
+          "typeID": 3392,
+          "level": 5
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 5
+        },
+        {
+          "typeID": 3413,
+          "level": 3
+        },
+        {
+          "typeID": 3416,
+          "level": 5
+        },
+        {
+          "typeID": 3419,
+          "level": 3
+        },
+        {
+          "typeID": 3420,
+          "level": 4
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3426,
+          "level": 3
+        },
+        {
+          "typeID": 3427,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 5
+        },
+        {
+          "typeID": 3429,
+          "level": 5
+        },
+        {
+          "typeID": 3431,
+          "level": 5
+        },
+        {
+          "typeID": 3435,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3452,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 11084,
+          "level": 1
+        },
+        {
+          "typeID": 11566,
+          "level": 3
+        },
+        {
+          "typeID": 12201,
+          "level": 1
+        },
+        {
+          "typeID": 12365,
+          "level": 3
+        },
+        {
+          "typeID": 12366,
+          "level": 3
+        },
+        {
+          "typeID": 12367,
+          "level": 3
+        },
+        {
+          "typeID": 12441,
+          "level": 4
+        },
+        {
+          "typeID": 12442,
+          "level": 4
+        },
+        {
+          "typeID": 12485,
+          "level": 1
+        },
+        {
+          "typeID": 19759,
+          "level": 5
+        },
+        {
+          "typeID": 19760,
+          "level": 5
+        },
+        {
+          "typeID": 19921,
+          "level": 4
+        },
+        {
+          "typeID": 19922,
+          "level": 5
+        },
+        {
+          "typeID": 20209,
+          "level": 4
+        },
+        {
+          "typeID": 20210,
+          "level": 1
+        },
+        {
+          "typeID": 20312,
+          "level": 4
+        },
+        {
+          "typeID": 20314,
+          "level": 4
+        },
+        {
+          "typeID": 20315,
+          "level": 4
+        },
+        {
+          "typeID": 21059,
+          "level": 4
+        },
+        {
+          "typeID": 21071,
+          "level": 4
+        },
+        {
+          "typeID": 22806,
+          "level": 4
+        },
+        {
+          "typeID": 22807,
+          "level": 4
+        },
+        {
+          "typeID": 22808,
+          "level": 4
+        },
+        {
+          "typeID": 22809,
+          "level": 4
+        },
+        {
+          "typeID": 24241,
+          "level": 5
+        },
+        {
+          "typeID": 25719,
+          "level": 4
+        },
+        {
+          "typeID": 33001,
+          "level": 5
+        },
+        {
+          "typeID": 33078,
+          "level": 3
+        },
+        {
+          "typeID": 33094,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        585,
+        587,
+        598,
+        622,
+        629,
+        630,
+        3766,
+        16242,
+        32878
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 60019,
+      "name": "Amarr Foundation Day Expert System",
+      "durationDays": 4,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3303,
+          "level": 5
+        },
+        {
+          "typeID": 3306,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 4
+        },
+        {
+          "typeID": 3331,
+          "level": 5
+        },
+        {
+          "typeID": 3335,
+          "level": 4
+        },
+        {
+          "typeID": 3392,
+          "level": 5
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 5
+        },
+        {
+          "typeID": 3417,
+          "level": 4
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3423,
+          "level": 4
+        },
+        {
+          "typeID": 3426,
+          "level": 5
+        },
+        {
+          "typeID": 3427,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 5
+        },
+        {
+          "typeID": 3429,
+          "level": 5
+        },
+        {
+          "typeID": 3431,
+          "level": 5
+        },
+        {
+          "typeID": 3434,
+          "level": 4
+        },
+        {
+          "typeID": 3435,
+          "level": 4
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3437,
+          "level": 5
+        },
+        {
+          "typeID": 3442,
+          "level": 4
+        },
+        {
+          "typeID": 11083,
+          "level": 1
+        },
+        {
+          "typeID": 12213,
+          "level": 1
+        },
+        {
+          "typeID": 12305,
+          "level": 4
+        },
+        {
+          "typeID": 12484,
+          "level": 1
+        },
+        {
+          "typeID": 19759,
+          "level": 4
+        },
+        {
+          "typeID": 19760,
+          "level": 4
+        },
+        {
+          "typeID": 19767,
+          "level": 4
+        },
+        {
+          "typeID": 22806,
+          "level": 4
+        },
+        {
+          "typeID": 22807,
+          "level": 4
+        },
+        {
+          "typeID": 22808,
+          "level": 4
+        },
+        {
+          "typeID": 22809,
+          "level": 4
+        },
+        {
+          "typeID": 23566,
+          "level": 5
+        },
+        {
+          "typeID": 23606,
+          "level": 4
+        },
+        {
+          "typeID": 23618,
+          "level": 4
+        },
+        {
+          "typeID": 24241,
+          "level": 5
+        },
+        {
+          "typeID": 33002,
+          "level": 5
+        },
+        {
+          "typeID": 33078,
+          "level": 3
+        },
+        {
+          "typeID": 33091,
+          "level": 4
+        },
+        {
+          "typeID": 33699,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        589,
+        591,
+        597,
+        624,
+        628,
+        2006,
+        2161,
+        16236,
+        32874
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 60089,
+      "name": "Caldari Union Day Expert System",
+      "durationDays": 4,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 5
+        },
+        {
+          "typeID": 3304,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 4
+        },
+        {
+          "typeID": 3319,
+          "level": 5
+        },
+        {
+          "typeID": 3320,
+          "level": 4
+        },
+        {
+          "typeID": 3321,
+          "level": 5
+        },
+        {
+          "typeID": 3324,
+          "level": 4
+        },
+        {
+          "typeID": 3330,
+          "level": 5
+        },
+        {
+          "typeID": 3334,
+          "level": 4
+        },
+        {
+          "typeID": 3413,
+          "level": 3
+        },
+        {
+          "typeID": 3416,
+          "level": 5
+        },
+        {
+          "typeID": 3417,
+          "level": 2
+        },
+        {
+          "typeID": 3418,
+          "level": 3
+        },
+        {
+          "typeID": 3419,
+          "level": 3
+        },
+        {
+          "typeID": 3420,
+          "level": 4
+        },
+        {
+          "typeID": 3424,
+          "level": 2
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3426,
+          "level": 3
+        },
+        {
+          "typeID": 3427,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 5
+        },
+        {
+          "typeID": 3429,
+          "level": 5
+        },
+        {
+          "typeID": 3431,
+          "level": 5
+        },
+        {
+          "typeID": 3432,
+          "level": 2
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 11082,
+          "level": 1
+        },
+        {
+          "typeID": 11566,
+          "level": 3
+        },
+        {
+          "typeID": 12210,
+          "level": 1
+        },
+        {
+          "typeID": 12365,
+          "level": 3
+        },
+        {
+          "typeID": 12366,
+          "level": 3
+        },
+        {
+          "typeID": 12367,
+          "level": 3
+        },
+        {
+          "typeID": 12441,
+          "level": 4
+        },
+        {
+          "typeID": 12442,
+          "level": 4
+        },
+        {
+          "typeID": 12487,
+          "level": 1
+        },
+        {
+          "typeID": 19759,
+          "level": 4
+        },
+        {
+          "typeID": 19760,
+          "level": 4
+        },
+        {
+          "typeID": 19761,
+          "level": 4
+        },
+        {
+          "typeID": 20209,
+          "level": 1
+        },
+        {
+          "typeID": 20210,
+          "level": 1
+        },
+        {
+          "typeID": 20312,
+          "level": 4
+        },
+        {
+          "typeID": 20315,
+          "level": 4
+        },
+        {
+          "typeID": 21059,
+          "level": 4
+        },
+        {
+          "typeID": 21071,
+          "level": 4
+        },
+        {
+          "typeID": 23566,
+          "level": 1
+        },
+        {
+          "typeID": 24241,
+          "level": 5
+        },
+        {
+          "typeID": 25719,
+          "level": 4
+        },
+        {
+          "typeID": 33000,
+          "level": 5
+        },
+        {
+          "typeID": 33092,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        583,
+        584,
+        602,
+        603,
+        621,
+        623,
+        632,
+        16238,
+        32876
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 63145,
+      "name": "Frigate Frenzy Expert System",
+      "durationDays": 4,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 4
+        },
+        {
+          "typeID": 3302,
+          "level": 4
+        },
+        {
+          "typeID": 3303,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 4
+        },
+        {
+          "typeID": 3319,
+          "level": 5
+        },
+        {
+          "typeID": 3320,
+          "level": 4
+        },
+        {
+          "typeID": 3321,
+          "level": 4
+        },
+        {
+          "typeID": 3328,
+          "level": 5
+        },
+        {
+          "typeID": 3329,
+          "level": 5
+        },
+        {
+          "typeID": 3330,
+          "level": 5
+        },
+        {
+          "typeID": 3331,
+          "level": 5
+        },
+        {
+          "typeID": 3393,
+          "level": 3
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3434,
+          "level": 1
+        },
+        {
+          "typeID": 3435,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3437,
+          "level": 5
+        },
+        {
+          "typeID": 3442,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 3
+        },
+        {
+          "typeID": 3452,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 12305,
+          "level": 4
+        },
+        {
+          "typeID": 12441,
+          "level": 4
+        },
+        {
+          "typeID": 12442,
+          "level": 4
+        },
+        {
+          "typeID": 19921,
+          "level": 1
+        },
+        {
+          "typeID": 20312,
+          "level": 4
+        },
+        {
+          "typeID": 20315,
+          "level": 4
+        },
+        {
+          "typeID": 21071,
+          "level": 4
+        },
+        {
+          "typeID": 23566,
+          "level": 4
+        },
+        {
+          "typeID": 23606,
+          "level": 4
+        },
+        {
+          "typeID": 23618,
+          "level": 4
+        },
+        {
+          "typeID": 24241,
+          "level": 4
+        },
+        {
+          "typeID": 26253,
+          "level": 2
+        },
+        {
+          "typeID": 26255,
+          "level": 2
+        },
+        {
+          "typeID": 26256,
+          "level": 2
+        },
+        {
+          "typeID": 26257,
+          "level": 2
+        },
+        {
+          "typeID": 26258,
+          "level": 2
+        },
+        {
+          "typeID": 26259,
+          "level": 2
+        },
+        {
+          "typeID": 26260,
+          "level": 2
+        },
+        {
+          "typeID": 26261,
+          "level": 2
+        },
+        {
+          "typeID": 28164,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [
+        583,
+        585,
+        587,
+        589,
+        593,
+        594,
+        597,
+        598,
+        602,
+        603,
+        608
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 63826,
+      "name": "Free AIR Explorer Expert System",
+      "durationDays": 3,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3328,
+          "level": 4
+        },
+        {
+          "typeID": 3329,
+          "level": 4
+        },
+        {
+          "typeID": 3330,
+          "level": 4
+        },
+        {
+          "typeID": 3331,
+          "level": 4
+        },
+        {
+          "typeID": 3412,
+          "level": 4
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 2
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3452,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 13278,
+          "level": 4
+        },
+        {
+          "typeID": 21718,
+          "level": 4
+        },
+        {
+          "typeID": 24241,
+          "level": 1
+        },
+        {
+          "typeID": 24242,
+          "level": 1
+        },
+        {
+          "typeID": 25739,
+          "level": 3
+        },
+        {
+          "typeID": 25810,
+          "level": 3
+        },
+        {
+          "typeID": 25811,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [
+        586,
+        605,
+        607,
+        29248,
+        33468
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 63827,
+      "name": "Free AIR Industrialist Expert System",
+      "durationDays": 3,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3340,
+          "level": 3
+        },
+        {
+          "typeID": 3341,
+          "level": 3
+        },
+        {
+          "typeID": 3342,
+          "level": 3
+        },
+        {
+          "typeID": 3343,
+          "level": 3
+        },
+        {
+          "typeID": 3355,
+          "level": 3
+        },
+        {
+          "typeID": 3356,
+          "level": 2
+        },
+        {
+          "typeID": 3359,
+          "level": 2
+        },
+        {
+          "typeID": 3380,
+          "level": 4
+        },
+        {
+          "typeID": 3385,
+          "level": 4
+        },
+        {
+          "typeID": 3386,
+          "level": 4
+        },
+        {
+          "typeID": 3387,
+          "level": 3
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3410,
+          "level": 2
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3419,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 2
+        },
+        {
+          "typeID": 3436,
+          "level": 2
+        },
+        {
+          "typeID": 3437,
+          "level": 3
+        },
+        {
+          "typeID": 3438,
+          "level": 3
+        },
+        {
+          "typeID": 3443,
+          "level": 3
+        },
+        {
+          "typeID": 3446,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3452,
+          "level": 1
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 3551,
+          "level": 4
+        },
+        {
+          "typeID": 16598,
+          "level": 2
+        },
+        {
+          "typeID": 16622,
+          "level": 3
+        },
+        {
+          "typeID": 22578,
+          "level": 4
+        },
+        {
+          "typeID": 24241,
+          "level": 3
+        },
+        {
+          "typeID": 24242,
+          "level": 1
+        },
+        {
+          "typeID": 25863,
+          "level": 4
+        },
+        {
+          "typeID": 26252,
+          "level": 1
+        },
+        {
+          "typeID": 32918,
+          "level": 4
+        },
+        {
+          "typeID": 33092,
+          "level": 1
+        },
+        {
+          "typeID": 60377,
+          "level": 2
+        }
+      ],
+      "associatedTypeIDs": [
+        648,
+        649,
+        650,
+        651,
+        652,
+        653,
+        654,
+        655,
+        656,
+        657,
+        1944,
+        16238,
+        19744,
+        32880
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 63828,
+      "name": "Free AIR Enforcer Expert System",
+      "durationDays": 3,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3301,
+          "level": 3
+        },
+        {
+          "typeID": 3302,
+          "level": 3
+        },
+        {
+          "typeID": 3303,
+          "level": 3
+        },
+        {
+          "typeID": 3310,
+          "level": 3
+        },
+        {
+          "typeID": 3311,
+          "level": 3
+        },
+        {
+          "typeID": 3312,
+          "level": 3
+        },
+        {
+          "typeID": 3315,
+          "level": 3
+        },
+        {
+          "typeID": 3316,
+          "level": 3
+        },
+        {
+          "typeID": 3317,
+          "level": 3
+        },
+        {
+          "typeID": 3318,
+          "level": 4
+        },
+        {
+          "typeID": 3319,
+          "level": 4
+        },
+        {
+          "typeID": 3320,
+          "level": 3
+        },
+        {
+          "typeID": 3321,
+          "level": 3
+        },
+        {
+          "typeID": 3328,
+          "level": 3
+        },
+        {
+          "typeID": 3329,
+          "level": 3
+        },
+        {
+          "typeID": 3330,
+          "level": 3
+        },
+        {
+          "typeID": 3331,
+          "level": 3
+        },
+        {
+          "typeID": 3355,
+          "level": 3
+        },
+        {
+          "typeID": 3356,
+          "level": 2
+        },
+        {
+          "typeID": 3357,
+          "level": 1
+        },
+        {
+          "typeID": 3359,
+          "level": 2
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 2
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 4
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 4
+        },
+        {
+          "typeID": 3437,
+          "level": 3
+        },
+        {
+          "typeID": 3440,
+          "level": 1
+        },
+        {
+          "typeID": 3452,
+          "level": 1
+        },
+        {
+          "typeID": 3454,
+          "level": 2
+        },
+        {
+          "typeID": 12305,
+          "level": 3
+        },
+        {
+          "typeID": 12441,
+          "level": 3
+        },
+        {
+          "typeID": 20314,
+          "level": 3
+        },
+        {
+          "typeID": 20315,
+          "level": 3
+        },
+        {
+          "typeID": 21059,
+          "level": 1
+        },
+        {
+          "typeID": 21071,
+          "level": 3
+        },
+        {
+          "typeID": 23618,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 3
+        },
+        {
+          "typeID": 24242,
+          "level": 1
+        },
+        {
+          "typeID": 33091,
+          "level": 3
+        },
+        {
+          "typeID": 33092,
+          "level": 3
+        },
+        {
+          "typeID": 33093,
+          "level": 3
+        },
+        {
+          "typeID": 33094,
+          "level": 3
+        },
+        {
+          "typeID": 33699,
+          "level": 1
+        }
+      ],
+      "associatedTypeIDs": [
+        587,
+        591,
+        593,
+        594,
+        597,
+        598,
+        602,
+        603,
+        16236,
+        16242,
+        32872,
+        32876
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 63829,
+      "name": "Free AIR Soldier of Fortune Expert System",
+      "durationDays": 3,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3301,
+          "level": 3
+        },
+        {
+          "typeID": 3302,
+          "level": 3
+        },
+        {
+          "typeID": 3303,
+          "level": 3
+        },
+        {
+          "typeID": 3310,
+          "level": 3
+        },
+        {
+          "typeID": 3311,
+          "level": 3
+        },
+        {
+          "typeID": 3312,
+          "level": 3
+        },
+        {
+          "typeID": 3315,
+          "level": 3
+        },
+        {
+          "typeID": 3316,
+          "level": 3
+        },
+        {
+          "typeID": 3317,
+          "level": 3
+        },
+        {
+          "typeID": 3318,
+          "level": 3
+        },
+        {
+          "typeID": 3319,
+          "level": 4
+        },
+        {
+          "typeID": 3320,
+          "level": 3
+        },
+        {
+          "typeID": 3321,
+          "level": 3
+        },
+        {
+          "typeID": 3328,
+          "level": 4
+        },
+        {
+          "typeID": 3329,
+          "level": 4
+        },
+        {
+          "typeID": 3330,
+          "level": 4
+        },
+        {
+          "typeID": 3331,
+          "level": 4
+        },
+        {
+          "typeID": 3355,
+          "level": 3
+        },
+        {
+          "typeID": 3356,
+          "level": 2
+        },
+        {
+          "typeID": 3359,
+          "level": 2
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 3
+        },
+        {
+          "typeID": 3394,
+          "level": 3
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3422,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3435,
+          "level": 2
+        },
+        {
+          "typeID": 3436,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3452,
+          "level": 1
+        },
+        {
+          "typeID": 12441,
+          "level": 3
+        },
+        {
+          "typeID": 12442,
+          "level": 3
+        },
+        {
+          "typeID": 16069,
+          "level": 3
+        },
+        {
+          "typeID": 19921,
+          "level": 1
+        },
+        {
+          "typeID": 20314,
+          "level": 3
+        },
+        {
+          "typeID": 20315,
+          "level": 3
+        },
+        {
+          "typeID": 21059,
+          "level": 1
+        },
+        {
+          "typeID": 21071,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 1
+        },
+        {
+          "typeID": 24242,
+          "level": 1
+        }
+      ],
+      "associatedTypeIDs": [
+        582,
+        583,
+        584,
+        585,
+        587,
+        589,
+        590,
+        591,
+        592,
+        593,
+        594,
+        597,
+        598,
+        599,
+        602,
+        603,
+        608,
+        609,
+        2161,
+        3766
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 64558,
+      "name": "Developer Subcapital Unlock ES",
+      "durationDays": 1,
+      "hidden": true,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3184,
+          "level": 5
+        },
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 5
+        },
+        {
+          "typeID": 3302,
+          "level": 5
+        },
+        {
+          "typeID": 3303,
+          "level": 5
+        },
+        {
+          "typeID": 3304,
+          "level": 5
+        },
+        {
+          "typeID": 3305,
+          "level": 5
+        },
+        {
+          "typeID": 3306,
+          "level": 5
+        },
+        {
+          "typeID": 3307,
+          "level": 5
+        },
+        {
+          "typeID": 3308,
+          "level": 5
+        },
+        {
+          "typeID": 3309,
+          "level": 5
+        },
+        {
+          "typeID": 3310,
+          "level": 5
+        },
+        {
+          "typeID": 3311,
+          "level": 5
+        },
+        {
+          "typeID": 3312,
+          "level": 5
+        },
+        {
+          "typeID": 3315,
+          "level": 5
+        },
+        {
+          "typeID": 3316,
+          "level": 5
+        },
+        {
+          "typeID": 3317,
+          "level": 5
+        },
+        {
+          "typeID": 3318,
+          "level": 5
+        },
+        {
+          "typeID": 3319,
+          "level": 5
+        },
+        {
+          "typeID": 3320,
+          "level": 5
+        },
+        {
+          "typeID": 3321,
+          "level": 5
+        },
+        {
+          "typeID": 3322,
+          "level": 5
+        },
+        {
+          "typeID": 3323,
+          "level": 5
+        },
+        {
+          "typeID": 3324,
+          "level": 5
+        },
+        {
+          "typeID": 3325,
+          "level": 5
+        },
+        {
+          "typeID": 3326,
+          "level": 5
+        },
+        {
+          "typeID": 3327,
+          "level": 5
+        },
+        {
+          "typeID": 3328,
+          "level": 5
+        },
+        {
+          "typeID": 3329,
+          "level": 5
+        },
+        {
+          "typeID": 3330,
+          "level": 5
+        },
+        {
+          "typeID": 3331,
+          "level": 5
+        },
+        {
+          "typeID": 3332,
+          "level": 5
+        },
+        {
+          "typeID": 3333,
+          "level": 5
+        },
+        {
+          "typeID": 3334,
+          "level": 5
+        },
+        {
+          "typeID": 3335,
+          "level": 5
+        },
+        {
+          "typeID": 3336,
+          "level": 5
+        },
+        {
+          "typeID": 3337,
+          "level": 5
+        },
+        {
+          "typeID": 3338,
+          "level": 5
+        },
+        {
+          "typeID": 3339,
+          "level": 5
+        },
+        {
+          "typeID": 3340,
+          "level": 5
+        },
+        {
+          "typeID": 3341,
+          "level": 5
+        },
+        {
+          "typeID": 3342,
+          "level": 5
+        },
+        {
+          "typeID": 3343,
+          "level": 5
+        },
+        {
+          "typeID": 3348,
+          "level": 5
+        },
+        {
+          "typeID": 3349,
+          "level": 5
+        },
+        {
+          "typeID": 3350,
+          "level": 5
+        },
+        {
+          "typeID": 3351,
+          "level": 5
+        },
+        {
+          "typeID": 3352,
+          "level": 5
+        },
+        {
+          "typeID": 3354,
+          "level": 5
+        },
+        {
+          "typeID": 3386,
+          "level": 5
+        },
+        {
+          "typeID": 3392,
+          "level": 5
+        },
+        {
+          "typeID": 3393,
+          "level": 5
+        },
+        {
+          "typeID": 3394,
+          "level": 5
+        },
+        {
+          "typeID": 3402,
+          "level": 5
+        },
+        {
+          "typeID": 3405,
+          "level": 5
+        },
+        {
+          "typeID": 3411,
+          "level": 5
+        },
+        {
+          "typeID": 3412,
+          "level": 5
+        },
+        {
+          "typeID": 3413,
+          "level": 5
+        },
+        {
+          "typeID": 3416,
+          "level": 5
+        },
+        {
+          "typeID": 3417,
+          "level": 5
+        },
+        {
+          "typeID": 3418,
+          "level": 5
+        },
+        {
+          "typeID": 3419,
+          "level": 5
+        },
+        {
+          "typeID": 3420,
+          "level": 5
+        },
+        {
+          "typeID": 3421,
+          "level": 5
+        },
+        {
+          "typeID": 3422,
+          "level": 5
+        },
+        {
+          "typeID": 3423,
+          "level": 5
+        },
+        {
+          "typeID": 3424,
+          "level": 5
+        },
+        {
+          "typeID": 3425,
+          "level": 5
+        },
+        {
+          "typeID": 3426,
+          "level": 5
+        },
+        {
+          "typeID": 3427,
+          "level": 5
+        },
+        {
+          "typeID": 3428,
+          "level": 5
+        },
+        {
+          "typeID": 3429,
+          "level": 5
+        },
+        {
+          "typeID": 3430,
+          "level": 5
+        },
+        {
+          "typeID": 3431,
+          "level": 5
+        },
+        {
+          "typeID": 3432,
+          "level": 5
+        },
+        {
+          "typeID": 3433,
+          "level": 5
+        },
+        {
+          "typeID": 3434,
+          "level": 5
+        },
+        {
+          "typeID": 3435,
+          "level": 5
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3437,
+          "level": 5
+        },
+        {
+          "typeID": 3438,
+          "level": 5
+        },
+        {
+          "typeID": 3439,
+          "level": 5
+        },
+        {
+          "typeID": 3440,
+          "level": 5
+        },
+        {
+          "typeID": 3441,
+          "level": 5
+        },
+        {
+          "typeID": 3442,
+          "level": 5
+        },
+        {
+          "typeID": 3449,
+          "level": 5
+        },
+        {
+          "typeID": 3450,
+          "level": 5
+        },
+        {
+          "typeID": 3451,
+          "level": 5
+        },
+        {
+          "typeID": 3452,
+          "level": 5
+        },
+        {
+          "typeID": 3453,
+          "level": 5
+        },
+        {
+          "typeID": 3454,
+          "level": 5
+        },
+        {
+          "typeID": 3455,
+          "level": 5
+        },
+        {
+          "typeID": 3551,
+          "level": 5
+        },
+        {
+          "typeID": 4385,
+          "level": 5
+        },
+        {
+          "typeID": 4411,
+          "level": 5
+        },
+        {
+          "typeID": 11082,
+          "level": 5
+        },
+        {
+          "typeID": 11083,
+          "level": 5
+        },
+        {
+          "typeID": 11084,
+          "level": 5
+        },
+        {
+          "typeID": 11206,
+          "level": 5
+        },
+        {
+          "typeID": 11207,
+          "level": 5
+        },
+        {
+          "typeID": 11208,
+          "level": 5
+        },
+        {
+          "typeID": 11395,
+          "level": 5
+        },
+        {
+          "typeID": 11446,
+          "level": 5
+        },
+        {
+          "typeID": 11566,
+          "level": 5
+        },
+        {
+          "typeID": 11569,
+          "level": 5
+        },
+        {
+          "typeID": 11572,
+          "level": 5
+        },
+        {
+          "typeID": 11574,
+          "level": 5
+        },
+        {
+          "typeID": 11579,
+          "level": 5
+        },
+        {
+          "typeID": 11584,
+          "level": 5
+        },
+        {
+          "typeID": 12092,
+          "level": 5
+        },
+        {
+          "typeID": 12093,
+          "level": 5
+        },
+        {
+          "typeID": 12095,
+          "level": 5
+        },
+        {
+          "typeID": 12096,
+          "level": 5
+        },
+        {
+          "typeID": 12098,
+          "level": 5
+        },
+        {
+          "typeID": 12201,
+          "level": 5
+        },
+        {
+          "typeID": 12202,
+          "level": 5
+        },
+        {
+          "typeID": 12203,
+          "level": 5
+        },
+        {
+          "typeID": 12204,
+          "level": 5
+        },
+        {
+          "typeID": 12205,
+          "level": 5
+        },
+        {
+          "typeID": 12206,
+          "level": 5
+        },
+        {
+          "typeID": 12207,
+          "level": 5
+        },
+        {
+          "typeID": 12209,
+          "level": 5
+        },
+        {
+          "typeID": 12210,
+          "level": 5
+        },
+        {
+          "typeID": 12211,
+          "level": 5
+        },
+        {
+          "typeID": 12212,
+          "level": 5
+        },
+        {
+          "typeID": 12213,
+          "level": 5
+        },
+        {
+          "typeID": 12214,
+          "level": 5
+        },
+        {
+          "typeID": 12215,
+          "level": 5
+        },
+        {
+          "typeID": 12305,
+          "level": 5
+        },
+        {
+          "typeID": 12365,
+          "level": 5
+        },
+        {
+          "typeID": 12366,
+          "level": 5
+        },
+        {
+          "typeID": 12367,
+          "level": 5
+        },
+        {
+          "typeID": 12441,
+          "level": 5
+        },
+        {
+          "typeID": 12442,
+          "level": 5
+        },
+        {
+          "typeID": 12484,
+          "level": 5
+        },
+        {
+          "typeID": 12485,
+          "level": 5
+        },
+        {
+          "typeID": 12486,
+          "level": 5
+        },
+        {
+          "typeID": 12487,
+          "level": 5
+        },
+        {
+          "typeID": 16069,
+          "level": 5
+        },
+        {
+          "typeID": 16591,
+          "level": 5
+        },
+        {
+          "typeID": 17940,
+          "level": 5
+        },
+        {
+          "typeID": 19719,
+          "level": 5
+        },
+        {
+          "typeID": 19759,
+          "level": 5
+        },
+        {
+          "typeID": 19760,
+          "level": 5
+        },
+        {
+          "typeID": 19761,
+          "level": 5
+        },
+        {
+          "typeID": 19766,
+          "level": 5
+        },
+        {
+          "typeID": 19767,
+          "level": 5
+        },
+        {
+          "typeID": 19921,
+          "level": 5
+        },
+        {
+          "typeID": 19922,
+          "level": 5
+        },
+        {
+          "typeID": 20209,
+          "level": 5
+        },
+        {
+          "typeID": 20210,
+          "level": 5
+        },
+        {
+          "typeID": 20211,
+          "level": 5
+        },
+        {
+          "typeID": 20212,
+          "level": 5
+        },
+        {
+          "typeID": 20213,
+          "level": 5
+        },
+        {
+          "typeID": 20312,
+          "level": 5
+        },
+        {
+          "typeID": 20314,
+          "level": 5
+        },
+        {
+          "typeID": 20315,
+          "level": 5
+        },
+        {
+          "typeID": 20494,
+          "level": 5
+        },
+        {
+          "typeID": 20495,
+          "level": 5
+        },
+        {
+          "typeID": 21059,
+          "level": 5
+        },
+        {
+          "typeID": 21071,
+          "level": 5
+        },
+        {
+          "typeID": 21718,
+          "level": 5
+        },
+        {
+          "typeID": 22536,
+          "level": 5
+        },
+        {
+          "typeID": 22541,
+          "level": 5
+        },
+        {
+          "typeID": 22551,
+          "level": 5
+        },
+        {
+          "typeID": 22552,
+          "level": 5
+        },
+        {
+          "typeID": 22578,
+          "level": 5
+        },
+        {
+          "typeID": 22761,
+          "level": 5
+        },
+        {
+          "typeID": 22806,
+          "level": 5
+        },
+        {
+          "typeID": 22807,
+          "level": 5
+        },
+        {
+          "typeID": 22808,
+          "level": 5
+        },
+        {
+          "typeID": 22809,
+          "level": 5
+        },
+        {
+          "typeID": 23566,
+          "level": 5
+        },
+        {
+          "typeID": 23594,
+          "level": 5
+        },
+        {
+          "typeID": 23606,
+          "level": 5
+        },
+        {
+          "typeID": 23618,
+          "level": 5
+        },
+        {
+          "typeID": 23950,
+          "level": 5
+        },
+        {
+          "typeID": 24241,
+          "level": 5
+        },
+        {
+          "typeID": 24764,
+          "level": 5
+        },
+        {
+          "typeID": 25530,
+          "level": 5
+        },
+        {
+          "typeID": 25538,
+          "level": 5
+        },
+        {
+          "typeID": 25718,
+          "level": 5
+        },
+        {
+          "typeID": 25719,
+          "level": 5
+        },
+        {
+          "typeID": 25739,
+          "level": 5
+        },
+        {
+          "typeID": 25810,
+          "level": 5
+        },
+        {
+          "typeID": 25811,
+          "level": 5
+        },
+        {
+          "typeID": 26252,
+          "level": 5
+        },
+        {
+          "typeID": 26253,
+          "level": 5
+        },
+        {
+          "typeID": 26254,
+          "level": 5
+        },
+        {
+          "typeID": 26255,
+          "level": 5
+        },
+        {
+          "typeID": 26256,
+          "level": 5
+        },
+        {
+          "typeID": 26257,
+          "level": 5
+        },
+        {
+          "typeID": 26258,
+          "level": 5
+        },
+        {
+          "typeID": 26259,
+          "level": 5
+        },
+        {
+          "typeID": 26260,
+          "level": 5
+        },
+        {
+          "typeID": 26261,
+          "level": 5
+        },
+        {
+          "typeID": 27902,
+          "level": 5
+        },
+        {
+          "typeID": 28073,
+          "level": 5
+        },
+        {
+          "typeID": 28164,
+          "level": 5
+        },
+        {
+          "typeID": 28609,
+          "level": 5
+        },
+        {
+          "typeID": 28615,
+          "level": 5
+        },
+        {
+          "typeID": 28656,
+          "level": 5
+        },
+        {
+          "typeID": 28667,
+          "level": 5
+        },
+        {
+          "typeID": 28879,
+          "level": 5
+        },
+        {
+          "typeID": 28880,
+          "level": 5
+        },
+        {
+          "typeID": 30532,
+          "level": 5
+        },
+        {
+          "typeID": 30536,
+          "level": 5
+        },
+        {
+          "typeID": 30537,
+          "level": 5
+        },
+        {
+          "typeID": 30538,
+          "level": 5
+        },
+        {
+          "typeID": 30539,
+          "level": 5
+        },
+        {
+          "typeID": 30540,
+          "level": 5
+        },
+        {
+          "typeID": 30541,
+          "level": 5
+        },
+        {
+          "typeID": 30542,
+          "level": 5
+        },
+        {
+          "typeID": 30543,
+          "level": 5
+        },
+        {
+          "typeID": 30544,
+          "level": 5
+        },
+        {
+          "typeID": 30545,
+          "level": 5
+        },
+        {
+          "typeID": 30546,
+          "level": 5
+        },
+        {
+          "typeID": 30547,
+          "level": 5
+        },
+        {
+          "typeID": 30548,
+          "level": 5
+        },
+        {
+          "typeID": 30549,
+          "level": 5
+        },
+        {
+          "typeID": 30550,
+          "level": 5
+        },
+        {
+          "typeID": 30551,
+          "level": 5
+        },
+        {
+          "typeID": 30552,
+          "level": 5
+        },
+        {
+          "typeID": 30553,
+          "level": 5
+        },
+        {
+          "typeID": 30554,
+          "level": 5
+        },
+        {
+          "typeID": 30650,
+          "level": 5
+        },
+        {
+          "typeID": 30651,
+          "level": 5
+        },
+        {
+          "typeID": 30652,
+          "level": 5
+        },
+        {
+          "typeID": 30653,
+          "level": 5
+        },
+        {
+          "typeID": 32797,
+          "level": 5
+        },
+        {
+          "typeID": 32918,
+          "level": 5
+        },
+        {
+          "typeID": 32999,
+          "level": 5
+        },
+        {
+          "typeID": 33000,
+          "level": 5
+        },
+        {
+          "typeID": 33001,
+          "level": 5
+        },
+        {
+          "typeID": 33002,
+          "level": 5
+        },
+        {
+          "typeID": 33078,
+          "level": 5
+        },
+        {
+          "typeID": 33091,
+          "level": 5
+        },
+        {
+          "typeID": 33092,
+          "level": 5
+        },
+        {
+          "typeID": 33093,
+          "level": 5
+        },
+        {
+          "typeID": 33094,
+          "level": 5
+        },
+        {
+          "typeID": 33095,
+          "level": 5
+        },
+        {
+          "typeID": 33096,
+          "level": 5
+        },
+        {
+          "typeID": 33097,
+          "level": 5
+        },
+        {
+          "typeID": 33098,
+          "level": 5
+        },
+        {
+          "typeID": 33699,
+          "level": 5
+        },
+        {
+          "typeID": 33856,
+          "level": 5
+        },
+        {
+          "typeID": 34390,
+          "level": 5
+        },
+        {
+          "typeID": 34533,
+          "level": 5
+        },
+        {
+          "typeID": 35680,
+          "level": 5
+        },
+        {
+          "typeID": 35685,
+          "level": 5
+        },
+        {
+          "typeID": 37615,
+          "level": 5
+        },
+        {
+          "typeID": 40328,
+          "level": 5
+        },
+        {
+          "typeID": 43702,
+          "level": 5
+        },
+        {
+          "typeID": 43703,
+          "level": 5
+        },
+        {
+          "typeID": 47445,
+          "level": 5
+        },
+        {
+          "typeID": 47867,
+          "level": 5
+        },
+        {
+          "typeID": 47868,
+          "level": 5
+        },
+        {
+          "typeID": 47869,
+          "level": 5
+        },
+        {
+          "typeID": 47870,
+          "level": 5
+        },
+        {
+          "typeID": 47871,
+          "level": 5
+        },
+        {
+          "typeID": 47872,
+          "level": 5
+        },
+        {
+          "typeID": 47873,
+          "level": 5
+        },
+        {
+          "typeID": 47874,
+          "level": 5
+        },
+        {
+          "typeID": 47875,
+          "level": 5
+        },
+        {
+          "typeID": 49742,
+          "level": 5
+        },
+        {
+          "typeID": 49743,
+          "level": 5
+        },
+        {
+          "typeID": 54794,
+          "level": 5
+        },
+        {
+          "typeID": 54826,
+          "level": 5
+        },
+        {
+          "typeID": 54827,
+          "level": 5
+        },
+        {
+          "typeID": 54828,
+          "level": 5
+        },
+        {
+          "typeID": 54829,
+          "level": 5
+        },
+        {
+          "typeID": 54840,
+          "level": 5
+        },
+        {
+          "typeID": 54841,
+          "level": 5
+        },
+        {
+          "typeID": 55031,
+          "level": 5
+        },
+        {
+          "typeID": 55032,
+          "level": 5
+        },
+        {
+          "typeID": 55033,
+          "level": 5
+        },
+        {
+          "typeID": 55034,
+          "level": 5
+        },
+        {
+          "typeID": 55035,
+          "level": 5
+        },
+        {
+          "typeID": 55511,
+          "level": 5
+        },
+        {
+          "typeID": 57164,
+          "level": 5
+        },
+        {
+          "typeID": 57317,
+          "level": 5
+        },
+        {
+          "typeID": 57318,
+          "level": 5
+        },
+        {
+          "typeID": 60515,
+          "level": 5
+        },
+        {
+          "typeID": 81032,
+          "level": 5
+        },
+        {
+          "typeID": 86260,
+          "level": 5
+        },
+        {
+          "typeID": 86261,
+          "level": 5
+        },
+        {
+          "typeID": 86262,
+          "level": 5
+        },
+        {
+          "typeID": 86263,
+          "level": 5
+        },
+        {
+          "typeID": 86264,
+          "level": 5
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4090,
+      "groupName": "QA Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 74114,
+      "name": "Navy Destroyers Expert System",
+      "durationDays": 4,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 5
+        },
+        {
+          "typeID": 3302,
+          "level": 5
+        },
+        {
+          "typeID": 3303,
+          "level": 5
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3392,
+          "level": 3
+        },
+        {
+          "typeID": 3394,
+          "level": 5
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 11082,
+          "level": 3
+        },
+        {
+          "typeID": 11083,
+          "level": 3
+        },
+        {
+          "typeID": 11084,
+          "level": 3
+        },
+        {
+          "typeID": 12201,
+          "level": 3
+        },
+        {
+          "typeID": 12210,
+          "level": 3
+        },
+        {
+          "typeID": 12213,
+          "level": 3
+        },
+        {
+          "typeID": 33091,
+          "level": 5
+        },
+        {
+          "typeID": 33092,
+          "level": 5
+        },
+        {
+          "typeID": 33093,
+          "level": 5
+        },
+        {
+          "typeID": 33094,
+          "level": 5
+        }
+      ],
+      "associatedTypeIDs": [
+        73789,
+        73794,
+        73795,
+        73796
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 74500,
+      "name": "Winter Nexus Expert System",
+      "durationDays": 4,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3386,
+          "level": 4
+        },
+        {
+          "typeID": 3410,
+          "level": 3
+        },
+        {
+          "typeID": 16281,
+          "level": 3
+        },
+        {
+          "typeID": 22578,
+          "level": 4
+        },
+        {
+          "typeID": 32918,
+          "level": 5
+        },
+        {
+          "typeID": 33856,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        32880,
+        33697,
+        37135
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 81098,
+      "name": "Space Exploration",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3328,
+          "level": 4
+        },
+        {
+          "typeID": 3329,
+          "level": 4
+        },
+        {
+          "typeID": 3330,
+          "level": 4
+        },
+        {
+          "typeID": 3331,
+          "level": 4
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 3
+        },
+        {
+          "typeID": 3394,
+          "level": 3
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3412,
+          "level": 4
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 3
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3425,
+          "level": 3
+        },
+        {
+          "typeID": 3428,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3432,
+          "level": 4
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 11566,
+          "level": 1
+        },
+        {
+          "typeID": 12365,
+          "level": 1
+        },
+        {
+          "typeID": 12366,
+          "level": 1
+        },
+        {
+          "typeID": 12367,
+          "level": 1
+        },
+        {
+          "typeID": 13278,
+          "level": 3
+        },
+        {
+          "typeID": 21059,
+          "level": 3
+        },
+        {
+          "typeID": 21718,
+          "level": 3
+        },
+        {
+          "typeID": 22806,
+          "level": 1
+        },
+        {
+          "typeID": 22807,
+          "level": 1
+        },
+        {
+          "typeID": 22808,
+          "level": 1
+        },
+        {
+          "typeID": 22809,
+          "level": 1
+        },
+        {
+          "typeID": 25739,
+          "level": 3
+        },
+        {
+          "typeID": 25811,
+          "level": 3
+        },
+        {
+          "typeID": 26252,
+          "level": 3
+        },
+        {
+          "typeID": 26253,
+          "level": 1
+        },
+        {
+          "typeID": 26254,
+          "level": 1
+        },
+        {
+          "typeID": 26256,
+          "level": 1
+        },
+        {
+          "typeID": 26261,
+          "level": 1
+        },
+        {
+          "typeID": 32999,
+          "level": 3
+        },
+        {
+          "typeID": 33000,
+          "level": 3
+        },
+        {
+          "typeID": 33001,
+          "level": 3
+        },
+        {
+          "typeID": 33002,
+          "level": 3
+        },
+        {
+          "typeID": 33078,
+          "level": 1
+        }
+      ],
+      "associatedTypeIDs": [
+        586,
+        605,
+        607,
+        29248,
+        33468,
+        72903,
+        72904,
+        72907,
+        72913
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 81118,
+      "name": "Faction Warfare",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 4
+        },
+        {
+          "typeID": 3302,
+          "level": 4
+        },
+        {
+          "typeID": 3303,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 3
+        },
+        {
+          "typeID": 3318,
+          "level": 4
+        },
+        {
+          "typeID": 3319,
+          "level": 5
+        },
+        {
+          "typeID": 3320,
+          "level": 4
+        },
+        {
+          "typeID": 3321,
+          "level": 4
+        },
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3355,
+          "level": 4
+        },
+        {
+          "typeID": 3359,
+          "level": 4
+        },
+        {
+          "typeID": 3392,
+          "level": 3
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 5
+        },
+        {
+          "typeID": 3413,
+          "level": 5
+        },
+        {
+          "typeID": 3416,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 4
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 4
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3426,
+          "level": 5
+        },
+        {
+          "typeID": 3428,
+          "level": 4
+        },
+        {
+          "typeID": 3429,
+          "level": 5
+        },
+        {
+          "typeID": 3431,
+          "level": 5
+        },
+        {
+          "typeID": 3435,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 3
+        },
+        {
+          "typeID": 3452,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 4
+        },
+        {
+          "typeID": 3455,
+          "level": 5
+        },
+        {
+          "typeID": 11566,
+          "level": 3
+        },
+        {
+          "typeID": 12365,
+          "level": 3
+        },
+        {
+          "typeID": 12366,
+          "level": 3
+        },
+        {
+          "typeID": 12367,
+          "level": 3
+        },
+        {
+          "typeID": 12441,
+          "level": 4
+        },
+        {
+          "typeID": 12442,
+          "level": 3
+        },
+        {
+          "typeID": 20312,
+          "level": 4
+        },
+        {
+          "typeID": 20314,
+          "level": 4
+        },
+        {
+          "typeID": 20315,
+          "level": 3
+        },
+        {
+          "typeID": 21071,
+          "level": 4
+        },
+        {
+          "typeID": 22806,
+          "level": 4
+        },
+        {
+          "typeID": 22807,
+          "level": 4
+        },
+        {
+          "typeID": 22808,
+          "level": 4
+        },
+        {
+          "typeID": 22809,
+          "level": 4
+        },
+        {
+          "typeID": 26252,
+          "level": 3
+        },
+        {
+          "typeID": 26253,
+          "level": 3
+        },
+        {
+          "typeID": 26254,
+          "level": 3
+        },
+        {
+          "typeID": 26261,
+          "level": 3
+        },
+        {
+          "typeID": 32999,
+          "level": 4
+        },
+        {
+          "typeID": 33000,
+          "level": 4
+        },
+        {
+          "typeID": 33001,
+          "level": 4
+        },
+        {
+          "typeID": 33002,
+          "level": 4
+        },
+        {
+          "typeID": 33078,
+          "level": 3
+        },
+        {
+          "typeID": 33091,
+          "level": 3
+        },
+        {
+          "typeID": 33092,
+          "level": 3
+        },
+        {
+          "typeID": 33093,
+          "level": 3
+        },
+        {
+          "typeID": 33094,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [
+        16236,
+        16238,
+        16240,
+        16242,
+        32876,
+        32878,
+        73789,
+        73794,
+        73795,
+        73796,
+        78333
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 81121,
+      "name": "Hauler Operations",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3340,
+          "level": 4
+        },
+        {
+          "typeID": 3341,
+          "level": 4
+        },
+        {
+          "typeID": 3342,
+          "level": 4
+        },
+        {
+          "typeID": 3343,
+          "level": 4
+        },
+        {
+          "typeID": 3355,
+          "level": 3
+        },
+        {
+          "typeID": 3356,
+          "level": 3
+        },
+        {
+          "typeID": 3380,
+          "level": 4
+        },
+        {
+          "typeID": 3385,
+          "level": 4
+        },
+        {
+          "typeID": 3387,
+          "level": 3
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3425,
+          "level": 3
+        },
+        {
+          "typeID": 3443,
+          "level": 4
+        },
+        {
+          "typeID": 3446,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 16598,
+          "level": 3
+        },
+        {
+          "typeID": 16622,
+          "level": 3
+        },
+        {
+          "typeID": 18025,
+          "level": 3
+        },
+        {
+          "typeID": 25235,
+          "level": 3
+        },
+        {
+          "typeID": 25863,
+          "level": 4
+        },
+        {
+          "typeID": 26252,
+          "level": 3
+        },
+        {
+          "typeID": 26254,
+          "level": 3
+        },
+        {
+          "typeID": 60377,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [
+        648,
+        649,
+        650,
+        651,
+        652,
+        653,
+        654,
+        655,
+        656,
+        657,
+        1944,
+        19744
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 81122,
+      "name": "Enforcer Operations",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 4
+        },
+        {
+          "typeID": 3302,
+          "level": 4
+        },
+        {
+          "typeID": 3303,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 3
+        },
+        {
+          "typeID": 3318,
+          "level": 4
+        },
+        {
+          "typeID": 3319,
+          "level": 5
+        },
+        {
+          "typeID": 3320,
+          "level": 4
+        },
+        {
+          "typeID": 3321,
+          "level": 4
+        },
+        {
+          "typeID": 3328,
+          "level": 4
+        },
+        {
+          "typeID": 3329,
+          "level": 4
+        },
+        {
+          "typeID": 3330,
+          "level": 4
+        },
+        {
+          "typeID": 3331,
+          "level": 4
+        },
+        {
+          "typeID": 3355,
+          "level": 4
+        },
+        {
+          "typeID": 3356,
+          "level": 4
+        },
+        {
+          "typeID": 3359,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 3
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 4
+        },
+        {
+          "typeID": 3425,
+          "level": 3
+        },
+        {
+          "typeID": 3427,
+          "level": 3
+        },
+        {
+          "typeID": 3429,
+          "level": 5
+        },
+        {
+          "typeID": 3434,
+          "level": 3
+        },
+        {
+          "typeID": 3435,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 4
+        },
+        {
+          "typeID": 3437,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 4
+        },
+        {
+          "typeID": 11566,
+          "level": 3
+        },
+        {
+          "typeID": 12305,
+          "level": 3
+        },
+        {
+          "typeID": 12365,
+          "level": 3
+        },
+        {
+          "typeID": 12366,
+          "level": 3
+        },
+        {
+          "typeID": 12367,
+          "level": 3
+        },
+        {
+          "typeID": 12441,
+          "level": 4
+        },
+        {
+          "typeID": 12442,
+          "level": 3
+        },
+        {
+          "typeID": 19921,
+          "level": 3
+        },
+        {
+          "typeID": 20312,
+          "level": 4
+        },
+        {
+          "typeID": 20314,
+          "level": 4
+        },
+        {
+          "typeID": 20315,
+          "level": 3
+        },
+        {
+          "typeID": 21059,
+          "level": 3
+        },
+        {
+          "typeID": 21071,
+          "level": 4
+        },
+        {
+          "typeID": 22806,
+          "level": 3
+        },
+        {
+          "typeID": 22807,
+          "level": 3
+        },
+        {
+          "typeID": 22808,
+          "level": 3
+        },
+        {
+          "typeID": 22809,
+          "level": 3
+        },
+        {
+          "typeID": 23618,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 4
+        },
+        {
+          "typeID": 26252,
+          "level": 3
+        },
+        {
+          "typeID": 26253,
+          "level": 1
+        },
+        {
+          "typeID": 26254,
+          "level": 1
+        },
+        {
+          "typeID": 26256,
+          "level": 1
+        },
+        {
+          "typeID": 26261,
+          "level": 1
+        },
+        {
+          "typeID": 32999,
+          "level": 3
+        },
+        {
+          "typeID": 33000,
+          "level": 3
+        },
+        {
+          "typeID": 33001,
+          "level": 3
+        },
+        {
+          "typeID": 33002,
+          "level": 3
+        },
+        {
+          "typeID": 33078,
+          "level": 2
+        }
+      ],
+      "associatedTypeIDs": [
+        583,
+        584,
+        585,
+        587,
+        589,
+        591,
+        593,
+        594,
+        597,
+        598,
+        602,
+        603,
+        608,
+        609,
+        2161,
+        3766,
+        17619,
+        17703,
+        17812,
+        17841,
+        17924,
+        17926,
+        17928,
+        17930,
+        17932,
+        33816,
+        37453,
+        37454,
+        37455,
+        37456
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 81614,
+      "name": "Gas Harvesting",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3386,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3410,
+          "level": 3
+        },
+        {
+          "typeID": 3411,
+          "level": 3
+        },
+        {
+          "typeID": 3412,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 17940,
+          "level": 3
+        },
+        {
+          "typeID": 25544,
+          "level": 2
+        },
+        {
+          "typeID": 25739,
+          "level": 3
+        },
+        {
+          "typeID": 25810,
+          "level": 3
+        },
+        {
+          "typeID": 25811,
+          "level": 3
+        },
+        {
+          "typeID": 26252,
+          "level": 3
+        },
+        {
+          "typeID": 26253,
+          "level": 3
+        },
+        {
+          "typeID": 26254,
+          "level": 3
+        },
+        {
+          "typeID": 26261,
+          "level": 3
+        },
+        {
+          "typeID": 32918,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        17476,
+        17478,
+        17480,
+        32880
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 81618,
+      "name": "Logistics Pilot",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3328,
+          "level": 4
+        },
+        {
+          "typeID": 3329,
+          "level": 4
+        },
+        {
+          "typeID": 3330,
+          "level": 4
+        },
+        {
+          "typeID": 3331,
+          "level": 4
+        },
+        {
+          "typeID": 3332,
+          "level": 4
+        },
+        {
+          "typeID": 3333,
+          "level": 4
+        },
+        {
+          "typeID": 3334,
+          "level": 4
+        },
+        {
+          "typeID": 3335,
+          "level": 4
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 2
+        },
+        {
+          "typeID": 3394,
+          "level": 5
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3411,
+          "level": 3
+        },
+        {
+          "typeID": 3417,
+          "level": 4
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3420,
+          "level": 4
+        },
+        {
+          "typeID": 3422,
+          "level": 4
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 4
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3437,
+          "level": 4
+        },
+        {
+          "typeID": 3439,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 12305,
+          "level": 3
+        },
+        {
+          "typeID": 16069,
+          "level": 4
+        },
+        {
+          "typeID": 23618,
+          "level": 3
+        },
+        {
+          "typeID": 27902,
+          "level": 3
+        },
+        {
+          "typeID": 28164,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [
+        582,
+        590,
+        592,
+        599,
+        620,
+        625,
+        631,
+        634
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 85127,
+      "name": "Crimson Harvest",
+      "durationDays": 7,
+      "hidden": true,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3304,
+          "level": 4
+        },
+        {
+          "typeID": 3305,
+          "level": 4
+        },
+        {
+          "typeID": 3306,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 4
+        },
+        {
+          "typeID": 3318,
+          "level": 4
+        },
+        {
+          "typeID": 3319,
+          "level": 5
+        },
+        {
+          "typeID": 3324,
+          "level": 4
+        },
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3355,
+          "level": 4
+        },
+        {
+          "typeID": 3359,
+          "level": 4
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 4
+        },
+        {
+          "typeID": 3416,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3420,
+          "level": 4
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 4
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 4
+        },
+        {
+          "typeID": 3429,
+          "level": 5
+        },
+        {
+          "typeID": 3431,
+          "level": 5
+        },
+        {
+          "typeID": 3436,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 3
+        },
+        {
+          "typeID": 3452,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 4
+        },
+        {
+          "typeID": 3455,
+          "level": 5
+        },
+        {
+          "typeID": 11566,
+          "level": 3
+        },
+        {
+          "typeID": 12365,
+          "level": 3
+        },
+        {
+          "typeID": 12366,
+          "level": 3
+        },
+        {
+          "typeID": 12367,
+          "level": 3
+        },
+        {
+          "typeID": 12441,
+          "level": 4
+        },
+        {
+          "typeID": 20312,
+          "level": 4
+        },
+        {
+          "typeID": 20314,
+          "level": 4
+        },
+        {
+          "typeID": 21071,
+          "level": 4
+        },
+        {
+          "typeID": 22806,
+          "level": 4
+        },
+        {
+          "typeID": 22807,
+          "level": 4
+        },
+        {
+          "typeID": 22808,
+          "level": 4
+        },
+        {
+          "typeID": 22809,
+          "level": 4
+        },
+        {
+          "typeID": 25719,
+          "level": 4
+        },
+        {
+          "typeID": 26252,
+          "level": 3
+        },
+        {
+          "typeID": 26253,
+          "level": 3
+        },
+        {
+          "typeID": 26261,
+          "level": 3
+        },
+        {
+          "typeID": 33095,
+          "level": 4
+        },
+        {
+          "typeID": 33096,
+          "level": 4
+        },
+        {
+          "typeID": 33097,
+          "level": 4
+        },
+        {
+          "typeID": 33098,
+          "level": 4
+        },
+        {
+          "typeID": 33699,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        16227,
+        16229,
+        16231,
+        16233,
+        24696,
+        24698,
+        24700,
+        24702,
+        33151,
+        33153,
+        33155,
+        33157,
+        72811,
+        72812,
+        72869,
+        72872,
+        78366,
+        78369
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 86227,
+      "name": "Brand Manager",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 81364,
+          "level": 3
+        },
+        {
+          "typeID": 81366,
+          "level": 4
+        },
+        {
+          "typeID": 81367,
+          "level": 3
+        },
+        {
+          "typeID": 81368,
+          "level": 4
+        },
+        {
+          "typeID": 81369,
+          "level": 3
+        },
+        {
+          "typeID": 81372,
+          "level": 3
+        },
+        {
+          "typeID": 81375,
+          "level": 4
+        },
+        {
+          "typeID": 81377,
+          "level": 4
+        },
+        {
+          "typeID": 84217,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 86393,
+      "name": "Deathless Expert System",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3302,
+          "level": 5
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 4
+        },
+        {
+          "typeID": 3319,
+          "level": 3
+        },
+        {
+          "typeID": 3327,
+          "level": 3
+        },
+        {
+          "typeID": 3329,
+          "level": 3
+        },
+        {
+          "typeID": 3330,
+          "level": 3
+        },
+        {
+          "typeID": 3392,
+          "level": 3
+        },
+        {
+          "typeID": 3394,
+          "level": 5
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 11579,
+          "level": 4
+        },
+        {
+          "typeID": 24241,
+          "level": 3
+        },
+        {
+          "typeID": 33092,
+          "level": 3
+        },
+        {
+          "typeID": 33094,
+          "level": 3
+        },
+        {
+          "typeID": 86260,
+          "level": 3
+        },
+        {
+          "typeID": 86261,
+          "level": 3
+        },
+        {
+          "typeID": 86262,
+          "level": 3
+        },
+        {
+          "typeID": 86263,
+          "level": 3
+        },
+        {
+          "typeID": 86264,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [
+        85087
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 87293,
+      "name": "Resplendent Coil",
+      "durationDays": 7,
+      "hidden": true,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 5
+        },
+        {
+          "typeID": 3304,
+          "level": 5
+        },
+        {
+          "typeID": 3305,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 4
+        },
+        {
+          "typeID": 3318,
+          "level": 4
+        },
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3328,
+          "level": 4
+        },
+        {
+          "typeID": 3329,
+          "level": 4
+        },
+        {
+          "typeID": 3332,
+          "level": 4
+        },
+        {
+          "typeID": 3333,
+          "level": 4
+        },
+        {
+          "typeID": 3355,
+          "level": 4
+        },
+        {
+          "typeID": 3359,
+          "level": 4
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 4
+        },
+        {
+          "typeID": 3416,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3420,
+          "level": 4
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 4
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 3
+        },
+        {
+          "typeID": 3452,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 4
+        },
+        {
+          "typeID": 3455,
+          "level": 4
+        },
+        {
+          "typeID": 11082,
+          "level": 2
+        },
+        {
+          "typeID": 12206,
+          "level": 2
+        },
+        {
+          "typeID": 12210,
+          "level": 2
+        },
+        {
+          "typeID": 12211,
+          "level": 2
+        },
+        {
+          "typeID": 22806,
+          "level": 3
+        },
+        {
+          "typeID": 22807,
+          "level": 3
+        },
+        {
+          "typeID": 22808,
+          "level": 3
+        },
+        {
+          "typeID": 22809,
+          "level": 3
+        },
+        {
+          "typeID": 33699,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        587,
+        608,
+        622,
+        626,
+        627,
+        629,
+        17722,
+        17928
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 87492,
+      "name": "Enforcer",
+      "durationDays": 14,
+      "hidden": true,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3301,
+          "level": 4
+        },
+        {
+          "typeID": 3302,
+          "level": 4
+        },
+        {
+          "typeID": 3303,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 3
+        },
+        {
+          "typeID": 3311,
+          "level": 3
+        },
+        {
+          "typeID": 3312,
+          "level": 3
+        },
+        {
+          "typeID": 3315,
+          "level": 3
+        },
+        {
+          "typeID": 3316,
+          "level": 3
+        },
+        {
+          "typeID": 3317,
+          "level": 3
+        },
+        {
+          "typeID": 3318,
+          "level": 3
+        },
+        {
+          "typeID": 3320,
+          "level": 4
+        },
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3355,
+          "level": 3
+        },
+        {
+          "typeID": 3359,
+          "level": 3
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3416,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 4
+        },
+        {
+          "typeID": 3425,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 4
+        },
+        {
+          "typeID": 3437,
+          "level": 3
+        },
+        {
+          "typeID": 3442,
+          "level": 3
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 3
+        },
+        {
+          "typeID": 3452,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3455,
+          "level": 4
+        },
+        {
+          "typeID": 12441,
+          "level": 4
+        },
+        {
+          "typeID": 20312,
+          "level": 3
+        },
+        {
+          "typeID": 20314,
+          "level": 3
+        },
+        {
+          "typeID": 20315,
+          "level": 3
+        },
+        {
+          "typeID": 21071,
+          "level": 3
+        },
+        {
+          "typeID": 22806,
+          "level": 3
+        },
+        {
+          "typeID": 22807,
+          "level": 3
+        },
+        {
+          "typeID": 22808,
+          "level": 3
+        },
+        {
+          "typeID": 22809,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 4
+        },
+        {
+          "typeID": 26252,
+          "level": 3
+        },
+        {
+          "typeID": 26260,
+          "level": 3
+        },
+        {
+          "typeID": 33091,
+          "level": 4
+        },
+        {
+          "typeID": 33092,
+          "level": 4
+        },
+        {
+          "typeID": 33093,
+          "level": 4
+        },
+        {
+          "typeID": 33094,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        16236,
+        16238,
+        16240,
+        16242,
+        32872,
+        32874,
+        32876,
+        32878
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 87494,
+      "name": "Soldier of Fortune",
+      "durationDays": 14,
+      "hidden": true,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3304,
+          "level": 4
+        },
+        {
+          "typeID": 3305,
+          "level": 4
+        },
+        {
+          "typeID": 3306,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 3
+        },
+        {
+          "typeID": 3311,
+          "level": 3
+        },
+        {
+          "typeID": 3312,
+          "level": 3
+        },
+        {
+          "typeID": 3315,
+          "level": 3
+        },
+        {
+          "typeID": 3316,
+          "level": 3
+        },
+        {
+          "typeID": 3317,
+          "level": 3
+        },
+        {
+          "typeID": 3318,
+          "level": 4
+        },
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3332,
+          "level": 3
+        },
+        {
+          "typeID": 3333,
+          "level": 3
+        },
+        {
+          "typeID": 3334,
+          "level": 3
+        },
+        {
+          "typeID": 3335,
+          "level": 3
+        },
+        {
+          "typeID": 3355,
+          "level": 3
+        },
+        {
+          "typeID": 3359,
+          "level": 3
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3416,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 4
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3437,
+          "level": 3
+        },
+        {
+          "typeID": 3442,
+          "level": 3
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 4
+        },
+        {
+          "typeID": 3455,
+          "level": 4
+        },
+        {
+          "typeID": 12441,
+          "level": 3
+        },
+        {
+          "typeID": 20312,
+          "level": 3
+        },
+        {
+          "typeID": 20314,
+          "level": 3
+        },
+        {
+          "typeID": 20315,
+          "level": 3
+        },
+        {
+          "typeID": 21071,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 3
+        },
+        {
+          "typeID": 25719,
+          "level": 4
+        },
+        {
+          "typeID": 33699,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        621,
+        622,
+        623,
+        624,
+        626,
+        627,
+        629,
+        2006
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 87496,
+      "name": "Explorer",
+      "durationDays": 14,
+      "hidden": true,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3328,
+          "level": 4
+        },
+        {
+          "typeID": 3329,
+          "level": 4
+        },
+        {
+          "typeID": 3330,
+          "level": 4
+        },
+        {
+          "typeID": 3331,
+          "level": 4
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 3
+        },
+        {
+          "typeID": 3394,
+          "level": 3
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3412,
+          "level": 4
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 4
+        },
+        {
+          "typeID": 3442,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 13278,
+          "level": 3
+        },
+        {
+          "typeID": 21718,
+          "level": 3
+        },
+        {
+          "typeID": 23618,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 3
+        },
+        {
+          "typeID": 25739,
+          "level": 3
+        },
+        {
+          "typeID": 25811,
+          "level": 3
+        },
+        {
+          "typeID": 26252,
+          "level": 3
+        },
+        {
+          "typeID": 26254,
+          "level": 1
+        }
+      ],
+      "associatedTypeIDs": [
+        586,
+        605,
+        607,
+        29248
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 87500,
+      "name": "Industrialist",
+      "durationDays": 14,
+      "hidden": true,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3355,
+          "level": 3
+        },
+        {
+          "typeID": 3380,
+          "level": 4
+        },
+        {
+          "typeID": 3385,
+          "level": 4
+        },
+        {
+          "typeID": 3386,
+          "level": 4
+        },
+        {
+          "typeID": 3387,
+          "level": 3
+        },
+        {
+          "typeID": 3389,
+          "level": 4
+        },
+        {
+          "typeID": 3410,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 3
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 4
+        },
+        {
+          "typeID": 3437,
+          "level": 3
+        },
+        {
+          "typeID": 3438,
+          "level": 3
+        },
+        {
+          "typeID": 3442,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3455,
+          "level": 4
+        },
+        {
+          "typeID": 16281,
+          "level": 3
+        },
+        {
+          "typeID": 17940,
+          "level": 4
+        },
+        {
+          "typeID": 22578,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 3
+        },
+        {
+          "typeID": 60377,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [
+        17476,
+        17478,
+        17480
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 88111,
+      "name": "Capsuleer Day YC127",
+      "durationDays": 7,
+      "hidden": true,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3304,
+          "level": 5
+        },
+        {
+          "typeID": 3305,
+          "level": 5
+        },
+        {
+          "typeID": 3306,
+          "level": 5
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 4
+        },
+        {
+          "typeID": 3318,
+          "level": 4
+        },
+        {
+          "typeID": 3319,
+          "level": 5
+        },
+        {
+          "typeID": 3321,
+          "level": 3
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3411,
+          "level": 3
+        },
+        {
+          "typeID": 3416,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 4
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3420,
+          "level": 4
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 4
+        },
+        {
+          "typeID": 3429,
+          "level": 4
+        },
+        {
+          "typeID": 3431,
+          "level": 4
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3437,
+          "level": 4
+        },
+        {
+          "typeID": 3442,
+          "level": 4
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 3
+        },
+        {
+          "typeID": 3452,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 12202,
+          "level": 2
+        },
+        {
+          "typeID": 12204,
+          "level": 2
+        },
+        {
+          "typeID": 12206,
+          "level": 2
+        },
+        {
+          "typeID": 12208,
+          "level": 2
+        },
+        {
+          "typeID": 12211,
+          "level": 2
+        },
+        {
+          "typeID": 12214,
+          "level": 2
+        },
+        {
+          "typeID": 12305,
+          "level": 4
+        },
+        {
+          "typeID": 12441,
+          "level": 4
+        },
+        {
+          "typeID": 12442,
+          "level": 4
+        },
+        {
+          "typeID": 20312,
+          "level": 4
+        },
+        {
+          "typeID": 20314,
+          "level": 4
+        },
+        {
+          "typeID": 20315,
+          "level": 4
+        },
+        {
+          "typeID": 21059,
+          "level": 4
+        },
+        {
+          "typeID": 21071,
+          "level": 4
+        },
+        {
+          "typeID": 22806,
+          "level": 3
+        },
+        {
+          "typeID": 22807,
+          "level": 3
+        },
+        {
+          "typeID": 22808,
+          "level": 3
+        },
+        {
+          "typeID": 22809,
+          "level": 3
+        },
+        {
+          "typeID": 23606,
+          "level": 4
+        },
+        {
+          "typeID": 23618,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 4
+        },
+        {
+          "typeID": 25718,
+          "level": 2
+        },
+        {
+          "typeID": 25719,
+          "level": 5
+        },
+        {
+          "typeID": 26252,
+          "level": 3
+        },
+        {
+          "typeID": 26253,
+          "level": 2
+        },
+        {
+          "typeID": 26257,
+          "level": 2
+        },
+        {
+          "typeID": 26258,
+          "level": 2
+        },
+        {
+          "typeID": 26259,
+          "level": 2
+        },
+        {
+          "typeID": 26260,
+          "level": 2
+        },
+        {
+          "typeID": 26261,
+          "level": 2
+        },
+        {
+          "typeID": 28164,
+          "level": 3
+        },
+        {
+          "typeID": 32797,
+          "level": 1
+        },
+        {
+          "typeID": 32999,
+          "level": 2
+        },
+        {
+          "typeID": 33000,
+          "level": 2
+        },
+        {
+          "typeID": 33001,
+          "level": 2
+        },
+        {
+          "typeID": 33002,
+          "level": 2
+        },
+        {
+          "typeID": 33078,
+          "level": 3
+        },
+        {
+          "typeID": 33095,
+          "level": 4
+        },
+        {
+          "typeID": 33096,
+          "level": 4
+        },
+        {
+          "typeID": 33097,
+          "level": 4
+        },
+        {
+          "typeID": 33098,
+          "level": 4
+        },
+        {
+          "typeID": 33699,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        16227,
+        16229,
+        16231,
+        16233,
+        24696,
+        24698,
+        24700,
+        24702,
+        33151,
+        33153,
+        33155,
+        33157,
+        72811,
+        72812,
+        72869,
+        72872,
+        78369
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 88856,
+      "name": "Kikimora Pilot",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 3
+        },
+        {
+          "typeID": 3315,
+          "level": 3
+        },
+        {
+          "typeID": 3316,
+          "level": 3
+        },
+        {
+          "typeID": 3317,
+          "level": 3
+        },
+        {
+          "typeID": 3318,
+          "level": 4
+        },
+        {
+          "typeID": 3327,
+          "level": 4
+        },
+        {
+          "typeID": 3355,
+          "level": 3
+        },
+        {
+          "typeID": 3359,
+          "level": 3
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3416,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 4
+        },
+        {
+          "typeID": 3425,
+          "level": 3
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 3
+        },
+        {
+          "typeID": 3452,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3455,
+          "level": 4
+        },
+        {
+          "typeID": 22806,
+          "level": 3
+        },
+        {
+          "typeID": 22807,
+          "level": 3
+        },
+        {
+          "typeID": 22808,
+          "level": 3
+        },
+        {
+          "typeID": 22809,
+          "level": 3
+        },
+        {
+          "typeID": 47870,
+          "level": 4
+        },
+        {
+          "typeID": 49742,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        49710
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 89507,
+      "name": "Mining Destroyer Operations",
+      "durationDays": 7,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3386,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3410,
+          "level": 2
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 3
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 4
+        },
+        {
+          "typeID": 3437,
+          "level": 3
+        },
+        {
+          "typeID": 3438,
+          "level": 3
+        },
+        {
+          "typeID": 3440,
+          "level": 1
+        },
+        {
+          "typeID": 3442,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 12305,
+          "level": 3
+        },
+        {
+          "typeID": 22578,
+          "level": 3
+        },
+        {
+          "typeID": 23566,
+          "level": 3
+        },
+        {
+          "typeID": 23606,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 3
+        },
+        {
+          "typeID": 25544,
+          "level": 3
+        },
+        {
+          "typeID": 32999,
+          "level": 3
+        },
+        {
+          "typeID": 89241,
+          "level": 4
+        },
+        {
+          "typeID": 90727,
+          "level": 4
+        },
+        {
+          "typeID": 90728,
+          "level": 2
+        }
+      ],
+      "associatedTypeIDs": [
+        89240,
+        89647
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 91517,
+      "name": "Perseverance Expert System",
+      "durationDays": 4,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3386,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3410,
+          "level": 2
+        },
+        {
+          "typeID": 3416,
+          "level": 3
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 3
+        },
+        {
+          "typeID": 3420,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 4
+        },
+        {
+          "typeID": 3437,
+          "level": 3
+        },
+        {
+          "typeID": 3438,
+          "level": 3
+        },
+        {
+          "typeID": 3440,
+          "level": 1
+        },
+        {
+          "typeID": 3442,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 12305,
+          "level": 3
+        },
+        {
+          "typeID": 16281,
+          "level": 3
+        },
+        {
+          "typeID": 22578,
+          "level": 3
+        },
+        {
+          "typeID": 23566,
+          "level": 3
+        },
+        {
+          "typeID": 23606,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 3
+        },
+        {
+          "typeID": 32999,
+          "level": 3
+        },
+        {
+          "typeID": 89241,
+          "level": 4
+        },
+        {
+          "typeID": 90727,
+          "level": 4
+        },
+        {
+          "typeID": 90728,
+          "level": 2
+        }
+      ],
+      "associatedTypeIDs": [
+        91174
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 91910,
+      "name": "Military Campaign Expert System",
+      "durationDays": 4,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 5
+        },
+        {
+          "typeID": 3302,
+          "level": 5
+        },
+        {
+          "typeID": 3303,
+          "level": 5
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3319,
+          "level": 5
+        },
+        {
+          "typeID": 3320,
+          "level": 5
+        },
+        {
+          "typeID": 3321,
+          "level": 5
+        },
+        {
+          "typeID": 3392,
+          "level": 4
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3416,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 4
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3437,
+          "level": 4
+        },
+        {
+          "typeID": 3442,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 11082,
+          "level": 3
+        },
+        {
+          "typeID": 11083,
+          "level": 3
+        },
+        {
+          "typeID": 11084,
+          "level": 3
+        },
+        {
+          "typeID": 12201,
+          "level": 3
+        },
+        {
+          "typeID": 12210,
+          "level": 3
+        },
+        {
+          "typeID": 12213,
+          "level": 3
+        },
+        {
+          "typeID": 12305,
+          "level": 4
+        },
+        {
+          "typeID": 12441,
+          "level": 4
+        },
+        {
+          "typeID": 12442,
+          "level": 4
+        },
+        {
+          "typeID": 12484,
+          "level": 2
+        },
+        {
+          "typeID": 12485,
+          "level": 2
+        },
+        {
+          "typeID": 12486,
+          "level": 2
+        },
+        {
+          "typeID": 12487,
+          "level": 2
+        },
+        {
+          "typeID": 20209,
+          "level": 3
+        },
+        {
+          "typeID": 20210,
+          "level": 3
+        },
+        {
+          "typeID": 20312,
+          "level": 4
+        },
+        {
+          "typeID": 20314,
+          "level": 4
+        },
+        {
+          "typeID": 20315,
+          "level": 4
+        },
+        {
+          "typeID": 21071,
+          "level": 4
+        },
+        {
+          "typeID": 23606,
+          "level": 4
+        },
+        {
+          "typeID": 23618,
+          "level": 4
+        },
+        {
+          "typeID": 24241,
+          "level": 5
+        },
+        {
+          "typeID": 28164,
+          "level": 4
+        },
+        {
+          "typeID": 33091,
+          "level": 5
+        },
+        {
+          "typeID": 33092,
+          "level": 5
+        },
+        {
+          "typeID": 33093,
+          "level": 5
+        },
+        {
+          "typeID": 33094,
+          "level": 5
+        }
+      ],
+      "associatedTypeIDs": [
+        73789,
+        73794,
+        73795,
+        73796,
+        91775,
+        91849,
+        91857,
+        91858
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 92958,
+      "name": "Gallente Election Expert System",
+      "durationDays": 4,
+      "hidden": false,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 5
+        },
+        {
+          "typeID": 3304,
+          "level": 4
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 4
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 4
+        },
+        {
+          "typeID": 3328,
+          "level": 5
+        },
+        {
+          "typeID": 3332,
+          "level": 3
+        },
+        {
+          "typeID": 3392,
+          "level": 5
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 5
+        },
+        {
+          "typeID": 3426,
+          "level": 5
+        },
+        {
+          "typeID": 3427,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 5
+        },
+        {
+          "typeID": 3429,
+          "level": 5
+        },
+        {
+          "typeID": 3431,
+          "level": 5
+        },
+        {
+          "typeID": 3433,
+          "level": 4
+        },
+        {
+          "typeID": 3435,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3437,
+          "level": 5
+        },
+        {
+          "typeID": 3442,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3452,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 4
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 11082,
+          "level": 1
+        },
+        {
+          "typeID": 12210,
+          "level": 1
+        },
+        {
+          "typeID": 12305,
+          "level": 4
+        },
+        {
+          "typeID": 12486,
+          "level": 1
+        },
+        {
+          "typeID": 19759,
+          "level": 4
+        },
+        {
+          "typeID": 19760,
+          "level": 4
+        },
+        {
+          "typeID": 19766,
+          "level": 4
+        },
+        {
+          "typeID": 22806,
+          "level": 4
+        },
+        {
+          "typeID": 22807,
+          "level": 4
+        },
+        {
+          "typeID": 22808,
+          "level": 4
+        },
+        {
+          "typeID": 22809,
+          "level": 4
+        },
+        {
+          "typeID": 23566,
+          "level": 4
+        },
+        {
+          "typeID": 23606,
+          "level": 4
+        },
+        {
+          "typeID": 23618,
+          "level": 4
+        },
+        {
+          "typeID": 24241,
+          "level": 5
+        },
+        {
+          "typeID": 32999,
+          "level": 5
+        },
+        {
+          "typeID": 33078,
+          "level": 3
+        },
+        {
+          "typeID": 33093,
+          "level": 4
+        },
+        {
+          "typeID": 33699,
+          "level": 4
+        }
+      ],
+      "associatedTypeIDs": [
+        593,
+        594,
+        608,
+        609,
+        626,
+        627,
+        633,
+        16240,
+        32872
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4098,
+      "groupName": "Promotional Expert Systems",
+      "published": true
+    },
+    {
+      "typeID": 93150,
+      "name": "Secret Operations",
+      "durationDays": 1,
+      "hidden": true,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 5
+        },
+        {
+          "typeID": 3302,
+          "level": 5
+        },
+        {
+          "typeID": 3303,
+          "level": 5
+        },
+        {
+          "typeID": 3310,
+          "level": 5
+        },
+        {
+          "typeID": 3312,
+          "level": 5
+        },
+        {
+          "typeID": 3315,
+          "level": 4
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3317,
+          "level": 4
+        },
+        {
+          "typeID": 3318,
+          "level": 5
+        },
+        {
+          "typeID": 3319,
+          "level": 5
+        },
+        {
+          "typeID": 3320,
+          "level": 5
+        },
+        {
+          "typeID": 3321,
+          "level": 5
+        },
+        {
+          "typeID": 3322,
+          "level": 3
+        },
+        {
+          "typeID": 3323,
+          "level": 1
+        },
+        {
+          "typeID": 3324,
+          "level": 5
+        },
+        {
+          "typeID": 3325,
+          "level": 5
+        },
+        {
+          "typeID": 3326,
+          "level": 5
+        },
+        {
+          "typeID": 3327,
+          "level": 5
+        },
+        {
+          "typeID": 3328,
+          "level": 5
+        },
+        {
+          "typeID": 3329,
+          "level": 5
+        },
+        {
+          "typeID": 3330,
+          "level": 5
+        },
+        {
+          "typeID": 3331,
+          "level": 5
+        },
+        {
+          "typeID": 3332,
+          "level": 5
+        },
+        {
+          "typeID": 3333,
+          "level": 5
+        },
+        {
+          "typeID": 3334,
+          "level": 5
+        },
+        {
+          "typeID": 3335,
+          "level": 5
+        },
+        {
+          "typeID": 3336,
+          "level": 5
+        },
+        {
+          "typeID": 3337,
+          "level": 5
+        },
+        {
+          "typeID": 3338,
+          "level": 5
+        },
+        {
+          "typeID": 3339,
+          "level": 5
+        },
+        {
+          "typeID": 3348,
+          "level": 5
+        },
+        {
+          "typeID": 3349,
+          "level": 5
+        },
+        {
+          "typeID": 3350,
+          "level": 5
+        },
+        {
+          "typeID": 3351,
+          "level": 4
+        },
+        {
+          "typeID": 3352,
+          "level": 4
+        },
+        {
+          "typeID": 3354,
+          "level": 4
+        },
+        {
+          "typeID": 3355,
+          "level": 5
+        },
+        {
+          "typeID": 3356,
+          "level": 4
+        },
+        {
+          "typeID": 3357,
+          "level": 4
+        },
+        {
+          "typeID": 3358,
+          "level": 4
+        },
+        {
+          "typeID": 3359,
+          "level": 4
+        },
+        {
+          "typeID": 3392,
+          "level": 5
+        },
+        {
+          "typeID": 3393,
+          "level": 5
+        },
+        {
+          "typeID": 3394,
+          "level": 5
+        },
+        {
+          "typeID": 3402,
+          "level": 5
+        },
+        {
+          "typeID": 3405,
+          "level": 4
+        },
+        {
+          "typeID": 3411,
+          "level": 5
+        },
+        {
+          "typeID": 3412,
+          "level": 5
+        },
+        {
+          "typeID": 3413,
+          "level": 5
+        },
+        {
+          "typeID": 3416,
+          "level": 5
+        },
+        {
+          "typeID": 3417,
+          "level": 5
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3420,
+          "level": 4
+        },
+        {
+          "typeID": 3421,
+          "level": 3
+        },
+        {
+          "typeID": 3422,
+          "level": 4
+        },
+        {
+          "typeID": 3424,
+          "level": 5
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3426,
+          "level": 5
+        },
+        {
+          "typeID": 3427,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 5
+        },
+        {
+          "typeID": 3429,
+          "level": 5
+        },
+        {
+          "typeID": 3430,
+          "level": 4
+        },
+        {
+          "typeID": 3431,
+          "level": 5
+        },
+        {
+          "typeID": 3432,
+          "level": 5
+        },
+        {
+          "typeID": 3433,
+          "level": 4
+        },
+        {
+          "typeID": 3434,
+          "level": 4
+        },
+        {
+          "typeID": 3435,
+          "level": 5
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3437,
+          "level": 5
+        },
+        {
+          "typeID": 3441,
+          "level": 4
+        },
+        {
+          "typeID": 3442,
+          "level": 4
+        },
+        {
+          "typeID": 3449,
+          "level": 5
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 4
+        },
+        {
+          "typeID": 3452,
+          "level": 4
+        },
+        {
+          "typeID": 3453,
+          "level": 5
+        },
+        {
+          "typeID": 3454,
+          "level": 4
+        },
+        {
+          "typeID": 3455,
+          "level": 5
+        },
+        {
+          "typeID": 3456,
+          "level": 5
+        },
+        {
+          "typeID": 3551,
+          "level": 3
+        },
+        {
+          "typeID": 4385,
+          "level": 3
+        },
+        {
+          "typeID": 4411,
+          "level": 3
+        },
+        {
+          "typeID": 11082,
+          "level": 3
+        },
+        {
+          "typeID": 11083,
+          "level": 3
+        },
+        {
+          "typeID": 11084,
+          "level": 3
+        },
+        {
+          "typeID": 11207,
+          "level": 5
+        },
+        {
+          "typeID": 11446,
+          "level": 4
+        },
+        {
+          "typeID": 11566,
+          "level": 4
+        },
+        {
+          "typeID": 11569,
+          "level": 4
+        },
+        {
+          "typeID": 11572,
+          "level": 4
+        },
+        {
+          "typeID": 11574,
+          "level": 5
+        },
+        {
+          "typeID": 11579,
+          "level": 5
+        },
+        {
+          "typeID": 11584,
+          "level": 3
+        },
+        {
+          "typeID": 12092,
+          "level": 4
+        },
+        {
+          "typeID": 12093,
+          "level": 4
+        },
+        {
+          "typeID": 12095,
+          "level": 4
+        },
+        {
+          "typeID": 12096,
+          "level": 4
+        },
+        {
+          "typeID": 12098,
+          "level": 4
+        },
+        {
+          "typeID": 12201,
+          "level": 3
+        },
+        {
+          "typeID": 12210,
+          "level": 3
+        },
+        {
+          "typeID": 12213,
+          "level": 3
+        },
+        {
+          "typeID": 12305,
+          "level": 5
+        },
+        {
+          "typeID": 12365,
+          "level": 4
+        },
+        {
+          "typeID": 12366,
+          "level": 4
+        },
+        {
+          "typeID": 12367,
+          "level": 4
+        },
+        {
+          "typeID": 12441,
+          "level": 5
+        },
+        {
+          "typeID": 12442,
+          "level": 4
+        },
+        {
+          "typeID": 12484,
+          "level": 3
+        },
+        {
+          "typeID": 12485,
+          "level": 3
+        },
+        {
+          "typeID": 12486,
+          "level": 3
+        },
+        {
+          "typeID": 12487,
+          "level": 3
+        },
+        {
+          "typeID": 13278,
+          "level": 4
+        },
+        {
+          "typeID": 16591,
+          "level": 4
+        },
+        {
+          "typeID": 19759,
+          "level": 3
+        },
+        {
+          "typeID": 19760,
+          "level": 3
+        },
+        {
+          "typeID": 19761,
+          "level": 3
+        },
+        {
+          "typeID": 19766,
+          "level": 3
+        },
+        {
+          "typeID": 19767,
+          "level": 3
+        },
+        {
+          "typeID": 19921,
+          "level": 4
+        },
+        {
+          "typeID": 19922,
+          "level": 3
+        },
+        {
+          "typeID": 20209,
+          "level": 3
+        },
+        {
+          "typeID": 20210,
+          "level": 3
+        },
+        {
+          "typeID": 20211,
+          "level": 3
+        },
+        {
+          "typeID": 20212,
+          "level": 3
+        },
+        {
+          "typeID": 20213,
+          "level": 3
+        },
+        {
+          "typeID": 20312,
+          "level": 4
+        },
+        {
+          "typeID": 20314,
+          "level": 4
+        },
+        {
+          "typeID": 20315,
+          "level": 4
+        },
+        {
+          "typeID": 20494,
+          "level": 5
+        },
+        {
+          "typeID": 20495,
+          "level": 5
+        },
+        {
+          "typeID": 21059,
+          "level": 5
+        },
+        {
+          "typeID": 21071,
+          "level": 5
+        },
+        {
+          "typeID": 21603,
+          "level": 5
+        },
+        {
+          "typeID": 21610,
+          "level": 3
+        },
+        {
+          "typeID": 21611,
+          "level": 4
+        },
+        {
+          "typeID": 21718,
+          "level": 4
+        },
+        {
+          "typeID": 22761,
+          "level": 4
+        },
+        {
+          "typeID": 22806,
+          "level": 4
+        },
+        {
+          "typeID": 22807,
+          "level": 4
+        },
+        {
+          "typeID": 22808,
+          "level": 4
+        },
+        {
+          "typeID": 22809,
+          "level": 4
+        },
+        {
+          "typeID": 23566,
+          "level": 3
+        },
+        {
+          "typeID": 23594,
+          "level": 4
+        },
+        {
+          "typeID": 23606,
+          "level": 5
+        },
+        {
+          "typeID": 23618,
+          "level": 3
+        },
+        {
+          "typeID": 23950,
+          "level": 4
+        },
+        {
+          "typeID": 24241,
+          "level": 5
+        },
+        {
+          "typeID": 24242,
+          "level": 3
+        },
+        {
+          "typeID": 24562,
+          "level": 3
+        },
+        {
+          "typeID": 24764,
+          "level": 3
+        },
+        {
+          "typeID": 25718,
+          "level": 3
+        },
+        {
+          "typeID": 25719,
+          "level": 5
+        },
+        {
+          "typeID": 25739,
+          "level": 3
+        },
+        {
+          "typeID": 25810,
+          "level": 3
+        },
+        {
+          "typeID": 25811,
+          "level": 3
+        },
+        {
+          "typeID": 26252,
+          "level": 3
+        },
+        {
+          "typeID": 26253,
+          "level": 3
+        },
+        {
+          "typeID": 26254,
+          "level": 3
+        },
+        {
+          "typeID": 26255,
+          "level": 3
+        },
+        {
+          "typeID": 26256,
+          "level": 3
+        },
+        {
+          "typeID": 26257,
+          "level": 3
+        },
+        {
+          "typeID": 26258,
+          "level": 3
+        },
+        {
+          "typeID": 26259,
+          "level": 3
+        },
+        {
+          "typeID": 26260,
+          "level": 3
+        },
+        {
+          "typeID": 26261,
+          "level": 3
+        },
+        {
+          "typeID": 28073,
+          "level": 4
+        },
+        {
+          "typeID": 28164,
+          "level": 4
+        },
+        {
+          "typeID": 28609,
+          "level": 4
+        },
+        {
+          "typeID": 28615,
+          "level": 4
+        },
+        {
+          "typeID": 28656,
+          "level": 4
+        },
+        {
+          "typeID": 28667,
+          "level": 4
+        },
+        {
+          "typeID": 28879,
+          "level": 3
+        },
+        {
+          "typeID": 28880,
+          "level": 3
+        },
+        {
+          "typeID": 30532,
+          "level": 5
+        },
+        {
+          "typeID": 30537,
+          "level": 5
+        },
+        {
+          "typeID": 30538,
+          "level": 5
+        },
+        {
+          "typeID": 30539,
+          "level": 5
+        },
+        {
+          "typeID": 30540,
+          "level": 5
+        },
+        {
+          "typeID": 30544,
+          "level": 5
+        },
+        {
+          "typeID": 30545,
+          "level": 5
+        },
+        {
+          "typeID": 30546,
+          "level": 5
+        },
+        {
+          "typeID": 30547,
+          "level": 5
+        },
+        {
+          "typeID": 30548,
+          "level": 5
+        },
+        {
+          "typeID": 30549,
+          "level": 5
+        },
+        {
+          "typeID": 30550,
+          "level": 5
+        },
+        {
+          "typeID": 30551,
+          "level": 5
+        },
+        {
+          "typeID": 30552,
+          "level": 5
+        },
+        {
+          "typeID": 30553,
+          "level": 5
+        },
+        {
+          "typeID": 30554,
+          "level": 5
+        },
+        {
+          "typeID": 30650,
+          "level": 3
+        },
+        {
+          "typeID": 30651,
+          "level": 3
+        },
+        {
+          "typeID": 30652,
+          "level": 3
+        },
+        {
+          "typeID": 30653,
+          "level": 3
+        },
+        {
+          "typeID": 32797,
+          "level": 3
+        },
+        {
+          "typeID": 32999,
+          "level": 4
+        },
+        {
+          "typeID": 33000,
+          "level": 4
+        },
+        {
+          "typeID": 33001,
+          "level": 4
+        },
+        {
+          "typeID": 33002,
+          "level": 4
+        },
+        {
+          "typeID": 33078,
+          "level": 4
+        },
+        {
+          "typeID": 33091,
+          "level": 5
+        },
+        {
+          "typeID": 33092,
+          "level": 5
+        },
+        {
+          "typeID": 33093,
+          "level": 5
+        },
+        {
+          "typeID": 33094,
+          "level": 5
+        },
+        {
+          "typeID": 33095,
+          "level": 5
+        },
+        {
+          "typeID": 33096,
+          "level": 5
+        },
+        {
+          "typeID": 33097,
+          "level": 5
+        },
+        {
+          "typeID": 33098,
+          "level": 5
+        },
+        {
+          "typeID": 33699,
+          "level": 5
+        },
+        {
+          "typeID": 34390,
+          "level": 4
+        },
+        {
+          "typeID": 34533,
+          "level": 4
+        },
+        {
+          "typeID": 35680,
+          "level": 4
+        },
+        {
+          "typeID": 35685,
+          "level": 4
+        },
+        {
+          "typeID": 37615,
+          "level": 4
+        },
+        {
+          "typeID": 47445,
+          "level": 4
+        },
+        {
+          "typeID": 47867,
+          "level": 5
+        },
+        {
+          "typeID": 47868,
+          "level": 5
+        },
+        {
+          "typeID": 47869,
+          "level": 5
+        },
+        {
+          "typeID": 47870,
+          "level": 5
+        },
+        {
+          "typeID": 47873,
+          "level": 3
+        },
+        {
+          "typeID": 49742,
+          "level": 5
+        },
+        {
+          "typeID": 49743,
+          "level": 5
+        },
+        {
+          "typeID": 54794,
+          "level": 5
+        },
+        {
+          "typeID": 54827,
+          "level": 3
+        },
+        {
+          "typeID": 54840,
+          "level": 4
+        },
+        {
+          "typeID": 54841,
+          "level": 5
+        },
+        {
+          "typeID": 55031,
+          "level": 5
+        },
+        {
+          "typeID": 55032,
+          "level": 5
+        },
+        {
+          "typeID": 55033,
+          "level": 5
+        },
+        {
+          "typeID": 55034,
+          "level": 5
+        },
+        {
+          "typeID": 55511,
+          "level": 4
+        },
+        {
+          "typeID": 86260,
+          "level": 4
+        },
+        {
+          "typeID": 86261,
+          "level": 4
+        },
+        {
+          "typeID": 86262,
+          "level": 4
+        },
+        {
+          "typeID": 86263,
+          "level": 4
+        },
+        {
+          "typeID": 86264,
+          "level": 4
+        },
+        {
+          "typeID": 89609,
+          "level": 4
+        },
+        {
+          "typeID": 89610,
+          "level": 4
+        },
+        {
+          "typeID": 89611,
+          "level": 5
+        }
+      ],
+      "associatedTypeIDs": [],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": false
+    },
+    {
+      "typeID": 93845,
+      "name": "Capsuleer Day YC128",
+      "durationDays": 7,
+      "hidden": true,
+      "retired": false,
+      "skillsGranted": [
+        {
+          "typeID": 3300,
+          "level": 5
+        },
+        {
+          "typeID": 3301,
+          "level": 5
+        },
+        {
+          "typeID": 3302,
+          "level": 5
+        },
+        {
+          "typeID": 3303,
+          "level": 5
+        },
+        {
+          "typeID": 3310,
+          "level": 4
+        },
+        {
+          "typeID": 3311,
+          "level": 4
+        },
+        {
+          "typeID": 3312,
+          "level": 3
+        },
+        {
+          "typeID": 3315,
+          "level": 3
+        },
+        {
+          "typeID": 3316,
+          "level": 4
+        },
+        {
+          "typeID": 3318,
+          "level": 4
+        },
+        {
+          "typeID": 3319,
+          "level": 5
+        },
+        {
+          "typeID": 3320,
+          "level": 5
+        },
+        {
+          "typeID": 3321,
+          "level": 5
+        },
+        {
+          "typeID": 3328,
+          "level": 5
+        },
+        {
+          "typeID": 3329,
+          "level": 5
+        },
+        {
+          "typeID": 3330,
+          "level": 5
+        },
+        {
+          "typeID": 3331,
+          "level": 5
+        },
+        {
+          "typeID": 3392,
+          "level": 5
+        },
+        {
+          "typeID": 3393,
+          "level": 4
+        },
+        {
+          "typeID": 3394,
+          "level": 4
+        },
+        {
+          "typeID": 3405,
+          "level": 3
+        },
+        {
+          "typeID": 3411,
+          "level": 3
+        },
+        {
+          "typeID": 3413,
+          "level": 5
+        },
+        {
+          "typeID": 3416,
+          "level": 4
+        },
+        {
+          "typeID": 3417,
+          "level": 4
+        },
+        {
+          "typeID": 3418,
+          "level": 4
+        },
+        {
+          "typeID": 3419,
+          "level": 4
+        },
+        {
+          "typeID": 3420,
+          "level": 4
+        },
+        {
+          "typeID": 3423,
+          "level": 3
+        },
+        {
+          "typeID": 3424,
+          "level": 3
+        },
+        {
+          "typeID": 3425,
+          "level": 4
+        },
+        {
+          "typeID": 3428,
+          "level": 3
+        },
+        {
+          "typeID": 3431,
+          "level": 3
+        },
+        {
+          "typeID": 3436,
+          "level": 5
+        },
+        {
+          "typeID": 3437,
+          "level": 4
+        },
+        {
+          "typeID": 3442,
+          "level": 3
+        },
+        {
+          "typeID": 3449,
+          "level": 4
+        },
+        {
+          "typeID": 3450,
+          "level": 4
+        },
+        {
+          "typeID": 3451,
+          "level": 3
+        },
+        {
+          "typeID": 3452,
+          "level": 3
+        },
+        {
+          "typeID": 3453,
+          "level": 3
+        },
+        {
+          "typeID": 3454,
+          "level": 3
+        },
+        {
+          "typeID": 3455,
+          "level": 3
+        },
+        {
+          "typeID": 11082,
+          "level": 2
+        },
+        {
+          "typeID": 11083,
+          "level": 2
+        },
+        {
+          "typeID": 11084,
+          "level": 2
+        },
+        {
+          "typeID": 12095,
+          "level": 3
+        },
+        {
+          "typeID": 12201,
+          "level": 2
+        },
+        {
+          "typeID": 12210,
+          "level": 2
+        },
+        {
+          "typeID": 12213,
+          "level": 2
+        },
+        {
+          "typeID": 12305,
+          "level": 4
+        },
+        {
+          "typeID": 12441,
+          "level": 4
+        },
+        {
+          "typeID": 12442,
+          "level": 4
+        },
+        {
+          "typeID": 20209,
+          "level": 2
+        },
+        {
+          "typeID": 20210,
+          "level": 2
+        },
+        {
+          "typeID": 20314,
+          "level": 3
+        },
+        {
+          "typeID": 20315,
+          "level": 3
+        },
+        {
+          "typeID": 21059,
+          "level": 4
+        },
+        {
+          "typeID": 21071,
+          "level": 4
+        },
+        {
+          "typeID": 23606,
+          "level": 4
+        },
+        {
+          "typeID": 23618,
+          "level": 3
+        },
+        {
+          "typeID": 24241,
+          "level": 4
+        },
+        {
+          "typeID": 26252,
+          "level": 3
+        },
+        {
+          "typeID": 26253,
+          "level": 2
+        },
+        {
+          "typeID": 26257,
+          "level": 2
+        },
+        {
+          "typeID": 26258,
+          "level": 2
+        },
+        {
+          "typeID": 26259,
+          "level": 2
+        },
+        {
+          "typeID": 26260,
+          "level": 2
+        },
+        {
+          "typeID": 26261,
+          "level": 2
+        },
+        {
+          "typeID": 28164,
+          "level": 3
+        },
+        {
+          "typeID": 32797,
+          "level": 1
+        },
+        {
+          "typeID": 33078,
+          "level": 3
+        }
+      ],
+      "associatedTypeIDs": [
+        11365,
+        11371,
+        11379,
+        11381,
+        11393,
+        11400,
+        12042,
+        12044
+      ],
+      "sourceRefs": [
+        "ClientSDE:eve-online-client-static-data-3365090-jsonl/expertsystems.jsonl"
+      ],
+      "groupID": 4091,
+      "groupName": "Standard Expert Systems",
+      "published": false
+    }
+  ]
+}

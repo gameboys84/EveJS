@@ -1,0 +1,2247 @@
+{
+  "locators": [
+    {
+      "graphicLocationID": 44,
+      "directionalLocatorCategories": [
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "typeID": 35825,
+      "graphicID": 21344,
+      "hasUndockLocators": true,
+      "name": "Raitaru",
+      "groupID": 1404,
+      "directionalLocators": [
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -463.80249,
+            "x": 4569.50781,
+            "z": 21625.57812
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "large01"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -463.80249,
+            "x": -4569.50781,
+            "z": 21625.57812
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "large02"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 0,
+            "x": 2298.55176,
+            "z": 21625.57812
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small01"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -710.3009,
+            "x": -2386.28735,
+            "z": 21625.57812
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small02"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 52,
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "typeID": 35826,
+      "graphicID": 21405,
+      "hasUndockLocators": true,
+      "name": "Azbel",
+      "groupID": 1404,
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -1394.5896,
+            "x": -12889.90137,
+            "z": 30727.36719
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital01"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -5107.07471,
+            "x": -12889.90137,
+            "z": 30727.36719
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital02"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -5107.07471,
+            "x": -9538.24902,
+            "z": 30727.36719
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital03"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -1390.88599,
+            "x": -9538.24902,
+            "z": 30727.36719
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital04"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 801.25568,
+            "x": -19506.76172,
+            "z": 32649.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "large01"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 1657.63184,
+            "x": -21285.21289,
+            "z": 32649.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "large02"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 8831.32812,
+            "x": -16769.82812,
+            "z": 29800.13086
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "large03"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 298.16687,
+            "x": -21150.98438,
+            "z": 32649.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small01"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 2051.00415,
+            "x": -19162.69141,
+            "z": 32649.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small02"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 10079.16895,
+            "x": -16769.82812,
+            "z": 29800.13086
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small03"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 53,
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall",
+        "undockPointSupercapital"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall",
+        "undockPointSupercapital"
+      ],
+      "typeID": 35827,
+      "graphicID": 21406,
+      "hasUndockLocators": true,
+      "name": "Sotiyo",
+      "groupID": 1404,
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -7726.83057,
+            "x": -8085.19873,
+            "z": 56168.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital01"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -11764.31152,
+            "x": -8085.19873,
+            "z": 56168.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital02"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -7726.83057,
+            "x": -4764.99268,
+            "z": 56168.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital03"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -11764.31152,
+            "x": -4744.58057,
+            "z": 56168.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital04"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -7726.83057,
+            "x": 8085.19922,
+            "z": 56168.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital05"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -11764.31152,
+            "x": 8085.19922,
+            "z": 56168.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital06"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -7726.83057,
+            "x": 4764.99316,
+            "z": 56168.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital07"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -11764.31152,
+            "x": 4744.58105,
+            "z": 56168.83203
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital08"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -9787.25,
+            "x": -1942.45789,
+            "z": 55126.92969
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "large01"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -9787.25,
+            "x": 1942.45801,
+            "z": 55126.92969
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "large02"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -8038.82275,
+            "x": -1896.39832,
+            "z": 55116.35938
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small01"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -8038.82275,
+            "x": 1896.39795,
+            "z": 55116.35938
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small02"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -11724.91504,
+            "x": -1896.39832,
+            "z": 55116.35938
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small03"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -11724.91504,
+            "x": 1896.39795,
+            "z": 55116.35938
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small04"
+        },
+        {
+          "category": "undockPointSupercapital",
+          "position": {
+            "y": 11873.00391,
+            "x": -5476.11426,
+            "z": 54651.39453
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "supercapital01"
+        },
+        {
+          "category": "undockPointSupercapital",
+          "position": {
+            "y": 11873.00391,
+            "x": 5476.11377,
+            "z": 54651.39453
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "supercapital02"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 51,
+      "directionalLocatorCategories": [
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "typeID": 35832,
+      "graphicID": 21137,
+      "hasUndockLocators": true,
+      "name": "Astrahus",
+      "groupID": 1657,
+      "directionalLocators": [
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 215.25922,
+            "x": 6866.13623,
+            "z": -11538.01465
+          },
+          "direction": {
+            "y": 0.0462,
+            "x": -0.28238,
+            "z": -0.95819
+          },
+          "name": "subcapital1"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 215.10736,
+            "x": 9581.47754,
+            "z": -12315.40723
+          },
+          "direction": {
+            "y": 0.0361,
+            "x": -0.28008,
+            "z": -0.9593
+          },
+          "name": "subcapital2"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -14.97162,
+            "x": 4030.66699,
+            "z": -10789.33203
+          },
+          "direction": {
+            "y": -0.03246,
+            "x": -0.24561,
+            "z": -0.96882
+          },
+          "name": "subcapital3"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -112.63899,
+            "x": 340.41803,
+            "z": -12707.28125
+          },
+          "direction": {
+            "y": -0.00791,
+            "x": 0.19666,
+            "z": -0.98044
+          },
+          "name": "subcapital4"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 238.98766,
+            "x": -5910.77783,
+            "z": -16764.24414
+          },
+          "direction": {
+            "y": 0.03892,
+            "x": 0.27525,
+            "z": -0.96058
+          },
+          "name": "subcapital5"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 256.00824,
+            "x": -2966.51929,
+            "z": -16526.91016
+          },
+          "direction": {
+            "y": -0.04427,
+            "x": 0.28014,
+            "z": -0.95894
+          },
+          "name": "subcapital6"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 30,
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "typeID": 35833,
+      "graphicID": 21138,
+      "hasUndockLocators": true,
+      "name": "Fortizar",
+      "groupID": 1657,
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -5477.17383,
+            "x": 4485.54688,
+            "z": -11414.37891
+          },
+          "direction": {
+            "y": 0.06147,
+            "x": 0.60302,
+            "z": -0.79536
+          },
+          "name": "capital1"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -5401.56543,
+            "x": 1897.53528,
+            "z": -13435.36523
+          },
+          "direction": {
+            "y": -0.05469,
+            "x": 0.58131,
+            "z": -0.81184
+          },
+          "name": "capital2"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 1949.82751,
+            "x": -13237.39844,
+            "z": -7818.84863
+          },
+          "direction": {
+            "y": 0.16726,
+            "x": 0.67747,
+            "z": -0.71628
+          },
+          "name": "large1"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 1540.78223,
+            "x": -1380.69031,
+            "z": -9616.49902
+          },
+          "direction": {
+            "y": -0.0124,
+            "x": 0.65184,
+            "z": -0.75825
+          },
+          "name": "large2"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 3337.72949,
+            "x": -14916.80957,
+            "z": -8543.68066
+          },
+          "direction": {
+            "y": 0.02766,
+            "x": 0.63644,
+            "z": -0.77083
+          },
+          "name": "large3"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 2879.7771,
+            "x": -21467.41602,
+            "z": -9327.69629
+          },
+          "direction": {
+            "y": 0.01804,
+            "x": 0,
+            "z": -0.99984
+          },
+          "name": "small1"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 2904.27954,
+            "x": -2188.22217,
+            "z": -9587.37402
+          },
+          "direction": {
+            "y": 0.03552,
+            "x": 0.67095,
+            "z": -0.74065
+          },
+          "name": "small2"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 1595.71729,
+            "x": -18144.68555,
+            "z": -9636.7041
+          },
+          "direction": {
+            "y": -0.00413,
+            "x": -0.03476,
+            "z": -0.99939
+          },
+          "name": "small3"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 2868.46851,
+            "x": -18170.88281,
+            "z": -9255.18359
+          },
+          "direction": {
+            "y": 0.04323,
+            "x": 0,
+            "z": -0.99907
+          },
+          "name": "small4"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 45,
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall",
+        "undockPointSupercapital"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall",
+        "undockPointSupercapital"
+      ],
+      "typeID": 35834,
+      "graphicID": 21139,
+      "hasUndockLocators": true,
+      "name": "Keepstar",
+      "groupID": 1657,
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": 692.58435,
+            "x": 15843.23438,
+            "z": -27646.02148
+          },
+          "direction": {
+            "y": 0.04217,
+            "x": 0,
+            "z": -0.99911
+          },
+          "name": "capital01"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": 1017.10297,
+            "x": 5466.62061,
+            "z": -27676.31445
+          },
+          "direction": {
+            "y": 0.04217,
+            "x": 0,
+            "z": -0.99911
+          },
+          "name": "capital02"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": 952.07129,
+            "x": -5314.354,
+            "z": -28061.41797
+          },
+          "direction": {
+            "y": 0.04217,
+            "x": 0,
+            "z": -0.99911
+          },
+          "name": "capital03"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": 952.07129,
+            "x": -15762.92676,
+            "z": -27806.98047
+          },
+          "direction": {
+            "y": 0.04217,
+            "x": 0,
+            "z": -0.99911
+          },
+          "name": "capital04"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -3900.11157,
+            "x": 22899.96875,
+            "z": -27276.98633
+          },
+          "direction": {
+            "y": 0.00178,
+            "x": 0,
+            "z": -1
+          },
+          "name": "large01"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 897.70404,
+            "x": -677.95746,
+            "z": -27131.96289
+          },
+          "direction": {
+            "y": 0.00178,
+            "x": 0,
+            "z": -1
+          },
+          "name": "large02"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -3974.05469,
+            "x": -22939.0918,
+            "z": -27131.96289
+          },
+          "direction": {
+            "y": 0.00178,
+            "x": 0,
+            "z": -1
+          },
+          "name": "large03"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -3183.79077,
+            "x": 493.02328,
+            "z": -27060.21484
+          },
+          "direction": {
+            "y": -0.01462,
+            "x": 0,
+            "z": -0.99989
+          },
+          "name": "large04"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 495.52911,
+            "x": 25993.20117,
+            "z": -28195.06836
+          },
+          "direction": {
+            "y": -0.00318,
+            "x": -0.22872,
+            "z": -0.97349
+          },
+          "name": "small01"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 639.81897,
+            "x": 20185.44141,
+            "z": -26752.49219
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small02"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 832.79181,
+            "x": 10335.87207,
+            "z": -26752.49219
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small03"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -1303.71021,
+            "x": 10335.87207,
+            "z": -26752.49219
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small04"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -6898.74707,
+            "x": 7196.4248,
+            "z": -26752.49219
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small05"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -3046.77246,
+            "x": 19859.08789,
+            "z": -26752.49219
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small06"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -3046.77246,
+            "x": 27202.66211,
+            "z": -28597.54883
+          },
+          "direction": {
+            "y": 0.03772,
+            "x": -0.25684,
+            "z": -0.96572
+          },
+          "name": "small07"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -6944.38965,
+            "x": -7166.56641,
+            "z": -26864.45703
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small08"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -1330.96497,
+            "x": -10327.46191,
+            "z": -26864.45703
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small09"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 860.72089,
+            "x": -10368.08398,
+            "z": -26864.45703
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small10"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 655.68585,
+            "x": -20163.55078,
+            "z": -26864.45703
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small11"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -3003.45581,
+            "x": -19871.05273,
+            "z": -26864.45703
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small12"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 510.56808,
+            "x": -26040.14258,
+            "z": -28030.69922
+          },
+          "direction": {
+            "y": 0.03802,
+            "x": 0.22612,
+            "z": -0.97336
+          },
+          "name": "small13"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -3241.54663,
+            "x": -27331.79688,
+            "z": -28563.04688
+          },
+          "direction": {
+            "y": 0.03789,
+            "x": 0.24041,
+            "z": -0.96993
+          },
+          "name": "small14"
+        },
+        {
+          "category": "undockPointSupercapital",
+          "position": {
+            "y": 17399.93945,
+            "x": 0,
+            "z": 6340.771
+          },
+          "direction": {
+            "y": -0.02036,
+            "x": 0,
+            "z": -0.99979
+          },
+          "name": "supercapital01"
+        },
+        {
+          "category": "undockPointSupercapital",
+          "position": {
+            "y": 17442.43555,
+            "x": 10479.71582,
+            "z": 6673.56006
+          },
+          "direction": {
+            "y": -0.02036,
+            "x": 0,
+            "z": -0.99979
+          },
+          "name": "supercapital02"
+        },
+        {
+          "category": "undockPointSupercapital",
+          "position": {
+            "y": 17441.6875,
+            "x": -10657.08008,
+            "z": 6271.77246
+          },
+          "direction": {
+            "y": -0.02036,
+            "x": 0,
+            "z": -0.99979
+          },
+          "name": "supercapital03"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 56,
+      "directionalLocatorCategories": [
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "typeID": 35835,
+      "graphicID": 21445,
+      "hasUndockLocators": true,
+      "name": "Athanor",
+      "groupID": 1406,
+      "directionalLocators": [
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -4186.18457,
+            "x": 3809.16187,
+            "z": 3937.86646
+          },
+          "direction": {
+            "y": -0.15877,
+            "x": 0,
+            "z": 0.98732
+          },
+          "name": "subcapital1"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -3852.85742,
+            "x": -4161.31299,
+            "z": 3937.8667
+          },
+          "direction": {
+            "y": -0.15129,
+            "x": 0,
+            "z": 0.98849
+          },
+          "name": "subcapital2"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -1173.57593,
+            "x": 0,
+            "z": 4852.06738
+          },
+          "direction": {
+            "y": -0.1589,
+            "x": 0,
+            "z": 0.98729
+          },
+          "name": "subcapital3"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 57,
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "typeID": 35836,
+      "graphicID": 21451,
+      "hasUndockLocators": true,
+      "name": "Tatara",
+      "groupID": 1406,
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -3925.33911,
+            "x": -4234.48535,
+            "z": 4186.65137
+          },
+          "direction": {
+            "y": -0.06496,
+            "x": 0,
+            "z": 0.99789
+          },
+          "name": "capital1"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -3925.33887,
+            "x": 4198.35107,
+            "z": 4186.65088
+          },
+          "direction": {
+            "y": -0.06496,
+            "x": 0,
+            "z": 0.99789
+          },
+          "name": "capital2"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -1699.48804,
+            "x": 0,
+            "z": 5270.08936
+          },
+          "direction": {
+            "y": -0.15877,
+            "x": 0,
+            "z": 0.98732
+          },
+          "name": "subcapital1"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -3907.90332,
+            "x": -3814.20679,
+            "z": 4500
+          },
+          "direction": {
+            "y": -0.10175,
+            "x": 0,
+            "z": 0.99481
+          },
+          "name": "subcapital2"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -3907.90332,
+            "x": 3717.98486,
+            "z": 4500
+          },
+          "direction": {
+            "y": -0.10175,
+            "x": 0,
+            "z": 0.99481
+          },
+          "name": "subcapital3"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -985.36847,
+            "x": 0,
+            "z": 5272.80127
+          },
+          "direction": {
+            "y": -0.1589,
+            "x": 0,
+            "z": 0.98729
+          },
+          "name": "subcapital4"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -3907.90332,
+            "x": -4660.40771,
+            "z": 4500
+          },
+          "direction": {
+            "y": -0.10175,
+            "x": 0,
+            "z": 0.99481
+          },
+          "name": "subcapital5"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -3907.90332,
+            "x": 4689.45947,
+            "z": 4500
+          },
+          "direction": {
+            "y": -0.10175,
+            "x": 0,
+            "z": 0.99481
+          },
+          "name": "subcapital6"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": null,
+      "directionalLocatorCategories": [],
+      "hasDirectionalLocators": false,
+      "graphicFile": null,
+      "undockLocatorCategories": [],
+      "typeID": 35840,
+      "graphicID": 22262,
+      "hasUndockLocators": false,
+      "name": "Pharolux Cyno Beacon",
+      "groupID": 2017,
+      "directionalLocators": []
+    },
+    {
+      "graphicLocationID": null,
+      "directionalLocatorCategories": [],
+      "hasDirectionalLocators": false,
+      "graphicFile": null,
+      "undockLocatorCategories": [],
+      "typeID": 35841,
+      "graphicID": 22269,
+      "hasUndockLocators": false,
+      "name": "Ansiblex Jump Bridge",
+      "groupID": 1408,
+      "directionalLocators": []
+    },
+    {
+      "graphicLocationID": null,
+      "directionalLocatorCategories": [],
+      "hasDirectionalLocators": false,
+      "graphicFile": null,
+      "undockLocatorCategories": [],
+      "typeID": 37534,
+      "graphicID": 22252,
+      "hasUndockLocators": false,
+      "name": "Tenebrex Cyno Jammer",
+      "groupID": 2016,
+      "directionalLocators": []
+    },
+    {
+      "graphicLocationID": 45,
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall",
+        "undockPointSupercapital"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall",
+        "undockPointSupercapital"
+      ],
+      "typeID": 40340,
+      "graphicID": 21315,
+      "hasUndockLocators": true,
+      "name": "Upwell Palatine Keepstar",
+      "groupID": 1657,
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": 692.58435,
+            "x": 15843.23438,
+            "z": -27646.02148
+          },
+          "direction": {
+            "y": 0.04217,
+            "x": 0,
+            "z": -0.99911
+          },
+          "name": "capital01"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": 1017.10297,
+            "x": 5466.62061,
+            "z": -27676.31445
+          },
+          "direction": {
+            "y": 0.04217,
+            "x": 0,
+            "z": -0.99911
+          },
+          "name": "capital02"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": 952.07129,
+            "x": -5314.354,
+            "z": -28061.41797
+          },
+          "direction": {
+            "y": 0.04217,
+            "x": 0,
+            "z": -0.99911
+          },
+          "name": "capital03"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": 952.07129,
+            "x": -15762.92676,
+            "z": -27806.98047
+          },
+          "direction": {
+            "y": 0.04217,
+            "x": 0,
+            "z": -0.99911
+          },
+          "name": "capital04"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -3900.11157,
+            "x": 22899.96875,
+            "z": -27276.98633
+          },
+          "direction": {
+            "y": 0.00178,
+            "x": 0,
+            "z": -1
+          },
+          "name": "large01"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 897.70404,
+            "x": -677.95746,
+            "z": -27131.96289
+          },
+          "direction": {
+            "y": 0.00178,
+            "x": 0,
+            "z": -1
+          },
+          "name": "large02"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -3974.05469,
+            "x": -22939.0918,
+            "z": -27131.96289
+          },
+          "direction": {
+            "y": 0.00178,
+            "x": 0,
+            "z": -1
+          },
+          "name": "large03"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -3183.79077,
+            "x": 493.02328,
+            "z": -27060.21484
+          },
+          "direction": {
+            "y": -0.01462,
+            "x": 0,
+            "z": -0.99989
+          },
+          "name": "large04"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 495.52911,
+            "x": 25993.20117,
+            "z": -28195.06836
+          },
+          "direction": {
+            "y": -0.00318,
+            "x": -0.22872,
+            "z": -0.97349
+          },
+          "name": "small01"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 639.81897,
+            "x": 20185.44141,
+            "z": -26752.49219
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small02"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 832.79181,
+            "x": 10335.87207,
+            "z": -26752.49219
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small03"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -1303.71021,
+            "x": 10335.87207,
+            "z": -26752.49219
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small04"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -6898.74707,
+            "x": 7196.4248,
+            "z": -26752.49219
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small05"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -3046.77246,
+            "x": 19859.08789,
+            "z": -26752.49219
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small06"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -3046.77246,
+            "x": 27202.66211,
+            "z": -28597.54883
+          },
+          "direction": {
+            "y": 0.03772,
+            "x": -0.25684,
+            "z": -0.96572
+          },
+          "name": "small07"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -6944.38965,
+            "x": -7166.56641,
+            "z": -26864.45703
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small08"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -1330.96497,
+            "x": -10327.46191,
+            "z": -26864.45703
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small09"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 860.72089,
+            "x": -10368.08398,
+            "z": -26864.45703
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small10"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 655.68585,
+            "x": -20163.55078,
+            "z": -26864.45703
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small11"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -3003.45581,
+            "x": -19871.05273,
+            "z": -26864.45703
+          },
+          "direction": {
+            "y": 0.03903,
+            "x": 0,
+            "z": -0.99924
+          },
+          "name": "small12"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 510.56808,
+            "x": -26040.14258,
+            "z": -28030.69922
+          },
+          "direction": {
+            "y": 0.03802,
+            "x": 0.22612,
+            "z": -0.97336
+          },
+          "name": "small13"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -3241.54663,
+            "x": -27331.79688,
+            "z": -28563.04688
+          },
+          "direction": {
+            "y": 0.03789,
+            "x": 0.24041,
+            "z": -0.96993
+          },
+          "name": "small14"
+        },
+        {
+          "category": "undockPointSupercapital",
+          "position": {
+            "y": 17399.93945,
+            "x": 0,
+            "z": 6340.771
+          },
+          "direction": {
+            "y": -0.02036,
+            "x": 0,
+            "z": -0.99979
+          },
+          "name": "supercapital01"
+        },
+        {
+          "category": "undockPointSupercapital",
+          "position": {
+            "y": 17442.43555,
+            "x": 10479.71582,
+            "z": 6673.56006
+          },
+          "direction": {
+            "y": -0.02036,
+            "x": 0,
+            "z": -0.99979
+          },
+          "name": "supercapital02"
+        },
+        {
+          "category": "undockPointSupercapital",
+          "position": {
+            "y": 17441.6875,
+            "x": -10657.08008,
+            "z": 6271.77246
+          },
+          "direction": {
+            "y": -0.02036,
+            "x": 0,
+            "z": -0.99979
+          },
+          "name": "supercapital03"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 30,
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "typeID": 47512,
+      "graphicID": 22195,
+      "hasUndockLocators": true,
+      "name": "'Moreau' Fortizar",
+      "groupID": 1657,
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -5477.17383,
+            "x": 4485.54688,
+            "z": -11414.37891
+          },
+          "direction": {
+            "y": 0.06147,
+            "x": 0.60302,
+            "z": -0.79536
+          },
+          "name": "capital1"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -5401.56543,
+            "x": 1897.53528,
+            "z": -13435.36523
+          },
+          "direction": {
+            "y": -0.05469,
+            "x": 0.58131,
+            "z": -0.81184
+          },
+          "name": "capital2"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 1949.82751,
+            "x": -13237.39844,
+            "z": -7818.84863
+          },
+          "direction": {
+            "y": 0.16726,
+            "x": 0.67747,
+            "z": -0.71628
+          },
+          "name": "large1"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 1540.78223,
+            "x": -1380.69031,
+            "z": -9616.49902
+          },
+          "direction": {
+            "y": -0.0124,
+            "x": 0.65184,
+            "z": -0.75825
+          },
+          "name": "large2"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 3337.72949,
+            "x": -14916.80957,
+            "z": -8543.68066
+          },
+          "direction": {
+            "y": 0.02766,
+            "x": 0.63644,
+            "z": -0.77083
+          },
+          "name": "large3"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 2879.7771,
+            "x": -21467.41602,
+            "z": -9327.69629
+          },
+          "direction": {
+            "y": 0.01804,
+            "x": 0,
+            "z": -0.99984
+          },
+          "name": "small1"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 2904.27954,
+            "x": -2188.22217,
+            "z": -9587.37402
+          },
+          "direction": {
+            "y": 0.03552,
+            "x": 0.67095,
+            "z": -0.74065
+          },
+          "name": "small2"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 1595.71729,
+            "x": -18144.68555,
+            "z": -9636.7041
+          },
+          "direction": {
+            "y": -0.00413,
+            "x": -0.03476,
+            "z": -0.99939
+          },
+          "name": "small3"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 2868.46851,
+            "x": -18170.88281,
+            "z": -9255.18359
+          },
+          "direction": {
+            "y": 0.04323,
+            "x": 0,
+            "z": -0.99907
+          },
+          "name": "small4"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 20,
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "typeID": 47513,
+      "graphicID": 22142,
+      "hasUndockLocators": true,
+      "name": "'Draccous' Fortizar",
+      "groupID": 1657,
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": 1512.27881,
+            "x": -36245.07031,
+            "z": -639.10883
+          },
+          "direction": {
+            "y": 0.04632,
+            "x": -0.99893,
+            "z": 0
+          },
+          "name": "capital1"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -78.28593,
+            "x": -33451.90625,
+            "z": -639.10883
+          },
+          "direction": {
+            "y": 0.02194,
+            "x": -0.99976,
+            "z": 0
+          },
+          "name": "large1"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 193.72964,
+            "x": -29673.27734,
+            "z": 11716.45605
+          },
+          "direction": {
+            "y": 0.01849,
+            "x": -0.99983,
+            "z": 0
+          },
+          "name": "small1"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 21,
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "typeID": 47514,
+      "graphicID": 22150,
+      "hasUndockLocators": true,
+      "name": "'Horizon' Fortizar",
+      "groupID": 1657,
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -2575.46729,
+            "x": 910.15167,
+            "z": -36605.74609
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": -1
+          },
+          "name": "capital1"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -2575.46729,
+            "x": 910.15167,
+            "z": -36605.74609
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": -1
+          },
+          "name": "large1"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -2575.46729,
+            "x": 910.15167,
+            "z": -36605.74609
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": -1
+          },
+          "name": "small1"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 29,
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "typeID": 47515,
+      "graphicID": 22189,
+      "hasUndockLocators": true,
+      "name": "'Marginis' Fortizar",
+      "groupID": 1657,
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -30561.86328,
+            "x": 0,
+            "z": -6209.4834
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": -1
+          },
+          "name": "capital1"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -31307.11133,
+            "x": 0,
+            "z": -3804.62744
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": -1
+          },
+          "name": "large1"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -30040.66016,
+            "x": 7565.56592,
+            "z": -7643.66846
+          },
+          "direction": {
+            "y": 0,
+            "x": -0.54864,
+            "z": -0.83606
+          },
+          "name": "small1"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -30040.66016,
+            "x": -7546.521,
+            "z": -7582.62109
+          },
+          "direction": {
+            "y": 0,
+            "x": 0.53637,
+            "z": -0.84398
+          },
+          "name": "small2"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 55,
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "typeID": 47516,
+      "graphicID": 22161,
+      "hasUndockLocators": true,
+      "name": "'Prometheus' Fortizar",
+      "groupID": 1657,
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -605.83984,
+            "x": 25440.60742,
+            "z": 312.03384
+          },
+          "direction": {
+            "y": 0,
+            "x": 1,
+            "z": 0
+          },
+          "name": "capital1"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -1690.92981,
+            "x": 24072.72656,
+            "z": 7443.90576
+          },
+          "direction": {
+            "y": 0,
+            "x": 1,
+            "z": 0
+          },
+          "name": "large1"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -1690.92981,
+            "x": 24072.72656,
+            "z": -6513.04346
+          },
+          "direction": {
+            "y": 0,
+            "x": 1,
+            "z": 0
+          },
+          "name": "large2"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -4188.41846,
+            "x": 25531.24414,
+            "z": 312.03384
+          },
+          "direction": {
+            "y": 0,
+            "x": 1,
+            "z": 0
+          },
+          "name": "small1"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -4188.41846,
+            "x": 25531.24414,
+            "z": -6239.06299
+          },
+          "direction": {
+            "y": 0,
+            "x": 1,
+            "z": 0
+          },
+          "name": "small2"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -4188.41846,
+            "x": 25531.24414,
+            "z": 6986.38721
+          },
+          "direction": {
+            "y": 0,
+            "x": 1,
+            "z": 0
+          },
+          "name": "small3"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": 2071,
+      "directionalLocatorCategories": [
+        "graphicSpawnPoint"
+      ],
+      "hasDirectionalLocators": true,
+      "graphicFile": null,
+      "undockLocatorCategories": [],
+      "typeID": 81080,
+      "graphicID": 27169,
+      "hasUndockLocators": false,
+      "name": "Orbital Skyhook",
+      "groupID": 4736,
+      "directionalLocators": [
+        {
+          "category": "graphicSpawnPoint",
+          "position": {
+            "y": -1200,
+            "x": 25000,
+            "z": 120
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 0
+          },
+          "name": "mercenaryDenPlacement"
+        },
+        {
+          "category": "graphicSpawnPoint",
+          "position": {
+            "y": -5317.60645,
+            "x": 0,
+            "z": -8209.28516
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 0
+          },
+          "name": "siloPlacement"
+        }
+      ]
+    },
+    {
+      "graphicLocationID": null,
+      "directionalLocatorCategories": [],
+      "hasDirectionalLocators": false,
+      "graphicFile": null,
+      "undockLocatorCategories": [],
+      "typeID": 81826,
+      "graphicID": 27379,
+      "hasUndockLocators": false,
+      "name": "Metenox Moon Drill",
+      "groupID": 4744,
+      "directionalLocators": []
+    }
+  ],
+  "_meta": {
+    "source": "client graphicLocations.fsdbinary",
+    "jsonlMirrorPath": "<generated>",
+    "generatedAt": "2026-06-16T22:42:57Z"
+  }
+}

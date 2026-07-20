@@ -1,0 +1,221 @@
+{
+    "counts":  {
+                   "randomizedTypeCount":  10,
+                   "relativeProbabilityTypeCount":  0,
+                   "randomizedEntryCount":  24,
+                   "relativeProbabilityEntryCount":  0
+               },
+    "_meta":  {
+                  "clientResIndexPath":  "<generated>",
+                  "source":  "client typematerials.fsdbinary",
+                  "clientResFilePath":  "<generated>",
+                  "binDir":  "<generated>",
+                  "generatedAt":  "2026-06-16T22:42:59Z"
+              },
+    "types":  [
+                  {
+                      "typeID":  90041,
+                      "hasRelativeProbability":  false,
+                      "randomizedMaterials":  [
+                                                  {
+                                                      "quantityMax":  496800,
+                                                      "materialTypeID":  34,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  368000
+                                                  },
+                                                  {
+                                                      "quantityMax":  111830,
+                                                      "materialTypeID":  35,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  89464
+                                                  },
+                                                  {
+                                                      "quantityMax":  45540,
+                                                      "materialTypeID":  36,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  35420
+                                                  },
+                                                  {
+                                                      "quantityMax":  31280,
+                                                      "materialTypeID":  37,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  23920
+                                                  },
+                                                  {
+                                                      "quantityMax":  4025,
+                                                      "materialTypeID":  38,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  2875
+                                                  },
+                                                  {
+                                                      "quantityMax":  1528,
+                                                      "materialTypeID":  39,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  1299
+                                                  },
+                                                  {
+                                                      "quantityMax":  830,
+                                                      "materialTypeID":  40,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  634
+                                                  },
+                                                  {
+                                                      "quantityMax":  624,
+                                                      "materialTypeID":  11399,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  312
+                                                  }
+                                              ]
+                  },
+                  {
+                      "typeID":  90283,
+                      "hasRelativeProbability":  false,
+                      "randomizedMaterials":  [
+                                                  {
+                                                      "quantityMax":  496800,
+                                                      "materialTypeID":  34,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  368000
+                                                  }
+                                              ]
+                  },
+                  {
+                      "typeID":  90284,
+                      "hasRelativeProbability":  false,
+                      "randomizedMaterials":  [
+                                                  {
+                                                      "quantityMax":  106238,
+                                                      "materialTypeID":  35,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  84990
+                                                  }
+                                              ]
+                  },
+                  {
+                      "typeID":  90286,
+                      "hasRelativeProbability":  false,
+                      "randomizedMaterials":  [
+                                                  {
+                                                      "quantityMax":  43263,
+                                                      "materialTypeID":  36,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  33649
+                                                  }
+                                              ]
+                  },
+                  {
+                      "typeID":  90289,
+                      "hasRelativeProbability":  false,
+                      "randomizedMaterials":  [
+                                                  {
+                                                      "quantityMax":  12512,
+                                                      "materialTypeID":  37,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  9568
+                                                  }
+                                              ]
+                  },
+                  {
+                      "typeID":  90292,
+                      "hasRelativeProbability":  false,
+                      "randomizedMaterials":  [
+                                                  {
+                                                      "quantityMax":  3823,
+                                                      "materialTypeID":  38,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  2731
+                                                  }
+                                              ]
+                  },
+                  {
+                      "typeID":  90294,
+                      "hasRelativeProbability":  false,
+                      "randomizedMaterials":  [
+                                                  {
+                                                      "quantityMax":  1451,
+                                                      "materialTypeID":  39,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  1233
+                                                  }
+                                              ]
+                  },
+                  {
+                      "typeID":  90296,
+                      "hasRelativeProbability":  false,
+                      "randomizedMaterials":  [
+                                                  {
+                                                      "quantityMax":  788,
+                                                      "materialTypeID":  40,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  602
+                                                  }
+                                              ]
+                  },
+                  {
+                      "typeID":  90298,
+                      "hasRelativeProbability":  false,
+                      "randomizedMaterials":  [
+                                                  {
+                                                      "quantityMax":  187,
+                                                      "materialTypeID":  11399,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  93
+                                                  }
+                                              ]
+                  },
+                  {
+                      "typeID":  90307,
+                      "hasRelativeProbability":  false,
+                      "randomizedMaterials":  [
+                                                  {
+                                                      "quantityMax":  496800,
+                                                      "materialTypeID":  34,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  368000
+                                                  },
+                                                  {
+                                                      "quantityMax":  111830,
+                                                      "materialTypeID":  35,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  89464
+                                                  },
+                                                  {
+                                                      "quantityMax":  45540,
+                                                      "materialTypeID":  36,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  35420
+                                                  },
+                                                  {
+                                                      "quantityMax":  31280,
+                                                      "materialTypeID":  37,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  23920
+                                                  },
+                                                  {
+                                                      "quantityMax":  4025,
+                                                      "materialTypeID":  38,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  2875
+                                                  },
+                                                  {
+                                                      "quantityMax":  1528,
+                                                      "materialTypeID":  39,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  1299
+                                                  },
+                                                  {
+                                                      "quantityMax":  830,
+                                                      "materialTypeID":  40,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  634
+                                                  },
+                                                  {
+                                                      "quantityMax":  624,
+                                                      "materialTypeID":  11399,
+                                                      "relativeProbability":  null,
+                                                      "quantityMin":  312
+                                                  }
+                                              ]
+                  }
+              ]
+}

@@ -1,0 +1,2132 @@
+{
+  "locators": [
+    {
+      "typeName": "Caldari Logistics Station",
+      "graphicID": 237,
+      "graphicLocationID": 28,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 6854.26221,
+            "x": 36,
+            "z": 7948.4668
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 54
+    },
+    {
+      "typeName": "Gallente Military Station",
+      "graphicID": 2307,
+      "graphicLocationID": 2,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -6001.50635,
+            "x": 0,
+            "z": -4509.06787
+          },
+          "direction": {
+            "y": -1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 56
+    },
+    {
+      "typeName": "Gallente Station Hub",
+      "graphicID": 2306,
+      "graphicLocationID": 1,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 5079.08594,
+            "x": 0,
+            "z": 5337.78467
+          },
+          "direction": {
+            "y": 0.19518,
+            "x": 0,
+            "z": -0.98077
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 57
+    },
+    {
+      "typeName": "Caldari Administrative Station",
+      "graphicID": 1019,
+      "graphicLocationID": 22,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 3217,
+            "x": -170,
+            "z": 12112.1543
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 1529
+    },
+    {
+      "typeName": "Caldari Research Station",
+      "graphicID": 1018,
+      "graphicLocationID": 27,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 7499.12793,
+            "x": 11384.42871,
+            "z": 270.25189
+          },
+          "direction": {
+            "y": 0.19309,
+            "x": 0.98118,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 1530
+    },
+    {
+      "typeName": "Caldari Trading Station",
+      "graphicID": 1017,
+      "graphicLocationID": 25,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -3841,
+            "x": 2447.21484,
+            "z": 2988
+          },
+          "direction": {
+            "y": 0.30902,
+            "x": 0.95106,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 1531
+    },
+    {
+      "typeName": "Amarr Station Hub",
+      "graphicID": 1068,
+      "graphicLocationID": 4,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 11158.4707,
+            "x": 0,
+            "z": 0
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 1926
+    },
+    {
+      "typeName": "Amarr Station Military",
+      "graphicID": 1069,
+      "graphicLocationID": 5,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -21987.52539,
+            "x": 0,
+            "z": 0
+          },
+          "direction": {
+            "y": -1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 1927
+    },
+    {
+      "typeName": "Amarr Industrial Station",
+      "graphicID": 1070,
+      "graphicLocationID": 6,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -21316.45117,
+            "x": 0,
+            "z": 0
+          },
+          "direction": {
+            "y": -1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 1928
+    },
+    {
+      "typeName": "Amarr Standard Station",
+      "graphicID": 1071,
+      "graphicLocationID": 7,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -12936.93945,
+            "x": 199.78848,
+            "z": -51.99395
+          },
+          "direction": {
+            "y": -1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 1929
+    },
+    {
+      "typeName": "Amarr Mining Station",
+      "graphicID": 1072,
+      "graphicLocationID": 8,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -9721,
+            "x": -10709,
+            "z": 2069
+          },
+          "direction": {
+            "y": -1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 1930
+    },
+    {
+      "typeName": "Amarr Research Station",
+      "graphicID": 1073,
+      "graphicLocationID": 9,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -5689.26807,
+            "x": -13,
+            "z": 0
+          },
+          "direction": {
+            "y": -1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 1931
+    },
+    {
+      "typeName": "Amarr Trade Post",
+      "graphicID": 1074,
+      "graphicLocationID": 10,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -9967.8291,
+            "x": -1749.89038,
+            "z": -27
+          },
+          "direction": {
+            "y": -1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 1932
+    },
+    {
+      "typeName": "Minmatar Hub",
+      "graphicID": 1132,
+      "graphicLocationID": 14,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -1437.88049,
+            "x": -2909,
+            "z": -20657
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": -1
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 2496
+    },
+    {
+      "typeName": "Minmatar Industrial Station",
+      "graphicID": 1133,
+      "graphicLocationID": 15,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 2654.04419,
+            "x": 6299,
+            "z": 11165.6543
+          },
+          "direction": {
+            "y": 0.00626,
+            "x": 0,
+            "z": 0.99998
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 2497
+    },
+    {
+      "typeName": "Minmatar Military Station",
+      "graphicID": 1134,
+      "graphicLocationID": 16,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -1172,
+            "x": 30416.30664,
+            "z": -3099.96265
+          },
+          "direction": {
+            "y": 0,
+            "x": 1,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 2498
+    },
+    {
+      "typeName": "Minmatar Mining Station",
+      "graphicID": 1135,
+      "graphicLocationID": 17,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 8452.42285,
+            "x": 11903.64941,
+            "z": 9744.41504
+          },
+          "direction": {
+            "y": 0.00626,
+            "x": 0.99998,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 2499
+    },
+    {
+      "typeName": "Minmatar Research Station",
+      "graphicID": 1136,
+      "graphicLocationID": 18,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 27,
+            "x": 1390.30151,
+            "z": -28047.03711
+          },
+          "direction": {
+            "y": 0.00617,
+            "x": 0.03134,
+            "z": -0.99949
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 2500
+    },
+    {
+      "typeName": "Minmatar Station",
+      "graphicID": 1137,
+      "graphicLocationID": 19,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 3115,
+            "x": 17,
+            "z": -18255.19727
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": -1
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 2501
+    },
+    {
+      "typeName": "Minmatar Trade Post",
+      "graphicID": 1138,
+      "graphicLocationID": 11,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 10096,
+            "x": 17,
+            "z": -12607.20605
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": -1
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 2502
+    },
+    {
+      "typeName": "Gallente Research Station",
+      "graphicID": 2308,
+      "graphicLocationID": 3,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 4860.29541,
+            "x": -1297.71375,
+            "z": -6949.29297
+          },
+          "direction": {
+            "y": -0.01975,
+            "x": 0.11059,
+            "z": -0.99367
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 3865
+    },
+    {
+      "typeName": "Gallente Trading Hub",
+      "graphicID": 1253,
+      "graphicLocationID": 35,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 884,
+            "x": 9264.68457,
+            "z": 0
+          },
+          "direction": {
+            "y": 0,
+            "x": 1,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 3866
+    },
+    {
+      "typeName": "Gallente Industrial Station",
+      "graphicID": 1254,
+      "graphicLocationID": 24,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 208.23645,
+            "x": 7933.66797,
+            "z": 18212.34961
+          },
+          "direction": {
+            "y": -0.00826,
+            "x": 0.2808,
+            "z": 0.95973
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 3867
+    },
+    {
+      "typeName": "Gallente Administrative Station",
+      "graphicID": 1255,
+      "graphicLocationID": 39,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 1058.91113,
+            "x": 9956.19238,
+            "z": 0
+          },
+          "direction": {
+            "y": 0.02015,
+            "x": 0.9998,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 3868
+    },
+    {
+      "typeName": "Gallente Logistics Station",
+      "graphicID": 1256,
+      "graphicLocationID": 33,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 1006.77295,
+            "x": 10679.88379,
+            "z": -14350.23535
+          },
+          "direction": {
+            "y": 0.03387,
+            "x": 0.99943,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 3869
+    },
+    {
+      "typeName": "Gallente Mining Station",
+      "graphicID": 1257,
+      "graphicLocationID": 26,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 938,
+            "x": 9788.60547,
+            "z": 0
+          },
+          "direction": {
+            "y": -0.01204,
+            "x": 0.99971,
+            "z": -0.0207
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 3870
+    },
+    {
+      "typeName": "Caldari Station Hub",
+      "graphicID": 1267,
+      "graphicLocationID": 31,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -4043.97363,
+            "x": 123.39453,
+            "z": -17010.32422
+          },
+          "direction": {
+            "y": -0.23963,
+            "x": 0,
+            "z": -0.97086
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 3871
+    },
+    {
+      "typeName": "Caldari Military Station",
+      "graphicID": 1251,
+      "graphicLocationID": 32,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -1354.30688,
+            "x": -27844.54883,
+            "z": -2399
+          },
+          "direction": {
+            "y": 0,
+            "x": -1,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 3872
+    },
+    {
+      "typeName": "Caldari Mining Station",
+      "graphicID": 1251,
+      "graphicLocationID": 32,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -1354.30688,
+            "x": -27844.54883,
+            "z": -2399
+          },
+          "direction": {
+            "y": 0,
+            "x": -1,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 4023
+    },
+    {
+      "typeName": "Caldari Food Processing Plant Station",
+      "graphicID": 1309,
+      "graphicLocationID": 23,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -2574,
+            "x": -33431.20703,
+            "z": -2477
+          },
+          "direction": {
+            "y": 0,
+            "x": -1,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 4024
+    },
+    {
+      "typeName": "Concord Starbase",
+      "graphicID": 3395,
+      "graphicLocationID": 42,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -39840.25391,
+            "x": -3152.70874,
+            "z": 8244.79785
+          },
+          "direction": {
+            "y": -0.00005,
+            "x": 0,
+            "z": 1
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 9868
+    },
+    {
+      "typeName": "Jovian Construct",
+      "graphicID": 2008,
+      "graphicLocationID": 58,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -26555,
+            "x": -896,
+            "z": -4800
+          },
+          "direction": {
+            "y": -1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 10795
+    },
+    {
+      "typeName": "Ishukone Corporation Headquarters",
+      "graphicID": 1019,
+      "graphicLocationID": 22,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 3217,
+            "x": -170,
+            "z": 12112.1543
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 29323
+    },
+    {
+      "typeName": "Repaired Amarr Station Hub",
+      "graphicID": 1068,
+      "graphicLocationID": 4,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 11158.4707,
+            "x": 0,
+            "z": 0
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 29387
+    },
+    {
+      "typeName": "Repaired Amarr Military Station",
+      "graphicID": 1069,
+      "graphicLocationID": 5,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -21987.52539,
+            "x": 0,
+            "z": 0
+          },
+          "direction": {
+            "y": -1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 29388
+    },
+    {
+      "typeName": "Repaired Amarr Trading Post",
+      "graphicID": 1074,
+      "graphicLocationID": 10,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -9967.8291,
+            "x": -1749.89038,
+            "z": -27
+          },
+          "direction": {
+            "y": -1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 29389
+    },
+    {
+      "typeName": "Sisters of EVE Logistics Station",
+      "graphicID": 20967,
+      "graphicLocationID": 33,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 1006.77295,
+            "x": 10679.88379,
+            "z": -14350.23535
+          },
+          "direction": {
+            "y": 0.03387,
+            "x": 0.99943,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 34325
+    },
+    {
+      "typeName": "Sisters of EVE Industrial Station",
+      "graphicID": 20968,
+      "graphicLocationID": 24,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 208.23645,
+            "x": 7933.66797,
+            "z": 18212.34961
+          },
+          "direction": {
+            "y": -0.00826,
+            "x": 0.2808,
+            "z": 0.95973
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 34326
+    },
+    {
+      "typeName": "Jita Trade Hub",
+      "graphicID": 24488,
+      "graphicLocationID": 2060,
+      "hasUndockLocators": true,
+      "graphicFile": "res:/dx9/model/spaceobjectfactory/hulls/jita.red",
+      "directionalLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall",
+        "undockPointSupercapital"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": -10629.62207,
+            "x": -355.83997,
+            "z": 65073.05078
+          },
+          "direction": {
+            "y": -0.03626,
+            "x": 0,
+            "z": 0.99934
+          },
+          "name": "capital01"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -11151.14551,
+            "x": 1597.4364,
+            "z": 65299.98438
+          },
+          "direction": {
+            "y": 0.00749,
+            "x": 0,
+            "z": 0.99997
+          },
+          "name": "large01"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -8362.59375,
+            "x": -512.18494,
+            "z": 64684.95312
+          },
+          "direction": {
+            "y": -0.00332,
+            "x": 0,
+            "z": 0.99999
+          },
+          "name": "large02"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -9685.65625,
+            "x": -2136.06079,
+            "z": 64996.28906
+          },
+          "direction": {
+            "y": 0.02502,
+            "x": 0,
+            "z": 0.99969
+          },
+          "name": "large03"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -6561.74316,
+            "x": 634.53345,
+            "z": 64914.54297
+          },
+          "direction": {
+            "y": -0.01289,
+            "x": 0,
+            "z": 0.99992
+          },
+          "name": "large04"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -6751.16455,
+            "x": 31700.75,
+            "z": 53291.46094
+          },
+          "direction": {
+            "y": -0.01704,
+            "x": 0,
+            "z": 0.99985
+          },
+          "name": "large05"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -6383.58154,
+            "x": -1821.08789,
+            "z": 65056.35547
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small01"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -14722.06738,
+            "x": -2480.08521,
+            "z": 64807.23047
+          },
+          "direction": {
+            "y": -0.0322,
+            "x": 0,
+            "z": 0.99948
+          },
+          "name": "small02"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -14615.6748,
+            "x": 24.37658,
+            "z": 64672.12891
+          },
+          "direction": {
+            "y": -0.05541,
+            "x": 0,
+            "z": 0.99846
+          },
+          "name": "small03"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -12086.14648,
+            "x": -2466.25073,
+            "z": 65268.23438
+          },
+          "direction": {
+            "y": -0.00545,
+            "x": 0,
+            "z": 0.99999
+          },
+          "name": "small04"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -8557.77051,
+            "x": 1718.08606,
+            "z": 64965.67969
+          },
+          "direction": {
+            "y": 0.01005,
+            "x": 0,
+            "z": 0.99995
+          },
+          "name": "small05"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -13621.39746,
+            "x": 1766.04187,
+            "z": 65003.25391
+          },
+          "direction": {
+            "y": 0.01478,
+            "x": 0,
+            "z": 0.99989
+          },
+          "name": "small06"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -6832.73096,
+            "x": 12573.78027,
+            "z": 63863.30859
+          },
+          "direction": {
+            "y": -0.02626,
+            "x": 0,
+            "z": 0.99966
+          },
+          "name": "small07"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -6385.19971,
+            "x": 28167.85742,
+            "z": 53914.50391
+          },
+          "direction": {
+            "y": -0.0179,
+            "x": 0,
+            "z": 0.99984
+          },
+          "name": "small08"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -15503.48828,
+            "x": -26322.02344,
+            "z": 57621.25781
+          },
+          "direction": {
+            "y": 0.01374,
+            "x": 0,
+            "z": 0.99991
+          },
+          "name": "small09"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -7546.20703,
+            "x": 18984.63867,
+            "z": 61930.82031
+          },
+          "direction": {
+            "y": -0.00614,
+            "x": 0,
+            "z": 0.99998
+          },
+          "name": "small10"
+        },
+        {
+          "category": "undockPointSupercapital",
+          "position": {
+            "y": -13240.5127,
+            "x": -149.29027,
+            "z": 65774.51562
+          },
+          "direction": {
+            "y": -0.02012,
+            "x": 0,
+            "z": 0.9998
+          },
+          "name": "supercapital01"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall",
+        "undockPointSupercapital"
+      ],
+      "stationTypeID": 52678
+    },
+    {
+      "typeName": "Association for Interdisciplinary Research Outpost",
+      "graphicID": 25047,
+      "graphicLocationID": 2063,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 1902.65051,
+            "x": 0,
+            "z": -6141.43799
+          },
+          "direction": {
+            "y": -0.00015,
+            "x": 0,
+            "z": 1
+          },
+          "name": "large01"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 2464.23877,
+            "x": 93.06725,
+            "z": -6176.37158
+          },
+          "direction": {
+            "y": 0.00001,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small01"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 1533.76184,
+            "x": 150.25337,
+            "z": -6110.99561
+          },
+          "direction": {
+            "y": -0.00177,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small02"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 1232.44727,
+            "x": -126.84022,
+            "z": -6085.71289
+          },
+          "direction": {
+            "y": 0.00078,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small03"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -413.25079,
+            "x": -2328.89209,
+            "z": -3909.9436
+          },
+          "direction": {
+            "y": -0.00323,
+            "x": 0.60017,
+            "z": 0.79987
+          },
+          "name": "small04"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPointLarge",
+        "undockPointSmall"
+      ],
+      "stationTypeID": 59956
+    },
+    {
+      "typeName": "Paragon Fulfilment Center",
+      "graphicID": 25623,
+      "graphicLocationID": 2064,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -15437.42871,
+            "x": 0,
+            "z": -3555.86865
+          },
+          "direction": {
+            "y": 0.02234,
+            "x": 0,
+            "z": -0.99975
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 71361
+    },
+    {
+      "typeName": "Minmatar Trade Post (Damaged)",
+      "graphicID": 25677,
+      "graphicLocationID": 2065,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 10096,
+            "x": 17,
+            "z": -12607.20605
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": -1
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 74397
+    },
+    {
+      "typeName": "Ancient Jovian Outpost",
+      "graphicID": 26281,
+      "graphicLocationID": 26198,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -9946.05078,
+            "x": 0,
+            "z": 0
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -8877.60645,
+            "x": 7004.74268,
+            "z": 1627.76831
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -9271.71094,
+            "x": -7720.27441,
+            "z": 1998.24927
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -9267.9082,
+            "x": -4425.57324,
+            "z": -1192.43457
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -8418.23145,
+            "x": 3661.67432,
+            "z": 847.6106
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -9243.06934,
+            "x": 0,
+            "z": 7023.96533
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -10060.73438,
+            "x": 0,
+            "z": -6670.30566
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -8671.29785,
+            "x": 1552.65625,
+            "z": -3509.62305
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -8968.03223,
+            "x": 0,
+            "z": 3339.07812
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -7864.37256,
+            "x": 4013.78345,
+            "z": 4931.63379
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -8199.59375,
+            "x": 4124.46045,
+            "z": -3838.2085
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -8114.77832,
+            "x": -3878.54443,
+            "z": -5214.15186
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": -8409.29395,
+            "x": -3785.68774,
+            "z": 4694.54346
+          },
+          "direction": {
+            "y": 1,
+            "x": 0,
+            "z": 0
+          },
+          "name": "undockPoint"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint"
+      ],
+      "stationTypeID": 78334
+    },
+    {
+      "typeName": "AIR Trade Center",
+      "graphicID": 33585,
+      "graphicLocationID": 2074,
+      "hasUndockLocators": true,
+      "graphicFile": null,
+      "directionalLocatorCategories": [
+        "undockPoint",
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall",
+        "undockPointSupercapital"
+      ],
+      "directionalLocators": [
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": 3643.55103,
+            "x": 945.50018,
+            "z": 35705.25391
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital01"
+        },
+        {
+          "category": "undockPointCapital",
+          "position": {
+            "y": 3643.55103,
+            "x": -1431.26758,
+            "z": 35705.25391
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "capital02"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 2849.74243,
+            "x": -61.2897,
+            "z": 22551.12305
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "large01"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": 3101.00439,
+            "x": -251.49001,
+            "z": 23089.24609
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "large02"
+        },
+        {
+          "category": "undockPointLarge",
+          "position": {
+            "y": -6167.62842,
+            "x": 28342.86523,
+            "z": 7320.42285
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "large03"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 2849.74243,
+            "x": -61.2897,
+            "z": 22551.12305
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "point01"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 6167.62842,
+            "x": 29738.99609,
+            "z": 7320.42285
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "point02"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 22030.16406,
+            "x": 327.87021,
+            "z": -9024.03906
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "point03"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 22855.56055,
+            "x": -232.8672,
+            "z": -9024.03906
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "point04"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 23659.87109,
+            "x": 467.07889,
+            "z": -9024.03906
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "point05"
+        },
+        {
+          "category": "undockPoint",
+          "position": {
+            "y": 24632.76367,
+            "x": -241.3503,
+            "z": -9024.03906
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "point06"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 2234.68237,
+            "x": -1220.84558,
+            "z": 23089.24609
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small02"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 3101.00439,
+            "x": -1220.84558,
+            "z": 23089.24609
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small03"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 2305.92163,
+            "x": 777.58838,
+            "z": 23089.24609
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small04"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 2899.64502,
+            "x": 1885.22852,
+            "z": 23089.24609
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small05"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 30822.39844,
+            "x": 50.9833,
+            "z": -9257.03809
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small06"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 34997.59375,
+            "x": 50.9833,
+            "z": -9257.03809
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small07"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 39241.37109,
+            "x": 50.9833,
+            "z": -9257.03809
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small08"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 43416.56641,
+            "x": 50.9833,
+            "z": -9257.03809
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small09"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": -1934.13452,
+            "x": 28958.64648,
+            "z": 8338.5459
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small10"
+        },
+        {
+          "category": "undockPointSmall",
+          "position": {
+            "y": 3832.82666,
+            "x": -7039.29639,
+            "z": 35359.03906
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "small11"
+        },
+        {
+          "category": "undockPointSupercapital",
+          "position": {
+            "y": 3643.55103,
+            "x": -157.9382,
+            "z": 35705.25391
+          },
+          "direction": {
+            "y": 0,
+            "x": 0,
+            "z": 1
+          },
+          "name": "supercapital01"
+        }
+      ],
+      "hasDirectionalLocators": true,
+      "undockLocatorCategories": [
+        "undockPoint",
+        "undockPointCapital",
+        "undockPointLarge",
+        "undockPointSmall",
+        "undockPointSupercapital"
+      ],
+      "stationTypeID": 92885
+    }
+  ],
+  "_meta": {
+    "source": "client graphicLocations.fsdbinary",
+    "stationTypesPath": "<generated>",
+    "jsonlMirrorPath": "<generated>",
+    "generatedAt": "2026-06-16T22:42:53Z"
+  }
+}

@@ -1,0 +1,1867 @@
+{
+  "loadouts": [
+    {
+      "loadoutID": "small_pulse_laser_frigate",
+      "name": "Small Pulse Laser Frigate",
+      "modules": [
+        {
+          "typeID": 13811,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21270,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "blood_raider_small_pulse_destroyer",
+      "name": "Blood Raiders Small Pulse Destroyer",
+      "modules": [
+        {
+          "typeID": 13811,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21270,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "blood_raider_medium_pulse_battlecruiser",
+      "name": "Blood Raiders Medium Pulse Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13801,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21286,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "blood_raider_large_pulse_battleship",
+      "name": "Blood Raiders Large Pulse Battleship",
+      "modules": [
+        {
+          "typeID": 13815,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21302,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "blood_raider_large_pulse_marauder",
+      "name": "Blood Raiders Large Pulse Marauder",
+      "modules": [
+        {
+          "typeID": 13815,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21302,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "guristas_entity_missile_battleship",
+      "name": "Guristas Entity Missile Battleship",
+      "modules": [],
+      "charges": []
+    },
+    {
+      "loadoutID": "ore_mining_venture_dual_miner",
+      "name": "ORE Mining Venture Dual Miner",
+      "modules": [
+        {
+          "typeID": 482,
+          "quantity": 2
+        }
+      ],
+      "charges": []
+    },
+    {
+      "loadoutID": "ore_mining_retriever_strip_pair",
+      "name": "ORE Mining Retriever Strip Pair",
+      "modules": [
+        {
+          "typeID": 17482,
+          "quantity": 2
+        },
+        {
+          "typeID": 22542,
+          "quantity": 2
+        }
+      ],
+      "charges": []
+    },
+    {
+      "loadoutID": "ore_mining_skiff_strip_pair",
+      "name": "ORE Mining Skiff Strip Pair",
+      "modules": [
+        {
+          "typeID": 17482,
+          "quantity": 2
+        },
+        {
+          "typeID": 22542,
+          "quantity": 1
+        }
+      ],
+      "charges": []
+    },
+    {
+      "loadoutID": "ore_mining_hulk_modulated_strip_pair",
+      "name": "ORE Mining Hulk Modulated Strip Pair",
+      "modules": [
+        {
+          "typeID": 17912,
+          "quantity": 2
+        },
+        {
+          "typeID": 22542,
+          "quantity": 2
+        }
+      ],
+      "charges": []
+    },
+    {
+      "loadoutID": "ore_mining_bestower_hauler",
+      "name": "ORE Mining Bestower Hauler",
+      "modules": [
+        {
+          "typeID": 1317,
+          "quantity": 3
+        }
+      ],
+      "charges": []
+    },
+    {
+      "loadoutID": "ore_mining_badger_hauler",
+      "name": "ORE Mining Badger Hauler",
+      "modules": [
+        {
+          "typeID": 1317,
+          "quantity": 3
+        }
+      ],
+      "charges": []
+    },
+    {
+      "loadoutID": "ore_mining_mammoth_hauler",
+      "name": "ORE Mining Mammoth Hauler",
+      "modules": [
+        {
+          "typeID": 1317,
+          "quantity": 3
+        }
+      ],
+      "charges": []
+    },
+    {
+      "loadoutID": "ore_mining_bustard_hauler",
+      "name": "ORE Mining Bustard Hauler",
+      "modules": [
+        {
+          "typeID": 1317,
+          "quantity": 4
+        }
+      ],
+      "charges": []
+    },
+    {
+      "loadoutID": "ore_mining_impel_hauler",
+      "name": "ORE Mining Impel Hauler",
+      "modules": [
+        {
+          "typeID": 1317,
+          "quantity": 4
+        }
+      ],
+      "charges": []
+    },
+    {
+      "loadoutID": "ore_mining_mastodon_hauler",
+      "name": "ORE Mining Mastodon Hauler",
+      "modules": [
+        {
+          "typeID": 1317,
+          "quantity": 4
+        }
+      ],
+      "charges": []
+    },
+    {
+      "loadoutID": "ore_mining_occator_hauler",
+      "name": "ORE Mining Occator Hauler",
+      "modules": [
+        {
+          "typeID": 1317,
+          "quantity": 4
+        }
+      ],
+      "charges": []
+    },
+    {
+      "loadoutID": "concord_small_beam_laser_frigate",
+      "name": "CONCORD Small Beam Laser Frigate",
+      "modules": [
+        {
+          "typeID": 16128,
+          "npcCapabilityTypeID": 454,
+          "quantity": 3
+        },
+        {
+          "typeID": 16140,
+          "quantity": 1
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 246,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "concord_small_pulse_laser_frigate",
+      "name": "CONCORD Small Pulse Laser Frigate",
+      "modules": [
+        {
+          "typeID": 16131,
+          "npcCapabilityTypeID": 453,
+          "quantity": 3
+        },
+        {
+          "typeID": 16140,
+          "quantity": 1
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 246,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "concord_medium_beam_laser_cruiser",
+      "name": "CONCORD Medium Beam Laser Cruiser",
+      "modules": [
+        {
+          "typeID": 16129,
+          "npcCapabilityTypeID": 457,
+          "quantity": 4
+        },
+        {
+          "typeID": 16140,
+          "quantity": 1
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 254,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "concord_large_beam_laser_battleship",
+      "name": "CONCORD Large Beam Laser Battleship",
+      "modules": [
+        {
+          "typeID": 3561,
+          "quantity": 6
+        },
+        {
+          "typeID": 16140,
+          "quantity": 1
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 17686,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "concord_large_pulse_laser_battleship",
+      "name": "CONCORD Large Pulse Laser Battleship",
+      "modules": [
+        {
+          "typeID": 3559,
+          "quantity": 6
+        },
+        {
+          "typeID": 16140,
+          "quantity": 1
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 17686,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "concord_small_beam_laser_frigate_mwd",
+      "name": "CONCORD Small Beam Laser Frigate MWD",
+      "modules": [
+        {
+          "typeID": 16128,
+          "npcCapabilityTypeID": 454,
+          "quantity": 3
+        },
+        {
+          "typeID": 16140,
+          "quantity": 1
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 246,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "concord_small_pulse_laser_frigate_mwd",
+      "name": "CONCORD Small Pulse Laser Frigate MWD",
+      "modules": [
+        {
+          "typeID": 16131,
+          "npcCapabilityTypeID": 453,
+          "quantity": 3
+        },
+        {
+          "typeID": 16140,
+          "quantity": 1
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 246,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "concord_medium_beam_laser_cruiser_mwd",
+      "name": "CONCORD Medium Beam Laser Cruiser MWD",
+      "modules": [
+        {
+          "typeID": 16129,
+          "npcCapabilityTypeID": 457,
+          "quantity": 4
+        },
+        {
+          "typeID": 16140,
+          "quantity": 1
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 254,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "concord_large_beam_laser_battleship_mwd",
+      "name": "CONCORD Large Beam Laser Battleship MWD",
+      "modules": [
+        {
+          "typeID": 3561,
+          "quantity": 6
+        },
+        {
+          "typeID": 16140,
+          "quantity": 1
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 17686,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "concord_large_pulse_laser_battleship_mwd",
+      "name": "CONCORD Large Pulse Laser Battleship MWD",
+      "modules": [
+        {
+          "typeID": 3559,
+          "quantity": 6
+        },
+        {
+          "typeID": 16140,
+          "quantity": 1
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 17686,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "sansha_small_pulse_frigate",
+      "name": "Sansha Small Pulse Frigate",
+      "modules": [
+        {
+          "typeID": 13830,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20863,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "sansha_medium_pulse_cruiser",
+      "name": "Sansha Medium Pulse Cruiser",
+      "modules": [
+        {
+          "typeID": 13825,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20879,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "sansha_medium_pulse_battlecruiser",
+      "name": "Sansha Medium Pulse Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13828,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20879,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "sansha_large_pulse_battleship",
+      "name": "Sansha Large Pulse Battleship",
+      "modules": [
+        {
+          "typeID": 13832,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20895,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "serpentis_small_blaster_frigate",
+      "name": "Serpentis Small Blaster Frigate",
+      "modules": [
+        {
+          "typeID": 13888,
+          "quantity": 3
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20040,
+          "quantityPerModule": 200
+        }
+      ]
+    },
+    {
+      "loadoutID": "serpentis_medium_blaster_cruiser",
+      "name": "Serpentis Medium Blaster Cruiser",
+      "modules": [
+        {
+          "typeID": 13884,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20057,
+          "quantityPerModule": 200
+        }
+      ]
+    },
+    {
+      "loadoutID": "serpentis_medium_blaster_battlecruiser",
+      "name": "Serpentis Medium Blaster Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13884,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20057,
+          "quantityPerModule": 200
+        }
+      ]
+    },
+    {
+      "loadoutID": "serpentis_large_blaster_battleship",
+      "name": "Serpentis Large Blaster Battleship",
+      "modules": [
+        {
+          "typeID": 13891,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20927,
+          "quantityPerModule": 200
+        }
+      ]
+    },
+    {
+      "loadoutID": "angel_small_autocannon_frigate",
+      "name": "Angel Small Autocannon Frigate",
+      "modules": [
+        {
+          "typeID": 13777,
+          "quantity": 3
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20767,
+          "quantityPerModule": 200
+        }
+      ]
+    },
+    {
+      "loadoutID": "angel_medium_autocannon_cruiser",
+      "name": "Angel Medium Autocannon Cruiser",
+      "modules": [
+        {
+          "typeID": 13782,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20783,
+          "quantityPerModule": 200
+        }
+      ]
+    },
+    {
+      "loadoutID": "angel_medium_autocannon_battlecruiser",
+      "name": "Angel Medium Autocannon Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13782,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20783,
+          "quantityPerModule": 200
+        }
+      ]
+    },
+    {
+      "loadoutID": "angel_large_autocannon_battleship",
+      "name": "Angel Large Autocannon Battleship",
+      "modules": [
+        {
+          "typeID": 13785,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20799,
+          "quantityPerModule": 200
+        }
+      ]
+    },
+    {
+      "loadoutID": "guristas_light_missile_frigate",
+      "name": "Guristas Light Missile Frigate",
+      "modules": [
+        {
+          "typeID": 13926,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 27365,
+          "quantityPerModule": 80
+        }
+      ]
+    },
+    {
+      "loadoutID": "guristas_heavy_missile_cruiser",
+      "name": "Guristas Heavy Missile Cruiser",
+      "modules": [
+        {
+          "typeID": 13922,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 27443,
+          "quantityPerModule": 80
+        }
+      ]
+    },
+    {
+      "loadoutID": "guristas_heavy_missile_battlecruiser",
+      "name": "Guristas Heavy Missile Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13922,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 27443,
+          "quantityPerModule": 80
+        }
+      ]
+    },
+    {
+      "loadoutID": "guristas_cruise_missile_battleship",
+      "name": "Guristas Cruise Missile Battleship",
+      "modules": [
+        {
+          "typeID": 13929,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 27399,
+          "quantityPerModule": 60
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_pulse_frigate_loadout",
+      "name": "Blood Raiders Pulse Frigate",
+      "modules": [
+        {
+          "typeID": 13811,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21270,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_pulse_destroyer_loadout",
+      "name": "Blood Raiders Pulse Destroyer",
+      "modules": [
+        {
+          "typeID": 13811,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21270,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_pulse_cruiser_loadout",
+      "name": "Blood Raiders Pulse Cruiser",
+      "modules": [
+        {
+          "typeID": 13801,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21286,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_pulse_battlecruiser_loadout",
+      "name": "Blood Raiders Pulse Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13807,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21286,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_pulse_battleship_loadout",
+      "name": "Blood Raiders Pulse Battleship",
+      "modules": [
+        {
+          "typeID": 13815,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21302,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_beam_frigate_loadout",
+      "name": "Blood Raiders Beam Frigate",
+      "modules": [
+        {
+          "typeID": 13809,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21270,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_beam_destroyer_loadout",
+      "name": "Blood Raiders Beam Destroyer",
+      "modules": [
+        {
+          "typeID": 13809,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21270,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_beam_cruiser_loadout",
+      "name": "Blood Raiders Beam Cruiser",
+      "modules": [
+        {
+          "typeID": 13799,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21286,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_beam_battlecruiser_loadout",
+      "name": "Blood Raiders Beam Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13805,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21286,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_beam_battleship_loadout",
+      "name": "Blood Raiders Beam Battleship",
+      "modules": [
+        {
+          "typeID": 13813,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21302,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_officer_ahremen_arkah_loadout",
+      "name": "Blood Raiders Officer Ahremen Arkah",
+      "modules": [
+        {
+          "typeID": 14443,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21302,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_officer_draclira_merlonne_loadout",
+      "name": "Blood Raiders Officer Draclira Merlonne",
+      "modules": [
+        {
+          "typeID": 14439,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21302,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_officer_raysere_giant_loadout",
+      "name": "Blood Raiders Officer Raysere Giant",
+      "modules": [
+        {
+          "typeID": 14453,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21302,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_blood_raider_officer_tairei_namazoth_loadout",
+      "name": "Blood Raiders Officer Tairei Namazoth",
+      "modules": [
+        {
+          "typeID": 14441,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21302,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_pulse_frigate_loadout",
+      "name": "Sansha Pulse Frigate",
+      "modules": [
+        {
+          "typeID": 13830,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20863,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_pulse_destroyer_loadout",
+      "name": "Sansha Pulse Destroyer",
+      "modules": [
+        {
+          "typeID": 13830,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20863,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_pulse_cruiser_loadout",
+      "name": "Sansha Pulse Cruiser",
+      "modules": [
+        {
+          "typeID": 13825,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20879,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_pulse_battlecruiser_loadout",
+      "name": "Sansha Pulse Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13828,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20879,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_pulse_battleship_loadout",
+      "name": "Sansha Pulse Battleship",
+      "modules": [
+        {
+          "typeID": 13832,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20895,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_beam_frigate_loadout",
+      "name": "Sansha Beam Frigate",
+      "modules": [
+        {
+          "typeID": 13829,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20863,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_beam_destroyer_loadout",
+      "name": "Sansha Beam Destroyer",
+      "modules": [
+        {
+          "typeID": 13829,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20863,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_beam_cruiser_loadout",
+      "name": "Sansha Beam Cruiser",
+      "modules": [
+        {
+          "typeID": 13824,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20879,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_beam_battlecruiser_loadout",
+      "name": "Sansha Beam Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13827,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20879,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_beam_battleship_loadout",
+      "name": "Sansha Beam Battleship",
+      "modules": [
+        {
+          "typeID": 13831,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20895,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_officer_brokara_ryver_loadout",
+      "name": "Sansha Officer Brokara Ryver",
+      "modules": [
+        {
+          "typeID": 14445,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20895,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_officer_chelm_soran_loadout",
+      "name": "Sansha Officer Chelm Soran",
+      "modules": [
+        {
+          "typeID": 14435,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20895,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_officer_selynne_mardakar_loadout",
+      "name": "Sansha Officer Selynne Mardakar",
+      "modules": [
+        {
+          "typeID": 14449,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20895,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_sansha_officer_vizan_ankonin_loadout",
+      "name": "Sansha Officer Vizan Ankonin",
+      "modules": [
+        {
+          "typeID": 14447,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20895,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_blaster_frigate_loadout",
+      "name": "Serpentis Blaster Frigate",
+      "modules": [
+        {
+          "typeID": 13888,
+          "quantity": 3
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20040,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_blaster_destroyer_loadout",
+      "name": "Serpentis Blaster Destroyer",
+      "modules": [
+        {
+          "typeID": 13888,
+          "quantity": 7
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20040,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_blaster_cruiser_loadout",
+      "name": "Serpentis Blaster Cruiser",
+      "modules": [
+        {
+          "typeID": 13884,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20057,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_blaster_battlecruiser_loadout",
+      "name": "Serpentis Blaster Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13892,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20057,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_blaster_battleship_loadout",
+      "name": "Serpentis Blaster Battleship",
+      "modules": [
+        {
+          "typeID": 13891,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20927,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_rail_frigate_loadout",
+      "name": "Serpentis Rail Frigate",
+      "modules": [
+        {
+          "typeID": 13894,
+          "quantity": 3
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20040,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_rail_destroyer_loadout",
+      "name": "Serpentis Rail Destroyer",
+      "modules": [
+        {
+          "typeID": 13894,
+          "quantity": 7
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20040,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_rail_cruiser_loadout",
+      "name": "Serpentis Rail Cruiser",
+      "modules": [
+        {
+          "typeID": 13872,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20057,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_rail_battlecruiser_loadout",
+      "name": "Serpentis Rail Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13874,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20927,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_rail_battleship_loadout",
+      "name": "Serpentis Rail Battleship",
+      "modules": [
+        {
+          "typeID": 13878,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20927,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_officer_cormack_vaaja_loadout",
+      "name": "Serpentis Officer Cormack Vaaja",
+      "modules": [
+        {
+          "typeID": 14385,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20927,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_officer_setele_schellan_loadout",
+      "name": "Serpentis Officer Setele Schellan",
+      "modules": [
+        {
+          "typeID": 14399,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20927,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_serpentis_officer_tuvan_orth_loadout",
+      "name": "Serpentis Officer Tuvan Orth",
+      "modules": [
+        {
+          "typeID": 14383,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20927,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_autocannon_frigate_loadout",
+      "name": "Angel Autocannon Frigate",
+      "modules": [
+        {
+          "typeID": 13773,
+          "quantity": 3
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20767,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_autocannon_destroyer_loadout",
+      "name": "Angel Autocannon Destroyer",
+      "modules": [
+        {
+          "typeID": 13776,
+          "quantity": 7
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20767,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_autocannon_cruiser_loadout",
+      "name": "Angel Autocannon Cruiser",
+      "modules": [
+        {
+          "typeID": 13778,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20783,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_autocannon_battlecruiser_loadout",
+      "name": "Angel Autocannon Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13782,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20783,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_autocannon_battleship_loadout",
+      "name": "Angel Autocannon Battleship",
+      "modules": [
+        {
+          "typeID": 13785,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20799,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_artillery_frigate_loadout",
+      "name": "Angel Artillery Frigate",
+      "modules": [
+        {
+          "typeID": 13779,
+          "quantity": 3
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20767,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_artillery_destroyer_loadout",
+      "name": "Angel Artillery Destroyer",
+      "modules": [
+        {
+          "typeID": 13781,
+          "quantity": 7
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20767,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_artillery_cruiser_loadout",
+      "name": "Angel Artillery Cruiser",
+      "modules": [
+        {
+          "typeID": 13783,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20783,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_artillery_battlecruiser_loadout",
+      "name": "Angel Artillery Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13784,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20783,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_artillery_battleship_loadout",
+      "name": "Angel Artillery Battleship",
+      "modules": [
+        {
+          "typeID": 13775,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20799,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_officer_gotan_kreiss_loadout",
+      "name": "Angel Officer Gotan Kreiss",
+      "modules": [
+        {
+          "typeID": 14459,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20799,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_officer_hakim_stormare_loadout",
+      "name": "Angel Officer Hakim Stormare",
+      "modules": [
+        {
+          "typeID": 14465,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20799,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_angel_officer_tobias_kruzhor_loadout",
+      "name": "Angel Officer Tobias Kruzhor",
+      "modules": [
+        {
+          "typeID": 14467,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 20799,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "retail_empty_npc_entity_loadout",
+      "name": "Retail NPC Entity Native Dogma",
+      "description": "Empty loadout for retail NPC entity types whose combat stats and effects live on the NPC type dogma record.",
+      "modules": [],
+      "charges": []
+    },
+    {
+      "loadoutID": "parity_guristas_missile_frigate_loadout",
+      "name": "Guristas Missile Frigate",
+      "modules": [
+        {
+          "typeID": 13926,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 27365,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_missile_destroyer_loadout",
+      "name": "Guristas Missile Destroyer",
+      "modules": [
+        {
+          "typeID": 13920,
+          "quantity": 7
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 27365,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_missile_cruiser_loadout",
+      "name": "Guristas Missile Cruiser",
+      "modules": [
+        {
+          "typeID": 13922,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 27443,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_missile_battlecruiser_loadout",
+      "name": "Guristas Missile Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13922,
+          "quantity": 7
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 27443,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_missile_battleship_loadout",
+      "name": "Guristas Missile Battleship",
+      "modules": [
+        {
+          "typeID": 13929,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 27399,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_rail_frigate_loadout",
+      "name": "Guristas Rail Frigate",
+      "modules": [
+        {
+          "typeID": 13865,
+          "quantity": 2
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21398,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_rail_destroyer_loadout",
+      "name": "Guristas Rail Destroyer",
+      "modules": [
+        {
+          "typeID": 13867,
+          "quantity": 7
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21398,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_rail_cruiser_loadout",
+      "name": "Guristas Rail Cruiser",
+      "modules": [
+        {
+          "typeID": 13873,
+          "quantity": 5
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21414,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_rail_battlecruiser_loadout",
+      "name": "Guristas Rail Battlecruiser",
+      "modules": [
+        {
+          "typeID": 13876,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21430,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_rail_battleship_loadout",
+      "name": "Guristas Rail Battleship",
+      "modules": [
+        {
+          "typeID": 13879,
+          "quantity": 6
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21430,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_officer_estamel_tharchon_loadout",
+      "name": "Guristas Officer Estamel Tharchon",
+      "modules": [
+        {
+          "typeID": 14678,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 27399,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_officer_kaikka_peunato_loadout",
+      "name": "Guristas Officer Kaikka Peunato",
+      "modules": [
+        {
+          "typeID": 14401,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21430,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_officer_thon_eney_loadout",
+      "name": "Guristas Officer Thon Eney",
+      "modules": [
+        {
+          "typeID": 14674,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 27399,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    },
+    {
+      "loadoutID": "parity_guristas_officer_vepas_minimala_loadout",
+      "name": "Guristas Officer Vepas Minimala",
+      "modules": [
+        {
+          "typeID": 14403,
+          "quantity": 4
+        }
+      ],
+      "charges": [
+        {
+          "typeID": 21430,
+          "quantityPerModule": 1,
+          "singleton": true
+        }
+      ]
+    }
+  ]
+}

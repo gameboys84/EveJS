@@ -1,0 +1,195 @@
+{
+  "source": {
+    "provider": "CCP Client Code Snapshot",
+    "authority": "fighterConst.py + abilityAttributes.py",
+    "generatedAt": "2026-06-14T03:01:56.239Z",
+    "sourceRoot": "tools/ClientCodeGrabber/Latest",
+    "fighterConstFile": "eve/common/script/mgt/fighterConst.py",
+    "abilityAttributesFile": "fighters/abilityAttributes.py"
+  },
+  "counts": {
+    "abilityCount": 36
+  },
+  "abilitiesByID": {
+    "1": {
+      "abilityID": 1,
+      "effectConstName": "effectFighterAbilityAttackTurret",
+      "effectFamily": "fighterAbilityAttackTurret"
+    },
+    "2": {
+      "abilityID": 2,
+      "effectConstName": "effectFighterAbilityStasisWebifier",
+      "effectFamily": "fighterAbilityStasisWebifier"
+    },
+    "3": {
+      "abilityID": 3,
+      "effectConstName": "effectFighterTargetPaint",
+      "effectFamily": "fighterTargetPaint"
+    },
+    "4": {
+      "abilityID": 4,
+      "effectConstName": "effectFighterAbilityMicroWarpDrive",
+      "effectFamily": "fighterAbilityMicroWarpDrive"
+    },
+    "5": {
+      "abilityID": 5,
+      "effectConstName": "effectFighterAbilityMicroJumpDrive",
+      "effectFamily": "fighterAbilityMicroJumpDrive"
+    },
+    "6": {
+      "abilityID": 6,
+      "effectConstName": "effectFighterDamageMultiply",
+      "effectFamily": "fighterDamageMultiply"
+    },
+    "7": {
+      "abilityID": 7,
+      "effectConstName": "effectFighterAbilityLaunchBomb",
+      "effectFamily": "fighterAbilityLaunchBomb"
+    },
+    "9": {
+      "abilityID": 9,
+      "effectConstName": "effectFighterAbilityAfterburner",
+      "effectFamily": "fighterAbilityAfterburner"
+    },
+    "10": {
+      "abilityID": 10,
+      "effectConstName": "effectFighterAbilityWarpDisruption",
+      "effectFamily": "fighterAbilityWarpDisruption"
+    },
+    "11": {
+      "abilityID": 11,
+      "effectConstName": "effectFighterAbilityEnergyNeutralizer",
+      "effectFamily": "fighterAbilityEnergyNeutralizer"
+    },
+    "12": {
+      "abilityID": 12,
+      "effectConstName": "effectFighterAbilityECM",
+      "effectFamily": "fighterAbilityECM"
+    },
+    "13": {
+      "abilityID": 13,
+      "effectConstName": "effectFighterAbilityEvasiveManeuvers",
+      "effectFamily": "fighterAbilityEvasiveManeuvers"
+    },
+    "14": {
+      "abilityID": 14,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "16": {
+      "abilityID": 16,
+      "effectConstName": "effectFighterAbilityTackle",
+      "effectFamily": "fighterAbilityTackle"
+    },
+    "17": {
+      "abilityID": 17,
+      "effectConstName": "effectFighterAbilityAttackMissile",
+      "effectFamily": "fighterAbilityAttackMissile"
+    },
+    "18": {
+      "abilityID": 18,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "19": {
+      "abilityID": 19,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "20": {
+      "abilityID": 20,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "21": {
+      "abilityID": 21,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "22": {
+      "abilityID": 22,
+      "effectConstName": "effectFighterAbilityAttackMissile",
+      "effectFamily": "fighterAbilityAttackMissile"
+    },
+    "23": {
+      "abilityID": 23,
+      "effectConstName": "effectFighterAbilityAttackMissile",
+      "effectFamily": "fighterAbilityAttackMissile"
+    },
+    "24": {
+      "abilityID": 24,
+      "effectConstName": "effectFighterAbilityAttackMissile",
+      "effectFamily": "fighterAbilityAttackMissile"
+    },
+    "25": {
+      "abilityID": 25,
+      "effectConstName": "effectFighterAbilityAttackMissile",
+      "effectFamily": "fighterAbilityAttackMissile"
+    },
+    "26": {
+      "abilityID": 26,
+      "effectConstName": "effectFighterAbilityAttackMissile",
+      "effectFamily": "fighterAbilityAttackMissile"
+    },
+    "27": {
+      "abilityID": 27,
+      "effectConstName": "effectFighterAbilityAttackMissile",
+      "effectFamily": "fighterAbilityAttackMissile"
+    },
+    "29": {
+      "abilityID": 29,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "30": {
+      "abilityID": 30,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "31": {
+      "abilityID": 31,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "32": {
+      "abilityID": 32,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "33": {
+      "abilityID": 33,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "34": {
+      "abilityID": 34,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "35": {
+      "abilityID": 35,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "36": {
+      "abilityID": 36,
+      "effectConstName": "effectFighterAbilityMissiles",
+      "effectFamily": "fighterAbilityMissiles"
+    },
+    "38": {
+      "abilityID": 38,
+      "effectConstName": "effectFighterAbilityKamikaze",
+      "effectFamily": "fighterAbilityKamikaze"
+    },
+    "44": {
+      "abilityID": 44,
+      "effectConstName": "effectFighterAbilityAttackMissile",
+      "effectFamily": "fighterAbilityAttackMissile"
+    },
+    "45": {
+      "abilityID": 45,
+      "effectConstName": "effectFighterAbilityAttackMissile",
+      "effectFamily": "fighterAbilityAttackMissile"
+    }
+  }
+}

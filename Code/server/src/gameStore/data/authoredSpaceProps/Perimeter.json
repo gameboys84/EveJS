@@ -1,0 +1,958 @@
+{
+  "solarSystemID": 30000144,
+  "systemName": "Perimeter",
+  "props": [
+    {
+      "itemID": "9002277252000000410",
+      "description": "TQ captured Non-Interactable Raven Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64903,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602981976.793,
+        "y": 44692356077.26172,
+        "z": 2112970806745.836
+      },
+      "dunPosition": {
+        "x": -20903.20703125,
+        "y": 39917.26171875,
+        "z": -68134.1640625
+      },
+      "dunRotation": [
+        273.8780822753906,
+        -12.951475143432617,
+        -29.403690338134766
+      ],
+      "dungeonObjectID": 1179300,
+      "dunObjectID": 1179300,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000411",
+      "description": "TQ captured Typhoon Wreck in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 57546,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602968828.043,
+        "y": 44692402485.03125,
+        "z": 2112970888485.586
+      },
+      "dunPosition": {
+        "x": -34051.95703125,
+        "y": 86325.03125,
+        "z": 13605.5859375
+      },
+      "dunRotation": [
+        359.55670166015625,
+        -69.70284271240234,
+        -52.16337203979492
+      ],
+      "dungeonObjectID": 1179310,
+      "dunObjectID": 1179310,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000412",
+      "description": "TQ captured Non-Interactable Raven Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64903,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602967850.2422,
+        "y": 44692277225.046875,
+        "z": 2112970893416.3125
+      },
+      "dunPosition": {
+        "x": -35029.7578125,
+        "y": -38934.953125,
+        "z": 18536.3125
+      },
+      "dunRotation": [
+        36.776546478271484,
+        -11.470564842224121,
+        -21.455116271972656
+      ],
+      "dungeonObjectID": 1179301,
+      "dunObjectID": 1179301,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000413",
+      "description": "TQ captured Typhoon Wreck in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 57546,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602894497,
+        "y": 44692379620.515625,
+        "z": 2112970893786.5508
+      },
+      "dunPosition": {
+        "x": -108383,
+        "y": 63460.515625,
+        "z": 18906.55078125
+      },
+      "dunRotation": [
+        181.8633575439453,
+        9.87198257446289,
+        8.546452522277832
+      ],
+      "dungeonObjectID": 1179311,
+      "dunObjectID": 1179311,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000414",
+      "description": "TQ captured Non-Interactable Scorpion Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64904,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660603008444.9668,
+        "y": 44692386243.921875,
+        "z": 2112970867254.1953
+      },
+      "dunPosition": {
+        "x": 5564.966796875,
+        "y": 70083.921875,
+        "z": -7625.8046875
+      },
+      "dunRotation": [
+        74.53253936767578,
+        3.5028576850891113,
+        26.621023178100586
+      ],
+      "dungeonObjectID": 1179292,
+      "dunObjectID": 1179292,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000415",
+      "description": "TQ captured Non-Interactable Raven Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64903,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660603074147.5781,
+        "y": 44692359699.484375,
+        "z": 2112970773899.6875
+      },
+      "dunPosition": {
+        "x": 71267.578125,
+        "y": 43539.484375,
+        "z": -100980.3125
+      },
+      "dunRotation": [
+        22.565523147583008,
+        -11.09757137298584,
+        -22.123815536499023
+      ],
+      "dungeonObjectID": 1179302,
+      "dunObjectID": 1179302,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000416",
+      "description": "TQ captured Typhoon Wreck in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 57546,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602960849.1484,
+        "y": 44692406057.11719,
+        "z": 2112970819861.0781
+      },
+      "dunPosition": {
+        "x": -42030.8515625,
+        "y": 89897.1171875,
+        "z": -55018.921875
+      },
+      "dunRotation": [
+        302.51171875,
+        -32.602603912353516,
+        -13.30907154083252
+      ],
+      "dungeonObjectID": 1179312,
+      "dunObjectID": 1179312,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000417",
+      "description": "TQ captured Non-Interactable Scorpion Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64904,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660603013279.9844,
+        "y": 44692413126.75,
+        "z": 2112970834403.4062
+      },
+      "dunPosition": {
+        "x": 10399.984375,
+        "y": 96966.75,
+        "z": -40476.59375
+      },
+      "dunRotation": [
+        16.57524871826172,
+        -10.673870086669922,
+        11.558960914611816
+      ],
+      "dungeonObjectID": 1179293,
+      "dunObjectID": 1179293,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000418",
+      "description": "TQ captured Non-Interactable Raven Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64903,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660603029655.4414,
+        "y": 44692370008.69922,
+        "z": 2112970913051.5156
+      },
+      "dunPosition": {
+        "x": 26775.44140625,
+        "y": 53848.69921875,
+        "z": 38171.515625
+      },
+      "dunRotation": [
+        317.2571105957031,
+        -18.922664642333984,
+        -7.6917595863342285
+      ],
+      "dungeonObjectID": 1179303,
+      "dunObjectID": 1179303,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000419",
+      "description": "TQ captured Typhoon Wreck in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 57546,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602918601.1484,
+        "y": 44692389124.75,
+        "z": 2112970839714.0703
+      },
+      "dunPosition": {
+        "x": -84278.8515625,
+        "y": 72964.75,
+        "z": -35165.9296875
+      },
+      "dunRotation": [
+        268.3951110839844,
+        -0.08168994635343552,
+        -4.943151473999023
+      ],
+      "dungeonObjectID": 1179313,
+      "dunObjectID": 1179313,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000420",
+      "description": "TQ captured Non-Interactable Scorpion Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64904,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602887844.7188,
+        "y": 44692413126.75,
+        "z": 2112970843125.3047
+      },
+      "dunPosition": {
+        "x": -115035.28125,
+        "y": 96966.75,
+        "z": -31754.6953125
+      },
+      "dunRotation": [
+        340.867919921875,
+        28.640172958374023,
+        -17.304838180541992
+      ],
+      "dungeonObjectID": 1179294,
+      "dunObjectID": 1179294,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000421",
+      "description": "TQ captured Megathron Navy Issue Wreckage in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64162,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1000,
+      "flagsByte": 2,
+      "position": {
+        "x": 660603008715.6465,
+        "y": 44692389124.75,
+        "z": 2112970919834.7227
+      },
+      "dunPosition": {
+        "x": 5835.646484375,
+        "y": 72964.75,
+        "z": 44954.72265625
+      },
+      "dunRotation": [
+        306.74053955078125,
+        13.186810493469238,
+        -43.55726623535156
+      ],
+      "dungeonObjectID": 1179304,
+      "dunObjectID": 1179304,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000422",
+      "description": "TQ captured Typhoon Wreck in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 57546,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602994102.5947,
+        "y": 44692414154.66406,
+        "z": 2112970888270.0664
+      },
+      "dunPosition": {
+        "x": -8777.4052734375,
+        "y": 97994.6640625,
+        "z": 13390.06640625
+      },
+      "dunRotation": [
+        264.24884033203125,
+        -22.89377212524414,
+        24.935422897338867
+      ],
+      "dungeonObjectID": 1179314,
+      "dunObjectID": 1179314,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000423",
+      "description": "TQ captured Non-Interactable Scorpion Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64904,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602920878.6016,
+        "y": 44692340178.5625,
+        "z": 2112970832424.3633
+      },
+      "dunPosition": {
+        "x": -82001.3984375,
+        "y": 24018.5625,
+        "z": -42455.63671875
+      },
+      "dunRotation": [
+        36.6181526184082,
+        -8.014603614807129,
+        17.650630950927734
+      ],
+      "dungeonObjectID": 1179295,
+      "dunObjectID": 1179295,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000424",
+      "description": "TQ captured Megathron Navy Issue Wreckage in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64162,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1000,
+      "flagsByte": 2,
+      "position": {
+        "x": 660603014430.8594,
+        "y": 44692328361.61719,
+        "z": 2112970790817.7656
+      },
+      "dunPosition": {
+        "x": 11550.859375,
+        "y": 12201.6171875,
+        "z": -84062.234375
+      },
+      "dunRotation": [
+        271.011962890625,
+        -34.5396842956543,
+        44.740623474121094
+      ],
+      "dungeonObjectID": 1179305,
+      "dunObjectID": 1179305,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000425",
+      "description": "TQ captured Typhoon Wreck in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 57546,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602964029.8359,
+        "y": 44692423643.125,
+        "z": 2112970873673.502
+      },
+      "dunPosition": {
+        "x": -38850.1640625,
+        "y": 107483.125,
+        "z": -1206.498046875
+      },
+      "dunRotation": [
+        294.8797607421875,
+        -0.012563706375658512,
+        -1.9555875062942505
+      ],
+      "dungeonObjectID": 1179315,
+      "dunObjectID": 1179315,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000426",
+      "description": "TQ captured Tranquility Trading Tower Wreck in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 77983,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 150000,
+      "flagsByte": 2,
+      "position": {
+        "x": 660603008444.9668,
+        "y": 44692316160,
+        "z": 2112970867254.1953
+      },
+      "dunPosition": {
+        "x": 5564.966796875,
+        "y": 0,
+        "z": -7625.8046875
+      },
+      "dunRotation": [
+        17.949161529541016,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1179286,
+      "dunObjectID": 1179286,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000427",
+      "description": "TQ captured Non-Interactable Scorpion Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64904,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660603008936.5254,
+        "y": 44692311270.46875,
+        "z": 2112970803899.0469
+      },
+      "dunPosition": {
+        "x": 6056.525390625,
+        "y": -4889.53125,
+        "z": -70980.953125
+      },
+      "dunRotation": [
+        2.6663453578948975,
+        -20.719106674194336,
+        -1.0288487672805786
+      ],
+      "dungeonObjectID": 1179296,
+      "dunObjectID": 1179296,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000428",
+      "description": "TQ captured Megathron Navy Issue Wreckage in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64162,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1000,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602994026.5977,
+        "y": 44692408726.61719,
+        "z": 2112970822071.7422
+      },
+      "dunPosition": {
+        "x": -8853.40234375,
+        "y": 92566.6171875,
+        "z": -52808.2578125
+      },
+      "dunRotation": [
+        329.8156433105469,
+        3.3906731605529785,
+        -4.702840328216553
+      ],
+      "dungeonObjectID": 1179306,
+      "dunObjectID": 1179306,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000429",
+      "description": "TQ captured VDB_Cloud_Vortex_04c in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 77374,
+      "ownerID": 500021,
+      "groupID": 4579,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 20,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602998081.5684,
+        "y": 44692329031.16016,
+        "z": 2112970882302.8496
+      },
+      "dunPosition": {
+        "x": -4798.431640625,
+        "y": 12871.16015625,
+        "z": 7422.849609375
+      },
+      "dunRotation": [
+        6.75569486618042,
+        7.457956314086914,
+        0.00003274710616096854
+      ],
+      "dungeonObjectID": 1179316,
+      "dunObjectID": 1179316,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000431",
+      "description": "TQ captured Non-Interactable Scorpion Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64904,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660603048219.4844,
+        "y": 44692432143.09375,
+        "z": 2112970857500.836
+      },
+      "dunPosition": {
+        "x": 45339.484375,
+        "y": 115983.09375,
+        "z": -17379.1640625
+      },
+      "dunRotation": [
+        0.7607948780059814,
+        -0.5313119888305664,
+        -27.740259170532227
+      ],
+      "dungeonObjectID": 1179297,
+      "dunObjectID": 1179297,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000432",
+      "description": "TQ captured Megathron Navy Issue Wreckage in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64162,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1000,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602916476.1016,
+        "y": 44692393785.3125,
+        "z": 2112970814313.7188
+      },
+      "dunPosition": {
+        "x": -86403.8984375,
+        "y": 77625.3125,
+        "z": -60566.28125
+      },
+      "dunRotation": [
+        330.318115234375,
+        -25.84982681274414,
+        0.5521096587181091
+      ],
+      "dungeonObjectID": 1179307,
+      "dunObjectID": 1179307,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000433",
+      "description": "TQ captured ENV_Caldari_01a in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64619,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1,
+      "flagsByte": 64,
+      "position": {
+        "x": 660603002880,
+        "y": 44692316160,
+        "z": 2112970874880
+      },
+      "dunPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "dunRotation": [
+        294.8797607421875,
+        -0.012563706375658512,
+        -1.9555875062942505
+      ],
+      "dungeonObjectID": 1179317,
+      "dunObjectID": 1179317,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000434",
+      "description": "TQ captured Non-Interactable Raven Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64903,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660603029364.2852,
+        "y": 44692428242.3125,
+        "z": 2112970872840.289
+      },
+      "dunPosition": {
+        "x": 26484.28515625,
+        "y": 112082.3125,
+        "z": -2039.7109375
+      },
+      "dunRotation": [
+        8.710233688354492,
+        -44.3358039855957,
+        -16.497875213623047
+      ],
+      "dungeonObjectID": 1179298,
+      "dunObjectID": 1179298,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000435",
+      "description": "TQ captured Megathron Navy Issue Wreckage in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64162,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1000,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602943740.457,
+        "y": 44692389124.75,
+        "z": 2112970891263.6094
+      },
+      "dunPosition": {
+        "x": -59139.54296875,
+        "y": 72964.75,
+        "z": 16383.609375
+      },
+      "dunRotation": [
+        306.5883483886719,
+        -7.559370040893555,
+        -16.12778663635254
+      ],
+      "dungeonObjectID": 1179308,
+      "dunObjectID": 1179308,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000436",
+      "description": "TQ captured Non-Interactable Raven Wreck (Do Not Translate) in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64903,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 200,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602995260.1445,
+        "y": 44692444124.140625,
+        "z": 2112970899856.75
+      },
+      "dunPosition": {
+        "x": -7619.85546875,
+        "y": 127964.140625,
+        "z": 24976.75
+      },
+      "dunRotation": [
+        37.020835876464844,
+        -41.25922775268555,
+        -18.1351375579834
+      ],
+      "dungeonObjectID": 1179299,
+      "dunObjectID": 1179299,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277252000000437",
+      "description": "TQ captured Megathron Navy Issue Wreckage in Perimeter.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64162,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1000,
+      "flagsByte": 2,
+      "position": {
+        "x": 660602971165.1641,
+        "y": 44692389124.75,
+        "z": 2112970895700.3477
+      },
+      "dunPosition": {
+        "x": -31714.8359375,
+        "y": 72964.75,
+        "z": 20820.34765625
+      },
+      "dunRotation": [
+        289.8421630859375,
+        -14.176740646362305,
+        -1.6456841230392456
+      ],
+      "dungeonObjectID": 1179309,
+      "dunObjectID": 1179309,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224015-136-TQBig",
+      "mode": "additive; no player-owned props"
+    }
+  }
+}

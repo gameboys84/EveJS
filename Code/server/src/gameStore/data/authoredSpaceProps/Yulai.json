@@ -1,0 +1,1128 @@
+{
+  "solarSystemID": 30005204,
+  "systemName": "Yulai",
+  "props": [
+    {
+      "itemID": "9002277298000002549",
+      "description": "TQ captured Builders Quarters in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72076,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 300,
+      "flagsByte": 64,
+      "position": {
+        "x": -1618594394817.495,
+        "y": 107281489826.95459,
+        "z": -2717284374075.088
+      },
+      "dunPosition": {
+        "x": 11582.5048828125,
+        "y": -93.04541015625,
+        "z": 18884.912109375
+      },
+      "dunRotation": [
+        77.84022521972656,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1469124,
+      "dunObjectID": 1469124,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002550",
+      "description": "TQ captured Non-interactable AIR Bowhead in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 93581,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 900,
+      "flagsByte": 0,
+      "position": {
+        "x": -1618594387636.0059,
+        "y": 107281488021.32922,
+        "z": -2717284372945.211
+      },
+      "dunPosition": {
+        "x": 18763.994140625,
+        "y": -1898.6707763671875,
+        "z": 20014.7890625
+      },
+      "dunRotation": [
+        317.5518493652344,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1493208,
+      "dunObjectID": 1493208,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002551",
+      "description": "TQ captured ParticleCloud 30km 01b in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64720,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1,
+      "flagsByte": 0,
+      "position": {
+        "x": -1618594408115.349,
+        "y": 107281489833.74283,
+        "z": -2717284391833.2217
+      },
+      "dunPosition": {
+        "x": -1715.3489990234375,
+        "y": -86.25717163085938,
+        "z": 1126.7783203125
+      },
+      "dunRotation": [
+        103.85874938964844,
+        8.020746231079102,
+        88.00357055664062
+      ],
+      "dungeonObjectID": 1469125,
+      "dunObjectID": 1469125,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002552",
+      "description": "TQ captured Non-interactable AIR Bowhead in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 93581,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 900,
+      "flagsByte": 0,
+      "position": {
+        "x": -1618594435788.5957,
+        "y": 107281495120.93555,
+        "z": -2717284381252.334
+      },
+      "dunPosition": {
+        "x": -29388.595703125,
+        "y": 5200.935546875,
+        "z": 11707.666015625
+      },
+      "dunRotation": [
+        358.9407043457031,
+        0.0002883689303416759,
+        0.00007648971950402483
+      ],
+      "dungeonObjectID": 1493209,
+      "dunObjectID": 1493209,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002553",
+      "description": "TQ captured Non-Interactable Silo in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 59999,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 907,
+      "flagsByte": 64,
+      "position": {
+        "x": -1618594389186.461,
+        "y": 107281488021.32922,
+        "z": -2717284373877.332
+      },
+      "dunPosition": {
+        "x": 17213.5390625,
+        "y": -1898.6707763671875,
+        "z": 19082.66796875
+      },
+      "dunRotation": [
+        322.3956604003906,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1469114,
+      "dunObjectID": 1469114,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002554",
+      "description": "TQ captured Non-Interactable Hangar Array in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 59997,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 911,
+      "flagsByte": 64,
+      "position": {
+        "x": -1618594393683.6943,
+        "y": 107281489920,
+        "z": -2717284376461.4883
+      },
+      "dunPosition": {
+        "x": 12716.3056640625,
+        "y": 0,
+        "z": 16498.51171875
+      },
+      "dunRotation": [
+        304.3942565917969,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1469126,
+      "dunObjectID": 1469126,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 3636
+    },
+    {
+      "itemID": "9002277298000002555",
+      "description": "TQ captured Non-interactable AIR Bowhead in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 93581,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 900,
+      "flagsByte": 0,
+      "position": {
+        "x": -1618594431938.8203,
+        "y": 107281495120.93555,
+        "z": -2717284381252.334
+      },
+      "dunPosition": {
+        "x": -25538.8203125,
+        "y": 5200.935546875,
+        "z": 11707.666015625
+      },
+      "dunRotation": [
+        14.437177658081055,
+        0.00028836901765316725,
+        0.00007648973405594006
+      ],
+      "dungeonObjectID": 1493210,
+      "dunObjectID": 1493210,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002556",
+      "description": "TQ captured Non-Interactable Reprocessing Array in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 59998,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 506,
+      "flagsByte": 64,
+      "position": {
+        "x": -1618594390621.8428,
+        "y": 107281488021.32922,
+        "z": -2717284372013.74
+      },
+      "dunPosition": {
+        "x": 15778.1572265625,
+        "y": -1898.6707763671875,
+        "z": 20946.259765625
+      },
+      "dunRotation": [
+        53.6281852722168,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1469115,
+      "dunObjectID": 1469115,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002557",
+      "description": "TQ captured Construction Storage Unit in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72074,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 50,
+      "flagsByte": 0,
+      "position": {
+        "x": -1618594394817.495,
+        "y": 107281489826.95459,
+        "z": -2717284375196.58
+      },
+      "dunPosition": {
+        "x": 11582.5048828125,
+        "y": -93.04541015625,
+        "z": 17763.419921875
+      },
+      "dunRotation": [
+        72.4122085571289,
+        0,
+        55.20175552368164
+      ],
+      "dungeonObjectID": 1469127,
+      "dunObjectID": 1469127,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002558",
+      "description": "TQ captured Non-interactable Radio Telescope in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 57744,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 2636,
+      "flagsByte": 96,
+      "position": {
+        "x": -1618594389780.834,
+        "y": 107281499111.12793,
+        "z": -2717284413313.336
+      },
+      "dunPosition": {
+        "x": 16619.166015625,
+        "y": 9191.1279296875,
+        "z": -20353.3359375
+      },
+      "dunRotation": [
+        225.93724060058594,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1493199,
+      "dunObjectID": 1493199,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 327
+    },
+    {
+      "itemID": "9002277298000002559",
+      "description": "TQ captured Concord Prison Barracks in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64178,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 4000,
+      "flagsByte": 32,
+      "position": {
+        "x": -1618594389904.3984,
+        "y": 107281468674.8086,
+        "z": -2717284345751.75
+      },
+      "dunPosition": {
+        "x": 16495.6015625,
+        "y": -21245.19140625,
+        "z": 47208.25
+      },
+      "dunRotation": [
+        311.4302673339844,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1493211,
+      "dunObjectID": 1493211,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002560",
+      "description": "TQ captured Non-Interactable Hangar Array in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 59997,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 911,
+      "flagsByte": 64,
+      "position": {
+        "x": -1618594433724.7344,
+        "y": 107281495120.93555,
+        "z": -2717284381252.334
+      },
+      "dunPosition": {
+        "x": -27324.734375,
+        "y": 5200.935546875,
+        "z": 11707.666015625
+      },
+      "dunRotation": [
+        325.082275390625,
+        0.00028836846468038857,
+        0.00007648966129636392
+      ],
+      "dungeonObjectID": 1469116,
+      "dunObjectID": 1469116,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 3636
+    },
+    {
+      "itemID": "9002277298000002561",
+      "description": "TQ captured LargeCollidableObject static-site beacon beside the Yulai-side Stargate (Manifest).",
+      "anchorItemID": 50016629,
+      "kind": "authoredSpaceProp",
+      "radius": 1,
+      "position": {
+        "x": -1618594414668.287,
+        "y": 107281490548.34387,
+        "z": -2717284392960
+      },
+      "forceDamageState": true,
+      "signalTrackerStaticSite": true,
+      "signalTrackerStaticSiteNameID": 1037722,
+      "signalTrackerStaticSiteFactionID": 500006,
+      "staticVisibilityScope": "publicgrid",
+      "typeID": 10645,
+      "ownerID": 500006,
+      "groupID": 310,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "flagsByte": 2,
+      "dunPosition": {
+        "x": -8268.287109375,
+        "y": 628.3438720703125,
+        "z": 0
+      },
+      "dungeonObjectID": 1469128,
+      "dunObjectID": 1469128,
+      "dunObjectNameID": 1037722,
+      "nameID": 1037722,
+      "itemName": "",
+      "slimName": ""
+    },
+    {
+      "itemID": "9002277298000002562",
+      "description": "TQ captured Non-Interactable Raitaru in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 93582,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 45000,
+      "flagsByte": 32,
+      "position": {
+        "x": -1618594462022.9883,
+        "y": 107281529027.29297,
+        "z": -2717284503195.664
+      },
+      "dunPosition": {
+        "x": -55622.98828125,
+        "y": 39107.29296875,
+        "z": -110235.6640625
+      },
+      "dunRotation": [
+        29.106250762939453,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1493200,
+      "dunObjectID": 1493200,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 3641
+    },
+    {
+      "itemID": "9002277298000002563",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 2222,
+      "flagsByte": 160,
+      "position": {
+        "x": -1618594385994.9512,
+        "y": 107281468674.8086,
+        "z": -2717284349281.9453
+      },
+      "dunPosition": {
+        "x": 20405.048828125,
+        "y": -21245.19140625,
+        "z": 43678.0546875
+      },
+      "dunRotation": [
+        311.4302673339844,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1493212,
+      "dunObjectID": 1493212,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 3636
+    },
+    {
+      "itemID": "9002277298000002564",
+      "description": "TQ captured Non-Interactable Hangar Array in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 59997,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 911,
+      "flagsByte": 64,
+      "position": {
+        "x": -1618594433724.7344,
+        "y": 107281492764.00952,
+        "z": -2717284381252.334
+      },
+      "dunPosition": {
+        "x": -27324.734375,
+        "y": 2844.009521484375,
+        "z": 11707.666015625
+      },
+      "dunRotation": [
+        325.082275390625,
+        0.00028836846468038857,
+        0.00007648966129636392
+      ],
+      "dungeonObjectID": 1469117,
+      "dunObjectID": 1469117,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 3636
+    },
+    {
+      "itemID": "9002277298000002565",
+      "description": "TQ captured Construction Storage Unit in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72074,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 50,
+      "flagsByte": 0,
+      "position": {
+        "x": -1618594395864.2988,
+        "y": 107281489921.90344,
+        "z": -2717284375225.67
+      },
+      "dunPosition": {
+        "x": 10535.701171875,
+        "y": 1.9034500122070312,
+        "z": 17734.330078125
+      },
+      "dunRotation": [
+        90.00003051757812,
+        -0.000015367924788733944,
+        63.53778076171875
+      ],
+      "dungeonObjectID": 1469129,
+      "dunObjectID": 1469129,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002566",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 2222,
+      "flagsByte": 160,
+      "position": {
+        "x": -1618594431934.539,
+        "y": 107281529027.29297,
+        "z": -2717284491349.0312
+      },
+      "dunPosition": {
+        "x": -25534.5390625,
+        "y": 39107.29296875,
+        "z": -98389.03125
+      },
+      "dunRotation": [
+        29.106250762939453,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1493201,
+      "dunObjectID": 1493201,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 3636
+    },
+    {
+      "itemID": "9002277298000002567",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 2222,
+      "flagsByte": 160,
+      "position": {
+        "x": -1618594393817.622,
+        "y": 107281468674.8086,
+        "z": -2717284342231.328
+      },
+      "dunPosition": {
+        "x": 12582.3779296875,
+        "y": -21245.19140625,
+        "z": 50728.671875
+      },
+      "dunRotation": [
+        311.4302673339844,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1493213,
+      "dunObjectID": 1493213,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 3636
+    },
+    {
+      "itemID": "9002277298000002568",
+      "description": "TQ captured Non-Interactable Hangar Array in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 59997,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 911,
+      "flagsByte": 64,
+      "position": {
+        "x": -1618594433724.7344,
+        "y": 107281493987.89746,
+        "z": -2717284381252.334
+      },
+      "dunPosition": {
+        "x": -27324.734375,
+        "y": 4067.8974609375,
+        "z": 11707.666015625
+      },
+      "dunRotation": [
+        325.082275390625,
+        0.00028836846468038857,
+        0.00007648966129636392
+      ],
+      "dungeonObjectID": 1469118,
+      "dunObjectID": 1469118,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 3636
+    },
+    {
+      "itemID": "9002277298000002569",
+      "description": "TQ captured Construction Storage Unit in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72074,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 50,
+      "flagsByte": 0,
+      "position": {
+        "x": -1618594395399.043,
+        "y": 107281489833.74283,
+        "z": -2717284375334.713
+      },
+      "dunPosition": {
+        "x": 11000.95703125,
+        "y": -86.25717163085938,
+        "z": 17625.287109375
+      },
+      "dunRotation": [
+        107.50419616699219,
+        27.905418395996094,
+        98.39635467529297
+      ],
+      "dungeonObjectID": 1469130,
+      "dunObjectID": 1469130,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002570",
+      "description": "TQ captured Non-interactable AIR Bowhead in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 93581,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 900,
+      "flagsByte": 0,
+      "position": {
+        "x": -1618594447354.8398,
+        "y": 107281527146.11719,
+        "z": -2717284478507.1406
+      },
+      "dunPosition": {
+        "x": -40954.83984375,
+        "y": 37226.1171875,
+        "z": -85547.140625
+      },
+      "dunRotation": [
+        59.758758544921875,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1493202,
+      "dunObjectID": 1493202,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277298000002571",
+      "description": "TQ captured Non-interactable Shipyard in Yulai.",
+      "kind": "authoredSpaceProp",
+      "typeID": 58722,
+      "ownerID": 500006,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1913,
+      "flagsByte": 2,
+      "position": {
+        "x": -1618594391797.4092,
+        "y": 107281488748.65771,
+        "z": -2717284376461.4883
+      },
+      "dunPosition": {
+        "x": 14602.5908203125,
+        "y": -1171.34228515625,
+        "z": 16498.51171875
+      },
+      "dunRotation": [
+        304.3942565917969,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1493214,
+      "dunObjectID": 1493214,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 3636
+    },
+    {
+      "itemID": "9002277298000002572",
+      "description": "TQ captured Yulai Manifest gate uw_sentry02_enviroment_asset.",
+      "anchorItemID": 50016629,
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500006,
+      "position": {
+        "x": -1618594468443.9062,
+        "y": 107281529027.29297,
+        "z": -2717284471744.6562
+      },
+      "dunPosition": {
+        "x": -62043.90625,
+        "y": 39107.29296875,
+        "z": -78784.65625
+      },
+      "dunRotation": [
+        29.106250762939453,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1469119,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "skinMaterialSetID": 3636,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "radius": 2222,
+      "flagsByte": 2,
+      "mode": "RIGID",
+      "dunObjectID": 1469119
+    },
+    {
+      "itemID": "9002277298000002573",
+      "description": "TQ captured Yulai Manifest gate cct1_t1a_environment_asset.",
+      "anchorItemID": 50016629,
+      "kind": "authoredSpaceProp",
+      "typeID": 72753,
+      "ownerID": 500006,
+      "position": {
+        "x": -1618594433507.4766,
+        "y": 107281493987.89746,
+        "z": -2717284379142.6904
+      },
+      "dunPosition": {
+        "x": -27107.4765625,
+        "y": 4067.8974609375,
+        "z": 13817.3095703125
+      },
+      "dunRotation": [
+        34.838932037353516,
+        -0.00005177228740649298,
+        0.000011979525879723951
+      ],
+      "dungeonObjectID": 1469120,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "skinMaterialSetID": 3636,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "radius": 3275,
+      "flagsByte": 2,
+      "mode": "RIGID",
+      "dunObjectID": 1469120
+    },
+    {
+      "itemID": "9002277298000002574",
+      "description": "TQ captured Yulai Manifest gate Non-interactable AIR Bowhead.",
+      "anchorItemID": 50016629,
+      "kind": "authoredSpaceProp",
+      "typeID": 93581,
+      "ownerID": 500006,
+      "position": {
+        "x": -1618594448787.2773,
+        "y": 107281527146.11719,
+        "z": -2717284477791.875
+      },
+      "dunPosition": {
+        "x": -42387.27734375,
+        "y": 37226.1171875,
+        "z": -84831.875
+      },
+      "dunRotation": [
+        40.470603942871094,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1493204,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "radius": 900,
+      "flagsByte": 2,
+      "mode": "RIGID",
+      "dunObjectID": 1493204
+    },
+    {
+      "itemID": "9002277298000002575",
+      "description": "TQ captured Yulai Manifest gate cct1_t1a_environment_asset.",
+      "anchorItemID": 50016629,
+      "kind": "authoredSpaceProp",
+      "typeID": 72753,
+      "ownerID": 500006,
+      "position": {
+        "x": -1618594394244.8955,
+        "y": 107281500397.27734,
+        "z": -2717284416536.035
+      },
+      "dunPosition": {
+        "x": 12155.1044921875,
+        "y": 10477.27734375,
+        "z": -23576.03515625
+      },
+      "dunRotation": [
+        290.25653076171875,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1469121,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "skinMaterialSetID": 3636,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "radius": 3275,
+      "flagsByte": 2,
+      "mode": "RIGID",
+      "dunObjectID": 1469121
+    },
+    {
+      "itemID": "9002277298000002576",
+      "description": "TQ captured Yulai Manifest gate cct1_t1a_environment_asset.",
+      "anchorItemID": 50016629,
+      "kind": "authoredSpaceProp",
+      "typeID": 72753,
+      "ownerID": 500006,
+      "position": {
+        "x": -1618594389904.3984,
+        "y": 107281488021.32922,
+        "z": -2717284372945.211
+      },
+      "dunPosition": {
+        "x": 16495.6015625,
+        "y": -1898.6707763671875,
+        "z": 20014.7890625
+      },
+      "dunRotation": [
+        322.3956604003906,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1469122,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "skinMaterialSetID": 3636,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "radius": 3275,
+      "flagsByte": 2,
+      "mode": "RIGID",
+      "dunObjectID": 1469122
+    },
+    {
+      "itemID": "9002277298000002577",
+      "description": "TQ captured Yulai Manifest gate uw_sentry02_enviroment_asset.",
+      "anchorItemID": 50016629,
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500006,
+      "position": {
+        "x": -1618594390387.9775,
+        "y": 107281500397.27734,
+        "z": -2717284417800.6836
+      },
+      "dunPosition": {
+        "x": 16012.0224609375,
+        "y": 10477.27734375,
+        "z": -24840.68359375
+      },
+      "dunRotation": [
+        290.2565002441406,
+        5.239813916091407e-8,
+        2.8524759443371295e-8
+      ],
+      "dungeonObjectID": 1493206,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "skinMaterialSetID": 3636,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "radius": 2222,
+      "flagsByte": 2,
+      "mode": "RIGID",
+      "dunObjectID": 1493206
+    },
+    {
+      "itemID": "9002277298000002578",
+      "description": "TQ captured Yulai Manifest gate Builders Quarters.",
+      "anchorItemID": 50016629,
+      "kind": "authoredSpaceProp",
+      "typeID": 72076,
+      "ownerID": 500006,
+      "position": {
+        "x": -1618594392662.5674,
+        "y": 107281489826.95459,
+        "z": -2717284378938.3105
+      },
+      "dunPosition": {
+        "x": 13737.4326171875,
+        "y": -93.04541015625,
+        "z": 14021.689453125
+      },
+      "dunRotation": [
+        72.65290069580078,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1469123,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "radius": 300,
+      "flagsByte": 2,
+      "mode": "RIGID",
+      "dunObjectID": 1469123
+    },
+    {
+      "itemID": "9002277298000002579",
+      "description": "TQ captured Yulai Manifest gate Non-interactable AIR Bowhead.",
+      "anchorItemID": 50016629,
+      "kind": "authoredSpaceProp",
+      "typeID": 93581,
+      "ownerID": 500006,
+      "position": {
+        "x": -1618594392710.955,
+        "y": 107281500397.27734,
+        "z": -2717284414467.203
+      },
+      "dunPosition": {
+        "x": 13689.044921875,
+        "y": 10477.27734375,
+        "z": -21507.203125
+      },
+      "dunRotation": [
+        290.25653076171875,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1493207,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "radius": 900,
+      "flagsByte": 2,
+      "mode": "RIGID",
+      "dunObjectID": 1493207
+    },
+    {
+      "itemID": "9002277003000002115",
+      "description": "TQ no-slim static destiny ball near Yulai IX (Kjarval) - CONCORD Bureau.",
+      "enabled": false,
+      "disabledReason": "Captured no-slim native marker. Do not emit until the complete native destiny tail contract is known.",
+      "anchorItemID": 60012256,
+      "kind": "authoredSpaceProp",
+      "radius": 1,
+      "position": {
+        "x": -1618576220160,
+        "y": 107272396800,
+        "z": -2717304299520
+      },
+      "omitSlimItem": true,
+      "forceDamageState": true,
+      "staticVisibilityScope": "publicgrid",
+      "mode": "RIGID",
+      "flagsByte": 2
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224015-136-TQBig",
+      "mode": "additive; no player-owned props"
+    },
+    "lastManualRepair": {
+      "date": "2026-05-21",
+      "reason": "Restore official Yulai Manifest gate item IDs and preserve TQ STOP static-collision tails, including empty 26-byte tails.",
+      "evidence": "client/skin.txt and client/stillno.txt BallNotInPark regression"
+    }
+  }
+}

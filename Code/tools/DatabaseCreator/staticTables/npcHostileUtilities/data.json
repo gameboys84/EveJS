@@ -1,0 +1,276 @@
+{
+  "templates": [
+    {
+      "templateID": "blood_small_hostile_utility",
+      "name": "Blood Raiders Small Hostile Utility",
+      "factionIDs": [
+        500012
+      ],
+      "behaviorProfileIDs": [
+        "blood_raider_destroyer_brawler",
+        "parity_blood_raider_small_beam_line"
+      ],
+      "modules": [
+        {
+          "typeID": 527,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        },
+        {
+          "typeID": 13003,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    },
+    {
+      "templateID": "blood_medium_hostile_utility",
+      "name": "Blood Raiders Medium Hostile Utility",
+      "factionIDs": [
+        500012
+      ],
+      "behaviorProfileIDs": [
+        "blood_raider_battlecruiser_line",
+        "parity_blood_raider_medium_beam_line"
+      ],
+      "modules": [
+        {
+          "typeID": 527,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        },
+        {
+          "typeID": 12267,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    },
+    {
+      "templateID": "blood_large_hostile_utility",
+      "name": "Blood Raiders Large Hostile Utility",
+      "factionIDs": [
+        500012
+      ],
+      "behaviorProfileIDs": [
+        "blood_raider_battleship_line",
+        "blood_raider_marauder",
+        "parity_blood_raider_large_beam_line"
+      ],
+      "modules": [
+        {
+          "typeID": 12271,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        },
+        {
+          "typeID": 12263,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    },
+    {
+      "templateID": "sansha_small_hostile_utility",
+      "name": "Sansha Small Hostile Utility",
+      "factionIDs": [
+        500019
+      ],
+      "behaviorProfileIDs": [
+        "sansha_small_pulse_line",
+        "parity_sansha_small_beam_line"
+      ],
+      "modules": [
+        {
+          "typeID": 527,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        },
+        {
+          "typeID": 448,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    },
+    {
+      "templateID": "sansha_medium_hostile_utility",
+      "name": "Sansha Medium Hostile Utility",
+      "factionIDs": [
+        500019
+      ],
+      "behaviorProfileIDs": [
+        "sansha_medium_pulse_line",
+        "parity_sansha_medium_beam_line"
+      ],
+      "modules": [
+        {
+          "typeID": 527,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        },
+        {
+          "typeID": 3244,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    },
+    {
+      "templateID": "sansha_large_hostile_utility",
+      "name": "Sansha Large Hostile Utility",
+      "factionIDs": [
+        500019
+      ],
+      "behaviorProfileIDs": [
+        "sansha_large_pulse_line",
+        "parity_sansha_large_beam_line"
+      ],
+      "modules": [
+        {
+          "typeID": 3244,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    },
+    {
+      "templateID": "serpentis_small_hostile_utility",
+      "name": "Serpentis Small Hostile Utility",
+      "factionIDs": [
+        500020
+      ],
+      "behaviorProfileIDs": [
+        "serpentis_small_blaster_brawler",
+        "parity_serpentis_small_rail_kiter"
+      ],
+      "modules": [
+        {
+          "typeID": 527,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        },
+        {
+          "typeID": 448,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    },
+    {
+      "templateID": "serpentis_medium_hostile_utility",
+      "name": "Serpentis Medium Hostile Utility",
+      "factionIDs": [
+        500020
+      ],
+      "behaviorProfileIDs": [
+        "serpentis_medium_blaster_brawler",
+        "parity_serpentis_medium_rail_kiter"
+      ],
+      "modules": [
+        {
+          "typeID": 527,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        },
+        {
+          "typeID": 3244,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    },
+    {
+      "templateID": "serpentis_large_hostile_utility",
+      "name": "Serpentis Large Hostile Utility",
+      "factionIDs": [
+        500020
+      ],
+      "behaviorProfileIDs": [
+        "serpentis_large_blaster_brawler",
+        "parity_serpentis_large_rail_kiter"
+      ],
+      "modules": [
+        {
+          "typeID": 527,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        },
+        {
+          "typeID": 3244,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    },
+    {
+      "templateID": "angel_small_hostile_utility",
+      "name": "Angel Small Hostile Utility",
+      "factionIDs": [
+        500011
+      ],
+      "behaviorProfileIDs": [
+        "angel_small_autocannon_skirmisher",
+        "parity_angel_small_artillery_skirmisher"
+      ],
+      "modules": [
+        {
+          "typeID": 527,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        },
+        {
+          "typeID": 448,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    },
+    {
+      "templateID": "angel_medium_hostile_utility",
+      "name": "Angel Medium Hostile Utility",
+      "factionIDs": [
+        500011
+      ],
+      "behaviorProfileIDs": [
+        "angel_medium_autocannon_skirmisher",
+        "parity_angel_medium_artillery_skirmisher"
+      ],
+      "modules": [
+        {
+          "typeID": 19806,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        },
+        {
+          "typeID": 527,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    },
+    {
+      "templateID": "angel_large_hostile_utility",
+      "name": "Angel Large Hostile Utility",
+      "factionIDs": [
+        500011
+      ],
+      "behaviorProfileIDs": [
+        "angel_large_autocannon_skirmisher",
+        "parity_angel_large_artillery_skirmisher"
+      ],
+      "modules": [
+        {
+          "typeID": 19806,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        },
+        {
+          "typeID": 3244,
+          "quantity": 1,
+          "moduleRole": "hostileUtility"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1377 @@
+{
+  "solarSystemID": 30005015,
+  "systemName": "Synchelle",
+  "props": [
+    {
+      "itemID": "9002277206000000488",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277813309.4219,
+        "y": -569656303546.3848,
+        "z": 1679810739968.834
+      },
+      "dunPosition": {
+        "x": 2109.421875,
+        "y": 16453.615234375,
+        "z": -24831.166015625
+      },
+      "dunRotation": [
+        335.53369140625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139864,
+      "dunObjectID": 1139864,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000489",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277814349.2617,
+        "y": -569656304589.1924,
+        "z": 1679810738202.7207
+      },
+      "dunPosition": {
+        "x": 3149.26171875,
+        "y": 15410.8076171875,
+        "z": -26597.279296875
+      },
+      "dunRotation": [
+        319.32037353515625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139886,
+      "dunObjectID": 1139886,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000490",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277810622.8042,
+        "y": -569656303482.9805,
+        "z": 1679810738409.418
+      },
+      "dunPosition": {
+        "x": -577.19580078125,
+        "y": 16517.01953125,
+        "z": -26390.58203125
+      },
+      "dunRotation": [
+        13.335693359375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139908,
+      "dunObjectID": 1139908,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000491",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277821074.041,
+        "y": -569656301772.3984,
+        "z": 1679810741524.3594
+      },
+      "dunPosition": {
+        "x": 9874.041015625,
+        "y": 18227.6015625,
+        "z": -23275.640625
+      },
+      "dunRotation": [
+        64.21052551269531,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139930,
+      "dunObjectID": 1139930,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000492",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277813309.0283,
+        "y": -569656304106.4268,
+        "z": 1679810739971.3516
+      },
+      "dunPosition": {
+        "x": 2109.0283203125,
+        "y": 15893.5732421875,
+        "z": -24828.6484375
+      },
+      "dunRotation": [
+        335.53369140625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139865,
+      "dunObjectID": 1139865,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000493",
+      "description": "TQ captured Serpentis Den non interactable in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64137,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1800,
+      "flagsByte": 96,
+      "position": {
+        "x": 1544277822219.377,
+        "y": -569656304245.6602,
+        "z": 1679810736204.0723
+      },
+      "dunPosition": {
+        "x": 11019.376953125,
+        "y": 15754.33984375,
+        "z": -28595.927734375
+      },
+      "dunRotation": [
+        325.28448486328125,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139887,
+      "dunObjectID": 1139887,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277206000000494",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277811126.059,
+        "y": -569656301720.3965,
+        "z": 1679810737487.3848
+      },
+      "dunPosition": {
+        "x": -73.9410400390625,
+        "y": 18279.603515625,
+        "z": -27312.615234375
+      },
+      "dunRotation": [
+        233.60504150390625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139909,
+      "dunObjectID": 1139909,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000495",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277819332.4116,
+        "y": -569656302815.2148,
+        "z": 1679810740444.0273
+      },
+      "dunPosition": {
+        "x": 8132.41162109375,
+        "y": 17184.78515625,
+        "z": -24355.97265625
+      },
+      "dunRotation": [
+        47.99747085571289,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139931,
+      "dunObjectID": 1139931,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000496",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277816579.9102,
+        "y": -569656305241.583,
+        "z": 1679810738537.955
+      },
+      "dunPosition": {
+        "x": 5379.91015625,
+        "y": 14758.4169921875,
+        "z": -26262.044921875
+      },
+      "dunRotation": [
+        162.97598266601562,
+        -0.000013660510376212187,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139866,
+      "dunObjectID": 1139866,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000497",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277813309.0283,
+        "y": -569656304592.9111,
+        "z": 1679810739971.3516
+      },
+      "dunPosition": {
+        "x": 2109.0283203125,
+        "y": 15407.0888671875,
+        "z": -24828.6484375
+      },
+      "dunRotation": [
+        10.249359130859375,
+        -0.000013660407603310887,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139888,
+      "dunObjectID": 1139888,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000498",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277811442.1538,
+        "y": -569656303000.2207,
+        "z": 1679810740290.7734
+      },
+      "dunPosition": {
+        "x": 242.1536865234375,
+        "y": 16999.779296875,
+        "z": -24509.2265625
+      },
+      "dunRotation": [
+        29.54902458190918,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139910,
+      "dunObjectID": 1139910,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000499",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277821076.539,
+        "y": -569656302818.9336,
+        "z": 1679810741524.8125
+      },
+      "dunPosition": {
+        "x": 9876.5390625,
+        "y": 17181.06640625,
+        "z": -23275.1875
+      },
+      "dunRotation": [
+        98.92610168457031,
+        -0.000013660591321240645,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139932,
+      "dunObjectID": 1139932,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000500",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277814844.875,
+        "y": -569656305724.3525,
+        "z": 1679810739633.2988
+      },
+      "dunPosition": {
+        "x": 3644.875,
+        "y": 14275.6474609375,
+        "z": -25166.701171875
+      },
+      "dunRotation": [
+        146.7627410888672,
+        -0.000013660494005307555,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139867,
+      "dunObjectID": 1139867,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000501",
+      "description": "TQ captured Dark Gray Cloud in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 10128,
+      "ownerID": 500004,
+      "groupID": 227,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 70000,
+      "flagsByte": 2,
+      "position": {
+        "x": 1544277815663.771,
+        "y": -569656289716.0273,
+        "z": 1679810764212.0908
+      },
+      "dunPosition": {
+        "x": 4463.77099609375,
+        "y": 30283.97265625,
+        "z": -587.9091796875
+      },
+      "dunRotation": [
+        334.6112060546875,
+        -40.35418701171875,
+        146.3402862548828
+      ],
+      "dungeonObjectID": 1139889,
+      "dunObjectID": 1139889,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277206000000502",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277811443.9595,
+        "y": -569656303560.2617,
+        "z": 1679810740292.5703
+      },
+      "dunPosition": {
+        "x": 243.9593505859375,
+        "y": 16439.73828125,
+        "z": -24507.4296875
+      },
+      "dunRotation": [
+        29.54902458190918,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139911,
+      "dunObjectID": 1139911,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000503",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277815522.503,
+        "y": -569656305367.1494,
+        "z": 1679810741495.9316
+      },
+      "dunPosition": {
+        "x": 4322.5029296875,
+        "y": 14632.8505859375,
+        "z": -23304.068359375
+      },
+      "dunRotation": [
+        318.8657531738281,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139933,
+      "dunObjectID": 1139933,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000504",
+      "description": "TQ captured Serpentis Den non interactable in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64137,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1800,
+      "flagsByte": 96,
+      "position": {
+        "x": 1544277811152.6477,
+        "y": -569656305127.1133,
+        "z": 1679810733171.2383
+      },
+      "dunPosition": {
+        "x": -47.352203369140625,
+        "y": 14872.88671875,
+        "z": -31628.76171875
+      },
+      "dunRotation": [
+        11.2335205078125,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139868,
+      "dunObjectID": 1139868,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277206000000505",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277815163.1465,
+        "y": -569656302189.2715,
+        "z": 1679810740107.461
+      },
+      "dunPosition": {
+        "x": 3963.146484375,
+        "y": 17810.728515625,
+        "z": -24692.5390625
+      },
+      "dunRotation": [
+        163.37672424316406,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139890,
+      "dunObjectID": 1139890,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000506",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277812205.9624,
+        "y": -569656304695.418,
+        "z": 1679810736803.6387
+      },
+      "dunPosition": {
+        "x": 1005.96240234375,
+        "y": 15304.58203125,
+        "z": -27996.361328125
+      },
+      "dunRotation": [
+        216.99130249023438,
+        -0.000013660524928127415,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139912,
+      "dunObjectID": 1139912,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000507",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277819894.9434,
+        "y": -569656305790.2383,
+        "z": 1679810740358.5605
+      },
+      "dunPosition": {
+        "x": 8694.943359375,
+        "y": 14209.76171875,
+        "z": -24441.439453125
+      },
+      "dunRotation": [
+        31.383411407470703,
+        -0.000013660551303473767,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139934,
+      "dunObjectID": 1139934,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000508",
+      "description": "TQ captured Serpentis Den non interactable in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 64137,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1800,
+      "flagsByte": 96,
+      "position": {
+        "x": 1544277817403.7676,
+        "y": -569656302841.5703,
+        "z": 1679810735042.9863
+      },
+      "dunPosition": {
+        "x": 6203.767578125,
+        "y": 17158.4296875,
+        "z": -29757.013671875
+      },
+      "dunRotation": [
+        345.3733825683594,
+        -1.3855334520339966,
+        -0.12067164480686188
+      ],
+      "dungeonObjectID": 1139869,
+      "dunObjectID": 1139869,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277206000000509",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277816579.9102,
+        "y": -569656304755.0986,
+        "z": 1679810738537.955
+      },
+      "dunPosition": {
+        "x": 5379.91015625,
+        "y": 15244.9013671875,
+        "z": -26262.044921875
+      },
+      "dunRotation": [
+        128.26046752929688,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139891,
+      "dunObjectID": 1139891,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000510",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277816626.629,
+        "y": -569656303361.3789,
+        "z": 1679810739694.998
+      },
+      "dunPosition": {
+        "x": 5426.62890625,
+        "y": 16638.62109375,
+        "z": -25105.001953125
+      },
+      "dunRotation": [
+        353.9820251464844,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139913,
+      "dunObjectID": 1139913,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000511",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277821399.877,
+        "y": -569656304655.0781,
+        "z": 1679810740523.9375
+      },
+      "dunPosition": {
+        "x": 10199.876953125,
+        "y": 15344.921875,
+        "z": -24276.0625
+      },
+      "dunRotation": [
+        203.9410400390625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139935,
+      "dunObjectID": 1139935,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000512",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277814350.3418,
+        "y": -569656304029.1455,
+        "z": 1679810738200.412
+      },
+      "dunPosition": {
+        "x": 3150.341796875,
+        "y": 15970.8544921875,
+        "z": -26599.587890625
+      },
+      "dunRotation": [
+        319.32037353515625,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139870,
+      "dunObjectID": 1139870,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000513",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277814844.875,
+        "y": -569656305237.8643,
+        "z": 1679810739633.2988
+      },
+      "dunPosition": {
+        "x": 3644.875,
+        "y": 14762.1357421875,
+        "z": -25166.701171875
+      },
+      "dunRotation": [
+        112.04732513427734,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139892,
+      "dunObjectID": 1139892,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000514",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277817776.1064,
+        "y": -569656304641.1963,
+        "z": 1679810741417.3652
+      },
+      "dunPosition": {
+        "x": 6576.1064453125,
+        "y": 15358.8037109375,
+        "z": -23382.634765625
+      },
+      "dunRotation": [
+        149.92576599121094,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139914,
+      "dunObjectID": 1139914,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000515",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277818473.7046,
+        "y": -569656305204.9619,
+        "z": 1679810739485.037
+      },
+      "dunPosition": {
+        "x": 7273.70458984375,
+        "y": 14795.0380859375,
+        "z": -25314.962890625
+      },
+      "dunRotation": [
+        200.85475158691406,
+        -0.00001366044034512015,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139936,
+      "dunObjectID": 1139936,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000516",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277815163.1914,
+        "y": -569656302749.3223,
+        "z": 1679810740104.914
+      },
+      "dunPosition": {
+        "x": 3963.19140625,
+        "y": 17250.677734375,
+        "z": -24695.0859375
+      },
+      "dunRotation": [
+        163.37672424316406,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139871,
+      "dunObjectID": 1139871,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000518",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277816626.2046,
+        "y": -569656302801.3281,
+        "z": 1679810739692.4824
+      },
+      "dunPosition": {
+        "x": 5426.20458984375,
+        "y": 17198.671875,
+        "z": -25107.517578125
+      },
+      "dunRotation": [
+        353.9820251464844,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139915,
+      "dunObjectID": 1139915,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000519",
+      "description": "TQ captured Non-interactable Outpost Factory (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 72092,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277820247.7969,
+        "y": -569656304172.3115,
+        "z": 1679810738826.0508
+      },
+      "dunPosition": {
+        "x": 9047.796875,
+        "y": 15827.6884765625,
+        "z": -25973.94921875
+      },
+      "dunRotation": [
+        220.15431213378906,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139937,
+      "dunObjectID": 1139937,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000520",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 1544277793927.2578,
+        "y": -569656297078.3086,
+        "z": 1679810766341.8398
+      },
+      "dunPosition": {
+        "x": -17272.7421875,
+        "y": 22921.69140625,
+        "z": 1541.83984375
+      },
+      "dunRotation": [
+        270.818115234375,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139872,
+      "dunObjectID": 1139872,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000521",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 1544277812694.7666,
+        "y": -569656295000,
+        "z": 1679810761249.0425
+      },
+      "dunPosition": {
+        "x": 1494.7666015625,
+        "y": 25000,
+        "z": -3550.95751953125
+      },
+      "dunRotation": [
+        23.52882194519043,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139894,
+      "dunObjectID": 1139894,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000522",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 650,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277815522.503,
+        "y": -569656305853.6338,
+        "z": 1679810741495.9316
+      },
+      "dunPosition": {
+        "x": 4322.5029296875,
+        "y": 14146.3662109375,
+        "z": -23304.068359375
+      },
+      "dunRotation": [
+        353.581298828125,
+        -0.000013660560398420785,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139916,
+      "dunObjectID": 1139916,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000523",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277817027.9976,
+        "y": -569656305289.8525,
+        "z": 1679810740098.0762
+      },
+      "dunPosition": {
+        "x": 5827.99755859375,
+        "y": 14710.1474609375,
+        "z": -24701.923828125
+      },
+      "dunRotation": [
+        302.6525573730469,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139938,
+      "dunObjectID": 1139938,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000524",
+      "description": "TQ captured uw_sentry02_enviroment_asset in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 60610,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 2222,
+      "flagsByte": 2,
+      "position": {
+        "x": 1544277794631.7422,
+        "y": -569656289960.7324,
+        "z": 1679810755580.6309
+      },
+      "dunPosition": {
+        "x": -16568.2578125,
+        "y": 30039.267578125,
+        "z": -9219.369140625
+      },
+      "dunRotation": [
+        22.14519691467285,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139873,
+      "dunObjectID": 1139873,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000525",
+      "description": "TQ captured Non-interactable Gallente Elevator (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71059,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 689,
+      "flagsByte": 64,
+      "position": {
+        "x": 1544277812072.9102,
+        "y": -569656304131.6367,
+        "z": 1679810738853.7188
+      },
+      "dunPosition": {
+        "x": 872.9100341796875,
+        "y": 15868.36328125,
+        "z": -25946.28125
+      },
+      "dunRotation": [
+        166.06263732910156,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1139895,
+      "dunObjectID": 1139895,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    },
+    {
+      "itemID": "9002277206000000526",
+      "description": "TQ captured Non-interactable Gallente Bunker (do not translate) in Synchelle.",
+      "kind": "authoredSpaceProp",
+      "typeID": 71058,
+      "ownerID": 500004,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 650,
+      "flagsByte": 2,
+      "position": {
+        "x": 1544277821399.877,
+        "y": -569656305141.5703,
+        "z": 1679810740523.9375
+      },
+      "dunPosition": {
+        "x": 10199.876953125,
+        "y": 14858.4296875,
+        "z": -24276.0625
+      },
+      "dunRotation": [
+        238.65650939941406,
+        -0.000013660436707141344,
+        -179.99998474121094
+      ],
+      "dungeonObjectID": 1139917,
+      "dunObjectID": 1139917,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid",
+      "skinMaterialSetID": 2732
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224015-136-TQBig",
+      "mode": "additive; no player-owned props"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+# Public EveJS TQ market snapshot seeder config.
+# This builds the SQLite database consumed by externalservices/market-server.
+
+[input]
+# Generated local Public EveJS authority data used for station, system, region, and type names.
+static_data_dir = "../../_local/gameStore/data"
+
+[output]
+# The market daemon reads this same database path by default.
+database_path = "../../externalservices/market-server/data/generated/market.sqlite"
+
+[source]
+# EVE Ref publishes the latest full public market order snapshot here.
+index_url = "https://data.everef.net/market-orders/index.json"
+download_dir = "cache"
+user_agent = "PublicEveJS market-seederv2/0.1"
+
+[import]
+# market_scope_with_npc stocks the selected live market systems and overlays
+# all NPC station stock from the same TQ snapshot. Jita is the default market scope.
+# Other modes: all_station, npc_only, player_only, market_scope.
+order_filter = "market_scope_with_npc"
+market_solar_system_ids = [30000142]
+npc_order_duration_threshold_days = 90
+
+[build]
+sqlite_cache_size_kib = 262144
+sqlite_page_size_bytes = 32768
+sqlite_worker_threads = 24
+insert_batch_rows = 100000

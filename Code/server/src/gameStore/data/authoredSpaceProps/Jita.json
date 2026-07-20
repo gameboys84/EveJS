@@ -1,0 +1,114 @@
+{
+  "solarSystemID": 30000142,
+  "systemName": "Jita",
+  "props": [
+    {
+      "itemID": "9002277261000000242",
+      "description": "TQ captured Caldari Coms Station in Jita.",
+      "kind": "authoredSpaceProp",
+      "typeID": 52671,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "STOP",
+      "radius": 1,
+      "flagsByte": 224,
+      "position": {
+        "x": -107303612026.76562,
+        "y": -18744990303.799805,
+        "z": 436489020957.4219
+      },
+      "dunPosition": {
+        "x": -249466.765625,
+        "y": -14943.7998046875,
+        "z": -31202.578125
+      },
+      "dunRotation": [
+        155.5076904296875,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1071362,
+      "dunObjectID": 1071362,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277261000000243",
+      "description": "TQ captured Caldari Elevator Hub in Jita.",
+      "kind": "authoredSpaceProp",
+      "typeID": 52672,
+      "ownerID": 500021,
+      "groupID": 1975,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 1,
+      "flagsByte": 2,
+      "position": {
+        "x": -107303806921.46875,
+        "y": -18745005574.447266,
+        "z": 436489085928.6797
+      },
+      "dunPosition": {
+        "x": -444361.46875,
+        "y": -30214.447265625,
+        "z": 33768.6796875
+      },
+      "dunRotation": [
+        178,
+        0,
+        0
+      ],
+      "dungeonObjectID": 1071363,
+      "dunObjectID": 1071363,
+      "dunObjectNameID": null,
+      "objectiveTargetGroup": null,
+      "nameID": null,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    },
+    {
+      "itemID": "9002277261000000244",
+      "description": "TQ captured Protest Monument in Jita.",
+      "kind": "authoredSpaceProp",
+      "typeID": 4319,
+      "ownerID": 500021,
+      "groupID": 226,
+      "categoryID": 2,
+      "mode": "RIGID",
+      "radius": 4634,
+      "flagsByte": 2,
+      "position": {
+        "x": -107303296944.75781,
+        "y": -18744984379.617188,
+        "z": 436489102495.16797
+      },
+      "dunPosition": {
+        "x": 65615.2421875,
+        "y": -9019.6171875,
+        "z": 50335.16796875
+      },
+      "dunRotation": null,
+      "dungeonObjectID": 984875,
+      "dunObjectID": 984875,
+      "dunObjectNameID": 202540,
+      "objectiveTargetGroup": null,
+      "nameID": 202540,
+      "itemName": "",
+      "slimName": "",
+      "staticVisibilityScope": "publicgrid"
+    }
+  ],
+  "source": {
+    "lastTqExtractorImport": {
+      "updater": "tools/TQLogDecoder/StargateStationsMiniballsExtractorAndServerUpdater/ServerUpdater/update-server-data.js",
+      "sourceFolder": "20260520-224014-152-tqbig2",
+      "mode": "additive; no player-owned props"
+    }
+  }
+}
