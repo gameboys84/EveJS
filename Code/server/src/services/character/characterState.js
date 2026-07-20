@@ -51,7 +51,6 @@ const {
   buildChargeTupleItemID,
   getAttributeIDByNames,
   getEffectIDByNames,
-  getTypeDogmaEffects,
   isEffectivelyOnlineModule,
   buildEffectiveItemAttributeMap,
   getTypeAttributeValue,
@@ -62,7 +61,6 @@ const {
   buildModuleAttributeChangeEvent,
   buildGodmaShipEffectEvent,
   sendOnMultiEvent,
-  sendOnMultiEventPairs,
 } = require(path.join(__dirname, "../_shared/godmaMultiEvent"));
 const {
   buildWeaponDogmaAttributeOverrides,
@@ -117,11 +115,6 @@ const ATTRIBUTE_SHIELD_CHARGE = getAttributeIDByNames("shieldCharge") || 264;
 const ATTRIBUTE_ARMOR_DAMAGE = getAttributeIDByNames("armorDamage") || 266;
 const ATTRIBUTE_RELOAD_TIME = getAttributeIDByNames("reloadTime") || 1795;
 const EFFECT_ONLINE = getEffectIDByNames("online") || 16;
-const EFFECT_STRIP_CLOAKING_PASSIVE = 854;
-const ATTRIBUTE_IS_ONLINE = getAttributeIDByNames("isOnline") || 2;
-const ATTRIBUTE_CPU_LOAD = getAttributeIDByNames("cpuLoad") || 49;
-const ATTRIBUTE_POWER_LOAD = getAttributeIDByNames("powerLoad") || 15;
-const ATTRIBUTE_SCAN_RESOLUTION = getAttributeIDByNames("scanResolution") || 564;
 const MODULE_ATTRIBUTE_CAPACITOR_NEED =
   getAttributeIDByNames("capacitorNeed") || 6;
 const MODULE_ATTRIBUTE_SPEED = getAttributeIDByNames("speed") || 51;
@@ -1303,6 +1296,7 @@ function buildChargeDogmaPrimeAttributes(item, options = {}) {
     0,
     Number(item && (item.stacksize ?? item.quantity ?? 0)) || 0,
   );
+  void options;
   const attributes = Object.fromEntries(
     Object.entries(getTypeDogmaAttributes(Number(item && item.typeID) || 0))
       .map(([attributeID, value]) => [Number(attributeID), Number(value)])
@@ -1310,10 +1304,6 @@ function buildChargeDogmaPrimeAttributes(item, options = {}) {
         ([attributeID, value]) =>
           Number.isInteger(attributeID) && Number.isFinite(value),
       ),
-  );
-  Object.assign(
-    attributes,
-    normalizeDogmaNumericAttributeMap(options.attributeOverrides),
   );
   attributes[ATTRIBUTE_QUANTITY] = normalizedChargeQuantity;
   return attributes;
@@ -2545,282 +2535,6 @@ function isFittingMoveChange(change, shipID) {
   return nowFitted || wasFitted;
 }
 
-function getSnapshotTrackedAttributes(snapshot) {
-  if (!snapshot || typeof snapshot !== "object") {
-    return {};
-  }
-  return (
-    snapshot.trackedShipAttributes ||
-    snapshot.shipAttributes ||
-    (snapshot.resourceState && snapshot.resourceState.attributes) ||
-    {}
-  );
-}
-
-function getResourceStateTrackedAttributes(resourceState) {
-  return resourceState && typeof resourceState === "object" && resourceState.attributes
-    ? resourceState.attributes
-    : {};
-}
-
-function buildStepTime(baseTime, offset) {
-  const numericOffset = Math.max(0, Math.trunc(Number(offset) || 0));
-  if (typeof baseTime === "bigint") {
-    return baseTime + BigInt(numericOffset);
-  }
-  if (typeof baseTime === "number" && Number.isFinite(baseTime)) {
-    return Math.trunc(baseTime) + numericOffset;
-  }
-  if (typeof baseTime === "string" && baseTime.trim() !== "") {
-    try {
-      return (BigInt(baseTime) + BigInt(numericOffset)).toString();
-    } catch (_) {
-      return baseTime;
-    }
-  }
-  return baseTime;
-}
-
-function sortAttributeChangesForStrip(changes, preferredOrder = []) {
-  const preferred = new Map(
-    preferredOrder.map((attributeID, index) => [Number(attributeID), index]),
-  );
-  return [...(Array.isArray(changes) ? changes : [])].sort((left, right) => {
-    const leftID = Number(left && left.attributeID) || 0;
-    const rightID = Number(right && right.attributeID) || 0;
-    const leftRank = preferred.has(leftID) ? preferred.get(leftID) : preferred.size + leftID;
-    const rightRank = preferred.has(rightID) ? preferred.get(rightID) : preferred.size + rightID;
-    if (leftRank !== rightRank) {
-      return leftRank - rightRank;
-    }
-    return leftID - rightID;
-  });
-}
-
-function pushShipAttributeChangePairs(
-  pairs,
-  charID,
-  shipID,
-  previousAttributes,
-  nextAttributes,
-  time,
-  preferredOrder = [],
-  excludeAttributeIDs = [],
-) {
-  const excluded = new Set(
-    (Array.isArray(excludeAttributeIDs) ? excludeAttributeIDs : [])
-      .map((attributeID) => Number(attributeID) || 0)
-      .filter((attributeID) => attributeID > 0),
-  );
-  const changes = listShipFittingAttributeChanges(
-    { trackedShipAttributes: previousAttributes || {} },
-    { trackedShipAttributes: nextAttributes || {} },
-  ).filter((change) => !excluded.has(Number(change.attributeID) || 0));
-
-  for (const change of sortAttributeChangesForStrip(changes, preferredOrder)) {
-    pairs.push({
-      event: buildModuleAttributeChangeEvent(
-        charID,
-        shipID,
-        change.attributeID,
-        change.nextValue,
-        change.previousValue,
-        time,
-      ),
-      time,
-    });
-  }
-}
-
-function stripModuleHasExtraCloakingEffect(moduleItem) {
-  const typeID = Number(moduleItem && moduleItem.typeID) || 0;
-  if (typeID <= 0) {
-    return false;
-  }
-  const effects = getTypeDogmaEffects(typeID);
-  return Boolean(effects && effects.has(EFFECT_STRIP_CLOAKING_PASSIVE));
-}
-
-function emitStripFittingDogmaMultiEventForSession(
-  session,
-  shipID,
-  changes,
-  options = {},
-) {
-  if (!session || typeof session.sendNotification !== "function") {
-    return false;
-  }
-  const charID = Number(session.characterID || session.charid) || 0;
-  const numericShipID = Number(shipID) || 0;
-  if (charID <= 0 || numericShipID <= 0) {
-    return false;
-  }
-
-  const previousSnapshot = options.previousSnapshot || null;
-  const movedModules = (Array.isArray(changes) ? changes : [])
-    .map((change) => (change && (change.previousData || change.previousState)) || (change && change.item))
-    .filter((item) => (
-      item &&
-      Number(item.itemID) > 0 &&
-      Number(item.categoryID) !== 8 &&
-      isShipFittingFlag(Number(item.flagID) || 0)
-    ));
-  if (movedModules.length === 0) {
-    return false;
-  }
-
-  const baseTime =
-    session._space && typeof session._space.simFileTime === "bigint"
-      ? session._space.simFileTime
-      : currentFileTime();
-  const pairs = [];
-  const initialAttributes = getSnapshotTrackedAttributes(previousSnapshot);
-  let currentAttributes = initialAttributes;
-  let remainingFittedItems = Array.isArray(previousSnapshot && previousSnapshot.fittedItems)
-    ? previousSnapshot.fittedItems.filter(Boolean).map((item) => ({ ...item }))
-    : [];
-
-  if (
-    previousSnapshot &&
-    typeof previousSnapshot.buildResourceStateForItems === "function" &&
-    remainingFittedItems.length > 0
-  ) {
-    movedModules.forEach((moduleItem, index) => {
-      const moduleID = Number(moduleItem && moduleItem.itemID) || 0;
-      if (moduleID <= 0) {
-        return;
-      }
-      const nextRemainingFittedItems = remainingFittedItems.filter(
-        (item) => Number(item && item.itemID) !== moduleID,
-      );
-      const nextResourceState =
-        previousSnapshot.buildResourceStateForItems(nextRemainingFittedItems);
-      const nextAttributes = getResourceStateTrackedAttributes(nextResourceState);
-      const time = buildStepTime(baseTime, index * 50000);
-
-      pushShipAttributeChangePairs(
-        pairs,
-        charID,
-        numericShipID,
-        currentAttributes,
-        nextAttributes,
-        time,
-        [ATTRIBUTE_CPU_LOAD, ATTRIBUTE_POWER_LOAD],
-        [ATTRIBUTE_SCAN_RESOLUTION],
-      );
-
-      if (isEffectivelyOnlineModule(moduleItem)) {
-        pairs.push({
-          event: buildModuleAttributeChangeEvent(
-            charID,
-            moduleID,
-            ATTRIBUTE_IS_ONLINE,
-            0,
-            1,
-            time,
-          ),
-          time,
-        });
-        pairs.push({
-          event: buildGodmaShipEffectEvent(
-            moduleID,
-            charID,
-            numericShipID,
-            EFFECT_ONLINE,
-            time,
-            { isStart: 0, shouldStart: 0 },
-          ),
-          time,
-        });
-      }
-
-      pushShipAttributeChangePairs(
-        pairs,
-        charID,
-        numericShipID,
-        currentAttributes,
-        nextAttributes,
-        time,
-        [ATTRIBUTE_SCAN_RESOLUTION],
-        [ATTRIBUTE_CPU_LOAD, ATTRIBUTE_POWER_LOAD],
-      );
-
-      if (stripModuleHasExtraCloakingEffect(moduleItem)) {
-        pairs.push({
-          event: buildGodmaShipEffectEvent(
-            moduleID,
-            charID,
-            numericShipID,
-            EFFECT_STRIP_CLOAKING_PASSIVE,
-            time,
-            {
-              isStart: 0,
-              shouldStart: 0,
-              targetID: numericShipID,
-            },
-          ),
-          time,
-        });
-      }
-
-      currentAttributes = nextAttributes;
-      remainingFittedItems = nextRemainingFittedItems;
-    });
-  } else {
-    const time = buildStepTime(baseTime, 0);
-    for (const moduleItem of movedModules) {
-      const moduleID = Number(moduleItem && moduleItem.itemID) || 0;
-      if (moduleID <= 0 || !isEffectivelyOnlineModule(moduleItem)) {
-        continue;
-      }
-      pairs.push({
-        event: buildModuleAttributeChangeEvent(
-          charID,
-          moduleID,
-          ATTRIBUTE_IS_ONLINE,
-          0,
-          1,
-          time,
-        ),
-        time,
-      });
-      pairs.push({
-        event: buildGodmaShipEffectEvent(
-          moduleID,
-          charID,
-          numericShipID,
-          EFFECT_ONLINE,
-          time,
-          { isStart: 0, shouldStart: 0 },
-        ),
-        time,
-      });
-    }
-  }
-
-  if (previousSnapshot) {
-    const nextSnapshot =
-      options.nextSnapshot ||
-      refreshShipFittingSnapshot(charID, numericShipID, {
-        shipItem: options.shipItem || null,
-        reason: "strip-fitting.after",
-      });
-    const finalAttributes = getSnapshotTrackedAttributes(nextSnapshot);
-    const finalTime = buildStepTime(baseTime, movedModules.length * 50000 + 752112);
-    pushShipAttributeChangePairs(
-      pairs,
-      charID,
-      numericShipID,
-      initialAttributes,
-      finalAttributes,
-      finalTime,
-      [ATTRIBUTE_SCAN_RESOLUTION, ATTRIBUTE_CPU_LOAD, ATTRIBUTE_POWER_LOAD],
-    );
-  }
-
-  return sendOnMultiEventPairs(session, pairs);
-}
-
 // Emit a complete TQ fitting transaction for a set of item moves into/out of the
 // active ship's fitting slots:
 //   OnMultiEvent (batched dogma recalc) -> OnItemsChanged.
@@ -2864,7 +2578,6 @@ function emitFittingTransactionForSession(session, shipID, changes, options = {}
   // 1. Batch the dogma recalc into ONE OnMultiEvent.
   if (fittingMoves.length > 0) {
     const shipRecord =
-      options.shipItem ||
       findCharacterShipItem(charID, numericShipID) ||
       getActiveShipRecord(charID) ||
       null;
@@ -2899,16 +2612,6 @@ function emitFittingTransactionForSession(session, shipID, changes, options = {}
         isShipFittingFlag(previous.flagID) &&
         Number(previous.locationID) === numericShipID;
       if (nowFitted && !wasFitted && isEffectivelyOnlineModule(item)) {
-        subEvents.push(
-          buildModuleAttributeChangeEvent(
-            charID,
-            item.itemID,
-            ATTRIBUTE_IS_ONLINE,
-            1,
-            0,
-            time,
-          ),
-        );
         // Newly fitted + online → the module's online effect starts.
         subEvents.push(
           buildGodmaShipEffectEvent(item.itemID, charID, numericShipID, EFFECT_ONLINE, time, {
@@ -2917,18 +2620,6 @@ function emitFittingTransactionForSession(session, shipID, changes, options = {}
           }),
         );
       } else if (wasFitted && !nowFitted) {
-        if (isEffectivelyOnlineModule(previous) || isEffectivelyOnlineModule(item)) {
-          subEvents.push(
-            buildModuleAttributeChangeEvent(
-              charID,
-              item.itemID,
-              ATTRIBUTE_IS_ONLINE,
-              0,
-              1,
-              time,
-            ),
-          );
-        }
         // Unfitted → the module's online effect stops.
         subEvents.push(
           buildGodmaShipEffectEvent(item.itemID, charID, numericShipID, EFFECT_ONLINE, time, {
@@ -4637,7 +4328,6 @@ module.exports = {
   emitItemsChangedBatchForSession,
   emitItemsChangedForSession,
   emitFittingTransactionForSession,
-  emitStripFittingDogmaMultiEventForSession,
   syncChargeGodmaPrimeForSession,
   syncChargeSublocationForSession,
   syncChargeSublocationTransitionForSession,

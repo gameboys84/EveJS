@@ -730,12 +730,9 @@ const MODULE_ATTRIBUTE_DURATION = 73;
 const MODULE_ATTRIBUTE_RELOAD_TIME = getAttributeIDByNames("reloadTime") || 1795;
 const GROUP_SCAN_PROBE_LAUNCHER = 481;
 const GROUP_CLOAKING_DEVICE = 330;
-const GROUP_SIEGE_MODULE = 515;
 const TYPE_PROTOTYPE_CLOAKING_DEVICE = 11370;
 const EFFECT_ID_CLOAKING_PROTOTYPE =
   getEffectIDByNames("cloakingPrototype") || 5945;
-const EFFECT_ID_BASTION_MODULE =
-  getEffectIDByNames("moduleBonusBastionModule") || 6658;
 const CLOAKING_MODULE_EFFECT_NAMES = new Set([
   "cloaking",
   "cloakingwarpsafe",
@@ -745,12 +742,6 @@ const CLOAKING_MODULE_EFFECT_GUIDS = new Set([
   "effects.cloaking",
   "effects.cloakingcovertops",
   "effects.cloakingprototype",
-]);
-const BASTION_MODULE_EFFECT_NAMES = new Set([
-  "modulebonusbastionmodule",
-]);
-const BASTION_MODULE_EFFECT_GUIDS = new Set([
-  "effects.siegemode",
 ]);
 const CLOAK_UNCLOAK_RANGE_ATTRIBUTE_NAMES = Object.freeze([
   "uncloakRange",
@@ -933,7 +924,6 @@ function isMobileAnalysisBeaconCloakBlocked(entity, nowMs = Date.now()) {
 
 function isShipMovementLockedByRuntime(entity, nowMs = Date.now()) {
   return (
-    isEntityBastionLocked(entity) ||
     isSuperweaponMovementLocked(entity, nowMs) ||
     isMobileAnalysisBeaconMovementLocked(entity, nowMs)
   );
@@ -1039,15 +1029,11 @@ function recordVisibilityJournal(session, event, details = {}) {
 }
 
 function advancePassiveRechargeRatio(currentRatio, deltaSeconds, rechargeSeconds) {
-  const isValidExactZero =
-    typeof currentRatio === "number" &&
-    Number.isFinite(currentRatio) &&
-    currentRatio === 0;
   const clampedRatio = clamp(toFiniteNumber(currentRatio, 0), 0, 1);
   const elapsedSeconds = Math.max(0, toFiniteNumber(deltaSeconds, 0));
   const totalRechargeSeconds = Math.max(0, toFiniteNumber(rechargeSeconds, 0));
   if (
-    (clampedRatio <= 0 && !isValidExactZero) ||
+    clampedRatio <= 0 ||
     clampedRatio >= 1 ||
     elapsedSeconds <= 0 ||
     totalRechargeSeconds <= 0
@@ -3950,14 +3936,8 @@ function recordAreaDamageKillmailOutcome(
     weaponDamageResult.destroyResult &&
     weaponDamageResult.destroyResult.success === true
   ) {
-    const victimSession =
-      weaponDamageResult.victimSession ||
-      (weaponDamageResult.destroyResult.data &&
-        weaponDamageResult.destroyResult.data.victimSession) ||
-      null;
     recordKillmailFromDestruction(targetEntity, weaponDamageResult.destroyResult, {
       attackerEntity,
-      victimSession,
       whenMs,
       weaponSnapshot: {
         moduleTypeID: toInt(moduleItem && moduleItem.typeID, 0) || null,
@@ -5954,70 +5934,6 @@ function isCloakingModuleActivation(moduleItem, effectRecord) {
   );
 }
 
-function isBastionModuleActivation(moduleItem, effectRecord) {
-  const groupID = toInt(moduleItem && moduleItem.groupID, 0);
-  const effectID = toInt(effectRecord && effectRecord.effectID, 0);
-  const effectName = String(effectRecord && effectRecord.name || "")
-    .trim()
-    .toLowerCase();
-  const effectGuid = String(effectRecord && effectRecord.guid || "")
-    .trim()
-    .toLowerCase();
-  const itemName = String(
-    moduleItem && (
-      moduleItem.itemName ||
-      moduleItem.typeName ||
-      moduleItem.name
-    ) || "",
-  ).trim().toLowerCase();
-  return (
-    effectID === EFFECT_ID_BASTION_MODULE ||
-    BASTION_MODULE_EFFECT_NAMES.has(effectName) ||
-    BASTION_MODULE_EFFECT_GUIDS.has(effectGuid) ||
-    (
-      groupID === GROUP_SIEGE_MODULE &&
-      itemName.includes("bastion")
-    )
-  );
-}
-
-function isBastionModuleEffectState(effectState) {
-  if (!effectState) {
-    return false;
-  }
-  if (effectState.bastionModuleEffect === true) {
-    return true;
-  }
-  const effectID = toInt(effectState.effectID, 0);
-  const effectName = String(effectState.effectName || "").trim().toLowerCase();
-  const effectGuid = String(effectState.guid || "").trim().toLowerCase();
-  return (
-    effectID === EFFECT_ID_BASTION_MODULE ||
-    BASTION_MODULE_EFFECT_NAMES.has(effectName) ||
-    BASTION_MODULE_EFFECT_GUIDS.has(effectGuid)
-  );
-}
-
-function findActiveBastionModuleEffectState(entity) {
-  if (!entity || !(entity.activeModuleEffects instanceof Map)) {
-    return null;
-  }
-  for (const effectState of entity.activeModuleEffects.values()) {
-    if (
-      effectState &&
-      toFiniteNumber(effectState.deactivatedAtMs, 0) <= 0 &&
-      isBastionModuleEffectState(effectState)
-    ) {
-      return effectState;
-    }
-  }
-  return null;
-}
-
-function isEntityBastionLocked(entity) {
-  return Boolean(findActiveBastionModuleEffectState(entity));
-}
-
 function isPrototypeCloakingModule(moduleItem, effectRecordOrState = null) {
   const typeID = toInt(
     moduleItem && moduleItem.typeID,
@@ -6101,28 +6017,6 @@ function isCloakingModuleEffectState(effectState) {
     groupID === GROUP_CLOAKING_DEVICE ||
     CLOAKING_MODULE_EFFECT_NAMES.has(effectName) ||
     CLOAKING_MODULE_EFFECT_GUIDS.has(effectGuid)
-  );
-}
-
-function isWarpSafeCloakingEffectDescriptor(effectRecordOrState) {
-  if (!effectRecordOrState || typeof effectRecordOrState !== "object") {
-    return false;
-  }
-  if (effectRecordOrState.isWarpSafe === true) {
-    return true;
-  }
-
-  const effectName = String(
-    effectRecordOrState.effectName ||
-      effectRecordOrState.name ||
-      "",
-  ).trim().toLowerCase();
-  const effectGuid = String(effectRecordOrState.guid || "")
-    .trim()
-    .toLowerCase();
-  return (
-    effectName === "cloakingwarpsafe" ||
-    effectGuid === "effects.cloakingcovertops"
   );
 }
 
@@ -6447,7 +6341,6 @@ function refreshInventoryBackedEntityPresentationFields(entity) {
   entity.typeID = toInt(itemRecord.typeID, entity.typeID);
   entity.groupID = toInt(itemRecord.groupID, entity.groupID);
   entity.categoryID = toInt(itemRecord.categoryID, entity.categoryID);
-  entity.graphicID = toInt(metadata && metadata.graphicID, 0) || null;
   entity.radius = resolvedRadius;
   entity.signatureRadius = resolveRuntimeInventoryEntitySignatureRadius(
     itemRecord,
@@ -6968,28 +6861,6 @@ function isDecloakProbeExemptEntity(entity) {
     .join(" ");
 
   return /\bprobes?\b/i.test(label);
-}
-
-function isDecloakNonPhysicalExemptEntity(entity) {
-  if (!entity) {
-    return false;
-  }
-  if (
-    entity.nonPhysicalDecloakExempt === true ||
-    entity.decloakExempt === true
-  ) {
-    return true;
-  }
-
-  const kind = String(entity.kind || "").trim().toLowerCase();
-  return kind === "asteroidbelt";
-}
-
-function isDecloakProximityExemptEntity(entity) {
-  return (
-    isDecloakProbeExemptEntity(entity) ||
-    isDecloakNonPhysicalExemptEntity(entity)
-  );
 }
 
 function applyStargateJumpCloakState(entity, options = {}) {
@@ -7893,18 +7764,6 @@ function buildUndockBootstrapMovementUpdates(entity, stampOverride = null) {
   const updates = [
     {
       stamp,
-      payload: destiny.buildOnSpecialFXPayload(entity.itemID, UNCLOAK_RENDER_EFFECT_GUID, {
-        start: true,
-        active: false,
-        duration: CLOAK_RENDER_EFFECT_DURATION_MS,
-      }),
-    },
-    {
-      stamp,
-      payload: destiny.buildSetBallPositionPayload(entity.itemID, entity.position),
-    },
-    {
-      stamp,
       payload: destiny.buildSetBallMassivePayload(entity.itemID, false),
     },
     {
@@ -8403,7 +8262,7 @@ function buildStaticStructureEntity(structure) {
     serviceStates: structure.serviceStates || {},
     unanchoring: structure.unanchoring || null,
     repairing: structureState.resolveStructureRepairingValue(structure),
-    docked: structureState.countCharactersDockedInStructure(structure.structureID),
+    docked: false,
     modules: [],
     dockable: structure.dockable === true,
     accessProfile:
@@ -8465,7 +8324,6 @@ function getStructureStaticEntitySignature(entity) {
     tetherRepairEffectMode: entity && entity.tetherRepairEffectMode,
     maxTargetRange: entity && entity.maxTargetRange,
     maxLockedTargets: entity && entity.maxLockedTargets,
-    docked: entity && entity.docked,
   });
 }
 
@@ -8973,7 +8831,6 @@ function buildStaticPlanetOrbitalEntity(orbital) {
 function buildStaticAsteroidBeltEntity(asteroidBelt) {
   return {
     kind: asteroidBelt.kind || "asteroidBelt",
-    nonPhysicalDecloakExempt: true,
     itemID: asteroidBelt.itemID,
     typeID: asteroidBelt.typeID,
     groupID: asteroidBelt.groupID,
@@ -9893,29 +9750,6 @@ function breakStructureTethersForStructure(scene, structureID, options = {}) {
 }
 
 function resolveSceneStructureTetherCandidate(scene, entity, nowMs) {
-  if (entity && entity.undockInvulnerabilityActive === true) {
-    return {
-      eligible: false,
-      reason: "UNDOCK_INVULNERABILITY",
-      structure: null,
-    };
-  }
-  const currentMs = Math.max(0, toFiniteNumber(nowMs, 0));
-  const undockInvulnerabilityUntilMs = toFiniteNumber(
-    entity && entity.undockInvulnerabilityUntilMs,
-    0,
-  );
-  if (undockInvulnerabilityUntilMs > currentMs) {
-    return {
-      eligible: false,
-      reason: "UNDOCK_INVULNERABILITY",
-      structure: null,
-    };
-  }
-  if (entity && undockInvulnerabilityUntilMs > 0) {
-    entity.undockInvulnerabilityActive = false;
-    entity.undockInvulnerabilityUntilMs = 0;
-  }
   return structureTethering.resolveEligibleTetherStructure(
     scene,
     entity,
@@ -10137,20 +9971,18 @@ function sendStructureTetherFxToSession(
 
   const structureEntity =
     resolveStructureTetherFxEntity(scene, structureOrID) || structureOrID;
-  const repairResults = options.suppressRepairFx === true
-    ? []
-    : getStructureTetherRepairFxGuids(
-        structureEntity,
-        options,
-      ).map((repairGuid) =>
-        scene.sendSpecialFxToSession(
-          session,
-          entity.itemID,
-          repairGuid,
-          buildStructureTetherRepairFxOptions(active, options),
-          entity,
-        ),
-      );
+  const repairResults = getStructureTetherRepairFxGuids(
+    structureEntity,
+    options,
+  ).map((repairGuid) =>
+    scene.sendSpecialFxToSession(
+      session,
+      entity.itemID,
+      repairGuid,
+      buildStructureTetherRepairFxOptions(active, options),
+      entity,
+    ),
+  );
   const linkResult = scene.sendSpecialFxToSession(
     session,
     entity.itemID,
@@ -10229,7 +10061,6 @@ function syncEntityStructureTetherState(scene, entity, options = {}) {
   }
 
   if (
-    options.replayFx !== false &&
     options.replaySession &&
     structureTethering.isEntityStructureTethered(entity) &&
     (
@@ -10253,7 +10084,6 @@ function syncEntityStructureTetherState(scene, entity, options = {}) {
       true,
       {
         useCurrentVisibleStamp: true,
-        suppressRepairFx: options.suppressRepairFx === true,
       },
     );
     fxReplayed = replayResult.delivered === true;
@@ -10375,68 +10205,6 @@ function getPropulsionEffectID(effectName) {
     return EFFECT_ID_MICROWARPDRIVE;
   }
   return 0;
-}
-
-function resolveActiveModuleEffectRecord(effectState) {
-  if (!effectState || typeof effectState !== "object") {
-    return null;
-  }
-  if (
-    effectState.effectRecord &&
-    typeof effectState.effectRecord === "object"
-  ) {
-    return effectState.effectRecord;
-  }
-
-  const effectID =
-    toInt(effectState.effectID, 0) ||
-    getPropulsionEffectID(effectState.effectName) ||
-    getEffectIDByNames(effectState.effectName);
-  return effectID > 0 ? getEffectTypeRecord(effectID) : null;
-}
-
-function isWarpSafeActiveModuleEffectState(effectState) {
-  const effectRecord = resolveActiveModuleEffectRecord(effectState);
-  return Boolean(
-    (effectRecord && effectRecord.isWarpSafe === true) ||
-      isWarpSafeCloakingEffectDescriptor(effectState),
-  );
-}
-
-function isEntityActiveWarpInFlight(entity) {
-  return Boolean(
-    entity &&
-      String(entity.mode || "").toUpperCase() === "WARP" &&
-      !entity.pendingWarp &&
-      entity.warpState,
-  );
-}
-
-function isEntityWarpSafeCloakedInFlight(entity) {
-  if (!isEntityActiveWarpInFlight(entity)) {
-    return false;
-  }
-  const activeCloakEffect = findActiveCloakingModuleEffectState(entity);
-  return Boolean(
-    activeCloakEffect &&
-      isWarpSafeActiveModuleEffectState(activeCloakEffect),
-  );
-}
-
-function isPropulsionModuleEffectState(effectState) {
-  if (!effectState) {
-    return false;
-  }
-  const effectName = String(effectState.effectName || "");
-  const effectID =
-    toInt(effectState.effectID, 0) ||
-    getPropulsionEffectID(effectName);
-  return (
-    effectName === PROPULSION_EFFECT_AFTERBURNER ||
-    effectName === PROPULSION_EFFECT_MICROWARPDRIVE ||
-    effectID === EFFECT_ID_AFTERBURNER ||
-    effectID === EFFECT_ID_MICROWARPDRIVE
-  );
 }
 
 function resolveSessionNotificationFileTime(session, whenMs = null) {
@@ -12538,10 +12306,6 @@ function normalizeEffectRepeatCount(rawRepeat, fallbackRepeat = null) {
   return normalizedRepeat;
 }
 
-function resolveInitialModuleRemainingCycles(rawRepeat) {
-  return normalizeEffectRepeatCount(rawRepeat, null) === 0 ? 1 : null;
-}
-
 function buildGodmaUserErrorTypeValue(typeID) {
   const normalizedTypeID = toInt(typeID, 0);
   return normalizedTypeID > 0 ? [4, normalizedTypeID] : normalizedTypeID;
@@ -12847,7 +12611,6 @@ function finalizePropulsionModuleDeactivationWithoutSession(
       start: false,
       active: false,
       duration: effectState.durationMs,
-      excludedSession: options.excludedSession || null,
     }),
     entity,
   );
@@ -13080,7 +12843,6 @@ function finalizeGenericModuleDeactivationWithoutSession(
           active: false,
           duration: effectState.durationMs,
           useCurrentVisibleStamp: true,
-          excludedSession: options.excludedSession || null,
         };
     scene.broadcastSpecialFx(
       entity.itemID,
@@ -13144,7 +12906,6 @@ function forceDeactivateBlockedMovementEffects(
   targetEntity,
   nowMs = null,
   reason = "scram",
-  options = {},
 ) {
   if (!scene || !targetEntity || !(targetEntity.activeModuleEffects instanceof Map)) {
     return 0;
@@ -13160,20 +12921,13 @@ function forceDeactivateBlockedMovementEffects(
     ),
   );
   let deactivatedCount = 0;
-  const blockAllPropulsion = options && options.blockAllPropulsion === true;
 
   for (const effectState of [...targetEntity.activeModuleEffects.values()]) {
     if (!effectState) {
       continue;
     }
 
-    if (
-      effectState.effectName === PROPULSION_EFFECT_MICROWARPDRIVE ||
-      (
-        blockAllPropulsion &&
-        effectState.effectName === PROPULSION_EFFECT_AFTERBURNER
-      )
-    ) {
+    if (effectState.effectName === PROPULSION_EFFECT_MICROWARPDRIVE) {
       if (targetEntity.session && isReadyForDestiny(targetEntity.session)) {
         scene.finalizePropulsionModuleDeactivation(targetEntity.session, effectState.moduleID, {
           reason,
@@ -13226,134 +12980,6 @@ function forceDeactivateBlockedMovementEffects(
   }
 
   return deactivatedCount;
-}
-
-function deactivateWarpUnsafeActiveModulesForWarpStart(
-  scene,
-  entity,
-  nowMs = null,
-  options = {},
-) {
-  if (!scene || !entity || !(entity.activeModuleEffects instanceof Map)) {
-    return {
-      success: true,
-      data: {
-        stoppedModuleIDs: [],
-        errors: [],
-      },
-    };
-  }
-
-  const activeEffectStates = [...entity.activeModuleEffects.values()]
-    .filter((effectState) => effectState && toInt(effectState.moduleID, 0) > 0)
-    .sort((left, right) => toInt(left.moduleID, 0) - toInt(right.moduleID, 0));
-  if (activeEffectStates.length === 0) {
-    return {
-      success: true,
-      data: {
-        stoppedModuleIDs: [],
-        errors: [],
-      },
-    };
-  }
-
-  const now = Math.max(
-    0,
-    toFiniteNumber(
-      nowMs,
-      typeof scene.getCurrentSimTimeMs === "function"
-        ? scene.getCurrentSimTimeMs()
-        : Date.now(),
-    ),
-  );
-  const reason = String(options.reason || "warpStart");
-  const ownerSession = entity.session || getOwningSessionForEntity(scene, entity);
-  const suppressOwnerDestinyUpdates =
-    options.suppressOwnerDestinyUpdates !== false;
-  const excludedSession =
-    options.excludedSession ||
-    (
-      suppressOwnerDestinyUpdates &&
-      ownerSession &&
-      isReadyForDestiny(ownerSession)
-        ? ownerSession
-        : null
-    );
-  const stoppedModuleIDs = [];
-  const errors = [];
-
-  for (const effectState of activeEffectStates) {
-    const moduleID = toInt(effectState.moduleID, 0);
-    if (
-      moduleID <= 0 ||
-      !(entity.activeModuleEffects instanceof Map) ||
-      !entity.activeModuleEffects.has(moduleID) ||
-      isWarpSafeActiveModuleEffectState(effectState)
-    ) {
-      continue;
-    }
-
-    const isPropulsionEffect = isPropulsionModuleEffectState(effectState);
-    let result = null;
-    if (ownerSession && isReadyForDestiny(ownerSession)) {
-      result = isPropulsionEffect
-        ? scene.finalizePropulsionModuleDeactivation(ownerSession, moduleID, {
-            reason,
-            nowMs: now,
-            clampToVisibleStamp: true,
-            excludedSession,
-            suppressOwnerDestinyUpdates,
-          })
-        : scene.finalizeGenericModuleDeactivation(ownerSession, moduleID, {
-            reason,
-            nowMs: now,
-            clampToVisibleStamp: true,
-            excludedSession,
-          });
-    } else {
-      result = isPropulsionEffect
-        ? finalizePropulsionModuleDeactivationWithoutSession(
-            scene,
-            entity,
-            effectState,
-            {
-              reason,
-              nowMs: now,
-              excludedSession,
-            },
-          )
-        : finalizeGenericModuleDeactivationWithoutSession(
-            scene,
-            entity,
-            effectState,
-            {
-              reason,
-              nowMs: now,
-              clampToVisibleStamp: true,
-              excludedSession,
-            },
-          );
-    }
-
-    if (result && result.success) {
-      stoppedModuleIDs.push(moduleID);
-      continue;
-    }
-
-    errors.push({
-      moduleID,
-      errorMsg: result && result.errorMsg ? result.errorMsg : "DEACTIVATION_FAILED",
-    });
-  }
-
-  return {
-    success: errors.length === 0,
-    errorMsg: errors.length > 0 ? "WARP_START_DEACTIVATION_FAILED" : null,
-    data: {
-      stoppedModuleIDs,
-      errors,
-    },
-  };
 }
 
 function buildFreshAcquireActiveSpecialFxReplayUpdates(
@@ -15604,7 +15230,6 @@ function applyWeaponDamageToTarget(
   const damageResult = fighterDamageContext && fighterDamageContext.damageResult
     ? fighterDamageContext.damageResult
     : applyDamageToEntity(targetEntity, resolvedShotDamage);
-  const victimSession = targetEntity.session || null;
   let destroyResult = null;
   if (damageResult.success) {
     try {
@@ -15763,7 +15388,6 @@ function applyWeaponDamageToTarget(
   return {
     damageResult,
     destroyResult,
-    victimSession,
   };
 }
 
@@ -16361,7 +15985,6 @@ function executeTurretCycle(scene, attackerEntity, effectState, cycleBoundaryMs)
     if (destroyResult && destroyResult.success) {
       recordKillmailFromDestruction(targetEntity, destroyResult, {
         attackerEntity,
-        victimSession: weaponDamageResult.victimSession,
         whenMs: cycleBoundaryMs,
         weaponSnapshot: presentedWeaponSnapshot,
         moduleItem,
@@ -17128,7 +16751,6 @@ function resolveMissileLifecycle(scene, missileEntity, nowMs) {
     if (weaponDamageResult.destroyResult && weaponDamageResult.destroyResult.success) {
       recordKillmailFromDestruction(targetEntity, weaponDamageResult.destroyResult, {
         attackerEntity,
-        victimSession: weaponDamageResult.victimSession,
         whenMs: nowMs,
         weaponSnapshot: missileEntity.missileSnapshot,
         moduleItem,
@@ -17320,7 +16942,6 @@ function resolveMissileLifecycle(scene, missileEntity, nowMs) {
     if (weaponDamageResult.destroyResult && weaponDamageResult.destroyResult.success) {
       recordKillmailFromDestruction(targetEntity, weaponDamageResult.destroyResult, {
         attackerEntity,
-        victimSession: weaponDamageResult.victimSession,
         whenMs: nowMs,
         weaponSnapshot: missileEntity.missileSnapshot,
         moduleItem,
@@ -18522,7 +18143,6 @@ function buildRuntimeInventoryEntity(item, systemID, nowMs) {
     categoryID: toInt(item.categoryID, toInt(metadata.categoryID, 0)),
     itemName: String(item.itemName || metadata.name || "Container"),
     ownerID: toInt(item.ownerID, 0),
-    graphicID: toInt(metadata && metadata.graphicID, 0) || null,
     position,
     velocity: cloneVector(spaceState.velocity),
     direction,
@@ -19861,7 +19481,6 @@ const movementWarpCommands = createMovementWarpCommands({
   buildWarpStartUpdates,
   clearTrackingState,
   cloneVector,
-  deactivateWarpUnsafeActiveModulesForWarpStart,
   getClientParityWarpInPoint,
   getStargateWarpLandingPoint,
   getStationWarpTargetPosition,
@@ -22874,12 +22493,6 @@ class SolarSystemScene {
         errorMsg: "TARGET_NOT_FOUND",
       };
     }
-    if (isEntityCloaked(targetEntity)) {
-      return {
-        success: false,
-        errorMsg: "TARGET_NOT_FOUND",
-      };
-    }
     if (structureTethering.isEntityStructureTethered(targetEntity)) {
       return {
         success: false,
@@ -24074,12 +23687,6 @@ class SolarSystemScene {
         errorMsg: "MODULE_REACTIVATING",
       };
     }
-    if (isShipMovementLockedByRuntime(entity, now)) {
-      return {
-        success: false,
-        errorMsg: "SHIP_IMMOBILE",
-      };
-    }
     if (
       effectName === PROPULSION_EFFECT_MICROWARPDRIVE &&
       hostileModuleRuntime.isMicrowarpdriveBlocked(entity)
@@ -24181,17 +23788,10 @@ class SolarSystemScene {
     // HUD gauge updates immediately rather than waiting for the next poll.
     notifyCapacitorChangeToSession(session, entity, now, previousChargeAmount);
 
-    const effectID = getPropulsionEffectID(effectName);
-    const effectRecord = effectID > 0 ? getEffectTypeRecord(effectID) : null;
     const effectState = {
       moduleID: normalizedModuleID,
       moduleFlagID: toInt(moduleItem.flagID, 0),
       effectName,
-      effectID,
-      effectCategoryID: toInt(effectRecord && effectRecord.effectCategoryID, 1),
-      effectRecord: effectRecord && typeof effectRecord === "object"
-        ? { ...effectRecord }
-        : null,
       groupID: toInt(moduleItem.groupID, 0),
       typeID: toInt(moduleItem.typeID, 0),
       startedAtMs: now,
@@ -24205,7 +23805,6 @@ class SolarSystemScene {
       reactivationDelayMs: runtimeAttributes.reactivationDelayMs,
       guid: PROPULSION_GUID_BY_EFFECT[effectName] || "",
       repeat: normalizeEffectRepeatCount(options.repeat, null),
-      remainingCycles: resolveInitialModuleRemainingCycles(options.repeat),
       deactivationRequestedAtMs: 0,
       deactivateAtMs: 0,
       stopReason: null,
@@ -24314,15 +23913,6 @@ class SolarSystemScene {
     effectState.stopReason = options.reason || effectState.stopReason || null;
 
     const hasReadyOwnerSession = isReadyForDestiny(session);
-    const suppressOwnerDestinyUpdates =
-      options.suppressOwnerDestinyUpdates === true;
-    const excludedSession =
-      options.excludedSession ||
-      (
-        suppressOwnerDestinyUpdates && hasReadyOwnerSession
-          ? session
-          : null
-      );
     const propulsionPresentationStamp =
       hasReadyOwnerSession
         ? this.getOwnerPropulsionTogglePresentationStamp(
@@ -24334,22 +23924,17 @@ class SolarSystemScene {
           )
         : null;
 
-    const refreshResult = hasReadyOwnerSession && !suppressOwnerDestinyUpdates
+    const refreshResult = hasReadyOwnerSession
       ? this.refreshSessionShipDerivedState(session, {
           broadcast: true,
           broadcastStamp: propulsionPresentationStamp,
         })
       : this.refreshShipEntityDerivedState(entity, {
           session,
-          broadcast: false,
+          broadcast: true,
+          broadcastOptions: buildObserverPropulsionShipPrimeBroadcastOptions(),
         });
     if (refreshResult.success) {
-      if (suppressOwnerDestinyUpdates || !hasReadyOwnerSession) {
-        this.broadcastShipPrimeUpdates(entity, {
-          excludedSession,
-          sendOptions: buildObserverPropulsionShipPrimeBroadcastOptions(),
-        });
-      }
       notifyPropulsionDerivedAttributesToSession(session, entity, effectState, stopTimeMs);
       this.broadcastSpecialFx(
         entity.itemID,
@@ -24365,7 +23950,6 @@ class SolarSystemScene {
               active: false,
               duration: effectState.durationMs,
               stampOverride: propulsionPresentationStamp,
-              excludedSession,
             }
           : buildObserverPropulsionSpecialFxOptions({
               moduleID: effectState.moduleID,
@@ -24376,7 +23960,6 @@ class SolarSystemScene {
               start: false,
               active: false,
               duration: effectState.durationMs,
-              excludedSession,
             }),
         entity,
       );
@@ -24525,10 +24108,6 @@ class SolarSystemScene {
       effectiveModuleItem,
       effectRecord,
     );
-    const isBastionActivation = isBastionModuleActivation(
-      effectiveModuleItem,
-      effectRecord,
-    );
     if (!isCloakingActivation && isEntityModuleCloaked(entity)) {
       return { success: false, errorMsg: "MODULE_CLOAKED" };
     }
@@ -24556,40 +24135,25 @@ class SolarSystemScene {
           },
         };
       }
-      const skipProximityCheck =
-        isEntityActiveWarpInFlight(entity) &&
-        isWarpSafeCloakingEffectDescriptor(effectRecord);
-      if (!skipProximityCheck) {
-        const proximityTrigger = this.findCloakProximityTrigger(
-          entity,
-          DEFAULT_NORMAL_CLOAK_DECLOAK_RANGE_METERS,
-        );
-        if (proximityTrigger) {
-          return {
-            success: false,
-            errorMsg: "CLOAK_PROXIMITY_BLOCKED",
-            data: {
-              triggerEntityID: toInt(
-                proximityTrigger.triggerEntity &&
-                  proximityTrigger.triggerEntity.itemID,
-                0,
-              ),
-              surfaceDistanceMeters: proximityTrigger.surfaceDistanceMeters,
-              rangeMeters: proximityTrigger.rangeMeters,
-            },
-          };
-        }
+      const proximityTrigger = this.findCloakProximityTrigger(
+        entity,
+        DEFAULT_NORMAL_CLOAK_DECLOAK_RANGE_METERS,
+      );
+      if (proximityTrigger) {
+        return {
+          success: false,
+          errorMsg: "CLOAK_PROXIMITY_BLOCKED",
+          data: {
+            triggerEntityID: toInt(
+              proximityTrigger.triggerEntity &&
+                proximityTrigger.triggerEntity.itemID,
+              0,
+            ),
+            surfaceDistanceMeters: proximityTrigger.surfaceDistanceMeters,
+            rangeMeters: proximityTrigger.rangeMeters,
+          },
+        };
       }
-    }
-    if (
-      isBastionActivation &&
-      entity.mode === "WARP" &&
-      !entity.pendingWarp
-    ) {
-      return { success: false, errorMsg: "CANNOT_ACTIVATE_IN_WARP" };
-    }
-    if (isBastionActivation && entity.pendingDock) {
-      return { success: false, errorMsg: "SHIP_IMMOBILE" };
     }
     if (
       moduleActivationRequiresActiveIndustrialCore(effectiveModuleItem.typeID) &&
@@ -25015,12 +24579,6 @@ class SolarSystemScene {
             errorMsg: microJumpDriveActivation.errorMsg || "UNSUPPORTED_MODULE",
           };
         }
-        if (isShipMovementLockedByRuntime(entity, now)) {
-          return {
-            success: false,
-            errorMsg: "SHIP_IMMOBILE",
-          };
-        }
         if (hostileModuleRuntime.isMicroJumpDriveBlocked(entity)) {
           return {
             success: false,
@@ -25315,9 +24873,6 @@ class SolarSystemScene {
       repeat: isCynosuralActivation
         ? 1
         : normalizeEffectRepeatCount(options.repeat, null),
-      remainingCycles: isCynosuralActivation
-        ? null
-        : resolveInitialModuleRemainingCycles(options.repeat),
       targetID: targetEntity ? resolvedTargetID : 0,
       chargeTypeID: toInt(
         (chargeItem && chargeItem.typeID) ||
@@ -25347,7 +24902,6 @@ class SolarSystemScene {
       miningEffect: Boolean(miningActivation && miningActivation.success === true),
       salvagerEffect: Boolean(salvagerActivation && salvagerActivation.success === true),
       cloakModuleEffect: isCloakingActivation,
-      bastionModuleEffect: isBastionActivation,
       cynosuralGeneration: isCynosuralActivation,
       cynosuralFleetID: isCynosuralActivation ? toInt(session && session.fleetid, 0) : 0,
       cynosuralCharacterID: isCynosuralActivation ? toInt(session && session.characterID, 0) : 0,
@@ -25445,14 +24999,6 @@ class SolarSystemScene {
       initializePrecursorTurretEffectState(effectState, weaponSnapshot, now);
     }
     entity.activeModuleEffects.set(normalizedModuleID, effectState);
-    if (effectState.bastionModuleEffect === true) {
-      forceDeactivateBlockedMovementEffects(this, entity, now, "bastion", {
-        blockAllPropulsion: true,
-      });
-      this.stopShipEntity(entity, {
-        reason: "bastion",
-      });
-    }
     if (effectState.cynosuralGeneration === true) {
       const cynoSpawnResult = spawnCynosuralFieldForEffect(
         this,
@@ -26253,7 +25799,6 @@ class SolarSystemScene {
               : {
                 ...baseStopFxOptions,
                 useCurrentVisibleStamp: true,
-                excludedSession: options.excludedSession || null,
               };
         this.broadcastSpecialFx(
           entity.itemID,
@@ -29480,7 +29025,7 @@ class SolarSystemScene {
         candidateID <= 0 ||
         candidateID === entityID ||
         !hasFiniteEntityPosition(candidate) ||
-        isDecloakProximityExemptEntity(candidate)
+        isDecloakProbeExemptEntity(candidate)
       ) {
         continue;
       }
@@ -29508,9 +29053,6 @@ class SolarSystemScene {
 
   findNormalCloakProximityTrigger(entity) {
     if (!isEntityNormalCloaked(entity)) {
-      return null;
-    }
-    if (isEntityWarpSafeCloakedInFlight(entity)) {
       return null;
     }
 
@@ -30762,10 +30304,8 @@ class SolarSystemScene {
       nowMs: options.nowMs,
       broadcastFx: false,
       replaySession: session,
-      replayFx: options.replayFx !== false,
       forceReplayFx: options.forceReplayFx === true,
       repairOnEngage: options.repairOnEngage !== false,
-      suppressRepairFx: options.suppressRepairFx === true,
     });
     const repaired = result.repaired;
     const repairedModules =
@@ -30791,53 +30331,6 @@ class SolarSystemScene {
       success: true,
       data: result,
     };
-  }
-
-  sendTqUndockTetherPresentationToSession(session, entityOrID, structureOrID) {
-    if (!session || !isReadyForDestiny(session)) {
-      return false;
-    }
-    const entity =
-      entityOrID && typeof entityOrID === "object"
-        ? entityOrID
-        : this.getEntityByID(entityOrID);
-    const structureEntity =
-      resolveStructureTetherFxEntity(this, structureOrID) || structureOrID;
-    const entityID = toInt(entity && entity.itemID, 0);
-    if (entityID <= 0 || !structureEntity) {
-      return false;
-    }
-
-    const stamp = this.getNextDestinyStamp();
-    setEntityMassiveState(entity, true);
-    session.sendNotification(
-      "DoDestinyUpdate",
-      "clientID",
-      destiny.buildDestinyUpdatePayload(
-        [
-          {
-            stamp,
-            payload: destiny.buildOnSpecialFXPayload(
-              entityID,
-              structureTethering.TETHER_FX_GUID,
-              buildStructureTetherFxOptions(structureEntity, true),
-            ),
-          },
-          {
-            stamp,
-            payload: destiny.buildSetBallMassivePayload(entityID, true),
-          },
-          {
-            stamp,
-            payload: destiny.buildSetBallMassPayload(entityID, entity.mass),
-          },
-        ],
-        false,
-        null,
-      ),
-    );
-    persistShipEntity(entity);
-    return true;
   }
 
   detachSession(session, options = {}) {
@@ -31448,21 +30941,6 @@ class SolarSystemScene {
     this.syncStaticVisibilityForSession(session, rawCurrentSimTimeMs, {
       stampOverride: modeStamp,
     });
-    if (
-      session &&
-      session._space &&
-      toInt(session._space.pendingUndockStructureSlimItemChangeID, 0) > 0
-    ) {
-      const structureID = toInt(
-        session._space.pendingUndockStructureSlimItemChangeID,
-        0,
-      );
-      session._space.pendingUndockStructureSlimItemChangeID = 0;
-      const structureEntity = this.getEntityByID(structureID);
-      if (structureEntity) {
-        this.sendSlimItemChangesToSession(session, [structureEntity]);
-      }
-    }
     this.syncSessionStructureTetherState(session, {
       nowMs: rawCurrentSimTimeMs,
       forceReplayFx: true,
@@ -32762,12 +32240,6 @@ class SolarSystemScene {
         errorMsg: "STATION_NOT_FOUND",
       };
     }
-    if (isShipMovementLockedByRuntime(entity, nowMs)) {
-      return {
-        success: false,
-        errorMsg: "SHIP_IMMOBILE",
-      };
-    }
 
     if (
       entity.pendingDock &&
@@ -33087,73 +32559,6 @@ class SolarSystemScene {
               )
             );
 
-          // Lifecycle accounting is deliberately separate from effectState.repeat,
-          // which is the client-facing presentation value. Source authority only
-          // establishes repeat=0 as a one-cycle request; all other values retain
-          // their legacy unbounded behavior until GOLD-001 resolves finite values.
-          // Existing module-specific auto-deactivation (cynos and command bursts)
-          // continues through its established handler below.
-          const lifecycleTerminalBoundary =
-            effectState.remainingCycles === 1 &&
-            effectState.autoDeactivateAtCycleEnd !== true;
-          const lifecycleFinalEffectDue =
-            lifecycleTerminalBoundary &&
-            (
-              effectState.miningEffect === true ||
-              (
-                effectState.localCycleEffect === true &&
-                effectState.localCycleTiming === "end"
-              )
-            );
-          const terminalFinalEffectDue =
-            deferredStopDue || lifecycleFinalEffectDue;
-
-          if (lifecycleTerminalBoundary && !lifecycleFinalEffectDue) {
-            // The first successful consequence already occurred at activation.
-            // Apply the completed cycle's owed heat, but do not enter reload,
-            // consume next-cycle resources, or execute a second consequence.
-            const heatDamageResult = applyOverloadHeatDamageToModule(
-              this,
-              entity,
-              moduleItem,
-              effectState,
-              cycleBoundaryMs,
-            );
-            if (!heatDamageResult.success) {
-              log.warn(
-                `[SpaceRuntime] Overload heat damage failed for ship=${toInt(entity && entity.itemID, 0)} ` +
-                  `module=${toInt(effectState && effectState.moduleID, 0)} ` +
-                  `error=${heatDamageResult.errorMsg || "UNKNOWN"}`,
-              );
-            }
-            const terminalReason =
-              heatDamageResult.success &&
-              heatDamageResult.data &&
-              heatDamageResult.data.burnedOut === true
-                ? "heat"
-                : "cycle";
-            effectState.remainingCycles = 0;
-            if (ownerSession && isReadyForDestiny(ownerSession)) {
-              finalizeDeactivation(ownerSession, effectState.moduleID, {
-                reason: terminalReason,
-                nowMs: cycleBoundaryMs,
-              });
-            } else if (isGenericEffect) {
-              finalizeGenericModuleDeactivationWithoutSession(
-                this,
-                entity,
-                effectState,
-                {
-                  reason: terminalReason,
-                  nowMs: cycleBoundaryMs,
-                },
-              );
-            } else {
-              entity.activeModuleEffects.delete(toInt(effectState.moduleID, 0));
-            }
-            continue;
-          }
-
           if (toFiniteNumber(effectState.deactivateAtMs, 0) > 0 && !deferredStopDue) {
             if (ownerSession && isReadyForDestiny(ownerSession)) {
               finalizeDeactivation(
@@ -33390,7 +32795,7 @@ class SolarSystemScene {
           }
 
           const previousChargeAmount = getEntityCapacitorAmount(entity);
-          if (!terminalFinalEffectDue && effectState.capNeed > previousChargeAmount + 1e-6) {
+          if (!deferredStopDue && effectState.capNeed > previousChargeAmount + 1e-6) {
             if (entity.session && isReadyForDestiny(entity.session)) {
               notifyCapacitorChangeToSession(
                 entity.session,
@@ -33419,7 +32824,7 @@ class SolarSystemScene {
             }
             continue;
           }
-          const cycleFuelConsumptionResult = terminalFinalEffectDue
+          const cycleFuelConsumptionResult = deferredStopDue
             ? { success: true }
             : consumeShipModuleFuelForSession(
               ownerSession,
@@ -33448,7 +32853,7 @@ class SolarSystemScene {
             }
             continue;
           }
-          if (!terminalFinalEffectDue && !consumeEntityCapacitor(entity, effectState.capNeed)) {
+          if (!deferredStopDue && !consumeEntityCapacitor(entity, effectState.capNeed)) {
             if (entity.session && isReadyForDestiny(entity.session)) {
               notifyCapacitorChangeToSession(
                 entity.session,
@@ -33478,7 +32883,7 @@ class SolarSystemScene {
             continue;
           }
           // CCP parity: Update the client's capacitor gauge each cycle.
-          if (!terminalFinalEffectDue && entity.session && isReadyForDestiny(entity.session)) {
+          if (!deferredStopDue && entity.session && isReadyForDestiny(entity.session)) {
             notifyCapacitorChangeToSession(
               entity.session,
               entity,
@@ -33506,7 +32911,7 @@ class SolarSystemScene {
               cycleExecutedForHeat = false;
               cycleStopReason = cycleResult.stopReason || "localCycle";
             } else if (
-              !terminalFinalEffectDue &&
+              !deferredStopDue &&
               cycleResult.data &&
               cycleResult.data.reloadState
             ) {
@@ -33950,25 +33355,17 @@ class SolarSystemScene {
             continue;
           }
 
-          if (terminalFinalEffectDue) {
-            // The already-paid-for final mining yield or end-of-cycle repair has
-            // now landed. Complete either the deferred manual stop or the
-            // repeat=0 lifecycle without starting or charging another cycle.
-            if (lifecycleFinalEffectDue) {
-              effectState.remainingCycles = 0;
-            }
-            const stopAtMs = deferredStopDue
-              ? Math.max(
-                cycleBoundaryMs,
-                toFiniteNumber(effectState.deactivateAtMs, 0),
-              )
-              : cycleBoundaryMs;
-            const terminalReason = deferredStopDue
-              ? effectState.stopReason || "manual"
-              : "cycle";
+          if (deferredStopDue) {
+            // The final cycle's effect (mining yield or end-of-cycle repair) has
+            // now been applied at the boundary; complete the deferred manual
+            // stop instead of starting another cycle.
+            const stopAtMs = Math.max(
+              cycleBoundaryMs,
+              toFiniteNumber(effectState.deactivateAtMs, 0),
+            );
             if (ownerSession && isReadyForDestiny(ownerSession)) {
               finalizeDeactivation(ownerSession, effectState.moduleID, {
-                reason: terminalReason,
+                reason: effectState.stopReason || "manual",
                 nowMs: stopAtMs,
               });
             } else if (isGenericEffect) {
@@ -33977,7 +33374,7 @@ class SolarSystemScene {
                 entity,
                 effectState,
                 {
-                  reason: terminalReason,
+                  reason: effectState.stopReason || "manual",
                   nowMs: stopAtMs,
                 },
               );
@@ -34182,28 +33579,6 @@ class SolarSystemScene {
             pendingWarpState,
             preWarpSyncStamp: toInt(pendingWarp.preWarpSyncStamp, 0),
           });
-          const warpStartDeactivationResult =
-            deactivateWarpUnsafeActiveModulesForWarpStart(
-              this,
-              entity,
-              now,
-              {
-                reason: "warpStart",
-              },
-            );
-          if (
-            warpStartDeactivationResult &&
-            warpStartDeactivationResult.success === false
-          ) {
-            logMovementDebug("warp.start_deactivation_failed", entity, {
-              pendingWarpState,
-              deactivationResult: warpStartDeactivationResult.data || null,
-              errorMsg:
-                warpStartDeactivationResult.errorMsg ||
-                "WARP_START_DEACTIVATION_FAILED",
-            });
-            continue;
-          }
           const warpState = activatePendingWarp(entity, pendingWarp, {
             nowMs: now,
             defaultEffectStamp: currentStamp,
@@ -37201,9 +36576,6 @@ class SpaceRuntime {
     if (!entity || !station) {
       return false;
     }
-    if (isShipMovementLockedByRuntime(entity, dockNow)) {
-      return false;
-    }
     if (structure) {
       try {
         const structureTetherRestrictionState = lazyRequire("../services/structure/structureTetherRestrictionState");
@@ -37443,7 +36815,6 @@ runtimeExports._testing = {
   buildDirectedMovementUpdatesForTesting: buildDirectedMovementUpdates,
   buildAttributeChangeForTesting: buildAttributeChange,
   computeTargetLockDurationMsForTesting: computeTargetLockDurationMs,
-  advancePassiveRechargeRatioForTesting: advancePassiveRechargeRatio,
   notifyCapacitorChangeToSessionForTesting: notifyCapacitorChangeToSession,
   notifyShipHealthAttributesToSessionForTesting: notifyShipHealthAttributesToSession,
   notifyModuleEffectStateForTesting: notifyModuleEffectState,

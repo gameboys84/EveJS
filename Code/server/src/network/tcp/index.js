@@ -362,11 +362,9 @@ module.exports = function (serviceManager) {
         log.err(`[TCP] socket error: ${err.message}`);
       });
     })
-    .listen(config.serverPort, config.gameServerBindHost, () => {
+    .listen(config.serverPort, "0.0.0.0", () => {
       log.success(`EveJS Elysian is running!`);
-      log.success(
-        `(listener: ${config.gameServerBindHost}:${config.serverPort})`,
-      );
+      log.success(`(port: ${config.serverPort})`);
       try {
         logStartupDataSummary();
       } catch (error) {

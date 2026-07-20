@@ -186,9 +186,6 @@ const {
   destroyWeaponBankAndNotify,
 } = require(path.join(__dirname, "../moduleGrouping/moduleGroupingRuntime"));
 const {
-  buildActivationHeatStateDict,
-} = require(path.join(__dirname, "./activationHeatState"));
-const {
   buildWeaponDogmaAttributeOverrides,
   collectCharacterModifierAttributes,
 } = require(path.join(__dirname, "../../space/combat/weaponDogma"));
@@ -3462,25 +3459,9 @@ class DogmaService extends BaseService {
     if (!primeItem) {
       return false;
     }
-    const weaponAttributeItem =
-      chargeItem &&
-      Number(chargeItem.typeID) === Number(primeItem.typeID)
-        ? {
-            ...chargeItem,
-            ...primeItem,
-            customInfo: chargeItem.customInfo ?? primeItem.customInfo,
-          }
-        : primeItem;
-    const weaponDogmaAttributes = this._getWeaponDogmaAttributeOverrides(
-      weaponAttributeItem,
-      session,
-      options,
-    );
     syncChargeGodmaPrimeForSession(session, shipID, primeItem, {
       description: "charge",
       now: options.when != null ? options.when : this._sessionFileTime(session),
-      attributeOverrides:
-        weaponDogmaAttributes && weaponDogmaAttributes.chargeAttributes,
     });
     return true;
   }
@@ -4816,13 +4797,16 @@ class DogmaService extends BaseService {
     return context.chargeByFlag.get(Number(flagID) || 0) || null;
   }
   _buildActivationState(charID, shipID, shipRecord = null, options = {}) {
+    // The live 23.02 client build in use here still expects a 4-slot
+    // shipState tuple during MakeShipActive on station boarding/login paths.
+    // Keep the fourth slot as an empty reserved payload for compatibility.
     return [
       this._buildShipState(charID, shipID, shipRecord, options),
       options.includeCharges === false
         ? this._buildEmptyDict()
         : this._buildChargeStateDict(charID, shipID, options),
       buildWeaponBankStateDict(shipID, { characterID: charID }),
-      buildActivationHeatStateDict(currentFileTime()),
+      this._buildEmptyDict(),
     ];
   }
   _getCharacterItemLocationID(session, options = {}) {
@@ -6159,11 +6143,6 @@ class DogmaService extends BaseService {
       case "MICRO_JUMP_DRIVE_BLOCKED":
         this._throwCustomNotifyUserError(
           "That module cannot be activated while you are warp scrambled.",
-        );
-        break;
-      case "SHIP_IMMOBILE":
-        this._throwCustomNotifyUserError(
-          "That module cannot be activated while your ship is immobilized.",
         );
         break;
       case "MAX_VELOCITY_ACTIVATION_LIMIT":

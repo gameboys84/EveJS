@@ -1,5 +1,0 @@
-# Linux container entrypoints and build definitions must keep LF endings even
-# when the repository is checked out on Windows.
-*.sh text eol=lf
-Dockerfile text eol=lf
-.dockerignore text eol=lf

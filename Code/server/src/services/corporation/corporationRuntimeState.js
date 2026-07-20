@@ -46,7 +46,6 @@ const CORP_ROLE_HANGAR_CAN_TAKE_ALL =
 const CORP_ROLE_HANGAR_CAN_QUERY_ALL =
   1048576n + 2097152n + 4194304n + 8388608n + 16777216n + 33554432n + 67108864n;
 const CORP_ROLE_BRAND_MANAGER = 34359738368n;
-const CORP_ROLE_CAN_RENT_OFFICE = 562949953421312n;
 const CORP_ROLE_JUNIOR_ACCOUNTANT = 4503599627370496n;
 const CORP_ROLE_TRADER = 18014398509481984n;
 const CORP_ROLE_CHAT_MANAGER = 36028797018963968n;
@@ -60,7 +59,6 @@ const FULL_ADMIN_ROLE_MASK =
   CORP_ROLE_HANGAR_CAN_TAKE_ALL +
   CORP_ROLE_HANGAR_CAN_QUERY_ALL +
   CORP_ROLE_BRAND_MANAGER +
-  CORP_ROLE_CAN_RENT_OFFICE +
   CORP_ROLE_JUNIOR_ACCOUNTANT +
   CORP_ROLE_TRADER +
   CORP_ROLE_CHAT_MANAGER +
@@ -588,7 +586,6 @@ function normalizeTitleState(title, titleID) {
 
 function normalizeCorporationRuntime(runtime, corporationRecord, table) {
   const base = runtime && typeof runtime === "object" ? cloneValue(runtime) : {};
-  const hasPersistedOffices = Object.prototype.hasOwnProperty.call(base, "offices");
   const memberIDs = getCharacterIDsInCorporation(corporationRecord.corporationID);
   const members = {};
   for (const memberID of memberIDs) {
@@ -618,7 +615,6 @@ function normalizeCorporationRuntime(runtime, corporationRecord, table) {
       offices[officeKey] = {
         corporationID: corporationRecord.corporationID,
         stationID,
-        leaseID: normalizePositiveInteger(office.leaseID, null),
         officeID: normalizePositiveInteger(office.officeID, null),
         officeFolderID: normalizePositiveInteger(office.officeFolderID, null),
         itemID: normalizePositiveInteger(office.itemID, null),
@@ -632,16 +628,12 @@ function normalizeCorporationRuntime(runtime, corporationRecord, table) {
           normalizePositiveInteger(office.stationTypeID, null),
         ),
         rentalCost: Number(office.rentalCost || 0),
-        startDate: normalizeFiletimeString(office.startDate),
-        dueDate: normalizeFiletimeString(office.dueDate || office.expiryDate),
-        billID: normalizePositiveInteger(office.billID, null),
         expiryDate: normalizeFiletimeString(office.expiryDate),
         impounded: normalizeBoolean(office.impounded, false),
       };
     }
   }
   if (
-    !hasPersistedOffices &&
     Object.keys(offices).length === 0 &&
     normalizePositiveInteger(corporationRecord.stationID, null)
   ) {
@@ -1247,35 +1239,6 @@ function updateCorporationRecord(corporationID, changes = {}) {
   return writeTable(CORPORATIONS_TABLE, table);
 }
 
-function deleteCorporationWithRuntime(corporationID) {
-  const currentRecord = getCorporationRecord(corporationID);
-  if (!currentRecord) {
-    return { success: false, errorMsg: "CORPORATION_NOT_FOUND" };
-  }
-  const numericCorporationID = currentRecord.corporationID;
-  const table = readCorporationTable();
-  delete table.records[String(numericCorporationID)];
-  const corporationWrite = writeTable(CORPORATIONS_TABLE, table);
-  if (!corporationWrite.success) {
-    return corporationWrite;
-  }
-
-  updateRuntimeState((runtimeTable) => {
-    if (runtimeTable && runtimeTable.corporations) {
-      delete runtimeTable.corporations[String(numericCorporationID)];
-    }
-    return runtimeTable;
-  });
-
-  return {
-    success: true,
-    data: {
-      corporationID: numericCorporationID,
-      corporationRecord: currentRecord,
-    },
-  };
-}
-
 function updateAllianceRecord(allianceID, changes = {}) {
   const currentRecord = getAllianceRecord(allianceID);
   if (!currentRecord) {
@@ -1533,7 +1496,6 @@ module.exports = {
   CORP_ROLE_DIRECTOR,
   CORP_ROLE_ACCOUNTANT,
   CORP_ROLE_BRAND_MANAGER,
-  CORP_ROLE_CAN_RENT_OFFICE,
   CORP_ROLE_CHAT_MANAGER,
   CORP_ROLE_JUNIOR_ACCOUNTANT,
   CORP_ROLE_PERSONNEL_MANAGER,
@@ -1548,7 +1510,6 @@ module.exports = {
   cloneValue,
   createAllianceWithRuntime,
   createCorporationWithRuntime,
-  deleteCorporationWithRuntime,
   ensureCharacterMemberState,
   ensureRuntimeInitialized,
   getAllianceRuntime,

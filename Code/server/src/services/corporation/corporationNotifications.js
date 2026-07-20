@@ -148,13 +148,6 @@ const CORPORATION_MEMBER_HEADER = [
   "shipTypeID",
 ];
 
-const SHAREHOLDER_CHANGE_HEADER = [
-  "corporationID",
-  "shareholderCorporationID",
-  "shareholderID",
-  "shares",
-];
-
 const CORPORATION_APPLICATION_HEADER = [
   "applicationID",
   "corporationID",
@@ -737,98 +730,6 @@ function notifyCorporationChanged(corporationID, previousSnapshot = null) {
   ]);
 }
 
-function notifyCorporationRemoved(corporationID, previousSnapshot = null, options = {}) {
-  const numericCorporationID = normalizePositiveInteger(corporationID, null);
-  if (!numericCorporationID) {
-    return;
-  }
-  const change = buildChangeDict(previousSnapshot, null, CORPORATION_HEADER);
-  if (change.entries.length <= 0) {
-    return;
-  }
-  const payloadTuple = [numericCorporationID, change];
-  sendNotificationToAllSessions(
-    "OnCorporationChanged",
-    "corpid",
-    payloadTuple,
-  );
-  const clientCharacterIDs = Array.isArray(options.clientCharacterIDs)
-    ? options.clientCharacterIDs
-    : [];
-  if (clientCharacterIDs.length > 0) {
-    sendNotificationToCharacterIDs(
-      clientCharacterIDs,
-      "OnCorporationChanged",
-      "clientID",
-      payloadTuple,
-    );
-  }
-}
-
-function notifyShareChange(idType, shareholderID, corporationID, beforeSnapshot, afterSnapshot, options = {}) {
-  const numericShareholderID = normalizePositiveInteger(shareholderID, null);
-  const numericCorporationID = normalizePositiveInteger(corporationID, null);
-  if (!numericShareholderID || !numericCorporationID) {
-    return;
-  }
-  const change = buildChangeDict(
-    beforeSnapshot,
-    afterSnapshot,
-    SHAREHOLDER_CHANGE_HEADER,
-  );
-  if (change.entries.length <= 0) {
-    return;
-  }
-  const payloadTuple = [
-    numericShareholderID,
-    numericCorporationID,
-    change,
-  ];
-  if (idType === "charid") {
-    sendNotificationToCharacterIDs(
-      options.clientCharacterIDs || [numericShareholderID],
-      "OnShareChange",
-      idType,
-      payloadTuple,
-    );
-    return;
-  }
-  sendNotificationToAllSessions("OnShareChange", idType, payloadTuple);
-}
-
-function notifyCorporationLiquidationShareTransfer(corporationID, characterID, shares) {
-  const numericCorporationID = normalizePositiveInteger(corporationID, null);
-  const numericCharacterID = normalizePositiveInteger(characterID, null);
-  const normalizedShares = Math.max(0, Number(shares) || 0);
-  if (!numericCorporationID || !numericCharacterID || normalizedShares <= 0) {
-    return;
-  }
-  notifyShareChange(
-    "*corpid&corprole",
-    numericCorporationID,
-    numericCorporationID,
-    {
-      corporationID: numericCorporationID,
-      shareholderID: numericCorporationID,
-      shares: normalizedShares,
-    },
-    null,
-  );
-  notifyShareChange(
-    "charid",
-    numericCharacterID,
-    numericCorporationID,
-    null,
-    {
-      corporationID: numericCorporationID,
-      shareholderCorporationID: numericCorporationID,
-      shareholderID: numericCharacterID,
-      shares: normalizedShares,
-    },
-    { clientCharacterIDs: [numericCharacterID] },
-  );
-}
-
 function notifyCorporationMemberChanged(
   corporationID,
   characterID,
@@ -1030,42 +931,6 @@ function buildOfficeJunkyardItemRow(corporationID, office) {
   );
 }
 
-function buildOfficeStationItemRow(corporationID, office) {
-  return buildPackedRow(
-    INVENTORY_ROW_DESCRIPTOR_COLUMNS,
-    {
-      itemID: resolveOfficeNotificationItemID(office),
-      typeID: OFFICE_TYPE_ID,
-      ownerID: Number(corporationID) || 0,
-      locationID: normalizePositiveInteger(office && office.stationID, 0),
-      flagID: FLAG_OFFICE_FOLDER,
-      quantity: -1,
-      groupID: OFFICE_GROUP_ID,
-      categoryID: OFFICE_CATEGORY_ID,
-      customInfo: null,
-      stacksize: 1,
-      singleton: 1,
-    },
-    INVENTORY_ROW_DESCRIPTOR_VIRTUAL_COLUMNS,
-  );
-}
-
-function notifyOfficeRentItemChange(corporationID, office) {
-  const stationID = normalizePositiveInteger(office && office.stationID, 0);
-  const officeItemID = resolveOfficeNotificationItemID(office);
-  if (!stationID || !officeItemID) {
-    return;
-  }
-  sendNotificationToAllSessions("OnItemsChanged", "*stationid&corpid", [
-    buildList([buildOfficeStationItemRow(corporationID, office)]),
-    {
-      type: "dict",
-      entries: [[3, 0]],
-    },
-    null,
-  ]);
-}
-
 function notifyOfficeUnrentItemChange(corporationID, office) {
   const stationID = normalizePositiveInteger(office && office.stationID, 0);
   const officeItemID = resolveOfficeNotificationItemID(office);
@@ -1136,14 +1001,11 @@ module.exports = {
   notifyAllianceRelationshipChanged,
   notifyCorporationApplicationChanged,
   notifyCorporationChanged,
-  notifyCorporationLiquidationShareTransfer,
   notifyCorporationMemberChanged,
   notifyCorporationRecruitmentAdChanged,
-  notifyCorporationRemoved,
   notifyCorporationWelcomeMailChanged,
   notifyLockedItemChange,
   notifyOfficeBillRefresh,
-  notifyOfficeRentItemChange,
   notifyOfficeRentalChange,
   notifyOfficeUnrentItemChange,
   notifyWarChanged,

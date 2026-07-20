@@ -218,37 +218,6 @@ try {
   log.spacer();
 }
 
-try {
-  const {
-    runStartupBillingMaintenance,
-  } = require(path.join(__dirname, "./src/services/account/billingMaintenance"));
-  const billingSummary = runStartupBillingMaintenance({
-    reason: "startup-downtime",
-  });
-  const officeRental = billingSummary.officeRental || {};
-  const actionCounts = officeRental.actionCounts || {};
-  if (Number(officeRental.processedCount) > 0 || officeRental.capped === true) {
-    const actionSummary = Object.entries(actionCounts)
-      .map(([action, count]) => `${action}=${count}`)
-      .join(" ");
-    const message =
-      `[Billing] Startup office rental processing complete: ` +
-      `processed=${Number(officeRental.processedCount) || 0} ` +
-      `cycles=${Number(officeRental.cycleCount) || 0}/${Number(officeRental.maxCycles) || 0} ` +
-      `${actionSummary || "actions=0"} ` +
-      `elapsed=${Number(billingSummary.elapsedMs) || 0}ms`;
-    if (officeRental.capped === true) {
-      log.warn(`${message} capped=true`);
-    } else {
-      log.info(message);
-    }
-  }
-  log.spacer();
-} catch (err) {
-  log.err(`[Billing] Failed startup bill processing: ${err.message}`);
-  log.spacer();
-}
-
 // Start the presence reconciler (safety net that re-converges local-chat and
 // station/structure guest visibility for missed fire-and-forget deltas).
 try {

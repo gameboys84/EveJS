@@ -287,26 +287,20 @@ set "EVEJS_BLUE_HASH="
 exit /b 0
 
 :EnsureClientDisplaySafety
-if /I "%EVEJS_CLIENT_SAFE_WINDOWED%"=="on" (
-  echo   Preparing safe windowed display settings...
-  powershell -NoProfile -ExecutionPolicy Bypass -File "%EVEJS_REPO_ROOT%\tools\ClientSETUP\scripts\PrepareClientSettings.ps1" -Mode Display
-  set "EVEJS_DISPLAY_EXIT=!errorlevel!"
-  if not "!EVEJS_DISPLAY_EXIT!"=="0" (
-    echo.
-    echo   [ERROR] Could not prepare safe client display settings.
-    echo       This usually means Windows blocked access to %%LOCALAPPDATA%%\CCP\EVE
-    echo       or the configured client path is invalid.
-    exit /b !EVEJS_DISPLAY_EXIT!
-  )
+echo   Preparing safe windowed display settings...
+powershell -NoProfile -ExecutionPolicy Bypass -File "%EVEJS_REPO_ROOT%\tools\ClientSETUP\scripts\PrepareClientSettings.ps1" -Mode Display
+set "EVEJS_DISPLAY_EXIT=%errorlevel%"
+if not "%EVEJS_DISPLAY_EXIT%"=="0" (
+  echo.
+  echo   [ERROR] Could not prepare safe client display settings.
+  echo       This usually means Windows blocked access to %%LOCALAPPDATA%%\CCP\EVE
+  echo       or the configured client path is invalid.
+  exit /b %EVEJS_DISPLAY_EXIT%
 )
-if /I "%EVEJS_CLIENT_SAFE_GRAPHICS%"=="on" (
-  call :EnsureClientGraphicsSafety
-  exit /b !errorlevel!
-)
-exit /b 0
+call :EnsureClientGraphicsSafety
+exit /b %errorlevel%
 
 :EnsureClientGraphicsSafety
-echo   Preparing safe low graphics settings...
 powershell -NoProfile -ExecutionPolicy Bypass -File "%EVEJS_REPO_ROOT%\tools\ClientSETUP\scripts\PrepareClientSettings.ps1" -Mode Graphics
 exit /b %errorlevel%
 

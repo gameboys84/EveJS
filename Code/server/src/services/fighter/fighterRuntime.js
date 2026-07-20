@@ -1980,7 +1980,6 @@ function executeFighterOffensiveCycle(scene, fighterEntity, controllerEntity, sl
     );
   }
 
-  let weaponDamageResult = null;
   if (snapshot.offensiveKind === "turret") {
     const shotResult = droneInterop.resolveTurretShot({
       attackerEntity: fighterEntity,
@@ -1996,7 +1995,7 @@ function executeFighterOffensiveCycle(scene, fighterEntity, controllerEntity, sl
     shotDamage = shotResult && shotResult.shotDamage ? shotResult.shotDamage : null;
     hitQuality = droneInterop.getCombatMessageHitQuality(shotResult);
     if (shotResult && shotResult.hit === true) {
-      weaponDamageResult = droneInterop.applyWeaponDamageToTarget(
+      const weaponDamageResult = droneInterop.applyWeaponDamageToTarget(
         scene,
         fighterEntity,
         targetEntity,
@@ -2023,7 +2022,7 @@ function executeFighterOffensiveCycle(scene, fighterEntity, controllerEntity, sl
       : null;
     hitQuality = sumDamageVector(shotDamage) > 0 ? 4 : 0;
     if (sumDamageVector(shotDamage) > 0) {
-      weaponDamageResult = droneInterop.applyWeaponDamageToTarget(
+      const weaponDamageResult = droneInterop.applyWeaponDamageToTarget(
         scene,
         fighterEntity,
         targetEntity,
@@ -2059,7 +2058,6 @@ function executeFighterOffensiveCycle(scene, fighterEntity, controllerEntity, sl
   if (destroyResult && destroyResult.success === true) {
     droneInterop.recordKillmailFromDestruction(targetEntity, destroyResult, {
       attackerEntity: combatSourceEntity,
-      victimSession: weaponDamageResult && weaponDamageResult.victimSession,
       whenMs: nowMs,
       weaponSnapshot: {
         ...snapshot,

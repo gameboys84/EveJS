@@ -12,7 +12,6 @@ const {
   getCharacterWallet,
 } = require(path.join(__dirname, "../../services/account/walletState"));
 
-const CONCORD_CORPORATION_ID = 1000125;
 const CATEGORY_SHIP = 6;
 const GROUP_CAPSULE = 29;
 const GROUP_SHUTTLE = 31;
@@ -47,14 +46,6 @@ function getSessionRegistry() {
 
 function getShipKillCounterStateService() {
   return require(path.join(__dirname, "../../services/ship/shipKillCounterState"));
-}
-
-function getNotificationStateService() {
-  return require(path.join(__dirname, "../../services/notifications/notificationState"));
-}
-
-function getNotificationConstants() {
-  return require(path.join(__dirname, "../../services/notifications/notificationConstants"));
 }
 
 function createKillmailRecord(recordInput) {
@@ -348,14 +339,7 @@ function awardKillmarkForFinalBlow(targetEntity, attackerEntity, finalAttacker, 
   return result;
 }
 
-function resolveSessionCharacterID(session) {
-  return toPositiveInt(
-    session && (session.characterID || session.charID || session.charid),
-    null,
-  );
-}
-
-function resolveVictimIdentity(targetEntity, options = {}) {
+function resolveVictimIdentity(targetEntity) {
   if (!targetEntity) {
     return {
       victimCharacterID: null,
@@ -379,42 +363,26 @@ function resolveVictimIdentity(targetEntity, options = {}) {
     };
   }
 
-  const victimSession = options && options.victimSession
-    ? options.victimSession
-    : null;
-  const sessionCharacterID = resolveSessionCharacterID(victimSession);
   const characterID = isNpcVictimEntity(targetEntity)
     ? null
     : toPositiveInt(
         targetEntity.pilotCharacterID ?? targetEntity.characterID,
-        sessionCharacterID,
+        null,
       );
   const characterRecord = characterID ? resolveCharacterRecord(characterID) || {} : {};
   return {
     victimCharacterID: characterID,
     victimCorporationID: toPositiveInt(
       characterRecord.corporationID,
-      toPositiveInt(
-        targetEntity.corporationID,
-        toPositiveInt(
-          victimSession && victimSession.corporationID,
-          toPositiveInt(targetEntity.ownerID, null),
-        ),
-      ),
+      toPositiveInt(targetEntity.corporationID, toPositiveInt(targetEntity.ownerID, null)),
     ),
     victimAllianceID: toPositiveInt(
       characterRecord.allianceID,
-      toPositiveInt(
-        targetEntity.allianceID,
-        toPositiveInt(victimSession && victimSession.allianceID, null),
-      ),
+      toPositiveInt(targetEntity.allianceID, null),
     ),
     victimFactionID: toPositiveInt(
       characterRecord.factionID,
-      toPositiveInt(
-        targetEntity.warFactionID,
-        toPositiveInt(victimSession && victimSession.warFactionID, null),
-      ),
+      toPositiveInt(targetEntity.warFactionID, null),
     ),
     victimShipTypeID: toPositiveInt(targetEntity.typeID, null),
   };
@@ -682,113 +650,6 @@ function notifyKillRightUsed(activation, targetEntity, attackerEntity) {
   return sessions.length;
 }
 
-function isLiveNotificationSession(session) {
-  return Boolean(
-    session &&
-      typeof session.sendNotification === "function" &&
-      (!session.socket || !session.socket.destroyed),
-  );
-}
-
-function resolveKillmailNotificationSessions(victimCharacterID, extraSessions = []) {
-  const targetCharacterID = toPositiveInt(victimCharacterID, 0) || 0;
-  if (targetCharacterID <= 0) {
-    return [];
-  }
-
-  const sessions = [];
-  const seen = new Set();
-  const addSession = (session) => {
-    if (!isLiveNotificationSession(session) || seen.has(session)) {
-      return;
-    }
-    const sessionCharacterID = toPositiveInt(
-      session.characterID || session.charID || session.charid,
-      0,
-    ) || 0;
-    if (sessionCharacterID !== targetCharacterID) {
-      return;
-    }
-    seen.add(session);
-    sessions.push(session);
-  };
-
-  const sessionRegistry = getSessionRegistry();
-  if (sessionRegistry && typeof sessionRegistry.getSessions === "function") {
-    for (const session of sessionRegistry.getSessions()) {
-      addSession(session);
-    }
-  }
-  for (const session of Array.isArray(extraSessions) ? extraSessions : []) {
-    addSession(session);
-  }
-  return sessions;
-}
-
-function notifyVictimKillmailAvailable(record, targetEntity, victimIdentity, options = {}) {
-  const victimCharacterID = toPositiveInt(
-    victimIdentity && victimIdentity.victimCharacterID,
-    0,
-  ) || 0;
-  const killID = toPositiveInt(record && record.killID, 0) || 0;
-  if (victimCharacterID <= 0 || killID <= 0) {
-    return null;
-  }
-
-  const notificationState = getNotificationStateService();
-  const notificationConstants = getNotificationConstants();
-  if (
-    !notificationState ||
-    typeof notificationState.createNotification !== "function" ||
-    !notificationConstants ||
-    !notificationConstants.NOTIFICATION_TYPE
-  ) {
-    return null;
-  }
-
-  const killmailState = getKillmailStateService();
-  const killMailHash =
-    killmailState && typeof killmailState.getKillmailHashValue === "function"
-      ? killmailState.getKillmailHashValue(record)
-      : "";
-  const extraSessions = [
-    targetEntity && targetEntity.session,
-    options.victimSession,
-  ].filter(Boolean);
-  const notificationResult = notificationState.createNotification(victimCharacterID, {
-    typeID: notificationConstants.NOTIFICATION_TYPE.KILL_REPORT_AVAILABLE,
-    senderID: CONCORD_CORPORATION_ID,
-    groupID: notificationConstants.NOTIFICATION_GROUP.MISC,
-    processed: false,
-    created: record.killTime,
-    data: {
-      killMailHash,
-      killMailID: killID,
-      victimShipTypeID:
-        toPositiveInt(record.victimShipTypeID, 0) ||
-        toPositiveInt(victimIdentity && victimIdentity.victimShipTypeID, 0) ||
-        null,
-    },
-    extraSessions,
-  });
-  if (!notificationResult || notificationResult.success !== true) {
-    return notificationResult || null;
-  }
-
-  const sessions = resolveKillmailNotificationSessions(
-    victimCharacterID,
-    extraSessions,
-  );
-  for (const session of sessions) {
-    session.sendNotification("OnKillNotification", "charid", []);
-    session.sendNotification("OnShipDeath", "charid", []);
-  }
-  return {
-    ...notificationResult,
-    sentSessionCount: sessions.length,
-  };
-}
-
 function consumeKillRightAfterKill(activation, targetEntity, attackerEntity, whenMs) {
   if (!activation) {
     return null;
@@ -841,7 +702,7 @@ function recordKillmailFromDestruction(targetEntity, destroyResult, options = {}
   ledger.attackers[finalAttackerKey] = finalAttacker;
   ledger.lastUpdatedAtMs = whenMs;
 
-  const victimIdentity = resolveVictimIdentity(targetEntity, options);
+  const victimIdentity = resolveVictimIdentity(targetEntity);
   const lootLocationIDs = resolveLootLocationIDs(targetEntity, destroyResult);
   const items = resolveKillmailItems(destroyResult, lootLocationIDs);
   const iskLost =
@@ -888,7 +749,6 @@ function recordKillmailFromDestruction(targetEntity, destroyResult, options = {}
   killRecordInput.warID = resolveKillmailWarID(killRecordInput);
   const record = createKillmailRecord(killRecordInput);
   if (record && toPositiveInt(record.killID, 0) > 0) {
-    notifyVictimKillmailAvailable(record, targetEntity, victimIdentity, options);
     awardKillmarkForFinalBlow(
       targetEntity,
       options.attackerEntity || null,

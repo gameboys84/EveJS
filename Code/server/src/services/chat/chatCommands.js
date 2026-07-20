@@ -47,7 +47,6 @@ const {
   adjustCharacterWalletLPBalance,
   adjustCorporationWalletLPBalance,
   getCharacterWalletLPBalance,
-  getCharacterWalletLPBalances,
   getCorporationWalletLPBalance,
   setCharacterWalletLPBalance,
   setCorporationWalletLPBalance,
@@ -313,7 +312,6 @@ const DEER_HUNTER_MESSAGE =
 const DEER_HUNTER_EFFECT_NAME = "microjump";
 const AVAILABLE_SLASH_COMMANDS = [
   "addisk",
-  "addlp",
   "addevermarks",
   "addcorpevermarks",
   "announce",
@@ -430,7 +428,6 @@ const AVAILABLE_SLASH_COMMANDS = [
   "sovauto",
   "autosov",
   "setplex",
-  "setlp",
   "setevermarks",
   "setcorpevermarks",
   "setisk",
@@ -445,7 +442,6 @@ const AVAILABLE_SLASH_COMMANDS = [
   "deadwarp",
   "typeinfo",
   "wallet",
-  "lp",
   "evermarks",
   "corpevermarks",
   "where",
@@ -563,9 +559,6 @@ const COMMANDS_HELP_TEXT = [
   "/gaterats [on|off]",
   "/invu [on|off]",
   "/wallet",
-  "/lp [npc corp name|corpID]",
-  "/addlp <amount> <npc corp name|corpID>",
-  "/setlp <amount> <npc corp name|corpID>",
   "/evermarks",
   "/grantshipemblem <corp|alliance|both> [current|ship name|typeID]",
   "/grantcorplogo [current|ship name|typeID]",
@@ -960,16 +953,6 @@ function formatSignedEvermarks(value) {
   return `${prefix}${numeric.toLocaleString("en-US")} EverMarks`;
 }
 
-function formatLoyaltyPoints(value) {
-  return `${Math.max(0, Math.trunc(Number(value || 0))).toLocaleString("en-US")} LP`;
-}
-
-function formatSignedLoyaltyPoints(value) {
-  const numeric = Math.trunc(Number(value || 0));
-  const prefix = numeric > 0 ? "+" : "";
-  return `${prefix}${numeric.toLocaleString("en-US")} LP`;
-}
-
 function formatSignedPlex(value) {
   const numeric = Math.trunc(Number(value || 0));
   const prefix = numeric > 0 ? "+" : "";
@@ -1003,118 +986,6 @@ function parseAmount(value) {
   };
   const suffix = String(match[2] || "").toLowerCase();
   return baseValue * (multiplier[suffix] || 1);
-}
-
-function formatCorporationLabel(corporationRecord) {
-  if (!corporationRecord) {
-    return "corporation";
-  }
-  const corporationID = normalizePositiveInteger(corporationRecord.corporationID);
-  const name = String(corporationRecord.corporationName || "").trim();
-  if (name && corporationID) {
-    return `${name}(${corporationID})`;
-  }
-  return corporationID ? `corporation ${corporationID}` : "corporation";
-}
-
-function normalizeLpIssuerLookupText(value) {
-  return tokenizeQuotedArguments(value).join(" ").trim();
-}
-
-function parseLoyaltyPointMutationArgs(argumentText) {
-  const tokens = tokenizeQuotedArguments(argumentText);
-  if (tokens.length < 2) {
-    return {
-      amount: null,
-      issuerText: "",
-    };
-  }
-  return {
-    amount: parseAmount(tokens[0]),
-    issuerText: tokens.slice(1).join(" ").trim(),
-  };
-}
-
-function resolveLoyaltyPointIssuerCorporation(issuerText) {
-  const normalizedIssuerText = normalizeLpIssuerLookupText(issuerText);
-  if (!normalizedIssuerText) {
-    return {
-      success: false,
-      errorMsg: "ISSUER_REQUIRED",
-    };
-  }
-
-  let corporationRecord = null;
-  if (/^(evermarks?|paragon lp)$/i.test(normalizedIssuerText)) {
-    corporationRecord = getCorporationRecord(EVERMARK_ISSUER_CORP_ID);
-  } else {
-    const corporationID = normalizePositiveInteger(normalizedIssuerText);
-    corporationRecord = corporationID
-      ? getCorporationRecord(corporationID)
-      : findCorporationByName(normalizedIssuerText);
-  }
-
-  if (!corporationRecord) {
-    return {
-      success: false,
-      errorMsg: "ISSUER_NOT_FOUND",
-    };
-  }
-
-  if (corporationRecord.isNPC !== true) {
-    return {
-      success: false,
-      errorMsg: "ISSUER_NOT_NPC",
-      data: corporationRecord,
-    };
-  }
-
-  return {
-    success: true,
-    data: corporationRecord,
-  };
-}
-
-function formatLoyaltyPointIssuerError(result, issuerText) {
-  if (!result || result.errorMsg === "ISSUER_REQUIRED") {
-    return "Usage: /addlp <amount> <npc corp name|corpID>";
-  }
-  if (result.errorMsg === "ISSUER_NOT_NPC") {
-    return `${formatCorporationLabel(result.data)} is not an NPC corporation. LP issuers must be NPC corporations.`;
-  }
-  return `NPC corporation not found: ${String(issuerText || "").trim()}.`;
-}
-
-function getLoyaltyPointSummary(session, issuerText = "") {
-  if (!session || !session.characterID) {
-    return "Select a character before checking LP.";
-  }
-
-  const normalizedIssuerText = normalizeLpIssuerLookupText(issuerText);
-  if (normalizedIssuerText) {
-    const issuerResult = resolveLoyaltyPointIssuerCorporation(normalizedIssuerText);
-    if (!issuerResult.success) {
-      return formatLoyaltyPointIssuerError(issuerResult, normalizedIssuerText);
-    }
-    const amount = getCharacterWalletLPBalance(
-      session.characterID,
-      issuerResult.data.corporationID,
-    );
-    return `${formatCorporationLabel(issuerResult.data)} LP: ${formatLoyaltyPoints(amount)}.`;
-  }
-
-  const balances = getCharacterWalletLPBalances(session.characterID);
-  if (balances.length === 0) {
-    return "No LP balances.";
-  }
-
-  const summary = balances
-    .map((entry) => {
-      const corporationRecord = getCorporationRecord(entry.issuerCorpID);
-      return `${formatCorporationLabel(corporationRecord || { corporationID: entry.issuerCorpID })}: ${formatLoyaltyPoints(entry.amount)}`;
-    })
-    .join("; ");
-  return `LP balances: ${summary}.`;
 }
 
 function formatSuggestions(suggestions) {
@@ -6459,10 +6330,8 @@ function handleSuicideCommand(session, chatHub, options) {
   }
 
   syncInventoryChangesToSession(session, destroyResult.data.wreckChanges || []);
-  if (destroyResult.data.destroyedShipContentChangesSyncedToSession !== true) {
-    syncInventoryChangesToSession(session, destroyResult.data.movedChanges || []);
-    syncInventoryChangesToSession(session, destroyResult.data.destroyChanges || []);
-  }
+  syncInventoryChangesToSession(session, destroyResult.data.movedChanges || []);
+  syncInventoryChangesToSession(session, destroyResult.data.destroyChanges || []);
 
   return handledResult(
     chatHub,
@@ -10784,15 +10653,6 @@ function executeChatCommand(session, rawMessage, chatHub, options = {}) {
     );
   }
 
-  if (command === "lp") {
-    return handledResult(
-      chatHub,
-      session,
-      options,
-      getLoyaltyPointSummary(session, argumentText),
-    );
-  }
-
   if (command === "evermarks") {
     if (!session || !session.characterID) {
       return handledResult(
@@ -11087,59 +10947,6 @@ function executeChatCommand(session, rawMessage, chatHub, options = {}) {
     );
   }
 
-  if (command === "addlp") {
-    if (!session || !session.characterID) {
-      return handledResult(
-        chatHub,
-        session,
-        options,
-        "Select a character before changing LP.",
-      );
-    }
-
-    const parsed = parseLoyaltyPointMutationArgs(argumentText);
-    if (parsed.amount === null || !parsed.issuerText) {
-      return handledResult(
-        chatHub,
-        session,
-        options,
-        "Usage: /addlp <amount> <npc corp name|corpID>",
-      );
-    }
-
-    const issuerResult = resolveLoyaltyPointIssuerCorporation(parsed.issuerText);
-    if (!issuerResult.success) {
-      return handledResult(
-        chatHub,
-        session,
-        options,
-        formatLoyaltyPointIssuerError(issuerResult, parsed.issuerText),
-      );
-    }
-
-    const result = adjustCharacterWalletLPBalance(
-      session.characterID,
-      issuerResult.data.corporationID,
-      parsed.amount,
-      { changeType: "admin_adjust" },
-    );
-    if (!result.success) {
-      return handledResult(
-        chatHub,
-        session,
-        options,
-        "LP change failed.",
-      );
-    }
-
-    return handledResult(
-      chatHub,
-      session,
-      options,
-      `Adjusted ${formatCorporationLabel(issuerResult.data)} LP by ${formatSignedLoyaltyPoints(parsed.amount)}. New balance: ${formatLoyaltyPoints(result.data.amount)}.`,
-    );
-  }
-
   if (command === "addevermarks") {
     if (!session || !session.characterID) {
       return handledResult(
@@ -11312,59 +11119,6 @@ function executeChatCommand(session, rawMessage, chatHub, options = {}) {
       session,
       options,
       `Wallet balance set to ${formatIsk(result.data.balance)}.`,
-    );
-  }
-
-  if (command === "setlp") {
-    if (!session || !session.characterID) {
-      return handledResult(
-        chatHub,
-        session,
-        options,
-        "Select a character before changing LP.",
-      );
-    }
-
-    const parsed = parseLoyaltyPointMutationArgs(argumentText);
-    if (parsed.amount === null || !parsed.issuerText) {
-      return handledResult(
-        chatHub,
-        session,
-        options,
-        "Usage: /setlp <amount> <npc corp name|corpID>",
-      );
-    }
-
-    const issuerResult = resolveLoyaltyPointIssuerCorporation(parsed.issuerText);
-    if (!issuerResult.success) {
-      return handledResult(
-        chatHub,
-        session,
-        options,
-        formatLoyaltyPointIssuerError(issuerResult, parsed.issuerText),
-      );
-    }
-
-    const result = setCharacterWalletLPBalance(
-      session.characterID,
-      issuerResult.data.corporationID,
-      parsed.amount,
-      { changeType: "admin_set" },
-    );
-    if (!result.success) {
-      return handledResult(
-        chatHub,
-        session,
-        options,
-        "LP change failed.",
-      );
-    }
-
-    return handledResult(
-      chatHub,
-      session,
-      options,
-      `${formatCorporationLabel(issuerResult.data)} LP set to ${formatLoyaltyPoints(result.data.amount)}.`,
     );
   }
 

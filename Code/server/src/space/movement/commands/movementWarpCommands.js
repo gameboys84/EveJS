@@ -52,7 +52,6 @@ function createMovementWarpCommands(deps = {}) {
     buildWarpStartUpdates,
     clearTrackingState,
     cloneVector,
-    deactivateWarpUnsafeActiveModulesForWarpStart,
     getClientParityWarpInPoint,
     getStargateWarpLandingPoint,
     getStationWarpTargetPosition,
@@ -469,25 +468,6 @@ function createMovementWarpCommands(deps = {}) {
       const now = toFiniteNumber(options.nowMs, runtime.getCurrentSimTimeMs());
       const pendingWarp = entity.pendingWarp;
       const currentStamp = runtime.getCurrentDestinyStamp(now);
-      if (typeof deactivateWarpUnsafeActiveModulesForWarpStart === "function") {
-        const deactivationResult = deactivateWarpUnsafeActiveModulesForWarpStart(
-          runtime,
-          entity,
-          now,
-          {
-            reason: "warpStart",
-          },
-        );
-        if (deactivationResult && deactivationResult.success === false) {
-          return {
-            success: false,
-            errorMsg:
-              deactivationResult.errorMsg ||
-              "WARP_START_DEACTIVATION_FAILED",
-            data: deactivationResult.data || null,
-          };
-        }
-      }
       const warpState = activatePendingWarp(entity, pendingWarp, {
         nowMs: now,
         defaultEffectStamp: currentStamp,

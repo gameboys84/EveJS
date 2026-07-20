@@ -89,8 +89,9 @@ function Ensure-LauncherConfig {
         "rem Graphics safety is opt-in because it overwrites GPU quality settings.",
         "set `"EVEJS_CLIENT_SAFE_GRAPHICS=off`"",
         "",
-        "rem Display/window safety is opt-in because it still writes the client settings file.",
-        "set `"EVEJS_CLIENT_SAFE_WINDOWED=off`""
+        "rem Window safety only updates display placement/size and preserves other client settings.",
+        "rem Set this to off if you want Play.bat to leave display settings untouched.",
+        "set `"EVEJS_CLIENT_SAFE_WINDOWED=on`""
     )
     [System.IO.Directory]::CreateDirectory($ClientSetupScriptsRoot) | Out-Null
     [System.IO.File]::WriteAllLines($ConfigBat, $defaultLines)

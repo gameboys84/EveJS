@@ -155,9 +155,9 @@ function collectHomeStationCandidates(session) {
     .filter((stationID) => stationID > 0);
 
   const orderedStationIDs = [
+    currentStationID,
     schoolHQStationID,
     ...officeStationIDs,
-    currentStationID,
   ].filter((stationID, index, array) => (
     stationID > 0 && array.indexOf(stationID) === index
   ));
@@ -395,12 +395,28 @@ class HomeStationServiceBase extends BaseService {
     return buildHomeStationPayload(station, homeStationInfo);
   }
 
+  Handle_GetHomeStation(args, session) {
+    return this.Handle_get_home_station(args, session);
+  }
+
+  Handle_getHomeStation(args, session) {
+    return this.Handle_get_home_station(args, session);
+  }
+
   Handle_get_home_station_candidates(args, session) {
     return buildHomeStationCandidatePayloads(session);
   }
 
+  Handle_getHomeStationCandidates(args, session) {
+    return this.Handle_get_home_station_candidates(args, session);
+  }
+
   Handle_get_next_remote_change_time(args, session) {
     return getNextRemoteChangeTime(session);
+  }
+
+  Handle_getNextRemoteChangeTime(args, session) {
+    return this.Handle_get_next_remote_change_time(args, session);
   }
 
   Handle_set_home_station(args, session) {
@@ -411,8 +427,20 @@ class HomeStationServiceBase extends BaseService {
     );
   }
 
+  Handle_setHomeStation(args, session) {
+    return this.Handle_set_home_station(args, session);
+  }
+
   Handle_reset_remote_change_time(args, session) {
     return resetRemoteChangeTime(session);
+  }
+
+  Handle_resetRemoteChangeTime(args, session) {
+    return this.Handle_reset_remote_change_time(args, session);
+  }
+
+  Handle_ResetRemoteChangeTime(args, session) {
+    return this.Handle_reset_remote_change_time(args, session);
   }
 }
 
@@ -422,6 +450,20 @@ class HomeStationService extends HomeStationServiceBase {
   }
 }
 
+class HomestationService extends HomeStationServiceBase {
+  constructor() {
+    super("homestation");
+  }
+}
+
+class HomeStationCamelService extends HomeStationServiceBase {
+  constructor() {
+    super("homeStation");
+  }
+}
+
 module.exports = {
   HomeStationService,
+  HomestationService,
+  HomeStationCamelService,
 };

@@ -4,12 +4,6 @@ const path = require("path");
 const {
   createTableRepository,
 } = require(path.join(__dirname, "../../gameStore/tableRepository"));
-const {
-  isRetiredMissionTemplateIdentifier,
-} = require(path.join(__dirname, "../../config/productionMissionPolicy"));
-const {
-  isRetiredOrdinaryEncounterMissionForAgent,
-} = require(path.join(__dirname, "./missionAuthority"));
 const repo = createTableRepository("service:agent", { strict: true });
 
 const MISSION_RUNTIME_TABLE = "missionRuntimeState";
@@ -62,74 +56,6 @@ function normalizeMissionContentID(value, fallback = null) {
     return Number.parseInt(text, 10);
   }
   return text;
-}
-
-function isRetiredMissionIdentifier(value) {
-  return isRetiredMissionTemplateIdentifier(value);
-}
-
-function isRetiredMissionRuntimeRecord(record = null) {
-  if (!record || typeof record !== "object") {
-    return false;
-  }
-  return [
-    record.contentID,
-    record.clientMissionID,
-    record.missionID,
-    record.missionTemplateID,
-    record.dungeonTemplateID,
-    record.generatedFromTemplateID,
-    record.completedMissionID,
-    record.lastContentID,
-    record.lastMissionTemplateID,
-  ].some(isRetiredMissionIdentifier);
-}
-
-function isRetiredActiveMissionRuntimeRecord(record = null, fallbackAgentID = 0) {
-  if (isRetiredMissionRuntimeRecord(record)) {
-    return true;
-  }
-  if (!record || typeof record !== "object") {
-    return false;
-  }
-  const missionIdentifier = record.contentID ??
-    record.clientMissionID ??
-    record.missionID ??
-    record.missionTemplateID;
-  const agentID = toPositiveInteger(
-    record.agentID,
-    toPositiveInteger(fallbackAgentID, 0),
-  );
-  return isRetiredOrdinaryEncounterMissionForAgent(
-    agentID,
-    missionIdentifier,
-    record,
-  );
-}
-
-function cleanupRetiredMissionBookmarks(characterID, bookmarkIDs) {
-  if (!(bookmarkIDs instanceof Set) || bookmarkIDs.size <= 0) {
-    return;
-  }
-  const bookmarkRuntime = require(path.join(
-    __dirname,
-    "../bookmark/bookmarkRuntimeState",
-  ));
-  for (const bookmarkID of bookmarkIDs) {
-    const bookmarkInfo = bookmarkRuntime.getBookmarkForCharacter(characterID, bookmarkID);
-    if (!bookmarkInfo || !bookmarkInfo.folder) {
-      continue;
-    }
-    try {
-      bookmarkRuntime.deleteBookmarks(
-        characterID,
-        bookmarkInfo.folder.folderID,
-        [bookmarkID],
-      );
-    } catch (_error) {
-      // State migration must remain idempotent when a stale bookmark is already gone.
-    }
-  }
 }
 
 function normalizeOptionalInteger(value, fallback = null) {
@@ -305,11 +231,7 @@ function createDefaultStorylineProgress() {
 }
 
 function normalizeMissionRecord(record, agentID, fallbackMissionSequence) {
-  if (
-    !record ||
-    typeof record !== "object" ||
-    isRetiredActiveMissionRuntimeRecord(record, agentID)
-  ) {
+  if (!record || typeof record !== "object") {
     return null;
   }
 
@@ -417,11 +339,7 @@ function normalizeMissionRecord(record, agentID, fallbackMissionSequence) {
 }
 
 function normalizeHistoryEntry(entry) {
-  if (
-    !entry ||
-    typeof entry !== "object" ||
-    isRetiredMissionRuntimeRecord(entry)
-  ) {
+  if (!entry || typeof entry !== "object") {
     return null;
   }
 
@@ -460,11 +378,7 @@ function normalizeEpicArcStatusRecord(record, fallbackMissionID = 0) {
     source.missionID ?? source.contentID ?? fallbackMissionID,
     null,
   );
-  if (
-    missionID === null ||
-    isRetiredMissionIdentifier(missionID) ||
-    isRetiredActiveMissionRuntimeRecord({ ...source, missionID }, source.agentID)
-  ) {
+  if (missionID === null) {
     return null;
   }
 
@@ -496,7 +410,7 @@ function normalizeEpicArcCompletionRecord(record, fallbackArcID = 0) {
     source.epicArcID ?? source.arcID ?? fallbackArcID,
     0,
   );
-  if (!epicArcID || isRetiredMissionRuntimeRecord(source)) {
+  if (!epicArcID) {
     return null;
   }
 
@@ -600,8 +514,6 @@ function normalizeStorylineCounter(record, fallbackKey = "") {
     return null;
   }
 
-  const hasRetiredLastMission = isRetiredMissionIdentifier(source.lastContentID) ||
-    isRetiredMissionIdentifier(source.lastMissionTemplateID);
   return {
     factionID,
     missionLevel,
@@ -609,12 +521,8 @@ function normalizeStorylineCounter(record, fallbackKey = "") {
     lastMissionSequence: toPositiveInteger(source.lastMissionSequence, 0) || null,
     lastAgentID: toPositiveInteger(source.lastAgentID, 0) || null,
     lastSolarSystemID: toPositiveInteger(source.lastSolarSystemID, 0) || null,
-    lastContentID: hasRetiredLastMission
-      ? null
-      : normalizeMissionContentID(source.lastContentID, null),
-    lastMissionTemplateID: hasRetiredLastMission
-      ? ""
-      : normalizeText(source.lastMissionTemplateID, ""),
+    lastContentID: normalizeMissionContentID(source.lastContentID, null),
+    lastMissionTemplateID: normalizeText(source.lastMissionTemplateID, ""),
     lastCompletedAtFileTime: normalizeText(source.lastCompletedAtFileTime, ""),
     lastUpdatedAtMs: toFiniteNumber(source.lastUpdatedAtMs, 0) || null,
   };
@@ -622,9 +530,6 @@ function normalizeStorylineCounter(record, fallbackKey = "") {
 
 function normalizeStorylineOfferRecord(record, fallbackAgentID = 0) {
   const source = record && typeof record === "object" ? record : {};
-  if (isRetiredMissionRuntimeRecord(source)) {
-    return null;
-  }
   const agentID = toPositiveInteger(source.agentID, toPositiveInteger(fallbackAgentID, 0));
   if (!agentID) {
     return null;
@@ -648,19 +553,10 @@ function normalizeStorylineOfferRecord(record, fallbackAgentID = 0) {
   };
 }
 
-function normalizeStorylineOfferMap(value, options = {}) {
+function normalizeStorylineOfferMap(value) {
   const source = value && typeof value === "object" && !Array.isArray(value) ? value : {};
   const result = {};
   for (const [agentKey, record] of Object.entries(source)) {
-    if (
-      options.excludeRetiredActive === true &&
-      isRetiredActiveMissionRuntimeRecord(record, agentKey)
-    ) {
-      continue;
-    }
-    if (options.excludeRetired === true && isRetiredMissionRuntimeRecord(record)) {
-      continue;
-    }
     const normalizedOffer = normalizeStorylineOfferRecord(record, agentKey);
     if (!normalizedOffer) {
       continue;
@@ -676,9 +572,6 @@ function normalizeStorylineMilestoneMap(value) {
   for (const [counterKey, record] of Object.entries(source)) {
     const normalizedCounterKey = normalizeText(counterKey, "");
     if (!normalizedCounterKey) {
-      continue;
-    }
-    if (isRetiredMissionRuntimeRecord(record)) {
       continue;
     }
     if (record && typeof record === "object" && !Array.isArray(record)) {
@@ -741,18 +634,9 @@ function normalizeStorylineProgress(progress) {
   normalized.issuedMilestonesByCounterKey = normalizeStorylineMilestoneMap(
     source.issuedMilestonesByCounterKey,
   );
-  normalized.pendingOffersByAgentID = normalizeStorylineOfferMap(
-    source.pendingOffersByAgentID,
-    { excludeRetiredActive: true },
-  );
-  normalized.declinedOffersByAgentID = normalizeStorylineOfferMap(
-    source.declinedOffersByAgentID,
-    { excludeRetired: true },
-  );
-  normalized.expiredOffersByAgentID = normalizeStorylineOfferMap(
-    source.expiredOffersByAgentID,
-    { excludeRetired: true },
-  );
+  normalized.pendingOffersByAgentID = normalizeStorylineOfferMap(source.pendingOffersByAgentID);
+  normalized.declinedOffersByAgentID = normalizeStorylineOfferMap(source.declinedOffersByAgentID);
+  normalized.expiredOffersByAgentID = normalizeStorylineOfferMap(source.expiredOffersByAgentID);
   return normalized;
 }
 
@@ -953,7 +837,7 @@ function recordPendingStorylineOffer(characterState, offerRecord = {}, options =
     };
   }
 
-  const pendingOfferRecord = {
+  const normalizedOffer = normalizeStorylineOfferRecord({
     ...offerRecord,
     status: "pending",
     offeredAtFileTime:
@@ -965,14 +849,7 @@ function recordPendingStorylineOffer(characterState, offerRecord = {}, options =
       options.expiresAtFileTime ||
       "",
     lastUpdatedAtMs: toFiniteNumber(options.nowMs, Date.now()),
-  };
-  if (isRetiredActiveMissionRuntimeRecord(pendingOfferRecord, offerRecord.agentID)) {
-    return {
-      recorded: false,
-      reason: "retired-mission-record",
-    };
-  }
-  const normalizedOffer = normalizeStorylineOfferRecord(pendingOfferRecord);
+  });
   if (!normalizedOffer) {
     return {
       recorded: false,
@@ -1132,110 +1009,6 @@ function ensureCharacterState(state, characterID) {
   const characterState = state.charactersByID[String(normalizedCharacterID)];
   characterState.characterID = normalizedCharacterID;
   characterState.lastUpdatedAtMs = Date.now();
-  const retiredMissionAgentIDs = new Set();
-  const retiredMissionBookmarkIDs = new Set();
-  const collectRetiredMissionAgentID = (record, fallbackAgentID = 0, forceRetired = false) => {
-    if (!forceRetired && !isRetiredMissionRuntimeRecord(record)) {
-      return;
-    }
-    const agentID = toPositiveInteger(
-      record && (record.agentID ?? record.lastAgentID),
-      toPositiveInteger(fallbackAgentID, 0),
-    );
-    if (agentID > 0) {
-      retiredMissionAgentIDs.add(agentID);
-    }
-  };
-  for (const [agentKey, missionRecord] of Object.entries(
-    characterState.missionsByAgentID || {},
-  )) {
-    const isRetiredActiveMission = isRetiredActiveMissionRuntimeRecord(
-      missionRecord,
-      agentKey,
-    );
-    if (isRetiredActiveMission) {
-      for (const bookmarkID of Object.values(
-        missionRecord &&
-          missionRecord.bookmarkIDsByRole &&
-          typeof missionRecord.bookmarkIDsByRole === "object"
-          ? missionRecord.bookmarkIDsByRole
-          : {},
-      )) {
-        const normalizedBookmarkID = toPositiveInteger(bookmarkID, 0);
-        if (normalizedBookmarkID > 0) {
-          retiredMissionBookmarkIDs.add(normalizedBookmarkID);
-        }
-      }
-    }
-    collectRetiredMissionAgentID(missionRecord, agentKey, isRetiredActiveMission);
-  }
-  for (const historyEntry of Array.isArray(characterState.history) ? characterState.history : []) {
-    collectRetiredMissionAgentID(historyEntry);
-  }
-  const storylineProgress = characterState.storylineProgress;
-  for (const mapName of [
-    "pendingOffersByAgentID",
-    "declinedOffersByAgentID",
-    "expiredOffersByAgentID",
-  ]) {
-    const offerMap = storylineProgress && storylineProgress[mapName];
-    for (const [agentKey, offerRecord] of Object.entries(
-      offerMap && typeof offerMap === "object" ? offerMap : {},
-    )) {
-      collectRetiredMissionAgentID(
-        offerRecord,
-        agentKey,
-        mapName === "pendingOffersByAgentID" &&
-          isRetiredActiveMissionRuntimeRecord(offerRecord, agentKey),
-      );
-    }
-  }
-  const issuedMilestones = storylineProgress &&
-    storylineProgress.issuedMilestonesByCounterKey;
-  for (const milestoneRecord of Object.values(
-    issuedMilestones && typeof issuedMilestones === "object" ? issuedMilestones : {},
-  )) {
-    collectRetiredMissionAgentID(milestoneRecord);
-  }
-  const storylineCounters = storylineProgress &&
-    storylineProgress.countersByFactionAndLevel;
-  for (const counterRecord of Object.values(
-    storylineCounters && typeof storylineCounters === "object" ? storylineCounters : {},
-  )) {
-    collectRetiredMissionAgentID(counterRecord);
-  }
-  const epicArcProgress = characterState.epicArcProgress;
-  const missionStatusByArcID = epicArcProgress && epicArcProgress.missionStatusByArcID;
-  for (const missionMap of Object.values(
-    missionStatusByArcID && typeof missionStatusByArcID === "object"
-      ? missionStatusByArcID
-      : {},
-  )) {
-    for (const [missionKey, statusRecord] of Object.entries(
-      missionMap && typeof missionMap === "object" ? missionMap : {},
-    )) {
-      collectRetiredMissionAgentID(
-        statusRecord,
-        0,
-        isRetiredActiveMissionRuntimeRecord(
-          {
-            ...statusRecord,
-            missionID: (statusRecord && statusRecord.missionID) ?? missionKey,
-          },
-          statusRecord && statusRecord.agentID,
-        ),
-      );
-    }
-  }
-  const completedArcsByID = epicArcProgress && epicArcProgress.completedArcsByID;
-  for (const completionRecord of Object.values(
-    completedArcsByID && typeof completedArcsByID === "object"
-      ? completedArcsByID
-      : {},
-  )) {
-    collectRetiredMissionAgentID(completionRecord);
-  }
-  cleanupRetiredMissionBookmarks(normalizedCharacterID, retiredMissionBookmarkIDs);
 
   if (
     !characterState.missionSelectionCursorByAgentID ||
@@ -1262,7 +1035,6 @@ function ensureCharacterState(state, characterID) {
     characterState.completedCareerAgentIDs = {};
   }
   ensureEpicArcProgress(characterState);
-  ensureStorylineProgress(characterState);
   if (!Array.isArray(characterState.history)) {
     characterState.history = [];
   }
@@ -1286,11 +1058,6 @@ function ensureCharacterState(state, characterID) {
       toPositiveInteger(state.nextMissionSequence, 1),
       normalizedMissionRecord.missionSequence + 1,
     );
-  }
-
-  for (const agentID of retiredMissionAgentIDs) {
-    delete characterState.missionSelectionCursorByAgentID[String(agentID)];
-    delete characterState.declineTimersByAgentID[String(agentID)];
   }
 
   const now = BigInt(Date.now()) * 10000n + 116444736000000000n;
@@ -1476,12 +1243,6 @@ function recordEpicArcMissionStatus(characterState, statusRecord = {}, options =
     missionID,
     lastUpdatedAtMs: toFiniteNumber(options.nowMs, Date.now()),
   }, missionID);
-  if (!normalizedStatus) {
-    return {
-      recorded: false,
-      reason: "retired-mission-record",
-    };
-  }
 
   if (!epicArcProgress.missionStatusByArcID[arcKey]) {
     epicArcProgress.missionStatusByArcID[arcKey] = {};
@@ -1520,12 +1281,6 @@ function recordEpicArcCompletion(characterState, completionRecord = {}, options 
     replayUntilFileTime,
     lastUpdatedAtMs: toFiniteNumber(options.nowMs, Date.now()),
   }, epicArcID);
-  if (!normalizedCompletion) {
-    return {
-      recorded: false,
-      reason: "retired-mission-record",
-    };
-  }
   epicArcProgress.completedArcsByID[String(epicArcID)] = normalizedCompletion;
   return {
     recorded: true,

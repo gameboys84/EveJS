@@ -2,14 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const repoRoot = path.resolve(__dirname, "..", "..");
-const Database = require(path.join(
-  repoRoot,
-  "server",
-  "node_modules",
-  "better-sqlite3",
-));
 const dataRoot = resolveDataRoot();
-const databasePath = resolveDatabasePath();
 const clientRoot = process.env.EVEJS_CLIENT_PATH || path.join(repoRoot, "client", "EVE");
 const resIndexPath = path.join(clientRoot, "resfileindex.txt");
 const resFilesRoot = path.join(path.dirname(clientRoot), "ResFiles");
@@ -36,35 +29,6 @@ function resolveDataRoot() {
   return path.join(repoRoot, "_local", "gameStore", "data");
 }
 
-function resolveDatabasePath() {
-  if (process.env.EVEJS_GAMESTORE_SQLITE_PATH) {
-    return path.resolve(process.env.EVEJS_GAMESTORE_SQLITE_PATH);
-  }
-  return path.resolve(dataRoot, "..", "gamestore.sqlite");
-}
-
-function readLivePlayerItems() {
-  if (!fs.existsSync(databasePath)) {
-    throw new Error(`Live SQLite player database was not found: ${databasePath}`);
-  }
-  const db = new Database(databasePath, { readonly: true, fileMustExist: true });
-  try {
-    db.pragma("busy_timeout = 5000");
-    return db
-      .prepare('SELECT key, json FROM "items" ORDER BY key')
-      .all()
-      .map((row) => {
-        try {
-          return JSON.parse(row.json);
-        } catch (error) {
-          throw new Error(`Could not parse SQLite item ${row.key}: ${error.message}`);
-        }
-      });
-  } finally {
-    db.close();
-  }
-}
-
 function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
@@ -87,7 +51,9 @@ function buildTypeTargets() {
   const itemTypes = readJson(
     path.join(dataRoot, "itemTypes", "data.json"),
   ).types || [];
-  const items = readLivePlayerItems();
+  const items = Object.values(
+    readJson(path.join(dataRoot, "items", "data.json")),
+  );
 
   const itemTypeById = new Map(itemTypes.map((entry) => [String(entry.typeID), entry]));
   const shipTypeById = new Map(shipTypes.map((entry) => [String(entry.typeID), entry]));

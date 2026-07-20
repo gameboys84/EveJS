@@ -50,7 +50,6 @@ const ATTRIBUTE = Object.freeze({
   EXTRACTOR_DEPLETION_RANGE: 1644,
   EXTRACTOR_DEPLETION_RATE: 1645,
   ECU_DECAY_FACTOR: 1683,
-  ECU_MAX_VOLUME: 1684,
   ECU_OVERLAP_FACTOR: 1685,
   ECU_NOISE_FACTOR: 1687,
   ECU_AREA_OF_INFLUENCE: 1689,
@@ -219,7 +218,6 @@ const COMMODITY_TIER_BY_GROUP_ID = Object.freeze({
 
 let itemTypeCache = null;
 let typeDogmaCache = null;
-let dogmaAttributeTypeCache = null;
 let schematicCache = null;
 
 function toInt(value, fallback = 0) {
@@ -263,22 +261,6 @@ function getTypeDogmaByID() {
     Object.entries(rows).map(([typeID, row]) => [toInt(typeID, 0), row]),
   );
   return typeDogmaCache;
-}
-
-function getDogmaAttributeTypeByID() {
-  if (dogmaAttributeTypeCache) {
-    return dogmaAttributeTypeCache;
-  }
-
-  const payload = readStaticTable(TABLE.TYPE_DOGMA);
-  const rows = payload && payload.attributeTypesByID &&
-    typeof payload.attributeTypesByID === "object"
-    ? payload.attributeTypesByID
-    : {};
-  dogmaAttributeTypeCache = new Map(
-    Object.entries(rows).map(([attributeID, row]) => [toInt(attributeID, 0), row]),
-  );
-  return dogmaAttributeTypeCache;
 }
 
 function normalizeSchematicRow(row = {}) {
@@ -356,18 +338,9 @@ function getTypeAttributes(typeID) {
 }
 
 function getTypeAttribute(typeID, attributeID, fallback = 0) {
-  const normalizedAttributeID = toInt(attributeID, 0);
   const attributes = getTypeAttributes(typeID);
-  const value = attributes[String(normalizedAttributeID)];
-  if (value !== undefined && value !== null) {
-    return toNumber(value, fallback);
-  }
-
-  const attributeType = getDogmaAttributeTypeByID().get(normalizedAttributeID);
-  const defaultValue = attributeType && attributeType.defaultValue;
-  return defaultValue === undefined || defaultValue === null
-    ? fallback
-    : toNumber(defaultValue, fallback);
+  const value = attributes[String(toInt(attributeID, 0))];
+  return value === undefined || value === null ? fallback : toNumber(value, fallback);
 }
 
 function getPinEntityType(typeID) {
@@ -524,7 +497,6 @@ function getSchematicsForPinType(typeID) {
 function clearCaches() {
   itemTypeCache = null;
   typeDogmaCache = null;
-  dogmaAttributeTypeCache = null;
   schematicCache = null;
 }
 

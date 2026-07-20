@@ -612,11 +612,7 @@ function createLoopbackCdnRequestHandler() {
   };
 }
 
-function createLoopbackCdnResponder(
-  activeHttpsPort,
-  listenPort = 443,
-  bindHost = "127.0.0.1",
-) {
+function createLoopbackCdnResponder(activeHttpsPort, listenPort = 443) {
   if (activeHttpsPort === listenPort) {
     return null;
   }
@@ -629,12 +625,12 @@ function createLoopbackCdnResponder(
 
   server.on("error", (err) => {
     log.http2Err(
-      `loopback CDN responder failed on ${bindHost}:${listenPort}: ${err.message}`,
+      `loopback CDN responder failed on 127.0.0.1:${listenPort}: ${err.message}`,
     );
   });
-  server.listen(listenPort, bindHost, () => {
+  server.listen(listenPort, "127.0.0.1", () => {
     log.debug(
-      `loopback CDN responder listening on ${bindHost}:${listenPort}`,
+      `loopback CDN responder listening on 127.0.0.1:${listenPort}`,
     );
   });
   return server;
@@ -857,10 +853,6 @@ const EXPRESS_PROXY_ENABLED = parseBooleanEnv(
   process.env.EVEJS_EXPRESS_PROXY_ENABLED,
   true,
 );
-const LOOPBACK_CDN_LISTEN_PORT = parseNonNegativeIntegerEnv(
-  process.env.EVEJS_PROXY_LOOPBACK_CDN_LISTEN_PORT,
-  443,
-);
 const PROXY_FORWARD_UPSTREAM_URL = parseOptionalUrl(
   process.env.EVEJS_PROXY_UPSTREAM_BASE_URL,
 );
@@ -1018,9 +1010,6 @@ function startServer() {
     });
   });
 
-  const { mountPlayerConnectEndpoints } = require("./playerConnectEndpoints");
-  mountPlayerConnectEndpoints(app);
-
   const { mountWebCompanionBridge } = require("./webCompanionBridge");
   mountWebCompanionBridge(app);
 
@@ -1043,11 +1032,7 @@ function startServer() {
 
   if (shouldHandleInterceptLocally()) {
     createLocalSecureResponder(httpsPort, bindHost);
-    createLoopbackCdnResponder(
-      httpsPort,
-      LOOPBACK_CDN_LISTEN_PORT,
-      bindHost,
-    );
+    createLoopbackCdnResponder(httpsPort);
   }
 
   const proxyServer = http.createServer(app);

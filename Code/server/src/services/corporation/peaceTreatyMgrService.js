@@ -2,7 +2,6 @@ const path = require("path");
 
 const BaseService = require(path.join(__dirname, "../baseService"));
 const {
-  buildDbRowset,
   buildFiletimeLong,
   buildKeyVal,
   buildList,
@@ -29,30 +28,6 @@ function buildTreatyPayload(treaty) {
   ]);
 }
 
-const PEACE_TREATY_DBROW_COLUMNS = [
-  ["otherOwnerID", 0x03],
-  ["expiryDate", 0x40],
-  ["peaceReason", 0x11],
-  ["warID", 0x03],
-  ["reasonEnded", 0x11],
-  ["warHQ", 0x14],
-];
-
-function buildTreatyRowset(treaties = []) {
-  return buildDbRowset(
-    PEACE_TREATY_DBROW_COLUMNS,
-    treaties.map((treaty) => [
-      Number(treaty && treaty.otherOwnerID) || 0,
-      treaty && treaty.expiryDate ? buildFiletimeLong(treaty.expiryDate) : null,
-      Number(treaty && treaty.peaceReason) || 0,
-      Number(treaty && treaty.warID) || 0,
-      Number(treaty && treaty.reasonEnded) || 0,
-      treaty && (treaty.warHQ || treaty.warHQID) ? Number(treaty.warHQ || treaty.warHQID) : null,
-    ]),
-    "carbon.common.script.sys.crowset.CRowset",
-  );
-}
-
 class PeaceTreatyManagerService extends BaseService {
   constructor() {
     super("peaceTreatyMgr");
@@ -66,8 +41,8 @@ class PeaceTreatyManagerService extends BaseService {
       0;
     const { outgoing, incoming } = listPeaceTreatiesForOwner(ownerID);
     return [
-      buildTreatyRowset(outgoing),
-      buildTreatyRowset(incoming),
+      buildList(outgoing.map((treaty) => buildTreatyPayload(treaty))),
+      buildList(incoming.map((treaty) => buildTreatyPayload(treaty))),
     ];
   }
 }

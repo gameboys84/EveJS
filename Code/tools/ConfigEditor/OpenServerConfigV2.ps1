@@ -9,11 +9,6 @@ Add-Type -AssemblyName PresentationFramework
 Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName WindowsBase
 
-Add-Type -Namespace EvEJS -Name NativeChrome -MemberDefinition @'
-[System.Runtime.InteropServices.DllImport("dwmapi.dll", PreserveSig = true)]
-public static extern int DwmSetWindowAttribute(System.IntPtr hwnd, int attr, ref int attrValue, int attrSize);
-'@
-
 $script:CliPath = Join-Path $PSScriptRoot "config-manager-cli.js"
 $script:IconManifestPath = Join-Path $PSScriptRoot "assets\icon-map.json"
 $script:ClientIconsRoot = Join-Path $PSScriptRoot "assets\eve-icons"
@@ -24,13 +19,6 @@ $script:SettingsFieldControllers = @{}
 $script:SettingsSnapshot = $null
 $script:SettingsDirty = $false
 $script:IsRenderingSettings = $false
-$script:SettingsSearchBox = $null
-$script:SettingsSearchHint = $null
-$script:SettingsSearchItems = @()
-$script:SettingsTabViews = @()
-$script:SettingsCardByKey = @{}
-$script:MasterTabs = $null
-$script:FooterErrorKey = $null
 
 $script:DatabaseSnapshot = $null
 $script:DbWorkingPlayer = $null
@@ -40,412 +28,28 @@ $script:DbRawJsonDirty = $false
 $script:SuppressPlayerSelection = $false
 $script:IconManifest = $null
 $script:NextGeneratedItemId = $null
-$script:ThemeToggleButton = $null
-$script:MarketStatus = $null
-$script:MarketLastQuery = $null
-$script:MarketBookTypeId = 0
 
 function New-Brush {
   param([Parameter(Mandatory = $true)][string]$Color)
   return [System.Windows.Media.BrushConverter]::new().ConvertFromString($Color)
 }
 
-# ---------------------------------------------------------------------------
-# Theme engine
-# ---------------------------------------------------------------------------
-# Every color the UI paints is expressed as a semantic *role* (TextPrimary,
-# Panel, Accent, ...). Two palettes map those roles to concrete hex values.
-# The active palette is exposed three ways:
-#   * $script:Theme        - role -> hex string (for code that needs a string,
-#                            e.g. New-Badge / glyph foregrounds)
-#   * $script:ThemeBrushes - role -> shared SolidColorBrush instance (for PS
-#                            controls that assign a Brush)
-#   * Application resources - the same brush instances keyed by role, so XAML
-#                            can bind with {DynamicResource <Role>}
-# Switching the theme mutates each shared brush's .Color in place, which live-
-# updates every XAML DynamicResource binding and every PS control that holds a
-# reference to the brush. Hex-based visuals (badges, cards) are refreshed by a
-# re-render triggered from Set-Theme.
-
-$script:PrefsPath = Join-Path $PSScriptRoot "config-editor-prefs.json"
-
-$script:ThemePalettes = @{
-  Dark = @{
-    WindowBg      = "#0E1116"
-    Panel         = "#191D24"
-    PanelSubtle   = "#14171D"
-    PanelInput    = "#11141A"
-    HeroBg        = "#171B22"
-    ListHoverBg   = "#20242D"
-    ListSelBg     = "#1D2A3B"
-    Border        = "#2A303B"
-    BorderStrong  = "#333B48"
-    BorderSel     = "#3D74B0"
-    BorderSelSoft = "#2E4B6E"
-    Accent        = "#4A9EFF"
-    AccentHover   = "#63B0FF"
-    OnAccent      = "#F5FAFF"
-    TextPrimary   = "#E6E9EF"
-    TextSecondary = "#C2C8D2"
-    TextMuted     = "#858E9C"
-    TextAccent    = "#6FB4FF"
-    BtnBg         = "#232833"
-    BtnHoverBg    = "#2B323E"
-    BtnPressBg    = "#313A48"
-    BtnText       = "#D7DCE4"
-    TabBg         = "#1B1F27"
-    TabSelBg      = "#232A36"
-    TabHoverBorder= "#4A5568"
-    SuccessBg     = "#14241E"
-    SuccessFg     = "#34D399"
-    WarnBg        = "#241E12"
-    WarnFg        = "#F0A030"
-    DangerBg      = "#2A1517"
-    DangerFg      = "#F87171"
-    InfoBg        = "#12202E"
-    InfoFg        = "#4A9EFF"
-    BadgeNeutralBg= "#23272F"
-    BadgeNeutralFg= "#C2C8D2"
-    BadgeBlueBg   = "#16283F"
-    BadgeBlueFg   = "#7FB4F0"
-    BadgeGreenBg  = "#14241E"
-    BadgeGreenFg  = "#34D399"
-    BadgePurpleBg = "#211A33"
-    BadgePurpleFg = "#B794F0"
-    BadgeAmberBg  = "#241E12"
-    BadgeAmberFg  = "#F0A030"
-    IconPlateBg   = "#232A36"
-    IconPlateBorder = "#313A48"
-    EditorIconBg  = "#16283F"
-    ScrollThumb   = "#3A414E"
-    ScrollThumbHover = "#525B6B"
-  }
-  Light = @{
-    WindowBg      = "#F4F7FB"
-    Panel         = "#FFFFFF"
-    PanelSubtle   = "#F4F7FB"
-    PanelInput    = "#FFFFFF"
-    HeroBg        = "#F7FAFD"
-    ListHoverBg   = "#F7FAFD"
-    ListSelBg     = "#EAF4FB"
-    Border        = "#D9E2EC"
-    BorderStrong  = "#D5E0EA"
-    BorderSel     = "#6FAEDC"
-    BorderSelSoft = "#B9D4E8"
-    Accent        = "#4F7EA8"
-    AccentHover   = "#6FAEDC"
-    OnAccent      = "#FFFFFF"
-    TextPrimary   = "#102235"
-    TextSecondary = "#334155"
-    TextMuted     = "#6A7C90"
-    TextAccent    = "#2F6F9F"
-    BtnBg         = "#FFFFFF"
-    BtnHoverBg    = "#F7FAFD"
-    BtnPressBg    = "#EAF4FB"
-    BtnText       = "#17324D"
-    TabBg         = "#EAF1F7"
-    TabSelBg      = "#FFFFFF"
-    TabHoverBorder= "#6A7A8F"
-    SuccessBg     = "#DDF6EF"
-    SuccessFg     = "#0F766E"
-    WarnBg        = "#FFF5DD"
-    WarnFg        = "#9A6700"
-    DangerBg      = "#FDE7EA"
-    DangerFg      = "#B42318"
-    InfoBg        = "#EAF4FB"
-    InfoFg        = "#2F6F9F"
-    BadgeNeutralBg= "#E2E8F0"
-    BadgeNeutralFg= "#334155"
-    BadgeBlueBg   = "#DBEAFE"
-    BadgeBlueFg   = "#1D4ED8"
-    BadgeGreenBg  = "#DCFCE7"
-    BadgeGreenFg  = "#166534"
-    BadgePurpleBg = "#EDE9FE"
-    BadgePurpleFg = "#6D28D9"
-    BadgeAmberBg  = "#FEF3C7"
-    BadgeAmberFg  = "#92400E"
-    IconPlateBg   = "#334155"
-    IconPlateBorder = "#223042"
-    EditorIconBg  = "#EAF4FB"
-    ScrollThumb   = "#C2CBD6"
-    ScrollThumbHover = "#A6B2C0"
-  }
+$script:Brushes = @{
+  Slate900 = New-Brush "#0F172A"
+  Slate700 = New-Brush "#334155"
+  Slate500 = New-Brush "#64748B"
+  Slate200 = New-Brush "#D9E2EC"
+  Slate100 = New-Brush "#F4F7FB"
+  White = New-Brush "#FFFFFF"
+  GreenBg = New-Brush "#DDF6EF"
+  GreenFg = New-Brush "#0F766E"
+  AmberBg = New-Brush "#FFF5DD"
+  AmberFg = New-Brush "#9A6700"
+  RedBg = New-Brush "#FDE7EA"
+  RedFg = New-Brush "#B42318"
+  BlueBg = New-Brush "#EAF4FB"
+  BlueFg = New-Brush "#2F6F9F"
 }
-
-# Named tones the icon manifest can reference so category tiles stay theme-aware
-# instead of using hardcoded hex. Each maps to a (background, foreground) role pair.
-$script:IconTonePalette = @{
-  blue    = @("BadgeBlueBg", "BadgeBlueFg")
-  green   = @("BadgeGreenBg", "BadgeGreenFg")
-  amber   = @("BadgeAmberBg", "BadgeAmberFg")
-  purple  = @("BadgePurpleBg", "BadgePurpleFg")
-  neutral = @("BadgeNeutralBg", "BadgeNeutralFg")
-  accent  = @("EditorIconBg", "TextAccent")
-  red     = @("DangerBg", "DangerFg")
-  teal    = @("SuccessBg", "SuccessFg")
-}
-
-$script:ActiveThemeName = "Dark"
-$script:Theme = @{}
-$script:ThemeBrushes = @{}
-$script:Brushes = @{}
-
-function Get-PreferredThemeName {
-  try {
-    if (Test-Path $script:PrefsPath) {
-      $prefs = Get-Content $script:PrefsPath -Raw | ConvertFrom-Json
-      $name = [string]$prefs.theme
-      if ($name -eq "Dark" -or $name -eq "Light") { return $name }
-    }
-  } catch { }
-  return "Dark"
-}
-
-function Save-ThemePreference {
-  param([Parameter(Mandatory = $true)][string]$Name)
-  try {
-    [pscustomobject]@{ theme = $Name } | ConvertTo-Json | Set-Content -Path $script:PrefsPath -Encoding UTF8
-  } catch { }
-}
-
-function Get-ThemeHex {
-  param([Parameter(Mandatory = $true)][string]$Role)
-  if ($script:Theme.ContainsKey($Role)) { return $script:Theme[$Role] }
-  return "#FF00FF"
-}
-
-function Get-ThemeBrush {
-  param([Parameter(Mandatory = $true)][string]$Role)
-  if ($script:ThemeBrushes.ContainsKey($Role)) { return $script:ThemeBrushes[$Role] }
-  return $script:ThemeBrushes["TextPrimary"]
-}
-
-# Compatibility aliases: legacy $script:Brushes.<Name> map onto theme roles so
-# existing PS controls pick up the active palette without per-call changes.
-$script:BrushRoleAliases = @{
-  Slate900 = "TextPrimary"
-  Slate700 = "TextSecondary"
-  Slate500 = "TextMuted"
-  Slate200 = "Border"
-  Slate100 = "PanelSubtle"
-  White    = "Panel"
-  GreenBg  = "SuccessBg"
-  GreenFg  = "SuccessFg"
-  AmberBg  = "WarnBg"
-  AmberFg  = "WarnFg"
-  RedBg    = "DangerBg"
-  RedFg    = "DangerFg"
-  BlueBg   = "InfoBg"
-  BlueFg   = "InfoFg"
-}
-
-function Apply-ThemeValues {
-  param([Parameter(Mandatory = $true)][string]$Name)
-
-  $palette = $script:ThemePalettes[$Name]
-  $script:ActiveThemeName = $Name
-  $script:Theme = @{}
-  foreach ($role in $palette.Keys) { $script:Theme[$role] = $palette[$role] }
-
-  # Replace (not mutate) the brush per role: WPF freezes a brush once it is used
-  # as a resource, so a fresh instance is registered each time. Assigning a new
-  # value to the resource key makes every {DynamicResource} consumer re-resolve;
-  # PS-built controls pick up the new brushes when Set-Theme re-renders them.
-  $app = [System.Windows.Application]::Current
-  foreach ($role in $palette.Keys) {
-    $color = [System.Windows.Media.ColorConverter]::ConvertFromString($palette[$role])
-    $brush = [System.Windows.Media.SolidColorBrush]::new($color)
-    $script:ThemeBrushes[$role] = $brush
-    if ($app) { $app.Resources[$role] = $brush }
-  }
-
-  foreach ($alias in $script:BrushRoleAliases.Keys) {
-    $script:Brushes[$alias] = $script:ThemeBrushes[$script:BrushRoleAliases[$alias]]
-  }
-}
-
-function Register-GlobalStyles {
-  # Implicit styles merged into Application resources so every window (including
-  # the on-demand dialogs) gets themed scrollbars. Brushes are resolved with
-  # DynamicResource so they follow theme switches.
-  $dictXaml = @'
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Style x:Key="EvejsScrollThumb" TargetType="Thumb">
-    <Setter Property="OverridesDefaultStyle" Value="True" />
-    <Setter Property="IsTabStop" Value="False" />
-    <Setter Property="MinHeight" Value="28" />
-    <Setter Property="MinWidth" Value="28" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="Thumb">
-          <Border x:Name="ThumbBorder" CornerRadius="4" Margin="2" Background="{DynamicResource ScrollThumb}" />
-          <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-              <Setter TargetName="ThumbBorder" Property="Background" Value="{DynamicResource ScrollThumbHover}" />
-            </Trigger>
-            <Trigger Property="IsDragging" Value="True">
-              <Setter TargetName="ThumbBorder" Property="Background" Value="{DynamicResource ScrollThumbHover}" />
-            </Trigger>
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
-  <Style x:Key="EvejsScrollPageButton" TargetType="RepeatButton">
-    <Setter Property="OverridesDefaultStyle" Value="True" />
-    <Setter Property="Background" Value="Transparent" />
-    <Setter Property="Focusable" Value="False" />
-    <Setter Property="IsTabStop" Value="False" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="RepeatButton">
-          <Border Background="Transparent" />
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
-  <Style TargetType="ScrollBar">
-    <Setter Property="OverridesDefaultStyle" Value="True" />
-    <Setter Property="Background" Value="Transparent" />
-    <Setter Property="Width" Value="12" />
-    <Setter Property="MinWidth" Value="12" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="ScrollBar">
-          <Grid Background="Transparent">
-            <Track x:Name="PART_Track"
-                   Orientation="{Binding Orientation, RelativeSource={RelativeSource TemplatedParent}}"
-                   IsDirectionReversed="True"
-                   Focusable="False">
-              <Track.DecreaseRepeatButton>
-                <RepeatButton Style="{StaticResource EvejsScrollPageButton}" Command="ScrollBar.PageUpCommand" />
-              </Track.DecreaseRepeatButton>
-              <Track.Thumb>
-                <Thumb Style="{StaticResource EvejsScrollThumb}" />
-              </Track.Thumb>
-              <Track.IncreaseRepeatButton>
-                <RepeatButton Style="{StaticResource EvejsScrollPageButton}" Command="ScrollBar.PageDownCommand" />
-              </Track.IncreaseRepeatButton>
-            </Track>
-          </Grid>
-          <ControlTemplate.Triggers>
-            <Trigger Property="Orientation" Value="Horizontal">
-              <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="False" />
-            </Trigger>
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-    <Style.Triggers>
-      <Trigger Property="Orientation" Value="Horizontal">
-        <Setter Property="Width" Value="Auto" />
-        <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Height" Value="12" />
-        <Setter Property="MinHeight" Value="12" />
-      </Trigger>
-    </Style.Triggers>
-  </Style>
-</ResourceDictionary>
-'@
-  try {
-    $dict = [System.Windows.Markup.XamlReader]::Parse($dictXaml)
-    [System.Windows.Application]::Current.Resources.MergedDictionaries.Add($dict)
-  } catch { }
-}
-
-function Initialize-Theme {
-  if (-not [System.Windows.Application]::Current) {
-    $null = [System.Windows.Application]::new()
-  }
-  $script:ActiveThemeName = Get-PreferredThemeName
-  Apply-ThemeValues -Name $script:ActiveThemeName
-  Register-GlobalStyles
-}
-
-function Set-Theme {
-  param([Parameter(Mandatory = $true)][ValidateSet("Dark", "Light")][string]$Name)
-
-  if ($Name -eq $script:ActiveThemeName) { return }
-  Apply-ThemeValues -Name $Name
-  Save-ThemePreference -Name $Name
-  if ($script:ThemeToggleButton) { Update-ThemeToggleButton }
-  if ($script:Window) { Apply-WindowThemeChrome -Window $script:Window }
-
-  # Mutating the shared brushes above live-updates every DynamicResource binding
-  # and every control painted from $script:Brushes. The only visuals that keep a
-  # stale color are the ones built from hex strings at render time (badges and
-  # per-item icon plates), so re-render those - WITHOUT discarding unsaved edits.
-  if ($script:SettingsSnapshot) {
-    $savedDirty = $script:SettingsDirty
-    $savedValues = $null
-    try { $savedValues = Collect-SettingsValues } catch { $savedValues = $null }
-    Render-SettingsSnapshot -Snapshot $script:SettingsSnapshot -ReadyMessage "Theme set to $Name."
-    if ($savedValues) {
-      $script:IsRenderingSettings = $true
-      try {
-        foreach ($key in @($savedValues.Keys)) {
-          if ($script:SettingsFieldControllers.ContainsKey($key)) {
-            Set-ControlValue -Controller $script:SettingsFieldControllers[$key] -Value $savedValues[$key]
-          }
-        }
-      } finally { $script:IsRenderingSettings = $false }
-    }
-    Set-SettingsDirtyState -Dirty $savedDirty -Message "Theme set to $Name."
-  }
-
-  if ($script:DatabaseSnapshot) {
-    $savedDbDirty = $script:DatabaseDirty
-    $script:IsRenderingDatabase = $true
-    try {
-      Update-PlayerListDisplay
-      if ($script:DbWorkingPlayer) {
-        Sync-OverviewControlsToWorkingCopy
-        Render-DatabasePlayer
-      }
-    } finally { $script:IsRenderingDatabase = $false }
-    Set-DatabaseDirtyState -Dirty $savedDbDirty -Message "Theme set to $Name."
-  }
-}
-
-function Update-ThemeToggleButton {
-  if (-not $script:ThemeToggleButton) { return }
-  if ($script:ActiveThemeName -eq "Dark") {
-    $script:ThemeToggleButton.Content = [string][char]0x2600  # sun: click to go light
-    $script:ThemeToggleButton.ToolTip = "Switch to light theme"
-  } else {
-    $script:ThemeToggleButton.Content = [string][char]0x263E  # moon: click to go dark
-    $script:ThemeToggleButton.ToolTip = "Switch to dark theme"
-  }
-}
-
-function Toggle-Theme {
-  $next = if ($script:ActiveThemeName -eq "Dark") { "Light" } else { "Dark" }
-  Set-Theme -Name $next
-}
-
-function Set-WindowDarkTitleBar {
-  param(
-    [Parameter(Mandatory = $true)][System.Windows.Window]$Window,
-    [bool]$Dark
-  )
-  try {
-    $hwnd = ([System.Windows.Interop.WindowInteropHelper]::new($Window)).Handle
-    if ($hwnd -eq [System.IntPtr]::Zero) { return }
-    $val = if ($Dark) { 1 } else { 0 }
-    # 20 = DWMWA_USE_IMMERSIVE_DARK_MODE (Win10 2004+); 19 on older builds.
-    if ([EvEJS.NativeChrome]::DwmSetWindowAttribute($hwnd, 20, [ref]$val, 4) -ne 0) {
-      [EvEJS.NativeChrome]::DwmSetWindowAttribute($hwnd, 19, [ref]$val, 4) | Out-Null
-    }
-  } catch { }
-}
-
-function Apply-WindowThemeChrome {
-  param([Parameter(Mandatory = $true)][System.Windows.Window]$Window)
-  Set-WindowDarkTitleBar -Window $Window -Dark ($script:ActiveThemeName -eq "Dark")
-}
-
-Initialize-Theme
 
 function Invoke-ProjectCli {
   param(
@@ -550,8 +154,8 @@ function Parse-JsonObjectText {
 function New-Badge {
   param(
     [Parameter(Mandatory = $true)][string]$Text,
-    [string]$Background = (Get-ThemeHex 'BadgeNeutralBg'),
-    [string]$Foreground = (Get-ThemeHex 'BadgeNeutralFg'),
+    [string]$Background = "#E2E8F0",
+    [string]$Foreground = "#334155",
     [string]$Glyph = "",
     [string]$ImagePath = "",
     [double]$ImageSize = 16
@@ -610,7 +214,7 @@ function New-IconVisual {
     [string]$ImagePath = "",
     [string]$Glyph = "",
     [string]$GlyphFont = "Segoe MDL2 Assets",
-    [string]$Foreground = (Get-ThemeHex 'TextSecondary'),
+    [string]$Foreground = "#334155",
     [double]$IconSize = 16,
     [double]$MarginRight = 8
   )
@@ -630,8 +234,8 @@ function New-IconVisual {
       $plate.Height = [Math]::Max($IconSize + 10, 24)
       $plate.CornerRadius = [System.Windows.CornerRadius]::new(8)
       $plate.Margin = [System.Windows.Thickness]::new(0, 0, $MarginRight, 0)
-      $plate.Background = New-Brush (Get-ThemeHex 'IconPlateBg')
-      $plate.BorderBrush = New-Brush (Get-ThemeHex 'IconPlateBorder')
+      $plate.Background = New-Brush "#334155"
+      $plate.BorderBrush = New-Brush "#223042"
       $plate.BorderThickness = [System.Windows.Thickness]::new(1)
       $plate.Child = $image
       return $plate
@@ -648,11 +252,7 @@ function New-IconVisual {
     $icon.FontSize = [Math]::Max($IconSize - 2, 12)
     $icon.Margin = [System.Windows.Thickness]::new(0, 0, $MarginRight, 0)
     $icon.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
-    # An empty foreground means "inherit" so button glyphs follow the button's
-    # own Foreground (primary vs secondary) across theme changes.
-    if (-not [string]::IsNullOrWhiteSpace($Foreground)) {
-      $icon.Foreground = New-Brush $Foreground
-    }
+    $icon.Foreground = New-Brush $Foreground
     return $icon
   }
 
@@ -729,19 +329,9 @@ function Resolve-ManifestIconSpec {
   }
 
   $foreground = [string](Get-JsonPropertyValue -Object $resolvedEntry -Name "foreground")
+  if ([string]::IsNullOrWhiteSpace($foreground)) { $foreground = "#4F7EA8" }
   $background = [string](Get-JsonPropertyValue -Object $resolvedEntry -Name "background")
-
-  # A named tone resolves to theme-aware colors (so tiles adapt to dark/light);
-  # explicit foreground/background hex still take precedence when provided.
-  $tone = [string](Get-JsonPropertyValue -Object $resolvedEntry -Name "tone")
-  if (-not [string]::IsNullOrWhiteSpace($tone) -and $script:IconTonePalette.ContainsKey($tone.ToLowerInvariant())) {
-    $tonePair = $script:IconTonePalette[$tone.ToLowerInvariant()]
-    if ([string]::IsNullOrWhiteSpace($background)) { $background = (Get-ThemeHex $tonePair[0]) }
-    if ([string]::IsNullOrWhiteSpace($foreground)) { $foreground = (Get-ThemeHex $tonePair[1]) }
-  }
-
-  if ([string]::IsNullOrWhiteSpace($foreground)) { $foreground = (Get-ThemeHex 'TextAccent') }
-  if ([string]::IsNullOrWhiteSpace($background)) { $background = (Get-ThemeHex 'EditorIconBg') }
+  if ([string]::IsNullOrWhiteSpace($background)) { $background = "#EAF4FB" }
 
   return [pscustomobject]@{
     glyph = Convert-GlyphTokenToText ([string](Get-JsonPropertyValue -Object $resolvedEntry -Name "glyph"))
@@ -858,7 +448,7 @@ function New-IconTextContent {
     $glyphText = [string][char]$GlyphCode
   }
 
-  $iconElement = New-IconVisual -ImagePath $IconPath -Glyph $glyphText -GlyphFont $GlyphFont -Foreground "" -IconSize $IconSize -MarginRight 8
+  $iconElement = New-IconVisual -ImagePath $IconPath -Glyph $glyphText -GlyphFont $GlyphFont -Foreground "#334155" -IconSize $IconSize -MarginRight 8
   if ($iconElement) {
     $panel.Children.Add($iconElement) | Out-Null
   }
@@ -909,75 +499,6 @@ function Set-StatusUi {
   $script:HeroBadgeBorder.BorderBrush = $toneConfig.Foreground
   $script:HeroBadgeText.Foreground = $toneConfig.Foreground
   $script:HeroBadgeText.Text = ("STATUS: {0}" -f $resolvedBadgeText.ToUpperInvariant())
-
-  # If an error names a known setting, make the footer a shortcut to that field.
-  $script:FooterErrorKey = if ($Tone -eq "error") { Find-SettingKeyInMessage -Message $Message } else { $null }
-  Update-FooterClickable
-}
-
-function Find-SettingKeyInMessage {
-  param([string]$Message)
-  if (-not $script:SettingsSnapshot -or [string]::IsNullOrEmpty($Message)) { return $null }
-  $best = $null
-  foreach ($entry in @($script:SettingsSnapshot.entries)) {
-    $key = [string]$entry.key
-    if ($key -and $script:SettingsCardByKey.ContainsKey($key) -and $Message.Contains($key)) {
-      # Prefer the longest match so e.g. "clientBuild" wins over any shorter key.
-      if (-not $best -or $key.Length -gt $best.Length) { $best = $key }
-    }
-  }
-  return $best
-}
-
-function Update-FooterClickable {
-  if (-not $script:FooterStatusText) { return }
-  if ($script:FooterErrorKey) {
-    $script:FooterStatusText.Cursor = [System.Windows.Input.Cursors]::Hand
-    $script:FooterStatusText.TextDecorations = [System.Windows.TextDecorations]::Underline
-    $script:FooterStatusText.ToolTip = "Go to setting: $($script:FooterErrorKey)"
-  } else {
-    $script:FooterStatusText.Cursor = [System.Windows.Input.Cursors]::Arrow
-    $script:FooterStatusText.TextDecorations = $null
-    $script:FooterStatusText.ToolTip = $null
-  }
-}
-
-function Flash-Card {
-  param([Parameter(Mandatory = $true)][System.Windows.Controls.Border]$Card)
-  $origBrush = $Card.BorderBrush
-  $origThickness = $Card.BorderThickness
-  $Card.BorderBrush = (Get-ThemeBrush 'Accent')
-  $Card.BorderThickness = [System.Windows.Thickness]::new(2)
-  $timer = [System.Windows.Threading.DispatcherTimer]::new()
-  $timer.Interval = [TimeSpan]::FromMilliseconds(1800)
-  $timer.Add_Tick({
-    $Card.BorderBrush = $origBrush
-    $Card.BorderThickness = $origThickness
-    $timer.Stop()
-  }.GetNewClosure())
-  $timer.Start()
-}
-
-function Navigate-ToSetting {
-  param([Parameter(Mandatory = $true)][string]$Key)
-  if (-not $script:SettingsCardByKey.ContainsKey($Key)) { return }
-  $target = $script:SettingsCardByKey[$Key]
-
-  if ($script:MasterTabs) { $script:MasterTabs.SelectedIndex = 0 }
-  $target.Section.Expanded = $true
-  if ($script:SettingsSearchBox -and -not [string]::IsNullOrEmpty($script:SettingsSearchBox.Text)) {
-    $script:SettingsSearchBox.Text = ""
-  }
-  $tabIndex = $script:SettingsTabs.Items.IndexOf($target.TabView.Tab)
-  if ($tabIndex -ge 0) { $script:SettingsTabs.SelectedIndex = $tabIndex }
-  Update-SettingsVisibility
-
-  # Defer until layout settles so BringIntoView can reach the now-visible card.
-  $card = $target.Card
-  $card.Dispatcher.BeginInvoke([System.Windows.Threading.DispatcherPriority]::Background, [action]{
-    $card.BringIntoView()
-    Flash-Card -Card $card
-  }.GetNewClosure()) | Out-Null
 }
 
 function Set-SettingsDirtyState {
@@ -1032,17 +553,11 @@ function Get-GroupDescription {
     "Basics" { return "Everyday toggles and the most common runtime switches." }
     "Structures & Safety" { return "Upwell bypasses and timer scaling controls for structure and safety workflows." }
     "Client Compatibility" { return "Values the client handshake expects to match your build." }
-    "Network" { return "Ports, service URLs, socket tuning, proxy, XMPP, and host bindings for the local services." }
+    "Network" { return "Ports and URLs used by the local services and redirects." }
     "Market & Services" { return "Market daemon connectivity, retries, and related service tuning." }
     "HyperNet" { return "HyperNet kill-switch, pricing, and startup seeding controls." }
-    "World & Performance" { return "Startup loading, debris cleanup, stargate / sentry presence, and runtime performance tuning." }
+    "World & Performance" { return "Startup loading, debris cleanup, and runtime performance tuning." }
     "NPC & Crimewatch" { return "NPC startup behavior and CONCORD / Crimewatch controls." }
-    "Mining" { return "Everything mining: belt / ice / gas sites, mining NPC fleets, haulers, response, and ledgers." }
-    "Belt Rats" { return "Asteroid belt NPC rat spawning, specials, commanders, officers, capitals, and bounties." }
-    "Wormholes" { return "Wormhole availability, lifetimes, and wandering-connection behavior." }
-    "New Eden Store" { return "New Eden Store checkout flow, PLEX offers, and test / fake-purchase switches." }
-    "Server Ops" { return "Server status reporting, downtime scheduling, industry indices, and packet logging." }
-    "Developer" { return "Developer conveniences: account bootstrap, new-character flow, skills, and expert systems." }
     default { return "Advanced settings for EvEJS." }
   }
 }
@@ -1125,12 +640,12 @@ function New-SettingsCard {
   param([Parameter(Mandatory = $true)][pscustomobject]$Entry)
 
   $card = [System.Windows.Controls.Border]::new()
-  $card.CornerRadius = [System.Windows.CornerRadius]::new(12)
+  $card.CornerRadius = [System.Windows.CornerRadius]::new(16)
   $card.BorderThickness = [System.Windows.Thickness]::new(1)
   $card.BorderBrush = $script:Brushes.Slate200
   $card.Background = $script:Brushes.White
-  $card.Padding = [System.Windows.Thickness]::new(16, 12, 16, 12)
-  $card.Margin = [System.Windows.Thickness]::new(0, 0, 0, 10)
+  $card.Padding = [System.Windows.Thickness]::new(18)
+  $card.Margin = [System.Windows.Thickness]::new(0, 0, 0, 14)
 
   $layout = [System.Windows.Controls.StackPanel]::new()
   $headerGrid = [System.Windows.Controls.Grid]::new()
@@ -1155,10 +670,10 @@ function New-SettingsCard {
 
   $badgePanel = [System.Windows.Controls.WrapPanel]::new()
   $badgePanel.HorizontalAlignment = [System.Windows.HorizontalAlignment]::Right
-  $badgePanel.Children.Add((New-Badge -Text ("Source: {0}" -f (Get-SourceLabel $Entry.source)) -Background (Get-ThemeHex 'BadgeNeutralBg') -Foreground (Get-ThemeHex 'BadgeNeutralFg'))) | Out-Null
-  $badgePanel.Children.Add((New-Badge -Text ("Default: {0}" -f (Format-DisplayValue $Entry.defaultValue)) -Background (Get-ThemeHex 'BadgeBlueBg') -Foreground (Get-ThemeHex 'BadgeBlueFg'))) | Out-Null
+  $badgePanel.Children.Add((New-Badge -Text ("Source: {0}" -f (Get-SourceLabel $Entry.source)) -Background "#E2E8F0" -Foreground "#334155")) | Out-Null
+  $badgePanel.Children.Add((New-Badge -Text ("Default: {0}" -f (Format-DisplayValue $Entry.defaultValue)) -Background "#DBEAFE" -Foreground "#1D4ED8")) | Out-Null
   if ($Entry.source -eq "env" -and $Entry.envVar) {
-    $badgePanel.Children.Add((New-Badge -Text ("Env: {0}" -f $Entry.envVar) -Background (Get-ThemeHex 'BadgeAmberBg') -Foreground (Get-ThemeHex 'BadgeAmberFg'))) | Out-Null
+    $badgePanel.Children.Add((New-Badge -Text ("Env: {0}" -f $Entry.envVar) -Background "#FEF3C7" -Foreground "#92400E")) | Out-Null
   }
   [System.Windows.Controls.Grid]::SetColumn($badgePanel, 1)
 
@@ -1202,7 +717,7 @@ function New-SettingsCard {
   $resetButton.Add_Click({
     Set-ControlValue -Controller $capturedController -Value $capturedEntry.defaultValue
     Set-SettingsDirtyState -Dirty $true -Message ("{0} has been reset in the form." -f $capturedEntry.label)
-  }.GetNewClosure())
+  })
 
   $script:SettingsFieldControllers[$Entry.key] = $controller
 
@@ -1219,104 +734,6 @@ function Collect-SettingsValues {
     $values[$key] = Get-ControlValue -Controller $script:SettingsFieldControllers[$key]
   }
   return $values
-}
-
-function New-SubGroupHeader {
-  param(
-    [Parameter(Mandatory = $true)][string]$Name,
-    [int]$Count = 0
-  )
-
-  $border = [System.Windows.Controls.Border]::new()
-  $border.CornerRadius = [System.Windows.CornerRadius]::new(8)
-  $border.Background = (Get-ThemeBrush 'PanelSubtle')
-  $border.BorderBrush = (Get-ThemeBrush 'Border')
-  $border.BorderThickness = [System.Windows.Thickness]::new(1)
-  $border.Padding = [System.Windows.Thickness]::new(12, 8, 12, 8)
-  $border.Margin = [System.Windows.Thickness]::new(0, 0, 0, 8)
-  $border.Cursor = [System.Windows.Input.Cursors]::Hand
-
-  $dock = [System.Windows.Controls.DockPanel]::new()
-
-  $chevron = [System.Windows.Controls.TextBlock]::new()
-  $chevron.Text = [string][char]0x25B8  # right-pointing triangle (collapsed)
-  $chevron.FontSize = 11
-  $chevron.Foreground = (Get-ThemeBrush 'TextAccent')
-  $chevron.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
-  $chevron.Margin = [System.Windows.Thickness]::new(0, 0, 10, 0)
-  [System.Windows.Controls.DockPanel]::SetDock($chevron, [System.Windows.Controls.Dock]::Left)
-  $dock.Children.Add($chevron) | Out-Null
-
-  $countText = [System.Windows.Controls.TextBlock]::new()
-  $countText.Text = [string]$Count
-  $countText.FontSize = 11
-  $countText.FontWeight = [System.Windows.FontWeights]::SemiBold
-  $countText.Foreground = (Get-ThemeBrush 'TextMuted')
-  $countText.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
-  [System.Windows.Controls.DockPanel]::SetDock($countText, [System.Windows.Controls.Dock]::Right)
-  $dock.Children.Add($countText) | Out-Null
-
-  $label = [System.Windows.Controls.TextBlock]::new()
-  $label.Text = $Name.ToUpperInvariant()
-  $label.FontSize = 12
-  $label.FontWeight = [System.Windows.FontWeights]::SemiBold
-  $label.Foreground = (Get-ThemeBrush 'TextAccent')
-  $label.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
-  $dock.Children.Add($label) | Out-Null
-
-  $border.Child = $dock
-  $border.Add_MouseEnter({ param($s, $e) $s.Background = (Get-ThemeBrush 'ListHoverBg') })
-  $border.Add_MouseLeave({ param($s, $e) $s.Background = (Get-ThemeBrush 'PanelSubtle') })
-
-  return [pscustomobject]@{ Element = $border; Chevron = $chevron }
-}
-
-function Update-SettingsVisibility {
-  if (-not $script:SettingsSearchBox) { return }
-
-  $term = ([string]$script:SettingsSearchBox.Text).Trim().ToLowerInvariant()
-  $hasTerm = $term.Length -gt 0
-  $vis = [System.Windows.Visibility]::Visible
-  $col = [System.Windows.Visibility]::Collapsed
-  $chevDown = [string][char]0x25BE  # expanded
-  $chevRight = [string][char]0x25B8 # collapsed
-
-  if ($script:SettingsSearchHint) {
-    $script:SettingsSearchHint.Visibility = if ($hasTerm) { $col } else { $vis }
-  }
-
-  $firstMatchTab = -1
-  $currentHasMatch = $false
-  for ($ti = 0; $ti -lt $script:SettingsTabViews.Count; $ti++) {
-    $tabView = $script:SettingsTabViews[$ti]
-    if ($tabView.Intro) { $tabView.Intro.Visibility = if ($hasTerm) { $col } else { $vis } }
-    $tabHasMatch = $false
-    foreach ($section in $tabView.Sections) {
-      $sectionHasMatch = $false
-      foreach ($card in $section.Cards) {
-        $match = (-not $hasTerm) -or ([string]$card.Tag).Contains($term)
-        if ($match) { $sectionHasMatch = $true }
-        # When searching, matching cards are force-shown; otherwise they follow
-        # the section's expand/collapse state.
-        $showCard = $match -and ($section.Expanded -or $hasTerm)
-        $card.Visibility = if ($showCard) { $vis } else { $col }
-      }
-      if ($section.Header) {
-        $section.Header.Visibility = if ((-not $hasTerm) -or $sectionHasMatch) { $vis } else { $col }
-      }
-      $effectiveExpanded = if ($hasTerm) { $sectionHasMatch } else { [bool]$section.Expanded }
-      if ($section.Chevron) { $section.Chevron.Text = if ($effectiveExpanded) { $chevDown } else { $chevRight } }
-      if ($sectionHasMatch) { $tabHasMatch = $true }
-    }
-    if ($tabHasMatch) {
-      if ($firstMatchTab -lt 0) { $firstMatchTab = $ti }
-      if ($ti -eq $script:SettingsTabs.SelectedIndex) { $currentHasMatch = $true }
-    }
-  }
-
-  if ($hasTerm -and -not $currentHasMatch -and $firstMatchTab -ge 0) {
-    $script:SettingsTabs.SelectedIndex = $firstMatchTab
-  }
 }
 
 function Render-SettingsSnapshot {
@@ -1336,10 +753,6 @@ function Render-SettingsSnapshot {
     }
 
     $script:SettingsTabs.Items.Clear()
-    $script:SettingsSearchItems = New-Object System.Collections.Generic.List[object]
-    $script:SettingsTabViews = New-Object System.Collections.Generic.List[object]
-    $script:SettingsCardByKey = @{}
-
     foreach ($group in @($Snapshot.groupOrder)) {
       $groupEntries = @($Snapshot.entries | Where-Object { $_.group -eq $group })
       if ($groupEntries.Count -eq 0) { continue }
@@ -1348,86 +761,34 @@ function Render-SettingsSnapshot {
       $tabItem.Header = $group
       $scrollViewer = [System.Windows.Controls.ScrollViewer]::new()
       $scrollViewer.VerticalScrollBarVisibility = [System.Windows.Controls.ScrollBarVisibility]::Auto
-      # Fixed gap between the tab strip and the scrolling viewport.
-      $scrollViewer.Margin = [System.Windows.Thickness]::new(0, 10, 0, 0)
-      $scrollViewer.Padding = [System.Windows.Thickness]::new(0, 0, 6, 0)
       $contentStack = [System.Windows.Controls.StackPanel]::new()
-      $contentStack.Margin = [System.Windows.Thickness]::new(0, 0, 0, 0)
+      $contentStack.Margin = [System.Windows.Thickness]::new(0, 12, 0, 0)
 
       $introCard = [System.Windows.Controls.Border]::new()
-      $introCard.CornerRadius = [System.Windows.CornerRadius]::new(12)
-      $introCard.Padding = [System.Windows.Thickness]::new(14, 9, 14, 9)
+      $introCard.CornerRadius = [System.Windows.CornerRadius]::new(16)
+      $introCard.Padding = [System.Windows.Thickness]::new(18)
       $introCard.Background = $script:Brushes.Slate100
       $introCard.BorderBrush = $script:Brushes.Slate200
       $introCard.BorderThickness = [System.Windows.Thickness]::new(1)
-      $introCard.Margin = [System.Windows.Thickness]::new(0, 0, 0, 10)
+      $introCard.Margin = [System.Windows.Thickness]::new(0, 0, 0, 14)
       $introText = [System.Windows.Controls.TextBlock]::new()
       $introText.Text = Get-GroupDescription $group
       $introText.TextWrapping = [System.Windows.TextWrapping]::Wrap
-      $introText.FontSize = 12
+      $introText.FontSize = 13
       $introText.Foreground = $script:Brushes.Slate700
       $introCard.Child = $introText
       $contentStack.Children.Add($introCard) | Out-Null
 
-      # Bucket the group's entries by sub-group, preserving first-seen order.
-      $subOrder = New-Object System.Collections.Generic.List[string]
-      $buckets = @{}
       foreach ($entry in $groupEntries) {
-        $sub = [string]$entry.subGroup
-        if ([string]::IsNullOrWhiteSpace($sub)) { $sub = "General" }
-        if (-not $buckets.ContainsKey($sub)) {
-          $buckets[$sub] = (New-Object System.Collections.Generic.List[object])
-          $subOrder.Add($sub) | Out-Null
-        }
-        $buckets[$sub].Add($entry) | Out-Null
-      }
-      $tabView = [pscustomobject]@{
-        Tab = $tabItem
-        Intro = $introCard
-        Sections = (New-Object System.Collections.Generic.List[object])
-      }
-
-      foreach ($sub in $subOrder) {
-        $bucketEntries = $buckets[$sub]
-        $headerInfo = New-SubGroupHeader -Name $sub -Count $bucketEntries.Count
-        $contentStack.Children.Add($headerInfo.Element) | Out-Null
-
-        $sectionCards = New-Object System.Collections.Generic.List[object]
-        $sectionObj = [pscustomobject]@{
-          Header = $headerInfo.Element
-          Chevron = $headerInfo.Chevron
-          Cards = $sectionCards
-          Expanded = $false
-        }
-        foreach ($entry in $bucketEntries) {
-          $card = New-SettingsCard -Entry $entry
-          $haystack = (@($entry.key, $entry.label, (@($entry.description) -join ' '), $entry.group, $sub, $entry.validValues) -join ' ').ToLowerInvariant()
-          $card.Tag = $haystack
-          $contentStack.Children.Add($card) | Out-Null
-          $script:SettingsSearchItems.Add([pscustomobject]@{ Card = $card; Haystack = $haystack }) | Out-Null
-          $sectionCards.Add($card) | Out-Null
-          $script:SettingsCardByKey[[string]$entry.key] = [pscustomobject]@{ Card = $card; Section = $sectionObj; TabView = $tabView }
-        }
-
-        # Collapsed by default; clicking the header toggles this section.
-        $capturedSection = $sectionObj
-        $toggleHandler = {
-          $capturedSection.Expanded = -not $capturedSection.Expanded
-          Update-SettingsVisibility
-        }.GetNewClosure()
-        $headerInfo.Element.Add_MouseLeftButtonUp($toggleHandler)
-        $tabView.Sections.Add($sectionObj) | Out-Null
+        $contentStack.Children.Add((New-SettingsCard -Entry $entry)) | Out-Null
       }
 
       $scrollViewer.Content = $contentStack
       $tabItem.Content = $scrollViewer
       $script:SettingsTabs.Items.Add($tabItem) | Out-Null
-      $script:SettingsTabViews.Add($tabView) | Out-Null
     }
 
     if ($script:SettingsTabs.Items.Count -gt 0) { $script:SettingsTabs.SelectedIndex = 0 }
-    # Apply the initial (all-collapsed) state and honor any active search term.
-    Update-SettingsVisibility
     Set-SettingsDirtyState -Dirty $false -Message $ReadyMessage
   } finally {
     $script:IsRenderingSettings = $false
@@ -1454,8 +815,8 @@ function New-DatabaseWorkingCopy {
     account = ConvertTo-DeepClone $SelectedPlayer.account
     characterId = [string]$SelectedPlayer.characterId
     character = ConvertTo-DeepClone $SelectedPlayer.character
-    skillsList = @(Convert-SkillStoreToList -SkillStore (Convert-SkillListToMap -SkillList @($SelectedPlayer.skillsList)) -CatalogByKey $catalogByKey)
-    itemsList = @(Convert-ItemMapToList -ItemsMap (Convert-ItemListToMap -ItemList @($SelectedPlayer.itemsList)))
+    skillsList = Convert-SkillStoreToList -SkillStore (Convert-SkillListToMap -SkillList @($SelectedPlayer.skillsList)) -CatalogByKey $catalogByKey
+    itemsList = Convert-ItemMapToList -ItemsMap (Convert-ItemListToMap -ItemList @($SelectedPlayer.itemsList))
     metrics = ConvertTo-DeepClone $SelectedPlayer.metrics
     references = ConvertTo-DeepClone $SelectedPlayer.references
     warningMessages = @($SelectedPlayer.warningMessages)
@@ -1463,21 +824,21 @@ function New-DatabaseWorkingCopy {
 }
 
 function Convert-SkillListToMap {
-  param([Parameter(Mandatory = $true)][AllowEmptyCollection()][object[]]$SkillList)
+  param([Parameter(Mandatory = $true)][object[]]$SkillList)
   $map = [ordered]@{}
   foreach ($skill in $SkillList) { $map[[string]$skill.skillKey] = $skill.raw }
   return [pscustomobject]$map
 }
 
 function Convert-ItemListToMap {
-  param([Parameter(Mandatory = $true)][AllowEmptyCollection()][object[]]$ItemList)
+  param([Parameter(Mandatory = $true)][object[]]$ItemList)
   $map = [ordered]@{}
   foreach ($item in $ItemList) { $map[[string]$item.itemKey] = $item.raw }
   return [pscustomobject]$map
 }
 
 function Build-DisplayItems {
-  param([Parameter(Mandatory = $true)][AllowEmptyCollection()][object[]]$Items, [Parameter(Mandatory = $true)][scriptblock]$LabelBuilder, [Parameter(Mandatory = $true)][string]$KeyName)
+  param([Parameter(Mandatory = $true)][object[]]$Items, [Parameter(Mandatory = $true)][scriptblock]$LabelBuilder, [Parameter(Mandatory = $true)][string]$KeyName)
   return @(
     foreach ($item in $Items) {
       [pscustomobject]@{
@@ -1590,15 +951,13 @@ function New-SkillRawFromCatalog {
   $resolvedLevel = [Math]::Max(0, [Math]::Min(5, $Level))
   $skillRank = if ($null -ne $CatalogEntry.skillRank -and [double]$CatalogEntry.skillRank -gt 0) { [double]$CatalogEntry.skillRank } else { 1 }
   $skillPoints = Get-SkillPointsForLevel -Rank $skillRank -Level $resolvedLevel
-  $ownerId = [Int64]::Parse($CharacterId, $script:Culture)
-  $skillTypeId = if ($null -ne $CatalogEntry.typeID) { [Int64]$CatalogEntry.typeID } else { [Int64]$CatalogEntry.skillKey }
-  $itemId = ($ownerId * 100000L) + $skillTypeId
+  $itemId = [Int64]::Parse(("{0}{1}" -f $CharacterId, $CatalogEntry.skillKey), $script:Culture)
 
   return [pscustomobject]@{
     itemID = $itemId
-    typeID = $skillTypeId
-    ownerID = $ownerId
-    locationID = $ownerId
+    typeID = if ($null -ne $CatalogEntry.typeID) { $CatalogEntry.typeID } else { [int]$CatalogEntry.skillKey }
+    ownerID = [Int64]::Parse($CharacterId, $script:Culture)
+    locationID = [Int64]::Parse($CharacterId, $script:Culture)
     flagID = 7
     categoryID = 16
     groupID = $CatalogEntry.groupID
@@ -2104,73 +1463,73 @@ function Open-ItemShipEditor {
     }
 
   [xml]$editorXaml = @'
-<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Width="1020" Height="700" MinWidth="900" MinHeight="620" WindowStartupLocation="CenterOwner" Background="{DynamicResource WindowBg}" FontFamily="Segoe UI">
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Width="1020" Height="700" MinWidth="900" MinHeight="620" WindowStartupLocation="CenterOwner" Background="#F4F7FB" FontFamily="Segoe UI">
   <Grid Margin="18">
     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
-    <Border Grid.Row="0" CornerRadius="22" Padding="22" Margin="0,0,0,16" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1">
+    <Border Grid.Row="0" CornerRadius="22" Padding="22" Margin="0,0,0,16" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1">
       <StackPanel>
-        <TextBlock x:Name="EditorHeroTitle" FontSize="28" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-        <TextBlock x:Name="EditorHeroText" Margin="0,8,0,0" FontSize="13" Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap" />
+        <TextBlock x:Name="EditorHeroTitle" FontSize="28" FontWeight="SemiBold" Foreground="#102235" />
+        <TextBlock x:Name="EditorHeroText" Margin="0,8,0,0" FontSize="13" Foreground="#516579" TextWrapping="Wrap" />
       </StackPanel>
     </Border>
     <Grid Grid.Row="1">
       <Grid.ColumnDefinitions><ColumnDefinition Width="360" /><ColumnDefinition Width="16" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
-      <Border Grid.Column="0" CornerRadius="20" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16">
+      <Border Grid.Column="0" CornerRadius="20" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="16">
         <DockPanel LastChildFill="True">
           <StackPanel DockPanel.Dock="Top">
-            <TextBlock Text="Catalog Search" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-            <TextBlock Text="Search by name or group." Margin="0,6,0,12" FontSize="12" Foreground="{DynamicResource TextMuted}" />
-            <TextBox x:Name="EditorSearchBox" Height="38" Padding="10,6,10,6" BorderBrush="{DynamicResource BorderStrong}" BorderThickness="1" Background="{DynamicResource PanelInput}" Foreground="{DynamicResource TextPrimary}" />
+            <TextBlock Text="Catalog Search" FontSize="18" FontWeight="SemiBold" Foreground="#102235" />
+            <TextBlock Text="Search by name or group." Margin="0,6,0,12" FontSize="12" Foreground="#6A7C90" />
+            <TextBox x:Name="EditorSearchBox" Height="38" Padding="10,6,10,6" BorderBrush="#D5E0EA" BorderThickness="1" Background="#FFFFFF" Foreground="#102235" />
           </StackPanel>
           <ListBox x:Name="EditorResultList" Margin="0,12,0,0" BorderThickness="0" Background="Transparent" />
         </DockPanel>
       </Border>
-      <Border Grid.Column="2" CornerRadius="20" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="20">
+      <Border Grid.Column="2" CornerRadius="20" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="20">
         <Grid>
           <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
           <DockPanel Grid.Row="0">
-            <Border x:Name="EditorIconCard" Width="54" Height="54" CornerRadius="16" BorderBrush="{DynamicResource Border}" BorderThickness="1" Background="{DynamicResource EditorIconBg}">
+            <Border x:Name="EditorIconCard" Width="54" Height="54" CornerRadius="16" BorderBrush="#D9E2EC" BorderThickness="1" Background="#EAF4FB">
               <Grid>
-                <TextBlock x:Name="EditorIconGlyph" FontFamily="Segoe MDL2 Assets" FontSize="24" Foreground="{DynamicResource TextAccent}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="EditorIconGlyph" FontFamily="Segoe MDL2 Assets" FontSize="24" Foreground="#2F6F9F" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <Image x:Name="EditorIconImage" Stretch="Uniform" Margin="6" />
               </Grid>
             </Border>
             <StackPanel Margin="14,0,0,0">
-              <TextBlock x:Name="EditorNameHeadline" FontSize="24" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-              <TextBlock x:Name="EditorMetaText" Margin="0,6,0,0" FontSize="12" Foreground="{DynamicResource TextMuted}" TextWrapping="Wrap" />
+              <TextBlock x:Name="EditorNameHeadline" FontSize="24" FontWeight="SemiBold" Foreground="#102235" />
+              <TextBlock x:Name="EditorMetaText" Margin="0,6,0,0" FontSize="12" Foreground="#6A7C90" TextWrapping="Wrap" />
             </StackPanel>
           </DockPanel>
-          <Border Grid.Row="1" Margin="0,16,0,0" CornerRadius="14" Background="{DynamicResource PanelSubtle}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="14">
-            <TextBlock x:Name="EditorHelperText" FontSize="12" Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap" />
+          <Border Grid.Row="1" Margin="0,16,0,0" CornerRadius="14" Background="#F7FAFD" BorderBrush="#E2E8F0" BorderThickness="1" Padding="14">
+            <TextBlock x:Name="EditorHelperText" FontSize="12" Foreground="#516579" TextWrapping="Wrap" />
           </Border>
           <Grid Grid.Row="2" Margin="0,18,0,0">
             <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Margin="0,0,10,0">
-              <TextBlock x:Name="EditorNameLabel" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" />
-              <TextBox x:Name="EditorNameTextBox" Height="38" Padding="10,6,10,6" BorderBrush="{DynamicResource BorderStrong}" BorderThickness="1" Background="{DynamicResource PanelInput}" Foreground="{DynamicResource TextPrimary}" />
+              <TextBlock x:Name="EditorNameLabel" FontSize="12" FontWeight="SemiBold" Foreground="#5B6B80" Margin="0,0,0,6" />
+              <TextBox x:Name="EditorNameTextBox" Height="38" Padding="10,6,10,6" BorderBrush="#D5E0EA" BorderThickness="1" Background="#FFFFFF" Foreground="#102235" />
             </StackPanel>
             <StackPanel Grid.Column="1" Margin="10,0,0,0">
-              <TextBlock x:Name="EditorQtyLabel" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" />
-              <TextBox x:Name="EditorQtyTextBox" Height="38" Padding="10,6,10,6" BorderBrush="{DynamicResource BorderStrong}" BorderThickness="1" Background="{DynamicResource PanelInput}" Foreground="{DynamicResource TextPrimary}" />
+              <TextBlock x:Name="EditorQtyLabel" FontSize="12" FontWeight="SemiBold" Foreground="#5B6B80" Margin="0,0,0,6" />
+              <TextBox x:Name="EditorQtyTextBox" Height="38" Padding="10,6,10,6" BorderBrush="#D5E0EA" BorderThickness="1" Background="#FFFFFF" Foreground="#102235" />
             </StackPanel>
           </Grid>
           <StackPanel Grid.Row="3" Margin="0,18,0,0">
-            <TextBlock Text="Where should it go?" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" />
-            <ComboBox x:Name="EditorLocationCombo" Height="38" Padding="8,4,8,4" BorderBrush="{DynamicResource BorderStrong}" BorderThickness="1" Background="{DynamicResource PanelInput}" Foreground="{DynamicResource TextPrimary}" />
-            <TextBlock x:Name="EditorLocationHelpText" Margin="0,8,0,0" FontSize="12" Foreground="{DynamicResource TextMuted}" TextWrapping="Wrap" />
+            <TextBlock Text="Where should it go?" FontSize="12" FontWeight="SemiBold" Foreground="#5B6B80" Margin="0,0,0,6" />
+            <ComboBox x:Name="EditorLocationCombo" Height="38" Padding="8,4,8,4" BorderBrush="#D5E0EA" BorderThickness="1" Background="#FFFFFF" Foreground="#102235" />
+            <TextBlock x:Name="EditorLocationHelpText" Margin="0,8,0,0" FontSize="12" Foreground="#6A7C90" TextWrapping="Wrap" />
           </StackPanel>
-          <Border Grid.Row="4" Margin="0,18,0,0" CornerRadius="16" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16">
+          <Border Grid.Row="4" Margin="0,18,0,0" CornerRadius="16" Background="#FFFFFF" BorderBrush="#E2E8F0" BorderThickness="1" Padding="16">
             <StackPanel>
-              <TextBlock Text="Power Notes" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-              <TextBlock x:Name="EditorPowerText" Margin="0,8,0,0" FontSize="12" Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap" />
+              <TextBlock Text="Power Notes" FontSize="13" FontWeight="SemiBold" Foreground="#102235" />
+              <TextBlock x:Name="EditorPowerText" Margin="0,8,0,0" FontSize="12" Foreground="#516579" TextWrapping="Wrap" />
             </StackPanel>
           </Border>
         </Grid>
       </Border>
     </Grid>
-    <Border Grid.Row="2" Margin="0,16,0,0" CornerRadius="18" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16">
+    <Border Grid.Row="2" Margin="0,16,0,0" CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="16">
       <DockPanel LastChildFill="False">
-        <TextBlock x:Name="EditorFooterText" VerticalAlignment="Center" FontSize="12" Foreground="{DynamicResource TextMuted}" Text="Changes are staged locally until you click Save Player Changes." />
+        <TextBlock x:Name="EditorFooterText" VerticalAlignment="Center" FontSize="12" Foreground="#6A7C90" Text="Changes are staged locally until you click Save Player Changes." />
         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
           <Button x:Name="EditorCancelButton" Margin="0,0,10,0" Padding="14,10,14,10">Cancel</Button>
           <Button x:Name="EditorApplyButton" Padding="16,10,16,10">Stage Change</Button>
@@ -2184,7 +1543,6 @@ function Open-ItemShipEditor {
   $editorWindow = [System.Windows.Markup.XamlReader]::Load([System.Xml.XmlNodeReader]::new($editorXaml))
   $editorWindow.Title = "EvEJS $windowTitle"
   $editorWindow.Owner = $script:Window
-  $editorWindow.Add_SourceInitialized({ param($s, $e) Apply-WindowThemeChrome -Window $s })
 
   $editorHeroTitle = $editorWindow.FindName("EditorHeroTitle")
   $editorHeroText = $editorWindow.FindName("EditorHeroText")
@@ -2227,8 +1585,6 @@ function Open-ItemShipEditor {
   $editorFooterText.Text = if ($isEdit) { "Editing $($ExistingItem.itemName). The change only hits disk when you save the player." } else { "This creates a new staged record for the selected player." }
 
   $editorResultList.SelectedValuePath = "typeID"
-  $editorResultList.SetValue([System.Windows.Controls.ScrollViewer]::HorizontalScrollBarVisibilityProperty, [System.Windows.Controls.ScrollBarVisibility]::Disabled)
-  $editorLocationCombo.Style = $script:Window.FindResource("ConfigComboBoxStyle")
   $editorLocationCombo.DisplayMemberPath = "label"
   $editorLocationCombo.SelectedValuePath = "key"
   $editorResultList.ItemContainerStyle = [System.Windows.Markup.XamlReader]::Parse(@'
@@ -2236,7 +1592,7 @@ function Open-ItemShipEditor {
   <Setter Property="Padding" Value="0" />
   <Setter Property="Margin" Value="0,0,0,10" />
   <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-  <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="{x:Type ListBoxItem}"><Border x:Name="Card" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" CornerRadius="16"><ContentPresenter /></Border><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Card" Property="Background" Value="{DynamicResource ListHoverBg}" /><Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource BorderSelSoft}" /></Trigger><Trigger Property="IsSelected" Value="True"><Setter TargetName="Card" Property="Background" Value="{DynamicResource ListSelBg}" /><Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource BorderSel}" /></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+  <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="{x:Type ListBoxItem}"><Border x:Name="Card" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" CornerRadius="16"><ContentPresenter /></Border><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Card" Property="Background" Value="#F7FAFD" /><Setter TargetName="Card" Property="BorderBrush" Value="#B9D4E8" /></Trigger><Trigger Property="IsSelected" Value="True"><Setter TargetName="Card" Property="Background" Value="#EAF4FB" /><Setter TargetName="Card" Property="BorderBrush" Value="#6FAEDC" /></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
 </Style>
 '@)
   $editorResultList.ItemTemplate = [System.Windows.Markup.XamlReader]::Parse(@'
@@ -2250,8 +1606,8 @@ function Open-ItemShipEditor {
       </Grid>
     </Border>
     <StackPanel Grid.Column="2">
-      <TextBlock Text="{Binding name}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-      <TextBlock Text="{Binding metaText}" Margin="0,4,0,0" FontSize="11" Foreground="{DynamicResource TextMuted}" TextWrapping="Wrap" />
+      <TextBlock Text="{Binding name}" FontSize="13" FontWeight="SemiBold" Foreground="#102235" />
+      <TextBlock Text="{Binding metaText}" Margin="0,4,0,0" FontSize="11" Foreground="#6A7C90" TextWrapping="Wrap" />
     </StackPanel>
   </Grid>
 </DataTemplate>
@@ -2406,9 +1762,9 @@ function Update-DatabaseSummary {
   $script:DbWarningText.Visibility = if ($warnings.Count -gt 0) { [System.Windows.Visibility]::Visible } else { [System.Windows.Visibility]::Collapsed }
 
   $script:DbMetricPanel.Children.Clear()
-  $script:DbMetricPanel.Children.Add((New-Badge -Text ("ISK: {0}" -f (Format-DisplayValue $summary.balance)) -Background (Get-ThemeHex 'BadgeBlueBg') -Foreground (Get-ThemeHex 'BadgeBlueFg'))) | Out-Null
-  $script:DbMetricPanel.Children.Add((New-Badge -Text ("Skills: {0}" -f $summary.skillCount) -Background (Get-ThemeHex 'BadgeGreenBg') -Foreground (Get-ThemeHex 'BadgeGreenFg'))) | Out-Null
-  $script:DbMetricPanel.Children.Add((New-Badge -Text ("Items: {0}" -f $summary.itemCount) -Background (Get-ThemeHex 'BadgePurpleBg') -Foreground (Get-ThemeHex 'BadgePurpleFg'))) | Out-Null
+  $script:DbMetricPanel.Children.Add((New-Badge -Text ("ISK: {0}" -f (Format-DisplayValue $summary.balance)) -Background "#DBEAFE" -Foreground "#1D4ED8")) | Out-Null
+  $script:DbMetricPanel.Children.Add((New-Badge -Text ("Skills: {0}" -f $summary.skillCount) -Background "#DCFCE7" -Foreground "#166534")) | Out-Null
+  $script:DbMetricPanel.Children.Add((New-Badge -Text ("Items: {0}" -f $summary.itemCount) -Background "#EDE9FE" -Foreground "#6D28D9")) | Out-Null
 }
 
 function Render-OverviewFields {
@@ -2562,7 +1918,7 @@ function Render-DatabaseSnapshot {
   $script:IsRenderingDatabase = $true
   try {
     $script:DatabaseSnapshot = $Snapshot
-    $script:DbPathText.Text = "SQLite player database: $($Snapshot.paths.databasePath)"
+    $script:DbPathText.Text = "Data root: $($Snapshot.paths.dataRoot)"
     $script:DbCountsText.Text = "$($Snapshot.playerCount) characters loaded"
     Update-PlayerListDisplay
     if ($Snapshot.selectedPlayer) {
@@ -2583,13 +1939,6 @@ function Reload-DatabaseSnapshot {
 
 function Save-DatabasePlayer {
   if (-not $script:DbWorkingPlayer) { return }
-  $decision = [System.Windows.MessageBox]::Show(
-    "EvEJS caches player records while the server is running. Stop the server before saving, or it can overwrite these SQLite changes. Continue only if the server is stopped.",
-    "Save Live SQLite Player Data",
-    [System.Windows.MessageBoxButton]::YesNo,
-    [System.Windows.MessageBoxImage]::Warning
-  )
-  if ($decision -ne [System.Windows.MessageBoxResult]::Yes) { return }
   Sync-OverviewControlsToWorkingCopy
   if ($script:DbRawJsonDirty) { Apply-RawJsonEditors }
   $payload = @{
@@ -2602,11 +1951,8 @@ function Save-DatabasePlayer {
     items = Convert-ItemListToMap -ItemList @($script:DbWorkingPlayer.itemsList)
   }
   $snapshot = Invoke-ProjectCli -Command "database-save" -InputObject $payload
-  $backupPath = if ($snapshot.PSObject.Properties["backupPath"]) { [string]$snapshot.backupPath } else { "" }
-  $saveMessage = "Saved directly to gamestore.sqlite. Restart EvEJS before using the updated player data."
-  if ($backupPath) { $saveMessage += " Backup: $backupPath" }
-  Render-DatabaseSnapshot -Snapshot $snapshot -ReadyMessage $saveMessage
-  Set-StatusUi -Message $saveMessage -Tone "success" -BadgeText "SQLite saved"
+  Render-DatabaseSnapshot -Snapshot $snapshot -ReadyMessage "Saved player database changes."
+  Set-StatusUi -Message "Saved player database changes." -Tone "success" -BadgeText "Database saved"
 }
 
 function Get-TextBoxNumericValue {
@@ -2678,16 +2024,14 @@ function Invoke-AssetExtraction {
 
 function Initialize-AppChrome {
   $script:Window.Title = "EvEJS Control Center"
-  $script:FooterHintText.Text = "Player tools write only to gamestore.sqlite. Stop the server before saving and restart it afterward."
-  $script:ThemeToggleButton.FontFamily = [System.Windows.Media.FontFamily]::new("Segoe UI Symbol")
-  Update-ThemeToggleButton
+  $script:FooterHintText.Text = "Skill Studio, pilot quick actions, and raw JSON editing all write back into the project database files."
 
   $buttonMap = @(
     @{ Button = $script:SettingsOpenFileButton; Text = "Open File"; Glyph = 0xE8A5; IconKey = "open_window" },
     @{ Button = $script:SettingsDefaultsButton; Text = "Load Defaults"; Glyph = 0xE777; IconKey = "randomize" },
     @{ Button = $script:SettingsReloadButton; Text = "Reload"; Glyph = 0xE72C; IconKey = "refresh" },
     @{ Button = $script:SettingsSaveButton; Text = "Save Changes"; Glyph = 0xE74E; IconKey = "save" },
-    @{ Button = $script:DbOpenFolderButton; Text = "Open Database Folder"; Glyph = 0xE838; IconKey = "folder" },
+    @{ Button = $script:DbOpenFolderButton; Text = "Open Data Folder"; Glyph = 0xE838; IconKey = "folder" },
     @{ Button = $script:DbReloadButton; Text = "Reload"; Glyph = 0xE72C; IconKey = "refresh" },
     @{ Button = $script:DbSkillStudioButton; Text = "Skill Studio"; Glyph = 0xE943; IconKey = "skillbook" },
     @{ Button = $script:DbSaveButton; Text = "Save Player Changes"; Glyph = 0xE74E; IconKey = "save" },
@@ -2722,17 +2066,17 @@ function Initialize-AppChrome {
   <Setter Property="Template">
     <Setter.Value>
       <ControlTemplate TargetType="{x:Type ListBoxItem}">
-        <Border x:Name="Card" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" CornerRadius="16">
+        <Border x:Name="Card" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" CornerRadius="16">
           <ContentPresenter />
         </Border>
         <ControlTemplate.Triggers>
           <Trigger Property="IsMouseOver" Value="True">
-            <Setter TargetName="Card" Property="Background" Value="{DynamicResource ListHoverBg}" />
-            <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource BorderSelSoft}" />
+            <Setter TargetName="Card" Property="Background" Value="#F7FAFD" />
+            <Setter TargetName="Card" Property="BorderBrush" Value="#B9D4E8" />
           </Trigger>
           <Trigger Property="IsSelected" Value="True">
-            <Setter TargetName="Card" Property="Background" Value="{DynamicResource ListSelBg}" />
-            <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource BorderSel}" />
+            <Setter TargetName="Card" Property="Background" Value="#EAF4FB" />
+            <Setter TargetName="Card" Property="BorderBrush" Value="#6FAEDC" />
           </Trigger>
         </ControlTemplate.Triggers>
       </ControlTemplate>
@@ -2760,15 +2104,15 @@ function Initialize-AppChrome {
         <Image Source="{Binding iconFilePath}" Stretch="Uniform" Margin="4" />
       </Grid>
     </Border>
-    <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding characterName}" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding accountName}" Margin="0,5,0,0" FontSize="12" Foreground="{DynamicResource TextMuted}" />
+    <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding characterName}" FontSize="14" FontWeight="SemiBold" Foreground="#102235" />
+    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding accountName}" Margin="0,5,0,0" FontSize="12" Foreground="#4F6276" />
     <Grid Grid.Row="2" Grid.Column="2" Margin="0,8,0,0">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-      <TextBlock Grid.Column="0" Text="{Binding shipName}" FontSize="11" Foreground="{DynamicResource TextAccent}" />
-      <TextBlock Grid.Column="1" Text="{Binding solarSystemName}" FontSize="11" Foreground="{DynamicResource TextMuted}" />
+      <TextBlock Grid.Column="0" Text="{Binding shipName}" FontSize="11" Foreground="#2F6F9F" />
+      <TextBlock Grid.Column="1" Text="{Binding solarSystemName}" FontSize="11" Foreground="#6A7C90" />
     </Grid>
   </Grid>
 </DataTemplate>
@@ -2790,11 +2134,11 @@ function Initialize-AppChrome {
       </Grid>
     </Border>
     <StackPanel Grid.Column="2">
-      <TextBlock Text="{Binding itemName}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-      <TextBlock Text="{Binding groupName}" Margin="0,4,0,0" FontSize="11" Foreground="{DynamicResource TextMuted}" />
-      <TextBlock Text="{Binding skillPoints, StringFormat=SP {0:N0}}" Margin="0,6,0,0" FontSize="11" Foreground="{DynamicResource TextAccent}" />
+      <TextBlock Text="{Binding itemName}" FontSize="13" FontWeight="SemiBold" Foreground="#102235" />
+      <TextBlock Text="{Binding groupName}" Margin="0,4,0,0" FontSize="11" Foreground="#6A7C90" />
+      <TextBlock Text="{Binding skillPoints, StringFormat=SP {0:N0}}" Margin="0,6,0,0" FontSize="11" Foreground="#2F6F9F" />
     </StackPanel>
-    <TextBlock Grid.Column="3" Text="{Binding skillLevel, StringFormat=Level {0}}" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextAccent}" />
+    <TextBlock Grid.Column="3" Text="{Binding skillLevel, StringFormat=Level {0}}" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="11" FontWeight="SemiBold" Foreground="#5A84A7" />
   </Grid>
 </DataTemplate>
 '@)
@@ -2810,9 +2154,9 @@ function Initialize-AppChrome {
       </Grid>
     </Border>
     <StackPanel Grid.Column="2">
-      <TextBlock Text="{Binding itemName}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-      <TextBlock Text="{Binding metaText}" Margin="0,4,0,0" FontSize="11" Foreground="{DynamicResource TextAccent}" />
-      <TextBlock Text="{Binding locationLabel}" Margin="0,5,0,0" FontSize="11" Foreground="{DynamicResource TextMuted}" TextWrapping="Wrap" />
+      <TextBlock Text="{Binding itemName}" FontSize="13" FontWeight="SemiBold" Foreground="#102235" />
+      <TextBlock Text="{Binding metaText}" Margin="0,4,0,0" FontSize="11" Foreground="#2F6F9F" />
+      <TextBlock Text="{Binding locationLabel}" Margin="0,5,0,0" FontSize="11" Foreground="#6A7C90" TextWrapping="Wrap" />
     </StackPanel>
   </Grid>
 </DataTemplate>
@@ -2822,67 +2166,11 @@ function Initialize-AppChrome {
     $listBox.BorderThickness = [System.Windows.Thickness]::new(0)
     $listBox.Background = $script:Brushes.White
     $listBox.ItemContainerStyle = $itemContainerStyle
-    $listBox.SetValue([System.Windows.Controls.ScrollViewer]::HorizontalScrollBarVisibilityProperty, [System.Windows.Controls.ScrollBarVisibility]::Disabled)
   }
 
   $script:DbPlayerList.ItemTemplate = $playerTemplate
   $script:DbSkillPreviewList.ItemTemplate = $skillTemplate
   $script:DbItemPreviewList.ItemTemplate = $itemTemplate
-
-  if ($script:MarketOrdersList) {
-    $script:MarketOrdersList.ItemContainerStyle = $itemContainerStyle
-    $script:MarketOrdersList.SetValue([System.Windows.Controls.ScrollViewer]::HorizontalScrollBarVisibilityProperty, [System.Windows.Controls.ScrollBarVisibility]::Disabled)
-    $script:MarketOrdersList.ItemTemplate = [System.Windows.Markup.XamlReader]::Parse(@'
-<DataTemplate xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-  <Grid Margin="14,10">
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" />
-      <ColumnDefinition Width="14" />
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="Auto" />
-    </Grid.ColumnDefinitions>
-    <Border Grid.Column="0" CornerRadius="8" Padding="10,4,10,4" VerticalAlignment="Center" Background="{Binding sideBg}">
-      <TextBlock Text="{Binding sideLabel}" FontSize="11" FontWeight="SemiBold" Foreground="{Binding sideFg}" />
-    </Border>
-    <StackPanel Grid.Column="2">
-      <TextBlock Text="{Binding typeName}" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-      <TextBlock Text="{Binding locationText}" Margin="0,3,0,0" FontSize="11" Foreground="{DynamicResource TextMuted}" TextWrapping="Wrap" />
-      <TextBlock Text="{Binding metaText}" Margin="0,2,0,0" FontSize="11" Foreground="{DynamicResource TextAccent}" />
-    </StackPanel>
-    <StackPanel Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right">
-      <TextBlock Text="{Binding priceText}" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Right" Foreground="{DynamicResource TextPrimary}" />
-      <TextBlock Text="{Binding qtyText}" Margin="0,3,0,0" FontSize="11" HorizontalAlignment="Right" Foreground="{DynamicResource TextMuted}" />
-    </StackPanel>
-  </Grid>
-</DataTemplate>
-'@)
-  }
-}
-
-function Initialize-Market {
-  if (-not $script:MarketOwnerCombo) { return }
-  $players = @()
-  if ($script:DatabaseSnapshot) {
-    foreach ($player in @($script:DatabaseSnapshot.players)) {
-      $characterId = [string]$player.characterId
-      if (-not $characterId) { continue }
-      $label = "{0}  ({1})" -f ([string]$player.characterName), $characterId
-      $players += [pscustomobject]@{ label = $label; value = $characterId }
-    }
-  }
-  $script:MarketOwnerCombo.DisplayMemberPath = "label"
-  $script:MarketOwnerCombo.SelectedValuePath = "value"
-  $script:MarketOwnerCombo.ItemsSource = $players
-  if ($script:MarketBookTypeCombo) {
-    $script:MarketBookTypeCombo.DisplayMemberPath = "label"
-    $script:MarketBookTypeCombo.SelectedValuePath = "typeID"
-  }
-  if (@($players).Count -gt 0) {
-    $selectedCharacterId = if ($script:DatabaseSnapshot) { [string]$script:DatabaseSnapshot.selectedCharacterId } else { "" }
-    if ($selectedCharacterId) { $script:MarketOwnerCombo.SelectedValue = $selectedCharacterId }
-    if (-not $script:MarketOwnerCombo.SelectedItem) { $script:MarketOwnerCombo.SelectedIndex = 0 }
-  }
-  Refresh-MarketStatus | Out-Null
 }
 
 function Open-SkillStudio {
@@ -2917,22 +2205,21 @@ function Open-SkillStudio {
   foreach ($entry in $originalSkillStore.GetEnumerator()) { $skillStore[[string]$entry.Key] = ConvertTo-DeepClone $entry.Value }
 
   [xml]$studioXaml = @'
-<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="EvEJS Skill Studio" Width="1080" Height="740" MinWidth="980" MinHeight="660" WindowStartupLocation="CenterOwner" Background="{DynamicResource WindowBg}" FontFamily="Segoe UI">
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="EvEJS Skill Studio" Width="1080" Height="740" MinWidth="980" MinHeight="660" WindowStartupLocation="CenterOwner" Background="#F4F7FB" FontFamily="Segoe UI">
   <Grid Margin="18">
     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
-    <Border Grid.Row="0" CornerRadius="16" Padding="24" Margin="0,0,0,16" Background="{DynamicResource HeroBg}" BorderBrush="{DynamicResource BorderSel}" BorderThickness="1"><StackPanel><TextBlock Text="Skill Studio" FontSize="28" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" /><TextBlock Text="Search every known skill, set clean levels instantly, and stage changes before saving the player database." Margin="0,8,0,0" FontSize="13" Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap" /></StackPanel></Border>
+    <Border Grid.Row="0" CornerRadius="24" Padding="24" Margin="0,0,0,16" BorderBrush="#6FAEDC" BorderThickness="1"><Border.Background><LinearGradientBrush StartPoint="0,0" EndPoint="1,1"><GradientStop Color="#FFFFFF" Offset="0" /><GradientStop Color="#F1F6FB" Offset="0.62" /><GradientStop Color="#E6F0F7" Offset="1" /></LinearGradientBrush></Border.Background><StackPanel><TextBlock Text="Skill Studio" FontSize="28" FontWeight="SemiBold" Foreground="#102235" /><TextBlock Text="Search every known skill, set clean levels instantly, and stage changes before saving the player database." Margin="0,8,0,0" FontSize="13" Foreground="#516579" TextWrapping="Wrap" /></StackPanel></Border>
     <Grid Grid.Row="1"><Grid.ColumnDefinitions><ColumnDefinition Width="360" /><ColumnDefinition Width="14" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
-      <Border Grid.Column="0" CornerRadius="20" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16"><DockPanel LastChildFill="True"><StackPanel DockPanel.Dock="Top"><TextBlock Text="Skill Catalog" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" /><TextBlock Text="Search by skill or group. Untrained skills can be added instantly." Margin="0,6,0,12" FontSize="12" Foreground="{DynamicResource TextMuted}" TextWrapping="Wrap" /><TextBox x:Name="StudioSearchBox" Height="38" Margin="0,0,0,10" Padding="10,6,10,6" BorderBrush="{DynamicResource BorderStrong}" BorderThickness="1" Background="{DynamicResource PanelInput}" Foreground="{DynamicResource TextPrimary}" /><ComboBox x:Name="StudioGroupCombo" Height="38" Margin="0,0,0,12" Padding="8,4,8,4" BorderBrush="{DynamicResource BorderStrong}" BorderThickness="1" Background="{DynamicResource PanelInput}" Foreground="{DynamicResource TextPrimary}" /><WrapPanel Margin="0,0,0,12"><Button x:Name="StudioFilteredIIIButton" Content="Filtered to III" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioFilteredVButton" Content="Filtered to V" Margin="0,0,8,8" Padding="12,8,12,8" /></WrapPanel></StackPanel><ListBox x:Name="StudioSkillList" BorderThickness="0" Background="Transparent" /></DockPanel></Border>
-      <Border Grid.Column="2" CornerRadius="20" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="20"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions><TextBlock x:Name="StudioSkillHeadline" Text="Pick a skill" FontSize="24" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" /><TextBlock x:Name="StudioSkillMeta" Grid.Row="1" Margin="0,8,0,0" FontSize="13" Foreground="{DynamicResource TextMuted}" TextWrapping="Wrap" /><WrapPanel x:Name="StudioBadgePanel" Grid.Row="2" Margin="0,14,0,0" /><Grid Grid.Row="3" Margin="0,16,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions><StackPanel Grid.Column="0" Margin="0,0,10,0"><TextBlock Text="Level" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" /><TextBox x:Name="StudioLevelTextBox" Height="38" Padding="10,6,10,6" BorderBrush="{DynamicResource BorderStrong}" BorderThickness="1" Background="{DynamicResource PanelInput}" Foreground="{DynamicResource TextPrimary}" /></StackPanel><StackPanel Grid.Column="1" Margin="10,0,10,0"><TextBlock Text="Skill Points" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" /><TextBox x:Name="StudioSkillPointsTextBox" Height="38" Padding="10,6,10,6" BorderBrush="{DynamicResource BorderStrong}" BorderThickness="1" Background="{DynamicResource PanelInput}" Foreground="{DynamicResource TextPrimary}" /></StackPanel><StackPanel Grid.Column="2" Margin="10,0,0,0"><TextBlock Text="Training" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" /><CheckBox x:Name="StudioTrainingCheckBox" Content="Currently training" FontSize="13" Foreground="{DynamicResource TextPrimary}" VerticalAlignment="Center" /></StackPanel></Grid><StackPanel Grid.Row="4" Margin="0,18,0,0"><TextBlock Text="Level Deck" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,8" /><WrapPanel><Button x:Name="StudioLevel0Button" Content="Level 0" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioLevel1Button" Content="Level I" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioLevel2Button" Content="Level II" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioLevel3Button" Content="Level III" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioLevel4Button" Content="Level IV" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioLevel5Button" Content="Level V" Margin="0,0,8,8" Padding="12,8,12,8" /></WrapPanel><WrapPanel Margin="0,18,0,0"><Button x:Name="StudioApplyButton" Content="Apply to Selected Skill" Margin="0,0,8,8" Padding="14,10,14,10" /><Button x:Name="StudioResetButton" Content="Restore Original" Margin="0,0,8,8" Padding="14,10,14,10" /><Button x:Name="StudioRemoveButton" Content="Remove Skill" Margin="0,0,8,8" Padding="14,10,14,10" /></WrapPanel><TextBlock x:Name="StudioStatusText" Margin="0,12,0,0" FontSize="12" Foreground="{DynamicResource TextAccent}" TextWrapping="Wrap" /></StackPanel></Grid></Border>
+      <Border Grid.Column="0" CornerRadius="20" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="16"><DockPanel LastChildFill="True"><StackPanel DockPanel.Dock="Top"><TextBlock Text="Skill Catalog" FontSize="18" FontWeight="SemiBold" Foreground="#102235" /><TextBlock Text="Search by skill or group. Untrained skills can be added instantly." Margin="0,6,0,12" FontSize="12" Foreground="#6A7C90" TextWrapping="Wrap" /><TextBox x:Name="StudioSearchBox" Height="38" Margin="0,0,0,10" Padding="10,6,10,6" BorderBrush="#D5E0EA" BorderThickness="1" Background="#FFFFFF" Foreground="#102235" /><ComboBox x:Name="StudioGroupCombo" Height="38" Margin="0,0,0,12" Padding="8,4,8,4" BorderBrush="#D5E0EA" BorderThickness="1" Background="#FFFFFF" Foreground="#102235" /><WrapPanel Margin="0,0,0,12"><Button x:Name="StudioFilteredIIIButton" Content="Filtered to III" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioFilteredVButton" Content="Filtered to V" Margin="0,0,8,8" Padding="12,8,12,8" /></WrapPanel></StackPanel><ListBox x:Name="StudioSkillList" BorderThickness="0" Background="Transparent" /></DockPanel></Border>
+      <Border Grid.Column="2" CornerRadius="20" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="20"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions><TextBlock x:Name="StudioSkillHeadline" Text="Pick a skill" FontSize="24" FontWeight="SemiBold" Foreground="#102235" /><TextBlock x:Name="StudioSkillMeta" Grid.Row="1" Margin="0,8,0,0" FontSize="13" Foreground="#6A7C90" TextWrapping="Wrap" /><WrapPanel x:Name="StudioBadgePanel" Grid.Row="2" Margin="0,14,0,0" /><Grid Grid.Row="3" Margin="0,16,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions><StackPanel Grid.Column="0" Margin="0,0,10,0"><TextBlock Text="Level" FontSize="12" FontWeight="SemiBold" Foreground="#5B6B80" Margin="0,0,0,6" /><TextBox x:Name="StudioLevelTextBox" Height="38" Padding="10,6,10,6" BorderBrush="#D5E0EA" BorderThickness="1" Background="#FFFFFF" Foreground="#102235" /></StackPanel><StackPanel Grid.Column="1" Margin="10,0,10,0"><TextBlock Text="Skill Points" FontSize="12" FontWeight="SemiBold" Foreground="#5B6B80" Margin="0,0,0,6" /><TextBox x:Name="StudioSkillPointsTextBox" Height="38" Padding="10,6,10,6" BorderBrush="#D5E0EA" BorderThickness="1" Background="#FFFFFF" Foreground="#102235" /></StackPanel><StackPanel Grid.Column="2" Margin="10,0,0,0"><TextBlock Text="Training" FontSize="12" FontWeight="SemiBold" Foreground="#5B6B80" Margin="0,0,0,6" /><CheckBox x:Name="StudioTrainingCheckBox" Content="Currently training" FontSize="13" Foreground="#102235" VerticalAlignment="Center" /></StackPanel></Grid><StackPanel Grid.Row="4" Margin="0,18,0,0"><TextBlock Text="Level Deck" FontSize="12" FontWeight="SemiBold" Foreground="#5B6B80" Margin="0,0,0,8" /><WrapPanel><Button x:Name="StudioLevel0Button" Content="Level 0" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioLevel1Button" Content="Level I" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioLevel2Button" Content="Level II" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioLevel3Button" Content="Level III" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioLevel4Button" Content="Level IV" Margin="0,0,8,8" Padding="12,8,12,8" /><Button x:Name="StudioLevel5Button" Content="Level V" Margin="0,0,8,8" Padding="12,8,12,8" /></WrapPanel><WrapPanel Margin="0,18,0,0"><Button x:Name="StudioApplyButton" Content="Apply to Selected Skill" Margin="0,0,8,8" Padding="14,10,14,10" /><Button x:Name="StudioResetButton" Content="Restore Original" Margin="0,0,8,8" Padding="14,10,14,10" /><Button x:Name="StudioRemoveButton" Content="Remove Skill" Margin="0,0,8,8" Padding="14,10,14,10" /></WrapPanel><TextBlock x:Name="StudioStatusText" Margin="0,12,0,0" FontSize="12" Foreground="#2F6F9F" TextWrapping="Wrap" /></StackPanel></Grid></Border>
     </Grid>
-    <Border Grid.Row="2" Margin="0,16,0,0" CornerRadius="18" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16"><DockPanel LastChildFill="False"><TextBlock x:Name="StudioFooterText" VerticalAlignment="Center" FontSize="12" Foreground="{DynamicResource TextMuted}" Text="Skill changes stay staged here until you click Apply To Player." /><StackPanel DockPanel.Dock="Right" Orientation="Horizontal"><Button x:Name="StudioCancelButton" Content="Cancel" Margin="0,0,10,0" Padding="14,10,14,10" /><Button x:Name="StudioSaveButton" Content="Apply To Player" Padding="16,10,16,10" /></StackPanel></DockPanel></Border>
+    <Border Grid.Row="2" Margin="0,16,0,0" CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="16"><DockPanel LastChildFill="False"><TextBlock x:Name="StudioFooterText" VerticalAlignment="Center" FontSize="12" Foreground="#6A7C90" Text="Skill changes stay staged here until you click Apply To Player." /><StackPanel DockPanel.Dock="Right" Orientation="Horizontal"><Button x:Name="StudioCancelButton" Content="Cancel" Margin="0,0,10,0" Padding="14,10,14,10" /><Button x:Name="StudioSaveButton" Content="Apply To Player" Padding="16,10,16,10" /></StackPanel></DockPanel></Border>
   </Grid>
 </Window>
 '@
 
   $studioWindow = [System.Windows.Markup.XamlReader]::Load([System.Xml.XmlNodeReader]::new($studioXaml))
   $studioWindow.Owner = $script:Window
-  $studioWindow.Add_SourceInitialized({ param($s, $e) Apply-WindowThemeChrome -Window $s })
   $studioSearchBox = $studioWindow.FindName("StudioSearchBox")
   $studioGroupCombo = $studioWindow.FindName("StudioGroupCombo")
   $studioSkillList = $studioWindow.FindName("StudioSkillList")
@@ -2953,12 +2240,10 @@ function Open-SkillStudio {
   $studioSaveButton = $studioWindow.FindName("StudioSaveButton")
 
   $studioSkillList.SelectedValuePath = "skillKey"
-  $studioSkillList.SetValue([System.Windows.Controls.ScrollViewer]::HorizontalScrollBarVisibilityProperty, [System.Windows.Controls.ScrollBarVisibility]::Disabled)
   $studioGroupCombo.DisplayMemberPath = "label"
   $studioGroupCombo.SelectedValuePath = "value"
   $studioGroupCombo.ItemsSource = @([pscustomobject]@{ label = "All Groups"; value = "" }) + @($catalog | Where-Object { $_.groupName } | Select-Object -ExpandProperty groupName -Unique | Sort-Object | ForEach-Object { [pscustomobject]@{ label = $_; value = $_ } })
   $studioGroupCombo.SelectedIndex = 0
-  $studioGroupCombo.Style = $script:Window.FindResource("ConfigComboBoxStyle")
   foreach ($button in @($studioApplyButton, $studioResetButton, $studioRemoveButton, $studioFilteredIIIButton, $studioFilteredVButton, $studioCancelButton, $studioSaveButton)) { $button.Style = $script:Window.FindResource("SecondaryButtonStyle") }
   $studioSaveButton.Style = $script:Window.FindResource("PrimaryButtonStyle")
   $studioSkillList.ItemContainerStyle = [System.Windows.Markup.XamlReader]::Parse(@'
@@ -2966,7 +2251,7 @@ function Open-SkillStudio {
   <Setter Property="Padding" Value="0" />
   <Setter Property="Margin" Value="0,0,0,10" />
   <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-  <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="{x:Type ListBoxItem}"><Border x:Name="Card" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" CornerRadius="16"><ContentPresenter /></Border><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Card" Property="Background" Value="{DynamicResource ListHoverBg}" /><Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource BorderSel}" /></Trigger><Trigger Property="IsSelected" Value="True"><Setter TargetName="Card" Property="Background" Value="{DynamicResource ListSelBg}" /><Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource Accent}" /></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+  <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="{x:Type ListBoxItem}"><Border x:Name="Card" Background="#F8FBFF" BorderBrush="#DCE8F5" BorderThickness="1" CornerRadius="16"><ContentPresenter /></Border><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Card" Property="Background" Value="#F0F9FF" /><Setter TargetName="Card" Property="BorderBrush" Value="#67E8F9" /></Trigger><Trigger Property="IsSelected" Value="True"><Setter TargetName="Card" Property="Background" Value="#CCFBF1" /><Setter TargetName="Card" Property="BorderBrush" Value="#0F766E" /></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
 </Style>
 '@)
   $studioSkillList.ItemTemplate = [System.Windows.Markup.XamlReader]::Parse(@'
@@ -2980,11 +2265,11 @@ function Open-SkillStudio {
       </Grid>
     </Border>
     <StackPanel Grid.Column="2">
-      <TextBlock Text="{Binding itemName}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-      <TextBlock Text="{Binding groupName}" Margin="0,4,0,0" FontSize="11" Foreground="{DynamicResource TextMuted}" />
-      <TextBlock Text="{Binding statusText}" Margin="0,6,0,0" FontSize="11" Foreground="{DynamicResource TextAccent}" />
+      <TextBlock Text="{Binding itemName}" FontSize="13" FontWeight="SemiBold" Foreground="#102235" />
+      <TextBlock Text="{Binding groupName}" Margin="0,4,0,0" FontSize="11" Foreground="#6A7C90" />
+      <TextBlock Text="{Binding statusText}" Margin="0,6,0,0" FontSize="11" Foreground="#2F6F9F" />
     </StackPanel>
-    <TextBlock Grid.Column="3" Text="{Binding currentLevel, StringFormat=Level {0}}" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextAccent}" />
+    <TextBlock Grid.Column="3" Text="{Binding currentLevel, StringFormat=Level {0}}" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="11" FontWeight="SemiBold" Foreground="#5A84A7" />
   </Grid>
 </DataTemplate>
 '@)
@@ -3035,8 +2320,8 @@ function Open-SkillStudio {
     $studioTrainingCheckBox.IsChecked = if ($raw) { [bool]$raw.inTraining } else { $false }
     $studioBadgePanel.Children.Clear()
     $skillIcon = Resolve-SkillIconSpec -GroupName $catalogEntry.groupName -ItemName $catalogEntry.itemName
-    $studioBadgePanel.Children.Add((New-Badge -Text ("Owned {0}" -f $ownedLabel) -Background (Get-ThemeHex 'BadgeBlueBg') -Foreground (Get-ThemeHex 'BadgeBlueFg') -Glyph $skillIcon.glyph)) | Out-Null
-    $studioBadgePanel.Children.Add((New-Badge -Text ("Recommended V SP {0:N0}" -f (Get-SkillPointsForLevel -Rank $catalogEntry.skillRank -Level 5)) -Background (Get-ThemeHex 'BadgeGreenBg') -Foreground (Get-ThemeHex 'BadgeGreenFg') -Glyph ([string][char]0xE76B))) | Out-Null
+    $studioBadgePanel.Children.Add((New-Badge -Text ("Owned {0}" -f $ownedLabel) -Background "#DBEAFE" -Foreground "#1D4ED8" -Glyph $skillIcon.glyph)) | Out-Null
+    $studioBadgePanel.Children.Add((New-Badge -Text ("Recommended V SP {0:N0}" -f (Get-SkillPointsForLevel -Rank $catalogEntry.skillRank -Level 5)) -Background "#DCFCE7" -Foreground "#166534" -Glyph ([string][char]0xE76B))) | Out-Null
   }
 
   $applySelectedSkill = {
@@ -3081,7 +2366,7 @@ function Open-SkillStudio {
     if ($studioSkillList.SelectedValue -and $studioLevelTextBox.Text.Trim() -ne "") {
       try { & $applySelectedSkill } catch { [System.Windows.MessageBox]::Show($_.Exception.Message, "EvEJS Skill Studio", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error) | Out-Null; return }
     }
-    $script:DbWorkingPlayer.skillsList = @(Convert-SkillStoreToList -SkillStore $skillStore -CatalogByKey $catalogByKey)
+    $script:DbWorkingPlayer.skillsList = Convert-SkillStoreToList -SkillStore $skillStore -CatalogByKey $catalogByKey
     Update-WorkingPlayerDerivedData
     Render-DatabasePlayer
     Set-DatabaseDirtyState -Dirty $true -Message "Skill Studio changes are staged in the working copy."
@@ -3123,7 +2408,7 @@ function Update-DatabaseSummary {
   $script:DbMetricPanel.Children.Add((New-Badge -Text ("ISK {0}" -f (Format-CompactNumber $summary.balance)) -Background $iskIcon.background -Foreground $iskIcon.foreground -Glyph $iskIcon.glyph -ImagePath $iskMetricIconPath -ImageSize 16)) | Out-Null
   $script:DbMetricPanel.Children.Add((New-Badge -Text ("PLEX {0}" -f (Format-CompactNumber $script:DbWorkingPlayer.character.plexBalance)) -Background $plexIcon.background -Foreground $plexIcon.foreground -Glyph $plexIcon.glyph -ImagePath $plexBadgeIconPath -ImageSize 16)) | Out-Null
   $script:DbMetricPanel.Children.Add((New-Badge -Text ("AUR {0}" -f (Format-CompactNumber $script:DbWorkingPlayer.character.aurBalance)) -Background $aurIcon.background -Foreground $aurIcon.foreground -Glyph $aurIcon.glyph -ImagePath $aurBadgeIconPath -ImageSize 16)) | Out-Null
-  $script:DbMetricPanel.Children.Add((New-Badge -Text ("SP {0}" -f (Format-CompactNumber $summary.skillPoints)) -Background (Get-ThemeHex 'BadgeGreenBg') -Foreground (Get-ThemeHex 'BadgeGreenFg') -Glyph $skillIcon.glyph -ImagePath $skillBadgeIconPath -ImageSize 16)) | Out-Null
+  $script:DbMetricPanel.Children.Add((New-Badge -Text ("SP {0}" -f (Format-CompactNumber $summary.skillPoints)) -Background "#E8F7F2" -Foreground "#166534" -Glyph $skillIcon.glyph -ImagePath $skillBadgeIconPath -ImageSize 16)) | Out-Null
   $script:DbMetricPanel.Children.Add((New-Badge -Text ("Ships {0}" -f $summary.shipCount) -Background $shipIcon.background -Foreground $shipIcon.foreground -Glyph $shipIcon.glyph)) | Out-Null
   $script:DbMetricPanel.Children.Add((New-Badge -Text ("Items {0}" -f $summary.itemCount) -Background $itemIcon.background -Foreground $itemIcon.foreground -Glyph $itemIcon.glyph -ImagePath $itemBadgeIconPath -ImageSize 16)) | Out-Null
 }
@@ -3164,8 +2449,8 @@ function Apply-RawJsonEditors {
   foreach ($entry in @(New-DatabaseSkillCatalog)) { $catalogByKey[[string]$entry.skillKey] = $entry }
   $skillStore = @{}
   foreach ($property in $skillsMap.PSObject.Properties) { $skillStore[[string]$property.Name] = ConvertTo-DeepClone $property.Value }
-  $script:DbWorkingPlayer.skillsList = @(Convert-SkillStoreToList -SkillStore $skillStore -CatalogByKey $catalogByKey)
-  $script:DbWorkingPlayer.itemsList = @(Convert-ItemMapToList -ItemsMap $itemsMap)
+  $script:DbWorkingPlayer.skillsList = Convert-SkillStoreToList -SkillStore $skillStore -CatalogByKey $catalogByKey
+  $script:DbWorkingPlayer.itemsList = Convert-ItemMapToList -ItemsMap $itemsMap
   Update-WorkingPlayerDerivedData
   $script:DbRawJsonDirty = $false
 }
@@ -3190,520 +2475,17 @@ function Render-DatabaseSnapshot {
   try {
     $script:DatabaseSnapshot = $Snapshot
     $script:NextGeneratedItemId = if ($Snapshot.nextItemIdSeed) { [int64]$Snapshot.nextItemIdSeed } else { [int64]990000001 }
-    $script:DbPathText.Text = "SQLite player database: $($Snapshot.paths.databasePath)"
+    $script:DbPathText.Text = "Data root: $($Snapshot.paths.dataRoot)"
     $script:DbCountsText.Text = "$($Snapshot.playerCount) characters loaded | $(@($Snapshot.skillCatalog).Count) skills ready in Skill Studio"
     Update-PlayerListDisplay
     if ($Snapshot.selectedPlayer) {
       $script:DbWorkingPlayer = New-DatabaseWorkingCopy -SelectedPlayer $Snapshot.selectedPlayer
-      $script:DbWorkingPlayer.itemsList = @(Convert-ItemMapToList -ItemsMap (Convert-ItemListToMap -ItemList @($script:DbWorkingPlayer.itemsList)))
+      $script:DbWorkingPlayer.itemsList = Convert-ItemMapToList -ItemsMap (Convert-ItemListToMap -ItemList @($script:DbWorkingPlayer.itemsList))
       Render-DatabasePlayer
     }
     Set-DatabaseDirtyState -Dirty $false -Message $ReadyMessage
   } finally {
     $script:IsRenderingDatabase = $false
-  }
-}
-
-# ---------------------------------------------------------------------------
-# Market Orders (external market daemon)
-# ---------------------------------------------------------------------------
-function Set-MarketActionsEnabled {
-  param([bool]$Enabled)
-  foreach ($button in @($script:MarketNewButton, $script:MarketModifyButton, $script:MarketCancelButton, $script:MarketLoadButton)) {
-    if ($button) { $button.IsEnabled = $Enabled }
-  }
-}
-
-function Set-MarketStatusUi {
-  param([bool]$Reachable, [string]$DaemonHost = "127.0.0.1", [int]$Port = 40111, [string]$ErrorText = "")
-  if ($Reachable) {
-    $script:MarketStatusBadge.Background = (Get-ThemeBrush 'SuccessBg')
-    $script:MarketStatusBadgeText.Foreground = (Get-ThemeBrush 'SuccessFg')
-    $script:MarketStatusBadgeText.Text = "ONLINE"
-    $script:MarketStatusText.Text = "Market daemon connected"
-    $script:MarketStatusDetail.Text = ("Connected to {0}:{1}" -f $DaemonHost, $Port)
-  } else {
-    $script:MarketStatusBadge.Background = (Get-ThemeBrush 'DangerBg')
-    $script:MarketStatusBadgeText.Foreground = (Get-ThemeBrush 'DangerFg')
-    $script:MarketStatusBadgeText.Text = "OFFLINE"
-    $script:MarketStatusText.Text = "Market daemon offline"
-    $detail = "Start the market daemon at {0}:{1} to view or manage orders." -f $DaemonHost, $Port
-    if ($ErrorText) { $detail = "{0}  ({1})" -f $detail, $ErrorText }
-    $script:MarketStatusDetail.Text = $detail
-  }
-  Set-MarketActionsEnabled -Enabled $Reachable
-}
-
-function Refresh-MarketStatus {
-  try {
-    $status = Invoke-ProjectCli -Command "market-status"
-    $script:MarketStatus = $status
-    # StrictMode throws on missing properties, and the "error" field is absent
-    # when the daemon is reachable - read every field through the safe accessor.
-    $reachable = [bool](Get-JsonPropertyValue -Object $status -Name "reachable")
-    $daemonHost = [string](Get-JsonPropertyValue -Object $status -Name "host")
-    $port = [int](Get-JsonPropertyValue -Object $status -Name "port")
-    $errorText = [string](Get-JsonPropertyValue -Object $status -Name "error")
-    Set-MarketStatusUi -Reachable $reachable -DaemonHost $daemonHost -Port $port -ErrorText $errorText
-    return $reachable
-  } catch {
-    $script:MarketStatus = $null
-    Set-MarketStatusUi -Reachable $false -ErrorText $_.Exception.Message
-    return $false
-  }
-}
-
-function Get-SelectedMarketOwnerId {
-  $idText = ([string]$script:MarketOwnerIdBox.Text).Trim()
-  if ($idText -match '^\d+$') { return [int64]$idText }
-  $selectedValue = $script:MarketOwnerCombo.SelectedValue
-  if ($selectedValue) { return [int64]$selectedValue }
-  return [int64]0
-}
-
-function New-MarketOrderDisplay {
-  param([Parameter(Mandatory = $true)][pscustomobject]$Order)
-  $isBuy = [bool]$Order.bid
-  $stationText = if ([string]$Order.stationName) { [string]$Order.stationName } else { "Station {0}" -f $Order.stationId }
-  $regionText = if ([string]$Order.regionName) { [string]$Order.regionName } else { "Region {0}" -f $Order.regionId }
-  $systemText = if ([string]$Order.solarSystemName) { [string]$Order.solarSystemName } else { "System {0}" -f $Order.solarSystemId }
-  return [pscustomobject]@{
-    orderId = [string]$Order.orderId
-    typeName = [string]$Order.typeName
-    sideLabel = if ($isBuy) { "BUY" } else { "SELL" }
-    sideBg = if ($isBuy) { Get-ThemeHex 'BadgeGreenBg' } else { Get-ThemeHex 'BadgeBlueBg' }
-    sideFg = if ($isBuy) { Get-ThemeHex 'BadgeGreenFg' } else { Get-ThemeHex 'BadgeBlueFg' }
-    priceText = ("{0:N2} ISK" -f [double]$Order.price)
-    qtyText = ("{0:N0} left of {1:N0}  (min {2:N0})" -f [double]$Order.volRemaining, [double]$Order.volEntered, [double]$Order.minVolume)
-    locationText = ("{0}  |  {1}  |  {2}" -f $stationText, $regionText, $systemText)
-    metaText = ("{0}  |  {1} day(s)  |  order {2}" -f $(if ([string]$Order.source) { [string]$Order.source } else { "unknown source" }), [int]$Order.durationDays, $Order.orderId)
-    raw = $Order
-  }
-}
-
-function Set-MarketOrdersList {
-  param([object[]]$Orders, [string]$Summary)
-  $display = @(@($Orders) | ForEach-Object { New-MarketOrderDisplay -Order $_ })
-  $script:MarketOrdersList.ItemsSource = $display
-  $buyCount = @($display | Where-Object { $_.sideLabel -eq "BUY" }).Count
-  $sellCount = @($display | Where-Object { $_.sideLabel -eq "SELL" }).Count
-  $seedCount = @($display | Where-Object { [string]$_.raw.source -eq "seed" }).Count
-  $script:MarketOrdersSummary.Text = ("{0}   |   {1} buy   |   {2} sell   |   {3} seeded" -f $Summary, $buyCount, $sellCount, $seedCount)
-}
-
-function Load-MarketOrders {
-  $ownerId = Get-SelectedMarketOwnerId
-  if ($ownerId -le 0) {
-    $script:MarketLastQuery = $null
-    $script:MarketOrdersList.ItemsSource = @()
-    $script:MarketOrdersSummary.Text = "Pick a character or enter an owner id, then click Load Orders."
-    return
-  }
-  try {
-    $result = Invoke-ProjectCli -Command "market-orders" -Arguments @([string]$ownerId)
-    $script:MarketLastQuery = [pscustomobject]@{ mode = "owner"; ownerId = $ownerId }
-    Set-MarketOrdersList -Orders @($result.orders) -Summary ("{0} order(s) for owner {1}" -f @($result.orders).Count, $ownerId)
-    Set-StatusUi -Message ("Loaded market orders for owner {0}." -f $ownerId) -Tone "success" -BadgeText "Market"
-  } catch {
-    $script:MarketOrdersList.ItemsSource = @()
-    $script:MarketOrdersSummary.Text = "Could not load orders: $($_.Exception.Message)"
-    Set-StatusUi -Message $_.Exception.Message -Tone "error"
-  }
-}
-
-function Load-MarketBook {
-  $regionText = ([string]$script:MarketRegionBox.Text).Trim()
-  if ($regionText -notmatch '^\d+$') {
-    Set-StatusUi -Message "Enter a numeric region id to browse the market book." -Tone "info" -BadgeText "Market"
-    return
-  }
-  $typeId = [int64]$script:MarketBookTypeId
-  if ($typeId -le 0) {
-    Set-StatusUi -Message "Search for and select an item type to browse the market book." -Tone "info" -BadgeText "Market"
-    return
-  }
-  $regionId = [int64]$regionText
-  try {
-    $book = Invoke-ProjectCli -Command "market-book" -Arguments @([string]$regionId, [string]$typeId)
-    $script:MarketLastQuery = [pscustomobject]@{ mode = "book"; regionId = $regionId; typeId = $typeId }
-    $all = @(@($book.sells) + @($book.buys))
-    $regionName = [string](Get-JsonPropertyValue -Object $book -Name "regionName")
-    $regionLabel = if ($regionName) { $regionName } else { "region {0}" -f $regionId }
-    Set-MarketOrdersList -Orders $all -Summary ("{0}: {1} order(s) in {2}" -f [string]$book.typeName, $all.Count, $regionLabel)
-    Set-StatusUi -Message ("Loaded market book for {0}." -f [string]$book.typeName) -Tone "success" -BadgeText "Market"
-  } catch {
-    $script:MarketOrdersList.ItemsSource = @()
-    $script:MarketOrdersSummary.Text = "Could not load book: $($_.Exception.Message)"
-    Set-StatusUi -Message $_.Exception.Message -Tone "error"
-  }
-}
-
-function Reload-MarketList {
-  if (-not $script:MarketLastQuery) { return }
-  if ([string]$script:MarketLastQuery.mode -eq "book") { Load-MarketBook } else { Load-MarketOrders }
-}
-
-function Refresh-Market {
-  $reachable = Refresh-MarketStatus
-  if ($reachable) {
-    if ($script:MarketLastQuery) { Reload-MarketList } else { Load-MarketOrders }
-  } else {
-    $script:MarketOrdersList.ItemsSource = @()
-    $script:MarketOrdersSummary.Text = "Market daemon is offline - no orders to show."
-  }
-}
-
-function Remove-SelectedMarketOrder {
-  $selected = $script:MarketOrdersList.SelectedItem
-  if (-not $selected) {
-    Set-StatusUi -Message "Select an order first, then click Cancel Selected." -Tone "info" -BadgeText "Market"
-    return
-  }
-  $isSeed = [string]$selected.raw.source -eq "seed"
-  $prompt = if ($isSeed) {
-    ("Remove seeded stock for {0} at station {1}?`n`nThis sets its seed quantity to 0." -f $selected.typeName, $selected.raw.stationId)
-  } else {
-    ("Cancel market order {0}?`n`n{1} {2}`n{3}" -f $selected.orderId, $selected.sideLabel, $selected.typeName, $selected.priceText)
-  }
-  $confirm = [System.Windows.MessageBox]::Show($prompt, "EvEJS Market", [System.Windows.MessageBoxButton]::YesNo, [System.Windows.MessageBoxImage]::Warning)
-  if ($confirm -ne [System.Windows.MessageBoxResult]::Yes) { return }
-  try {
-    if ($isSeed) {
-      $payload = @{
-        stationId = [int64]$selected.raw.stationId
-        typeId = [int64]$selected.raw.typeId
-        deltaQuantity = -[int64]$selected.raw.volRemaining
-        reason = "config_editor_remove_seed"
-      }
-      Invoke-ProjectCli -Command "market-adjust-seed" -InputObject $payload | Out-Null
-      Set-StatusUi -Message ("Zeroed seeded stock for {0}." -f $selected.typeName) -Tone "success" -BadgeText "Market"
-    } else {
-      Invoke-ProjectCli -Command "market-cancel" -Arguments @([string]$selected.orderId) | Out-Null
-      Set-StatusUi -Message ("Cancelled market order {0}." -f $selected.orderId) -Tone "success" -BadgeText "Market"
-    }
-    Reload-MarketList
-  } catch {
-    Set-StatusUi -Message $_.Exception.Message -Tone "error"
-    [System.Windows.MessageBox]::Show($_.Exception.Message, "EvEJS Market", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error) | Out-Null
-  }
-}
-
-function Invoke-MarketModifySelected {
-  $selected = $script:MarketOrdersList.SelectedItem
-  if (-not $selected) {
-    Set-StatusUi -Message "Select an order to modify." -Tone "info" -BadgeText "Market"
-    return
-  }
-  try {
-    if ([string]$selected.raw.source -eq "seed") {
-      Open-SeedOrderEditor -SeedOrder $selected
-    } else {
-      Open-MarketOrderEditor -ExistingOrder $selected
-    }
-  } catch {
-    Set-StatusUi -Message $_.Exception.Message -Tone "error"
-    [System.Windows.MessageBox]::Show($_.Exception.Message, "EvEJS Market", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error) | Out-Null
-  }
-}
-
-function Open-SeedOrderEditor {
-  param([Parameter(Mandatory = $true)][pscustomobject]$SeedOrder)
-
-  if (-not $script:MarketStatus -or -not $script:MarketStatus.reachable) {
-    [System.Windows.MessageBox]::Show("The market daemon is offline.", "EvEJS Market", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
-    return
-  }
-  $raw = $SeedOrder.raw
-
-  [xml]$seedXaml = @'
-<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="EvEJS Seed Order" Width="520" Height="420" WindowStartupLocation="CenterOwner" Background="{DynamicResource WindowBg}" FontFamily="Segoe UI">
-  <Grid Margin="18">
-    <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
-    <Border Grid.Row="0" CornerRadius="14" Padding="16,12,16,12" Margin="0,0,0,12" Background="{DynamicResource HeroBg}" BorderBrush="{DynamicResource BorderSel}" BorderThickness="1">
-      <StackPanel>
-        <TextBlock x:Name="SeedTitle" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-        <TextBlock x:Name="SeedMeta" Margin="0,4,0,0" FontSize="12" Foreground="{DynamicResource TextMuted}" TextWrapping="Wrap" />
-      </StackPanel>
-    </Border>
-    <Border Grid.Row="1" CornerRadius="14" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16">
-      <StackPanel>
-        <TextBlock x:Name="SeedCurrent" FontSize="12" Foreground="{DynamicResource TextAccent}" Margin="0,0,0,14" TextWrapping="Wrap" />
-        <TextBlock Text="New Price (ISK)" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" />
-        <TextBox x:Name="SeedPriceBox" Height="36" Margin="0,0,0,14" VerticalContentAlignment="Center" />
-        <TextBlock Text="New Quantity" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" />
-        <TextBox x:Name="SeedQtyBox" Height="36" VerticalContentAlignment="Center" />
-      </StackPanel>
-    </Border>
-    <Border Grid.Row="2" Margin="0,12,0,0" CornerRadius="14" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="14,10,14,10">
-      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-        <Button x:Name="SeedCancelButton" Content="Cancel" Margin="0,0,10,0" Padding="14,8,14,8" />
-        <Button x:Name="SeedSaveButton" Content="Apply Changes" Padding="16,8,16,8" />
-      </StackPanel>
-    </Border>
-  </Grid>
-</Window>
-'@
-
-  $seedWindow = [System.Windows.Markup.XamlReader]::Load([System.Xml.XmlNodeReader]::new($seedXaml))
-  $seedWindow.Owner = $script:Window
-  $seedWindow.Add_SourceInitialized({ param($s, $e) Apply-WindowThemeChrome -Window $s })
-
-  $seedTitle = $seedWindow.FindName("SeedTitle")
-  $seedMeta = $seedWindow.FindName("SeedMeta")
-  $seedCurrent = $seedWindow.FindName("SeedCurrent")
-  $seedPriceBox = $seedWindow.FindName("SeedPriceBox")
-  $seedQtyBox = $seedWindow.FindName("SeedQtyBox")
-  $seedCancelButton = $seedWindow.FindName("SeedCancelButton")
-  $seedSaveButton = $seedWindow.FindName("SeedSaveButton")
-
-  $seedPriceBox.Style = $script:Window.FindResource("ConfigTextBoxStyle")
-  $seedQtyBox.Style = $script:Window.FindResource("ConfigTextBoxStyle")
-  $seedCancelButton.Style = $script:Window.FindResource("SecondaryButtonStyle")
-  $seedSaveButton.Style = $script:Window.FindResource("PrimaryButtonStyle")
-
-  $currentPrice = [double]$raw.price
-  $currentQty = [int64]$raw.volRemaining
-  $seedStation = if ([string]$raw.stationName) { [string]$raw.stationName } else { "Station {0}" -f $raw.stationId }
-  $seedRegion = if ([string]$raw.regionName) { [string]$raw.regionName } else { "Region {0}" -f $raw.regionId }
-  $seedSystem = if ([string]$raw.solarSystemName) { [string]$raw.solarSystemName } else { "System {0}" -f $raw.solarSystemId }
-  $seedTitle.Text = "Modify Seeded Order"
-  $seedMeta.Text = ("{0}  |  {1}  |  {2}  |  {3}" -f $SeedOrder.typeName, $seedStation, $seedRegion, $seedSystem)
-  $seedCurrent.Text = ("Current seed: {0:N2} ISK  x  {1:N0} units" -f $currentPrice, $currentQty)
-  $seedPriceBox.Text = [string]$currentPrice
-  $seedQtyBox.Text = [string]$currentQty
-
-  $seedCancelButton.Add_Click({ $seedWindow.DialogResult = $false; $seedWindow.Close() })
-  $seedSaveButton.Add_Click({
-    try {
-      $newPrice = Parse-NumericText -Text $seedPriceBox.Text -Label "New price"
-      $newQty = [int64](Parse-NumericText -Text $seedQtyBox.Text -Label "New quantity")
-      $delta = $newQty - $currentQty
-      $payload = @{
-        stationId = [int64]$raw.stationId
-        typeId = [int64]$raw.typeId
-        deltaQuantity = $delta
-        newPrice = $newPrice
-        reason = "config_editor_modify_seed"
-      }
-      Invoke-ProjectCli -Command "market-adjust-seed" -InputObject $payload | Out-Null
-      $seedWindow.DialogResult = $true
-      $seedWindow.Close()
-    } catch {
-      [System.Windows.MessageBox]::Show($_.Exception.Message, "EvEJS Market", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error) | Out-Null
-    }
-  })
-
-  if ($seedWindow.ShowDialog() -eq $true) {
-    Set-StatusUi -Message ("Updated seeded stock for {0}." -f $SeedOrder.typeName) -Tone "success" -BadgeText "Market"
-    Reload-MarketList
-  }
-}
-
-function Open-MarketOrderEditor {
-  param([pscustomobject]$ExistingOrder = $null)
-
-  if (-not $script:MarketStatus -or -not $script:MarketStatus.reachable) {
-    [System.Windows.MessageBox]::Show("The market daemon is offline. Start it before adding or modifying orders.", "EvEJS Market", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
-    return
-  }
-
-  $isModify = $null -ne $ExistingOrder
-  $windowTitle = if ($isModify) { "Modify Market Order" } else { "New Market Order" }
-
-  [xml]$orderXaml = @'
-<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Width="920" Height="700" MinWidth="820" MinHeight="620" WindowStartupLocation="CenterOwner" Background="{DynamicResource WindowBg}" FontFamily="Segoe UI">
-  <Grid Margin="18">
-    <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
-    <Border Grid.Row="0" CornerRadius="14" Padding="18,14,18,14" Margin="0,0,0,14" Background="{DynamicResource HeroBg}" BorderBrush="{DynamicResource BorderSel}" BorderThickness="1">
-      <StackPanel>
-        <TextBlock x:Name="MoeTitle" FontSize="22" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-        <TextBlock Text="Orders are placed directly on the running market daemon." Margin="0,4,0,0" FontSize="12" Foreground="{DynamicResource TextMuted}" />
-      </StackPanel>
-    </Border>
-    <Grid Grid.Row="1">
-      <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="14" /><ColumnDefinition Width="360" /></Grid.ColumnDefinitions>
-      <Border Grid.Column="0" CornerRadius="14" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16">
-        <DockPanel LastChildFill="True">
-          <StackPanel DockPanel.Dock="Top">
-            <TextBlock Text="Item Type" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-            <TextBlock x:Name="MoeSelectedType" Margin="0,4,0,10" FontSize="12" Foreground="{DynamicResource TextAccent}" TextWrapping="Wrap" Text="No type selected" />
-            <TextBox x:Name="MoeSearchBox" Height="36" Margin="0,0,0,10" VerticalContentAlignment="Center" />
-          </StackPanel>
-          <ListBox x:Name="MoeTypeList" BorderThickness="0" Background="Transparent" Foreground="{DynamicResource TextPrimary}" />
-        </DockPanel>
-      </Border>
-      <Border Grid.Column="2" CornerRadius="14" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16">
-        <StackPanel>
-          <TextBlock Text="Order Side" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" />
-          <ComboBox x:Name="MoeSideCombo" Height="34" Margin="0,0,0,12" />
-          <Grid Margin="0,0,0,12">
-            <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="12" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0"><TextBlock Text="Price (ISK)" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" /><TextBox x:Name="MoePriceBox" Height="34" VerticalContentAlignment="Center" /></StackPanel>
-            <StackPanel Grid.Column="2"><TextBlock Text="Quantity" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" /><TextBox x:Name="MoeQtyBox" Height="34" VerticalContentAlignment="Center" /></StackPanel>
-          </Grid>
-          <Grid Margin="0,0,0,12">
-            <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="12" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0"><TextBlock Text="Min Volume" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" /><TextBox x:Name="MoeMinVolBox" Height="34" VerticalContentAlignment="Center" /></StackPanel>
-            <StackPanel Grid.Column="2"><TextBlock Text="Duration (days)" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" /><TextBox x:Name="MoeDurationBox" Height="34" VerticalContentAlignment="Center" /></StackPanel>
-          </Grid>
-          <Grid Margin="0,0,0,12">
-            <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="12" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0"><TextBlock Text="Range" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" /><TextBox x:Name="MoeRangeBox" Height="34" VerticalContentAlignment="Center" /></StackPanel>
-            <StackPanel Grid.Column="2"><TextBlock Text="Source" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" /><ComboBox x:Name="MoeSourceCombo" Height="34" /></StackPanel>
-          </Grid>
-          <TextBlock Text="Station ID" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" />
-          <TextBox x:Name="MoeStationBox" Height="34" Margin="0,0,0,12" VerticalContentAlignment="Center" />
-          <TextBlock Text="Owner (character) ID" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" Margin="0,0,0,6" />
-          <TextBox x:Name="MoeOwnerBox" Height="34" VerticalContentAlignment="Center" />
-        </StackPanel>
-      </Border>
-    </Grid>
-    <Border Grid.Row="2" Margin="0,14,0,0" CornerRadius="14" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="14,10,14,10">
-      <DockPanel LastChildFill="False">
-        <TextBlock x:Name="MoeFooter" VerticalAlignment="Center" FontSize="12" Foreground="{DynamicResource TextMuted}" />
-        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-          <Button x:Name="MoeCancelButton" Content="Cancel" Margin="0,0,10,0" Padding="14,8,14,8" />
-          <Button x:Name="MoeSaveButton" Content="Place Order" Padding="16,8,16,8" />
-        </StackPanel>
-      </DockPanel>
-    </Border>
-  </Grid>
-</Window>
-'@
-
-  $orderWindow = [System.Windows.Markup.XamlReader]::Load([System.Xml.XmlNodeReader]::new($orderXaml))
-  $orderWindow.Owner = $script:Window
-  $orderWindow.Title = "EvEJS $windowTitle"
-  $orderWindow.Add_SourceInitialized({ param($s, $e) Apply-WindowThemeChrome -Window $s })
-
-  $moeTitle = $orderWindow.FindName("MoeTitle")
-  $moeSelectedType = $orderWindow.FindName("MoeSelectedType")
-  $moeSearchBox = $orderWindow.FindName("MoeSearchBox")
-  $moeTypeList = $orderWindow.FindName("MoeTypeList")
-  $moeSideCombo = $orderWindow.FindName("MoeSideCombo")
-  $moePriceBox = $orderWindow.FindName("MoePriceBox")
-  $moeQtyBox = $orderWindow.FindName("MoeQtyBox")
-  $moeMinVolBox = $orderWindow.FindName("MoeMinVolBox")
-  $moeDurationBox = $orderWindow.FindName("MoeDurationBox")
-  $moeRangeBox = $orderWindow.FindName("MoeRangeBox")
-  $moeSourceCombo = $orderWindow.FindName("MoeSourceCombo")
-  $moeStationBox = $orderWindow.FindName("MoeStationBox")
-  $moeOwnerBox = $orderWindow.FindName("MoeOwnerBox")
-  $moeFooter = $orderWindow.FindName("MoeFooter")
-  $moeCancelButton = $orderWindow.FindName("MoeCancelButton")
-  $moeSaveButton = $orderWindow.FindName("MoeSaveButton")
-
-  # Shared styles live in the main window's resources, so apply them here rather
-  # than via {StaticResource} (which does not resolve into a separate window).
-  foreach ($tb in @($moeSearchBox, $moePriceBox, $moeQtyBox, $moeMinVolBox, $moeDurationBox, $moeRangeBox, $moeStationBox, $moeOwnerBox)) {
-    $tb.Style = $script:Window.FindResource("ConfigTextBoxStyle")
-  }
-  foreach ($cb in @($moeSideCombo, $moeSourceCombo)) {
-    $cb.Style = $script:Window.FindResource("ConfigComboBoxStyle")
-  }
-  $moeCancelButton.Style = $script:Window.FindResource("SecondaryButtonStyle")
-  $moeSaveButton.Style = $script:Window.FindResource("PrimaryButtonStyle")
-
-  $moeTitle.Text = $windowTitle
-  $moeTypeList.SetValue([System.Windows.Controls.ScrollViewer]::HorizontalScrollBarVisibilityProperty, [System.Windows.Controls.ScrollBarVisibility]::Disabled)
-  $moeTypeList.DisplayMemberPath = "label"
-  $moeTypeList.SelectedValuePath = "typeID"
-
-  $moeSideCombo.ItemsSource = @(
-    [pscustomobject]@{ label = "Sell order"; value = $false },
-    [pscustomobject]@{ label = "Buy order"; value = $true }
-  )
-  $moeSideCombo.DisplayMemberPath = "label"
-  $moeSideCombo.SelectedValuePath = "value"
-  $moeSourceCombo.ItemsSource = @("player", "seed", "npc")
-
-  $script:MoeSelectedTypeId = 0
-  $script:MoeSelectedTypeName = ""
-  $setSelectedType = {
-    param($TypeId, $TypeName)
-    $script:MoeSelectedTypeId = [int64]$TypeId
-    $script:MoeSelectedTypeName = [string]$TypeName
-    $moeSelectedType.Text = if ($script:MoeSelectedTypeId -gt 0) { "{0}  (type {1})" -f $script:MoeSelectedTypeName, $script:MoeSelectedTypeId } else { "No type selected" }
-  }
-
-  $runTypeSearch = {
-    $query = ([string]$moeSearchBox.Text).Trim()
-    if ($query.Length -lt 2) { $moeTypeList.ItemsSource = @(); return }
-    try {
-      $results = Invoke-ProjectCli -Command "database-type-search" -Arguments @("item", $query)
-      $moeTypeList.ItemsSource = @(@($results) | ForEach-Object {
-          [pscustomobject]@{ label = ("{0}  -  {1}" -f $_.name, $_.groupName); name = $_.name; typeID = $_.typeID }
-        })
-    } catch {
-      $moeTypeList.ItemsSource = @()
-    }
-  }
-  $moeSearchBox.Add_TextChanged({ & $runTypeSearch })
-  $moeTypeList.Add_SelectionChanged({
-    $selection = $moeTypeList.SelectedItem
-    if ($selection) { & $setSelectedType $selection.typeID $selection.name }
-  })
-
-  # Prefill defaults (from the current owner selection) or the order being modified.
-  $defaultOwner = Get-SelectedMarketOwnerId
-  if ($isModify) {
-    $raw = $ExistingOrder.raw
-    & $setSelectedType $raw.typeId $ExistingOrder.typeName
-    $moeSideCombo.SelectedValue = [bool]$raw.bid
-    $moePriceBox.Text = [string]$raw.price
-    $moeQtyBox.Text = [string][int64]$raw.volRemaining
-    $moeMinVolBox.Text = [string][int64]$raw.minVolume
-    $moeDurationBox.Text = [string][int64]$raw.durationDays
-    $moeRangeBox.Text = [string][int64]$raw.rangeValue
-    $moeStationBox.Text = [string][int64]$raw.stationId
-    $moeOwnerBox.Text = [string][int64]$raw.ownerId
-    $moeSourceCombo.SelectedItem = if ([string]$raw.source) { [string]$raw.source } else { "player" }
-    $moeSaveButton.Content = "Apply Changes"
-    $moeFooter.Text = "Modify re-places order $($ExistingOrder.orderId): the old order is cancelled and a new one created."
-  } else {
-    $moeSideCombo.SelectedIndex = 0
-    $moeMinVolBox.Text = "1"
-    $moeDurationBox.Text = "90"
-    $moeRangeBox.Text = "0"
-    $moeSourceCombo.SelectedItem = "player"
-    if ($defaultOwner -gt 0) { $moeOwnerBox.Text = [string]$defaultOwner }
-    $moeFooter.Text = "The order is placed immediately on the market daemon."
-  }
-
-  $moeCancelButton.Add_Click({ $orderWindow.DialogResult = $false; $orderWindow.Close() })
-  $moeSaveButton.Add_Click({
-    try {
-      if ($script:MoeSelectedTypeId -le 0) { throw "Search for and select an item type first." }
-      $payload = @{
-        typeId = [int64]$script:MoeSelectedTypeId
-        bid = [bool]$moeSideCombo.SelectedValue
-        price = (Parse-NumericText -Text $moePriceBox.Text -Label "Price")
-        quantity = (Parse-NumericText -Text $moeQtyBox.Text -Label "Quantity")
-        minVolume = (Parse-NumericText -Text $moeMinVolBox.Text -Label "Min volume")
-        durationDays = (Parse-NumericText -Text $moeDurationBox.Text -Label "Duration")
-        rangeValue = (Parse-NumericText -Text $moeRangeBox.Text -Label "Range")
-        stationId = (Parse-NumericText -Text $moeStationBox.Text -Label "Station id")
-        ownerId = (Parse-NumericText -Text $moeOwnerBox.Text -Label "Owner id")
-        source = [string]$moeSourceCombo.SelectedItem
-      }
-      if ($isModify) {
-        $payload.orderId = [string]$ExistingOrder.orderId
-        Invoke-ProjectCli -Command "market-modify" -InputObject $payload | Out-Null
-      } else {
-        Invoke-ProjectCli -Command "market-place" -InputObject $payload | Out-Null
-      }
-      $orderWindow.DialogResult = $true
-      $orderWindow.Close()
-    } catch {
-      [System.Windows.MessageBox]::Show($_.Exception.Message, "EvEJS Market", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error) | Out-Null
-    }
-  })
-
-  $result = $orderWindow.ShowDialog()
-  if ($result -eq $true) {
-    $verb = if ($isModify) { "Updated" } else { "Placed" }
-    Set-StatusUi -Message ("{0} market order for owner {1}." -f $verb, (Get-SelectedMarketOwnerId)) -Tone "success" -BadgeText "Market"
-    if ($script:MarketLastQuery) { Reload-MarketList } else { Load-MarketOrders }
   }
 }
 
@@ -3716,15 +2498,15 @@ $xaml = @'
         MinWidth="1100"
         MinHeight="760"
         WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource WindowBg}"
+        Background="#F4F7FB"
         FontFamily="Segoe UI">
   <Window.Resources>
     <Style x:Key="SecondaryButtonStyle" TargetType="Button">
       <Setter Property="FontSize" Value="13" />
       <Setter Property="FontWeight" Value="SemiBold" />
-      <Setter Property="Background" Value="{DynamicResource BtnBg}" />
-      <Setter Property="Foreground" Value="{DynamicResource BtnText}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource BorderStrong}" />
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="Foreground" Value="#17324D" />
+      <Setter Property="BorderBrush" Value="#D5E0EA" />
       <Setter Property="BorderThickness" Value="1" />
       <Setter Property="Cursor" Value="Hand" />
       <Setter Property="Template">
@@ -3734,21 +2516,21 @@ $xaml = @'
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    CornerRadius="10">
+                    CornerRadius="14">
               <ContentPresenter HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Margin="{TemplateBinding Padding}" />
             </Border>
             <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource BtnHoverBg}" />
-                <Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource BorderSel}" />
+                <Setter TargetName="Chrome" Property="Background" Value="#F7FAFD" />
+                <Setter TargetName="Chrome" Property="BorderBrush" Value="#6FAEDC" />
               </Trigger>
               <Trigger Property="IsPressed" Value="True">
-                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource BtnPressBg}" />
+                <Setter TargetName="Chrome" Property="Background" Value="#EAF4FB" />
               </Trigger>
               <Trigger Property="IsEnabled" Value="False">
-                <Setter TargetName="Chrome" Property="Opacity" Value="0.45" />
+                <Setter TargetName="Chrome" Property="Opacity" Value="0.55" />
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
@@ -3756,163 +2538,44 @@ $xaml = @'
       </Setter>
     </Style>
     <Style x:Key="PrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}">
-      <Setter Property="Background" Value="{DynamicResource Accent}" />
-      <Setter Property="Foreground" Value="{DynamicResource OnAccent}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource AccentHover}" />
+      <Setter Property="Background" Value="#4F7EA8" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#6FAEDC" />
     </Style>
     <Style x:Key="ConfigTextBoxStyle" TargetType="TextBox">
       <Setter Property="Padding" Value="10,6,10,6" />
       <Setter Property="FontSize" Value="14" />
-      <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
-      <Setter Property="Background" Value="{DynamicResource PanelInput}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource BorderStrong}" />
+      <Setter Property="Foreground" Value="#0F172A" />
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#D5E0EA" />
       <Setter Property="BorderThickness" Value="1" />
-      <Setter Property="CaretBrush" Value="{DynamicResource TextPrimary}" />
-      <Setter Property="SelectionBrush" Value="{DynamicResource Accent}" />
-    </Style>
-    <Style x:Key="ConfigComboBoxItemStyle" TargetType="ComboBoxItem">
-      <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
-      <Setter Property="Background" Value="Transparent" />
-      <Setter Property="Padding" Value="10,7,10,7" />
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="ComboBoxItem">
-            <Border x:Name="ItemChrome" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="6">
-              <ContentPresenter />
-            </Border>
-            <ControlTemplate.Triggers>
-              <Trigger Property="IsHighlighted" Value="True">
-                <Setter TargetName="ItemChrome" Property="Background" Value="{DynamicResource ListHoverBg}" />
-              </Trigger>
-              <Trigger Property="IsSelected" Value="True">
-                <Setter TargetName="ItemChrome" Property="Background" Value="{DynamicResource ListSelBg}" />
-              </Trigger>
-            </ControlTemplate.Triggers>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
     </Style>
     <Style x:Key="ConfigComboBoxStyle" TargetType="ComboBox">
       <Setter Property="FontSize" Value="14" />
-      <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
-      <Setter Property="Background" Value="{DynamicResource PanelInput}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource BorderStrong}" />
+      <Setter Property="Foreground" Value="#0F172A" />
+      <Setter Property="Background" Value="#FFFFFF" />
+      <Setter Property="BorderBrush" Value="#D5E0EA" />
       <Setter Property="BorderThickness" Value="1" />
-      <Setter Property="ItemContainerStyle" Value="{StaticResource ConfigComboBoxItemStyle}" />
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="ComboBox">
-            <Grid>
-              <ToggleButton Focusable="False"
-                            ClickMode="Press"
-                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-                <ToggleButton.Template>
-                  <ControlTemplate TargetType="ToggleButton">
-                    <Border x:Name="CbChrome"
-                            Background="{DynamicResource PanelInput}"
-                            BorderBrush="{DynamicResource BorderStrong}"
-                            BorderThickness="1"
-                            CornerRadius="10">
-                      <Path x:Name="CbArrow"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Margin="0,0,12,0"
-                            Data="M0,0 L4,4 L8,0 Z"
-                            Fill="{DynamicResource TextMuted}" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                      <Trigger Property="IsMouseOver" Value="True">
-                        <Setter TargetName="CbChrome" Property="BorderBrush" Value="{DynamicResource BorderSel}" />
-                      </Trigger>
-                    </ControlTemplate.Triggers>
-                  </ControlTemplate>
-                </ToggleButton.Template>
-              </ToggleButton>
-              <ContentPresenter x:Name="CbContent"
-                                IsHitTestVisible="False"
-                                Content="{TemplateBinding SelectionBoxItem}"
-                                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                Margin="12,0,30,0"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Left"
-                                TextElement.Foreground="{DynamicResource TextPrimary}" />
-              <Popup x:Name="CbPopup"
-                     Placement="Bottom"
-                     IsOpen="{TemplateBinding IsDropDownOpen}"
-                     AllowsTransparency="True"
-                     Focusable="False"
-                     PopupAnimation="Slide">
-                <Border MinWidth="{TemplateBinding ActualWidth}"
-                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                        Background="{DynamicResource Panel}"
-                        BorderBrush="{DynamicResource BorderStrong}"
-                        BorderThickness="1"
-                        CornerRadius="8"
-                        Margin="0,4,0,0">
-                  <ScrollViewer>
-                    <ItemsPresenter />
-                  </ScrollViewer>
-                </Border>
-              </Popup>
-            </Grid>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-    <Style TargetType="TabControl">
-      <Setter Property="Background" Value="Transparent" />
-      <Setter Property="BorderThickness" Value="0" />
-      <Setter Property="Padding" Value="0" />
     </Style>
     <Style x:Key="SectionLabelStyle" TargetType="TextBlock">
       <Setter Property="FontSize" Value="12" />
       <Setter Property="FontWeight" Value="SemiBold" />
-      <Setter Property="Foreground" Value="{DynamicResource TextMuted}" />
+      <Setter Property="Foreground" Value="#5B6B80" />
       <Setter Property="Margin" Value="0,0,0,6" />
     </Style>
-    <Style x:Key="ThemeToggleButtonStyle" TargetType="Button">
-      <Setter Property="FontSize" Value="16" />
-      <Setter Property="Background" Value="{DynamicResource BtnBg}" />
-      <Setter Property="Foreground" Value="{DynamicResource TextAccent}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource BorderStrong}" />
-      <Setter Property="Cursor" Value="Hand" />
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="Button">
-            <Border x:Name="Chrome"
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="1"
-                    CornerRadius="10"
-                    Width="40"
-                    Height="36">
-              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </Border>
-            <ControlTemplate.Triggers>
-              <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="Chrome" Property="BorderBrush" Value="{DynamicResource BorderSel}" />
-                <Setter TargetName="Chrome" Property="Background" Value="{DynamicResource BtnHoverBg}" />
-              </Trigger>
-            </ControlTemplate.Triggers>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
     <Style TargetType="TabItem">
-      <Setter Property="FontSize" Value="12" />
+      <Setter Property="FontSize" Value="13" />
       <Setter Property="FontWeight" Value="SemiBold" />
-      <Setter Property="Foreground" Value="{DynamicResource TextSecondary}" />
-      <Setter Property="Padding" Value="12,6" />
+      <Setter Property="Padding" Value="18,10" />
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="TabItem">
             <Border x:Name="TabChrome"
-                    Background="{DynamicResource TabBg}"
-                    BorderBrush="{DynamicResource Border}"
+                    Background="#EAF1F7"
+                    BorderBrush="#D5E0EA"
                     BorderThickness="1"
-                    CornerRadius="8"
-                    Margin="0,0,8,8">
+                    CornerRadius="14"
+                    Margin="0,0,8,0">
               <ContentPresenter ContentSource="Header"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
@@ -3920,12 +2583,11 @@ $xaml = @'
             </Border>
             <ControlTemplate.Triggers>
               <Trigger Property="IsSelected" Value="True">
-                <Setter TargetName="TabChrome" Property="Background" Value="{DynamicResource TabSelBg}" />
-                <Setter TargetName="TabChrome" Property="BorderBrush" Value="{DynamicResource BorderSel}" />
-                <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+                <Setter TargetName="TabChrome" Property="Background" Value="#FFFFFF" />
+                <Setter TargetName="TabChrome" Property="BorderBrush" Value="#6FAEDC" />
               </Trigger>
               <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="TabChrome" Property="BorderBrush" Value="{DynamicResource TabHoverBorder}" />
+                <Setter TargetName="TabChrome" Property="BorderBrush" Value="#6A7A8F" />
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
@@ -3933,93 +2595,91 @@ $xaml = @'
       </Setter>
     </Style>
   </Window.Resources>
-  <Grid Margin="12">
+  <Grid Margin="18">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <Border Grid.Row="0" CornerRadius="12" Padding="18,12,18,12" Margin="0,0,0,10"
-            Background="{DynamicResource HeroBg}"
-            BorderBrush="{DynamicResource BorderSel}"
-            BorderThickness="1">
+    <Border Grid.Row="0" CornerRadius="24" Padding="24" Margin="0,0,0,14">
+      <Border.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+          <GradientStop Color="#FFFFFF" Offset="0" />
+          <GradientStop Color="#F1F6FB" Offset="0.62" />
+          <GradientStop Color="#E6F0F7" Offset="1" />
+        </LinearGradientBrush>
+      </Border.Background>
+      <Border.BorderBrush>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+          <GradientStop Color="#D5E0EA" Offset="0" />
+          <GradientStop Color="#6FAEDC" Offset="0.6" />
+          <GradientStop Color="#D5E0EA" Offset="1" />
+        </LinearGradientBrush>
+      </Border.BorderBrush>
+      <Border.BorderThickness>1</Border.BorderThickness>
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <StackPanel VerticalAlignment="Center">
+        <StackPanel>
           <TextBlock Text="EvEJS Command Nexus"
-                     FontSize="20"
+                     FontSize="28"
                      FontWeight="SemiBold"
-                     Foreground="{DynamicResource TextPrimary}" />
+                     Foreground="#102235" />
           <TextBlock Text="Capsuleer-side control for server settings, player data, and fast recovery actions."
-                     Margin="0,3,0,0"
+                     Margin="0,8,0,0"
+                     FontSize="14"
+                     Foreground="#516579" />
+          <TextBlock Text="Command decks: Server Settings and Server Database"
+                     Margin="0,14,0,0"
                      FontSize="12"
-                     Foreground="{DynamicResource TextMuted}" />
+                     Foreground="#6A7C90" />
         </StackPanel>
-        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-          <Border x:Name="HeroBadgeBorder"
-                  VerticalAlignment="Top"
-                  Background="{DynamicResource InfoBg}"
-                  BorderBrush="{DynamicResource BorderStrong}"
-                  BorderThickness="1"
-                  CornerRadius="10"
-                  Padding="14,8,14,8"
-                  Margin="0,0,10,0">
-            <TextBlock x:Name="HeroBadgeText"
-                       FontSize="12"
-                       FontWeight="SemiBold"
-                       Foreground="{DynamicResource TextAccent}"
-                       VerticalAlignment="Center"
-                       Text="STATUS: READY" />
-          </Border>
-          <Button x:Name="ThemeToggleButton"
-                  Style="{StaticResource ThemeToggleButtonStyle}"
-                  ToolTip="Toggle dark / light theme"
-                  Content="&#x263D;" />
-        </StackPanel>
+        <Border x:Name="HeroBadgeBorder"
+                Grid.Column="1"
+                VerticalAlignment="Top"
+                Background="#F7FAFD"
+                BorderBrush="#D5E0EA"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="14,8,14,8">
+          <TextBlock x:Name="HeroBadgeText"
+                     FontSize="12"
+                     FontWeight="SemiBold"
+                     Foreground="#2F6F9F"
+                     Text="STATUS: READY" />
+        </Border>
       </Grid>
     </Border>
 
     <TabControl x:Name="MasterTabs" Grid.Row="1" Background="Transparent">
       <TabItem Header="Server Settings">
-        <Grid Margin="0,8,0,0">
+        <Grid Margin="0,12,0,0">
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
           </Grid.RowDefinitions>
-          <Border Grid.Row="0" CornerRadius="14" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="14,10,14,10" Margin="0,0,0,10">
-            <StackPanel>
-              <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="*" />
-                  <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid VerticalAlignment="Center">
-                  <TextBox x:Name="SettingsSearchBox" Height="36" Padding="34,0,12,0" VerticalContentAlignment="Center" Style="{StaticResource ConfigTextBoxStyle}" />
-                  <TextBlock Text="&#xE721;" FontFamily="Segoe MDL2 Assets" FontSize="14" IsHitTestVisible="False" Foreground="{DynamicResource TextMuted}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,0" />
-                  <TextBlock x:Name="SettingsSearchHint" Text="Search settings by name, key, or description" IsHitTestVisible="False" Foreground="{DynamicResource TextMuted}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="34,0,0,0" FontSize="13" />
-                </Grid>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,0,0">
-                  <Button x:Name="SettingsOpenFileButton" Content="Open File" Margin="0,0,8,0" Padding="12,7,12,7" Style="{StaticResource SecondaryButtonStyle}" />
-                  <Button x:Name="SettingsDefaultsButton" Content="Load Defaults" Margin="0,0,8,0" Padding="12,7,12,7" Style="{StaticResource SecondaryButtonStyle}" />
-                  <Button x:Name="SettingsReloadButton" Content="Reload" Margin="0,0,8,0" Padding="12,7,12,7" Style="{StaticResource SecondaryButtonStyle}" />
-                  <Button x:Name="SettingsSaveButton" Content="Save Changes" Padding="14,7,14,7" Style="{StaticResource PrimaryButtonStyle}" />
-                </StackPanel>
-              </Grid>
-              <TextBlock x:Name="SettingsPathText" FontSize="11" Foreground="{DynamicResource TextMuted}" Margin="2,8,0,0" TextTrimming="CharacterEllipsis" />
-              <TextBlock x:Name="SettingsEnvNoteText" Margin="2,6,0,0" FontSize="12" Foreground="{DynamicResource TextAccent}" TextWrapping="Wrap" Visibility="Collapsed" />
-            </StackPanel>
+          <Border Grid.Row="0" CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="18" Margin="0,0,0,14">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <StackPanel>
+                <TextBlock x:Name="SettingsPathText" FontSize="13" FontWeight="SemiBold" Foreground="#102235" />
+                <TextBlock x:Name="SettingsEnvNoteText" Margin="0,8,0,0" FontSize="12" Foreground="#2F6F9F" TextWrapping="Wrap" Visibility="Collapsed" />
+              </StackPanel>
+              <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="SettingsOpenFileButton" Content="Open File" Margin="0,0,10,0" Padding="16,10,16,10" Style="{StaticResource SecondaryButtonStyle}" />
+                <Button x:Name="SettingsDefaultsButton" Content="Load Defaults" Margin="0,0,10,0" Padding="16,10,16,10" Style="{StaticResource SecondaryButtonStyle}" />
+                <Button x:Name="SettingsReloadButton" Content="Reload" Margin="0,0,10,0" Padding="16,10,16,10" Style="{StaticResource SecondaryButtonStyle}" />
+                <Button x:Name="SettingsSaveButton" Content="Save Changes" Padding="18,10,18,10" Style="{StaticResource PrimaryButtonStyle}" />
+              </StackPanel>
+            </Grid>
           </Border>
-          <TabControl x:Name="SettingsTabs" Grid.Row="1" Background="Transparent">
-            <TabControl.ItemsPanel>
-              <ItemsPanelTemplate>
-                <WrapPanel />
-              </ItemsPanelTemplate>
-            </TabControl.ItemsPanel>
-          </TabControl>
+          <TabControl x:Name="SettingsTabs" Grid.Row="1" Background="Transparent" />
         </Grid>
       </TabItem>
 
@@ -4030,18 +2690,18 @@ $xaml = @'
             <RowDefinition Height="*" />
           </Grid.RowDefinitions>
 
-          <Border Grid.Row="0" CornerRadius="18" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="18" Margin="0,0,0,14">
+          <Border Grid.Row="0" CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="18" Margin="0,0,0,14">
             <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
               <StackPanel>
-                <TextBlock x:Name="DbPathText" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-                <TextBlock x:Name="DbCountsText" Margin="0,8,0,0" FontSize="12" Foreground="{DynamicResource TextMuted}" />
+                <TextBlock x:Name="DbPathText" FontSize="13" FontWeight="SemiBold" Foreground="#102235" />
+                <TextBlock x:Name="DbCountsText" Margin="0,8,0,0" FontSize="12" Foreground="#6A7C90" />
               </StackPanel>
               <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="DbOpenFolderButton" Content="Open Database Folder" Margin="0,0,10,0" Padding="16,10,16,10" Style="{StaticResource SecondaryButtonStyle}" />
+                <Button x:Name="DbOpenFolderButton" Content="Open Data Folder" Margin="0,0,10,0" Padding="16,10,16,10" Style="{StaticResource SecondaryButtonStyle}" />
                 <Button x:Name="DbReloadButton" Content="Reload" Margin="0,0,10,0" Padding="16,10,16,10" Style="{StaticResource SecondaryButtonStyle}" />
                 <Button x:Name="DbSkillStudioButton" Content="Skill Studio" Margin="0,0,10,0" Padding="16,10,16,10" Style="{StaticResource SecondaryButtonStyle}" />
                 <Button x:Name="DbSaveButton" Content="Save Player Changes" Padding="18,10,18,10" Style="{StaticResource PrimaryButtonStyle}" />
@@ -4056,11 +2716,11 @@ $xaml = @'
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" CornerRadius="18" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="16">
+            <Border Grid.Column="0" CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="16">
               <DockPanel LastChildFill="True">
                 <StackPanel DockPanel.Dock="Top">
-                  <TextBlock Text="Players" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-                  <TextBlock Text="Search by character, account, system, corporation, or ship." Margin="0,6,0,12" FontSize="12" Foreground="{DynamicResource TextMuted}" TextWrapping="Wrap" />
+                  <TextBlock Text="Players" FontSize="18" FontWeight="SemiBold" Foreground="#102235" />
+                  <TextBlock Text="Search by character, account, system, corporation, or ship." Margin="0,6,0,12" FontSize="12" Foreground="#6A7C90" TextWrapping="Wrap" />
                   <TextBox x:Name="DbSearchBox" Height="38" Margin="0,0,0,12" Style="{StaticResource ConfigTextBoxStyle}" />
                 </StackPanel>
                 <ListBox x:Name="DbPlayerList" BorderThickness="0" Background="Transparent" />
@@ -4073,11 +2733,11 @@ $xaml = @'
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
 
-              <Border Grid.Row="0" CornerRadius="18" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="18" Margin="0,0,0,14">
+              <Border Grid.Row="0" CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="18" Margin="0,0,0,14">
                 <StackPanel>
-                  <TextBlock x:Name="DbPlayerHeadline" FontSize="24" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" Text="No player selected" />
-                  <TextBlock x:Name="DbPlayerMeta" Margin="0,8,0,0" FontSize="13" Foreground="{DynamicResource TextMuted}" TextWrapping="Wrap" />
-                  <TextBlock x:Name="DbWarningText" Margin="0,10,0,0" FontSize="12" Foreground="{DynamicResource TextAccent}" TextWrapping="Wrap" Visibility="Collapsed" />
+                  <TextBlock x:Name="DbPlayerHeadline" FontSize="24" FontWeight="SemiBold" Foreground="#102235" Text="No player selected" />
+                  <TextBlock x:Name="DbPlayerMeta" Margin="0,8,0,0" FontSize="13" Foreground="#6A7C90" TextWrapping="Wrap" />
+                  <TextBlock x:Name="DbWarningText" Margin="0,10,0,0" FontSize="12" Foreground="#2F6F9F" TextWrapping="Wrap" Visibility="Collapsed" />
                   <WrapPanel x:Name="DbMetricPanel" Margin="0,14,0,0" />
                 </StackPanel>
               </Border>
@@ -4085,7 +2745,7 @@ $xaml = @'
               <TabControl x:Name="DbDetailTabs" Grid.Row="1" Background="Transparent">
                 <TabItem Header="Overview">
                   <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <Border CornerRadius="18" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="18" Margin="0,12,0,0">
+                    <Border CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="18" Margin="0,12,0,0">
                       <Grid>
                         <Grid.ColumnDefinitions>
                           <ColumnDefinition Width="*" />
@@ -4104,7 +2764,7 @@ $xaml = @'
                         </StackPanel>
                         <StackPanel Grid.Row="0" Grid.Column="1" Margin="12,0,0,12">
                           <TextBlock Text="Banned" Style="{StaticResource SectionLabelStyle}" />
-                          <CheckBox x:Name="DbBannedCheckBox" Content="Account is banned" FontSize="14" Foreground="{DynamicResource TextPrimary}" />
+                          <CheckBox x:Name="DbBannedCheckBox" Content="Account is banned" FontSize="14" Foreground="#102235" />
                         </StackPanel>
 
                         <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,12,12">
@@ -4170,11 +2830,11 @@ $xaml = @'
                             </WrapPanel>
                             <TextBlock Text="Read-only References" Style="{StaticResource SectionLabelStyle}" />
                             <TextBlock Text="Corporation" Style="{StaticResource SectionLabelStyle}" Margin="0,12,0,6" />
-                            <TextBlock x:Name="DbOverviewCorporationText" Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap" />
+                            <TextBlock x:Name="DbOverviewCorporationText" Foreground="#334155" TextWrapping="Wrap" />
                             <TextBlock Text="Station" Style="{StaticResource SectionLabelStyle}" Margin="0,12,0,6" />
-                            <TextBlock x:Name="DbOverviewStationText" Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap" />
+                            <TextBlock x:Name="DbOverviewStationText" Foreground="#334155" TextWrapping="Wrap" />
                             <TextBlock Text="Solar System" Style="{StaticResource SectionLabelStyle}" Margin="0,12,0,6" />
-                            <TextBlock x:Name="DbOverviewSystemText" Foreground="{DynamicResource TextSecondary}" TextWrapping="Wrap" />
+                            <TextBlock x:Name="DbOverviewSystemText" Foreground="#334155" TextWrapping="Wrap" />
                           </StackPanel>
 
                           <StackPanel Grid.Column="2" Margin="12,0,0,0">
@@ -4200,10 +2860,10 @@ $xaml = @'
                 <TabItem Header="Raw JSON">
                   <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="0,12,0,0">
-                      <Border CornerRadius="18" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="18" Margin="0,0,0,14">
+                      <Border CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="18" Margin="0,0,0,14">
                         <StackPanel>
-                          <TextBlock Text="Raw object editors" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" />
-                          <TextBlock Text="This is the full-control escape hatch. Edit carefully, then click Apply Raw JSON before saving." Margin="0,8,0,0" FontSize="12" Foreground="{DynamicResource TextMuted}" TextWrapping="Wrap" />
+                          <TextBlock Text="Raw object editors" FontSize="18" FontWeight="SemiBold" Foreground="#102235" />
+                          <TextBlock Text="This is the full-control escape hatch. Edit carefully, then click Apply Raw JSON before saving." Margin="0,8,0,0" FontSize="12" Foreground="#6A7C90" TextWrapping="Wrap" />
                           <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
                             <Button x:Name="DbRefreshJsonButton" Content="Refresh From Working Copy" Margin="0,0,10,0" Padding="16,10,16,10" Style="{StaticResource SecondaryButtonStyle}" />
                             <Button x:Name="DbApplyJsonButton" Content="Apply Raw JSON" Padding="16,10,16,10" Style="{StaticResource PrimaryButtonStyle}" />
@@ -4211,28 +2871,28 @@ $xaml = @'
                         </StackPanel>
                       </Border>
 
-                      <Border CornerRadius="18" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="18" Margin="0,0,0,14">
+                      <Border CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="18" Margin="0,0,0,14">
                         <StackPanel>
                           <TextBlock Text="Account JSON" Style="{StaticResource SectionLabelStyle}" />
                           <TextBox x:Name="DbAccountJsonTextBox" Height="180" AcceptsReturn="True" TextWrapping="NoWrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Style="{StaticResource ConfigTextBoxStyle}" />
                         </StackPanel>
                       </Border>
 
-                      <Border CornerRadius="18" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="18" Margin="0,0,0,14">
+                      <Border CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="18" Margin="0,0,0,14">
                         <StackPanel>
                           <TextBlock Text="Character JSON" Style="{StaticResource SectionLabelStyle}" />
                           <TextBox x:Name="DbCharacterJsonTextBox" Height="240" AcceptsReturn="True" TextWrapping="NoWrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Style="{StaticResource ConfigTextBoxStyle}" />
                         </StackPanel>
                       </Border>
 
-                      <Border CornerRadius="18" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="18" Margin="0,0,0,14">
+                      <Border CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="18" Margin="0,0,0,14">
                         <StackPanel>
                           <TextBlock Text="Skills JSON" Style="{StaticResource SectionLabelStyle}" />
                           <TextBox x:Name="DbSkillsJsonTextBox" Height="220" AcceptsReturn="True" TextWrapping="NoWrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Style="{StaticResource ConfigTextBoxStyle}" />
                         </StackPanel>
                       </Border>
 
-                      <Border CornerRadius="18" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="18">
+                      <Border CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="18">
                         <StackPanel>
                           <TextBlock Text="Items JSON" Style="{StaticResource SectionLabelStyle}" />
                           <TextBox x:Name="DbItemsJsonTextBox" Height="220" AcceptsReturn="True" TextWrapping="NoWrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Style="{StaticResource ConfigTextBoxStyle}" />
@@ -4246,86 +2906,12 @@ $xaml = @'
           </Grid>
         </Grid>
       </TabItem>
-
-      <TabItem Header="Market Orders">
-        <Grid Margin="0,8,0,0">
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-          </Grid.RowDefinitions>
-
-          <Border Grid.Row="0" CornerRadius="14" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="14,10,14,10" Margin="0,0,0,10">
-            <StackPanel>
-              <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="*" />
-                  <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel VerticalAlignment="Center">
-                  <StackPanel Orientation="Horizontal">
-                    <Border x:Name="MarketStatusBadge" CornerRadius="8" Padding="10,4,10,4" Background="{DynamicResource WarnBg}" VerticalAlignment="Center">
-                      <TextBlock x:Name="MarketStatusBadgeText" Text="CHECKING" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource WarnFg}" />
-                    </Border>
-                    <TextBlock x:Name="MarketStatusText" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" Text="Checking market daemon..." />
-                  </StackPanel>
-                  <TextBlock x:Name="MarketStatusDetail" Margin="0,4,0,0" FontSize="12" Foreground="{DynamicResource TextMuted}" Text="" />
-                </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                  <Button x:Name="MarketRefreshButton" Content="Refresh" Margin="0,0,8,0" Padding="12,7,12,7" Style="{StaticResource SecondaryButtonStyle}" />
-                  <Button x:Name="MarketNewButton" Content="New Order" Margin="0,0,8,0" Padding="12,7,12,7" Style="{StaticResource SecondaryButtonStyle}" />
-                  <Button x:Name="MarketModifyButton" Content="Modify Selected" Margin="0,0,8,0" Padding="12,7,12,7" Style="{StaticResource SecondaryButtonStyle}" />
-                  <Button x:Name="MarketCancelButton" Content="Cancel Selected" Padding="12,7,12,7" Style="{StaticResource PrimaryButtonStyle}" />
-                </StackPanel>
-              </Grid>
-              <Grid Margin="0,12,0,0">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="260" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="180" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Character" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" />
-                <ComboBox x:Name="MarketOwnerCombo" Grid.Column="1" Height="34" Style="{StaticResource ConfigComboBoxStyle}" />
-                <TextBlock Grid.Column="2" Text="Owner ID" VerticalAlignment="Center" Margin="14,0,10,0" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" />
-                <TextBox x:Name="MarketOwnerIdBox" Grid.Column="3" Height="34" VerticalContentAlignment="Center" Style="{StaticResource ConfigTextBoxStyle}" />
-                <Button x:Name="MarketLoadButton" Grid.Column="4" Content="Load Orders" Margin="12,0,0,0" Padding="14,7,14,7" Style="{StaticResource SecondaryButtonStyle}" />
-              </Grid>
-              <Grid Margin="0,10,0,0">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="210" />
-                  <ColumnDefinition Width="230" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="130" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Browse book" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" />
-                <TextBox x:Name="MarketBookTypeBox" Grid.Column="1" Height="34" VerticalContentAlignment="Center" Style="{StaticResource ConfigTextBoxStyle}" />
-                <ComboBox x:Name="MarketBookTypeCombo" Grid.Column="2" Height="34" Margin="8,0,0,0" Style="{StaticResource ConfigComboBoxStyle}" />
-                <TextBlock Grid.Column="3" Text="Region" VerticalAlignment="Center" Margin="14,0,10,0" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMuted}" />
-                <TextBox x:Name="MarketRegionBox" Grid.Column="4" Height="34" Text="10000002" VerticalContentAlignment="Center" Style="{StaticResource ConfigTextBoxStyle}" />
-                <Button x:Name="MarketBookLoadButton" Grid.Column="5" Content="Load Book" Margin="12,0,0,0" Padding="14,7,14,7" Style="{StaticResource SecondaryButtonStyle}" />
-              </Grid>
-            </StackPanel>
-          </Border>
-
-          <Border Grid.Row="1" CornerRadius="14" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="8">
-            <DockPanel LastChildFill="True">
-              <TextBlock x:Name="MarketOrdersSummary" DockPanel.Dock="Top" Margin="6,4,6,10" FontSize="12" Foreground="{DynamicResource TextMuted}" Text="No orders loaded." />
-              <ListBox x:Name="MarketOrdersList" BorderThickness="0" Background="Transparent" />
-            </DockPanel>
-          </Border>
-        </Grid>
-      </TabItem>
     </TabControl>
 
-    <Border Grid.Row="2" CornerRadius="12" Background="{DynamicResource Panel}" BorderBrush="{DynamicResource Border}" BorderThickness="1" Padding="14,8,14,8" Margin="0,8,0,0">
+    <Border Grid.Row="2" CornerRadius="18" Background="#FFFFFF" BorderBrush="#D9E2EC" BorderThickness="1" Padding="16" Margin="0,14,0,0">
       <DockPanel LastChildFill="True">
-        <TextBlock x:Name="FooterHintText" DockPanel.Dock="Right" FontSize="12" Foreground="{DynamicResource TextMuted}" VerticalAlignment="Center" Text="Changes save directly into the project files" />
-        <TextBlock x:Name="FooterStatusText" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource SuccessFg}" VerticalAlignment="Center" Text="Ready" />
+        <TextBlock x:Name="FooterHintText" DockPanel.Dock="Right" FontSize="12" Foreground="#6A7C90" VerticalAlignment="Center" Text="Changes save directly into the project files" />
+        <TextBlock x:Name="FooterStatusText" FontSize="12" FontWeight="SemiBold" Foreground="#0F766E" VerticalAlignment="Center" Text="Ready" />
       </DockPanel>
     </Border>
   </Grid>
@@ -4338,20 +2924,16 @@ $script:Window = [System.Windows.Markup.XamlReader]::Load($reader)
 
 $script:HeroBadgeBorder = $script:Window.FindName("HeroBadgeBorder")
 $script:HeroBadgeText = $script:Window.FindName("HeroBadgeText")
-$script:ThemeToggleButton = $script:Window.FindName("ThemeToggleButton")
 $script:FooterStatusText = $script:Window.FindName("FooterStatusText")
 $script:FooterHintText = $script:Window.FindName("FooterHintText")
 
 $script:SettingsPathText = $script:Window.FindName("SettingsPathText")
 $script:SettingsEnvNoteText = $script:Window.FindName("SettingsEnvNoteText")
-$script:SettingsSearchBox = $script:Window.FindName("SettingsSearchBox")
-$script:SettingsSearchHint = $script:Window.FindName("SettingsSearchHint")
 $script:SettingsOpenFileButton = $script:Window.FindName("SettingsOpenFileButton")
 $script:SettingsDefaultsButton = $script:Window.FindName("SettingsDefaultsButton")
 $script:SettingsReloadButton = $script:Window.FindName("SettingsReloadButton")
 $script:SettingsSaveButton = $script:Window.FindName("SettingsSaveButton")
 $script:SettingsTabs = $script:Window.FindName("SettingsTabs")
-$script:MasterTabs = $script:Window.FindName("MasterTabs")
 
 $script:DbPathText = $script:Window.FindName("DbPathText")
 $script:DbCountsText = $script:Window.FindName("DbCountsText")
@@ -4399,24 +2981,6 @@ $script:DbItemsJsonTextBox = $script:Window.FindName("DbItemsJsonTextBox")
 $script:DbRefreshJsonButton = $script:Window.FindName("DbRefreshJsonButton")
 $script:DbApplyJsonButton = $script:Window.FindName("DbApplyJsonButton")
 
-$script:MarketStatusBadge = $script:Window.FindName("MarketStatusBadge")
-$script:MarketStatusBadgeText = $script:Window.FindName("MarketStatusBadgeText")
-$script:MarketStatusText = $script:Window.FindName("MarketStatusText")
-$script:MarketStatusDetail = $script:Window.FindName("MarketStatusDetail")
-$script:MarketRefreshButton = $script:Window.FindName("MarketRefreshButton")
-$script:MarketNewButton = $script:Window.FindName("MarketNewButton")
-$script:MarketModifyButton = $script:Window.FindName("MarketModifyButton")
-$script:MarketCancelButton = $script:Window.FindName("MarketCancelButton")
-$script:MarketOwnerCombo = $script:Window.FindName("MarketOwnerCombo")
-$script:MarketOwnerIdBox = $script:Window.FindName("MarketOwnerIdBox")
-$script:MarketLoadButton = $script:Window.FindName("MarketLoadButton")
-$script:MarketBookTypeBox = $script:Window.FindName("MarketBookTypeBox")
-$script:MarketBookTypeCombo = $script:Window.FindName("MarketBookTypeCombo")
-$script:MarketRegionBox = $script:Window.FindName("MarketRegionBox")
-$script:MarketBookLoadButton = $script:Window.FindName("MarketBookLoadButton")
-$script:MarketOrdersSummary = $script:Window.FindName("MarketOrdersSummary")
-$script:MarketOrdersList = $script:Window.FindName("MarketOrdersList")
-
 Invoke-AssetExtraction
 
 Initialize-AppChrome
@@ -4425,24 +2989,11 @@ $settingsSnapshot = Invoke-ProjectCli -Command "export"
 $databaseSnapshot = Invoke-ProjectCli -Command "database-export"
 Render-SettingsSnapshot -Snapshot $settingsSnapshot
 Render-DatabaseSnapshot -Snapshot $databaseSnapshot
-Initialize-Market
 
 if ($NoUi) {
   Write-Output "EvEJS Config Manager loaded successfully."
   return
 }
-
-$script:ThemeToggleButton.Add_Click({
-  Toggle-Theme
-})
-
-$script:SettingsSearchBox.Add_TextChanged({
-  Update-SettingsVisibility
-})
-
-$script:FooterStatusText.Add_MouseLeftButtonUp({
-  if ($script:FooterErrorKey) { Navigate-ToSetting -Key $script:FooterErrorKey }
-})
 
 $script:SettingsOpenFileButton.Add_Click({
   Start-Process -FilePath "notepad.exe" -ArgumentList @($script:SettingsSnapshot.paths.localConfigPath)
@@ -4478,8 +3029,7 @@ $script:SettingsSaveButton.Add_Click({
 })
 
 $script:DbOpenFolderButton.Add_Click({
-  $databaseFolder = Split-Path -Parent ([string]$script:DatabaseSnapshot.paths.databasePath)
-  Start-Process -FilePath "explorer.exe" -ArgumentList @($databaseFolder)
+  Start-Process -FilePath "explorer.exe" -ArgumentList @($script:DatabaseSnapshot.paths.dataRoot)
 })
 
 $script:DbReloadButton.Add_Click({
@@ -4556,7 +3106,7 @@ $script:DbMaxOwnedSkillsButton.Add_Click({
         $skillStore[[string]$skill.skillKey] = ConvertTo-DeepClone $skill.raw
       }
     }
-    $script:DbWorkingPlayer.skillsList = @(Convert-SkillStoreToList -SkillStore $skillStore -CatalogByKey $catalogByKey)
+    $script:DbWorkingPlayer.skillsList = Convert-SkillStoreToList -SkillStore $skillStore -CatalogByKey $catalogByKey
     Update-WorkingPlayerDerivedData
     Render-DatabasePlayer
     Set-DatabaseDirtyState -Dirty $true -Message "Upgraded all currently owned skills to level V in the staged player."
@@ -4703,41 +3253,6 @@ $script:DbApplyJsonButton.Add_Click({
     Set-StatusUi -Message $_.Exception.Message -Tone "error"
     [System.Windows.MessageBox]::Show($_.Exception.Message, "EvEJS Config Manager", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error) | Out-Null
   }
-})
-
-$script:MarketRefreshButton.Add_Click({ Refresh-Market })
-$script:MarketLoadButton.Add_Click({ Load-MarketOrders })
-$script:MarketOwnerCombo.Add_SelectionChanged({
-  if ($script:MarketOwnerCombo.SelectedValue) { $script:MarketOwnerIdBox.Text = "" }
-})
-$script:MarketBookLoadButton.Add_Click({ Load-MarketBook })
-$script:MarketBookTypeBox.Add_TextChanged({
-  $query = ([string]$script:MarketBookTypeBox.Text).Trim()
-  if ($query.Length -lt 2) { $script:MarketBookTypeCombo.ItemsSource = @(); return }
-  try {
-    $results = Invoke-ProjectCli -Command "database-type-search" -Arguments @("item", $query)
-    $script:MarketBookTypeCombo.ItemsSource = @(@($results) | ForEach-Object {
-        [pscustomobject]@{ label = ("{0}  -  {1}" -f $_.name, $_.groupName); typeID = $_.typeID }
-      })
-    if ($script:MarketBookTypeCombo.Items.Count -gt 0) { $script:MarketBookTypeCombo.SelectedIndex = 0 }
-  } catch { $script:MarketBookTypeCombo.ItemsSource = @() }
-})
-$script:MarketBookTypeCombo.Add_SelectionChanged({
-  $sel = $script:MarketBookTypeCombo.SelectedValue
-  $script:MarketBookTypeId = if ($sel) { [int64]$sel } else { 0 }
-})
-$script:MarketNewButton.Add_Click({
-  try { Open-MarketOrderEditor } catch {
-    Set-StatusUi -Message $_.Exception.Message -Tone "error"
-    [System.Windows.MessageBox]::Show($_.Exception.Message, "EvEJS Market", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error) | Out-Null
-  }
-})
-$script:MarketModifyButton.Add_Click({ Invoke-MarketModifySelected })
-$script:MarketCancelButton.Add_Click({ Remove-SelectedMarketOrder })
-$script:MarketOrdersList.Add_MouseDoubleClick({ Invoke-MarketModifySelected })
-
-$script:Window.Add_SourceInitialized({
-  Apply-WindowThemeChrome -Window $script:Window
 })
 
 $script:Window.Add_Closing({

@@ -415,35 +415,16 @@ function getCharacterSessions(characterID, options = {}) {
     return [];
   }
 
-  const sessions = [];
-  const seen = new Set();
-  const addSession = (session) => {
+  return sessionRegistry.getSessions().filter((session) => {
     if (!session || session === excludedSession) {
-      return;
+      return false;
     }
     const sessionCharacterID = toPositiveInteger(
       session.characterID || session.charID || session.charid,
       0,
     );
-    if (
-      sessionCharacterID !== numericCharacterID ||
-      seen.has(session) ||
-      (session.socket && session.socket.destroyed)
-    ) {
-      return;
-    }
-    seen.add(session);
-    sessions.push(session);
-  };
-
-  for (const session of sessionRegistry.getSessions()) {
-    addSession(session);
-  }
-  for (const session of Array.isArray(options.extraSessions) ? options.extraSessions : []) {
-    addSession(session);
-  }
-
-  return sessions;
+    return sessionCharacterID === numericCharacterID;
+  });
 }
 
 function sendNotificationReceivedEvent(record, options = {}) {
@@ -636,7 +617,6 @@ function createNotification(characterID, options = {}) {
   if (options.emitLive !== false) {
     sendNotificationReceivedEvent(record, {
       excludeSession: options.excludeSession || null,
-      extraSessions: options.extraSessions || [],
     });
   }
 

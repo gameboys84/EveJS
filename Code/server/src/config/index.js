@@ -1496,15 +1496,6 @@ const CONFIG_ENTRY_DEFINITIONS = [
     validValues: "true or false.",
   },
   {
-    key: "gameServerBindHost",
-    defaultValue: "127.0.0.1",
-    envVar: "EVEJS_GAME_SERVER_BIND_HOST",
-    envType: "string",
-    description:
-      "Local interface used by the main game TCP listener. Keep this on 127.0.0.1 unless a container or similarly isolated network boundary provides the external localhost-only restriction.",
-    validValues: 'Bind address such as "127.0.0.1" or "0.0.0.0".',
-  },
-  {
     key: "serverPort",
     defaultValue: 26000,
     envVar: "EVEJS_SERVER_PORT",
@@ -1750,15 +1741,6 @@ const CONFIG_ENTRY_DEFINITIONS = [
     validValues: '"block" or "forward".',
   },
   {
-    key: "xmppServerBindHost",
-    defaultValue: "127.0.0.1",
-    envVar: "EVEJS_XMPP_SERVER_BIND_HOST",
-    envType: "string",
-    description:
-      "Local interface used by the XMPP chat listener. Keep this on 127.0.0.1 unless a container or similarly isolated network boundary provides the external localhost-only restriction.",
-    validValues: 'Bind address such as "127.0.0.1" or "0.0.0.0".',
-  },
-  {
     key: "xmppServerPort",
     defaultValue: 5222,
     envVar: "EVEJS_XMPP_SERVER_PORT",
@@ -1793,15 +1775,6 @@ const CONFIG_ENTRY_DEFINITIONS = [
     description:
       "XMPP conference domain used for chat room JIDs.",
     validValues: 'Domain or host string such as "conference.localhost" or "conference.chat.example.com".',
-  },
-  {
-    key: "playerConnectToken",
-    defaultValue: "",
-    envVar: "EVEJS_PLAYER_CONNECT_TOKEN",
-    envType: "string",
-    description:
-      "Shared secret that gates the /playerconnect/* helper endpoints (health ping + CA download) used by the PlayerConnect bundle. When empty, those endpoints are disabled.",
-    validValues: "Any non-empty string, or empty to disable the PlayerConnect endpoints.",
   },
   {
     key: "omegaLicenseEnabled",

@@ -19,9 +19,6 @@ const {
   buildRowset,
 } = require(path.join(__dirname, "../_shared/serviceHelpers"));
 const {
-  buildCachedMethodCallResult,
-} = require(path.join(__dirname, "../cache/objectCacheRuntime"));
-const {
   NPC_STARTER_CORPORATION_ID,
   getCorporationInfoRecord,
 } = require(path.join(__dirname, "./corporationState"));
@@ -518,16 +515,7 @@ class CorpService extends BaseService {
         });
       }
     }
-    return buildCachedMethodCallResult(
-      [buildCorpMedalRowset(medals), buildMedalGraphicsRowset(graphics)],
-      {
-        serviceName: "corporationSvc",
-        method: "GetAllCorpMedals",
-        args: [corporationID],
-        versionCheck: "1 hour",
-        proxyCache: true,
-      },
-    );
+    return [buildCorpMedalRowset(medals), buildMedalGraphicsRowset(graphics)];
   }
 
   Handle_GetRecipientsOfMedal(args, session) {

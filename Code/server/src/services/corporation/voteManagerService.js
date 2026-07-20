@@ -27,25 +27,23 @@ const {
 
 const VOTE_CASE_HEADER = [
   "voteCaseID",
+  "corporationID",
+  "voteType",
   "voteCaseText",
   "description",
-  "corporationID",
-  "createdByCharacterID",
-  "voteType",
   "startDateTime",
   "endDateTime",
-  "processed",
+  "createdByCharacterID",
 ];
 const VOTE_CASE_DBROW_COLUMNS = [
   ["voteCaseID", 0x03],
+  ["corporationID", 0x03],
+  ["voteType", 0x03],
   ["voteCaseText", 0x82],
   ["description", 0x82],
-  ["corporationID", 0x03],
-  ["createdByCharacterID", 0x03],
-  ["voteType", 0x11],
   ["startDateTime", 0x40],
   ["endDateTime", 0x40],
-  ["processed", 0x0b],
+  ["createdByCharacterID", 0x03],
 ];
 const MAX_CLOSED_VOTES_FETCHED = 20;
 const VOTE_OPTION_HEADER = [
@@ -72,17 +70,15 @@ function buildVoteCaseRowset(voteCases = []) {
     voteCases.map((voteCase) =>
       [
         Number(voteCase.voteCaseID || 0),
+        Number(voteCase.corporationID || 0),
+        Number(voteCase.voteType || 0),
         voteCase.voteCaseText || "",
         voteCase.description || "",
-        Number(voteCase.corporationID || 0),
-        Number(voteCase.createdByCharacterID || 0),
-        Number(voteCase.voteType || 0),
         buildFiletimeLong(voteCase.startDateTime || 0),
         buildFiletimeLong(voteCase.endDateTime || 0),
-        voteCase.processed ? 1 : 0,
+        Number(voteCase.createdByCharacterID || 0),
       ],
     ),
-    "carbon.common.script.sys.crowset.CRowset",
   );
 }
 

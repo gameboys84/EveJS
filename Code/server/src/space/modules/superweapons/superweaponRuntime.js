@@ -1849,7 +1849,6 @@ function applySuperweaponDamage(scene, sourceEntity, targetEntity, damageVector,
   ) {
     callbacks.recordKillmailFromDestruction(targetEntity, weaponDamageResult.destroyResult, {
       attackerEntity: sourceEntity,
-      victimSession: weaponDamageResult.victimSession,
       whenMs,
       moduleItem,
     });

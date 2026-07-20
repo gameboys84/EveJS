@@ -3,7 +3,6 @@ const path = require("path");
 const BaseService = require(path.join(__dirname, "../baseService"));
 const log = require(path.join(__dirname, "../../utils/logger"));
 const {
-  buildDbRowset,
   buildFiletimeLong,
   buildList,
   buildDict,
@@ -12,9 +11,6 @@ const {
   buildRowset,
   extractList,
 } = require(path.join(__dirname, "../_shared/serviceHelpers"));
-const {
-  buildCachedMethodCallResult,
-} = require(path.join(__dirname, "../cache/objectCacheRuntime"));
 const { getCharacterRecord } = require(path.join(
   __dirname,
   "../character/characterState",
@@ -34,10 +30,7 @@ const {
   readAggressionSettings,
 } = require(path.join(__dirname, "./aggressionSettingsState"));
 const {
-  buildAssetItemCrowset,
   buildAssetItemRowset,
-  buildAssetLocationCrowset,
-  buildAssetSearchCrowset,
   buildLocationList,
   listAssetItemsForLocation,
   listAssetLocations,
@@ -103,36 +96,18 @@ const ROWSET_NAME = "eve.common.script.sys.rowset.Rowset";
 const CORP_ROLE_DIRECTOR = 1n;
 const CORP_ROLE_AUDITOR = 4096n;
 const AUDIT_LOG_EVENT_HEADER = [
-  "eventID",
   "eventDateTime",
   "eventTypeID",
-  "characterID",
   "corporationID",
-];
-const AUDIT_LOG_EVENT_DBROW_COLUMNS = [
-  ["eventID", 0x14],
-  ["eventDateTime", 0x40],
-  ["eventTypeID", 0x02],
-  ["characterID", 0x03],
-  ["corporationID", 0x03],
 ];
 const ROLE_HISTORY_HEADER = [
-  "characterID",
-  "corporationID",
   "changeTime",
-  "grantable",
   "oldRoles",
   "newRoles",
   "issuerID",
-];
-const ROLE_HISTORY_DBROW_COLUMNS = [
-  ["characterID", 0x03],
-  ["corporationID", 0x03],
-  ["changeTime", 0x40],
-  ["grantable", 0x0b],
-  ["oldRoles", 0x14],
-  ["newRoles", 0x14],
-  ["issuerID", 0x03],
+  "corporationID",
+  "charID",
+  "grantable",
 ];
 
 function buildLong(value) {
@@ -209,16 +184,8 @@ function isInAuditRange(timestamp, fromDate, toDate) {
 
 function buildEmptyAuditMemberPayload() {
   return [
-    buildDbRowset(
-      AUDIT_LOG_EVENT_DBROW_COLUMNS,
-      [],
-      "carbon.common.script.sys.crowset.CRowset",
-    ),
-    buildDbRowset(
-      ROLE_HISTORY_DBROW_COLUMNS,
-      [],
-      "carbon.common.script.sys.crowset.CRowset",
-    ),
+    buildRowset(AUDIT_LOG_EVENT_HEADER, [], ROWSET_NAME),
+    buildRowset(ROLE_HISTORY_HEADER, [], ROWSET_NAME),
   ];
 }
 
@@ -278,18 +245,12 @@ function buildAuditEventRows(runtime, memberID, fromDate, toDate, rowsPerPage) {
         : -1,
     )
     .slice(0, rowsPerPage)
-    .map((entry) => [
-      normalizeInteger(getFirstPresent(entry, ["eventID", "id", "event_id"]), 0),
+    .map((entry) => buildList([
       buildFiletimeLong(getFirstPresent(entry, ["eventDateTime", "eventTime", "changeTime"]) || 0n),
       normalizeInteger(getFirstPresent(entry, ["eventTypeID", "eventTypeId", "event_type_id"]), 0),
-      normalizeInteger(getFirstPresent(entry, ["charID", "characterID", "memberID"]), 0),
       normalizeInteger(getFirstPresent(entry, ["corporationID", "corpID", "corpid"]), 0),
-    ]);
-  return buildDbRowset(
-    AUDIT_LOG_EVENT_DBROW_COLUMNS,
-    rows,
-    "carbon.common.script.sys.crowset.CRowset",
-  );
+    ]));
+  return buildRowset(AUDIT_LOG_EVENT_HEADER, rows, ROWSET_NAME);
 }
 
 function buildRoleHistoryRows(runtime, memberID, fromDate, toDate, rowsPerPage) {
@@ -314,20 +275,16 @@ function buildRoleHistoryRows(runtime, memberID, fromDate, toDate, rowsPerPage) 
         : -1,
     )
     .slice(0, rowsPerPage)
-    .map((entry) => [
-      normalizeInteger(getFirstPresent(entry, ["charID", "characterID", "memberID"]), 0),
-      normalizeInteger(getFirstPresent(entry, ["corporationID", "corpID", "corpid"]), 0),
+    .map((entry) => buildList([
       buildFiletimeLong(getFirstPresent(entry, ["changeTime", "changedAt"]) || 0n),
-      getFirstPresent(entry, ["grantable", "isGrantable"]) ? 1 : 0,
       buildLong(getFirstPresent(entry, ["oldRoles", "old_roles"]) || 0n),
       buildLong(getFirstPresent(entry, ["newRoles", "new_roles"]) || 0n),
       normalizeInteger(getFirstPresent(entry, ["issuerID", "issuerId", "issuer_id"]), -1),
-    ]);
-  return buildDbRowset(
-    ROLE_HISTORY_DBROW_COLUMNS,
-    rows,
-    "carbon.common.script.sys.crowset.CRowset",
-  );
+      normalizeInteger(getFirstPresent(entry, ["corporationID", "corpID", "corpid"]), 0),
+      normalizeInteger(getFirstPresent(entry, ["charID", "characterID", "memberID"]), 0),
+      getFirstPresent(entry, ["grantable", "isGrantable"]) ? 1 : 0,
+    ]));
+  return buildRowset(ROLE_HISTORY_HEADER, rows, ROWSET_NAME);
 }
 
 function resolveCorporationInfo(corpID, session) {
@@ -531,43 +488,18 @@ class CorpMgrService extends BaseService {
     ];
   }
 
-  Handle_GetAssetInventory(args, session) {
+  Handle_GetAssetInventory(args) {
     const corporationID = args && args.length > 0 ? Number(args[0]) || 0 : 0;
     const which = args && args.length > 1 ? String(args[1] || "") : "offices";
-    const sessionCorporationID =
-      (session && (session.corporationID || session.corpid)) || corporationID;
-    const rowset = buildAssetLocationCrowset(
-      listAssetLocations(corporationID, which),
-      which,
-    );
-    return buildCachedMethodCallResult(rowset, {
-      serviceName: "corpmgr",
-      method: "GetAssetInventory",
-      args: [corporationID, which],
-      versionCheck: "5 minutes",
-      sessionInfo: "corpid",
-      sessionInfoValue: sessionCorporationID,
-    });
+    return buildLocationList(listAssetLocations(corporationID, which));
   }
 
-  Handle_GetAssetInventoryForLocation(args, session) {
+  Handle_GetAssetInventoryForLocation(args) {
     const corporationID = args && args.length > 0 ? Number(args[0]) || 0 : 0;
     const locationID = args && args.length > 1 ? Number(args[1]) || 0 : 0;
     const which = args && args.length > 2 ? String(args[2] || "") : "offices";
-    const sessionCorporationID =
-      (session && (session.corporationID || session.corpid)) || corporationID;
-    return buildCachedMethodCallResult(
-      buildAssetItemCrowset(
-        listAssetItemsForLocation(corporationID, locationID, which),
-      ),
-      {
-        serviceName: "corpmgr",
-        method: "GetAssetInventoryForLocation",
-        args: [corporationID, locationID, which],
-        versionCheck: "5 minutes",
-        sessionInfo: "corpid",
-        sessionInfoValue: sessionCorporationID,
-      },
+    return buildAssetItemRowset(
+      listAssetItemsForLocation(corporationID, locationID, which),
     );
   }
 
@@ -578,7 +510,7 @@ class CorpMgrService extends BaseService {
     const groupID = args && args.length > 2 ? Number(args[2]) || 0 : 0;
     const typeID = args && args.length > 3 ? Number(args[3]) || 0 : 0;
     const minimumQuantity = args && args.length > 4 ? Number(args[4]) || 0 : 0;
-    const rowset = buildAssetSearchCrowset(
+    return buildLocationList(
       searchAssetLocations(corporationID, which, {
         categoryID,
         groupID,
@@ -586,20 +518,6 @@ class CorpMgrService extends BaseService {
         minimumQuantity,
       }),
     );
-    return buildCachedMethodCallResult(rowset, {
-      serviceName: "corpmgr",
-      method: "SearchAssets",
-      args: [
-        which,
-        args && args.length > 1 ? args[1] : null,
-        args && args.length > 2 ? args[2] : null,
-        args && args.length > 3 ? args[3] : null,
-        args && args.length > 4 ? args[4] : null,
-      ],
-      versionCheck: "5 minutes",
-      sessionInfo: "corpid",
-      sessionInfoValue: corporationID,
-    });
   }
 }
 

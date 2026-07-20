@@ -3554,7 +3554,6 @@ function tickDroneCombat(scene, droneEntity, controllerEntity, now) {
     ) {
       droneInterop.recordKillmailFromDestruction(targetEntity, destroyResult, {
         attackerEntity: combatSourceEntity,
-        victimSession: weaponDamageResult && weaponDamageResult.victimSession,
         whenMs: now,
         weaponSnapshot: {
           ...snapshot,

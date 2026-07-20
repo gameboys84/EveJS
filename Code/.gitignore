@@ -21,13 +21,6 @@ server/tidi_probe.log
 /tools/DataSync/source_json
 /target
 
-# Generated per-install TLS certificates and private keys.
-# Created by tools/ClientSETUP/scripts/Install-EvEJSCerts.ps1.
-/server/certs/*.pem
-/server/src/_secondary/express/certs/*.pem
-/server/src/_secondary/express/certs/*.pfx
-/server/src/_secondary/express/certs/*passphrase*.txt
-
 # Generated local database data. Run tools/DatabaseCreator/CreateDatabase.bat.
 /server/src/gameStore/data/*/data.json
 
@@ -38,7 +31,5 @@ server/tidi_probe.log
 *.sqlite-wal
 *.sqlite-shm
 /tools/PlayerConnect
-/tools/PlayerConnect-v2
-/tools/market-seederv2/cache/
-/tools/market-seederv2/target/
-/tools/ClientCodeGrabberV2
+/tools/market-seederv2
+/server/certs

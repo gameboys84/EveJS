@@ -1,13 +1,9 @@
 const BaseService = require("../baseService");
 const log = require("../../utils/logger");
 const {
-  buildDbRowset,
   buildFiletimeLong,
   buildKeyVal,
 } = require("../_shared/serviceHelpers");
-const {
-  buildCachedMethodCallResult,
-} = require("../cache/objectCacheRuntime");
 const standingRuntime = require("./standingRuntime");
 
 // Standings use real Rowsets so the client can call both .Index() and .Filter().
@@ -168,22 +164,6 @@ function buildStandingCompositionList(rows = []) {
   );
 }
 
-const STANDING_COMPOSITION_DBROW_COLUMNS = [
-  ["standing", 0x05],
-  ["ownerID", 0x03],
-];
-
-function buildStandingCompositionRowset(rows = []) {
-  return buildDbRowset(
-    STANDING_COMPOSITION_DBROW_COLUMNS,
-    rows.map((row) => [
-      Number(row && row.standing) || 0,
-      Number(row && row.ownerID) || 0,
-    ]),
-    "carbon.common.script.sys.crowset.CRowset",
-  );
-}
-
 class StandingMgrService extends BaseService {
   constructor(name = "standingMgr") {
     super(name);
@@ -223,18 +203,8 @@ class StandingMgrService extends BaseService {
     const fromID = args && args.length > 0 ? args[0] : 0;
     const toID = args && args.length > 1 ? args[1] : 0;
     log.debug(`[StandingMgr] GetStandingCompositions(${fromID}, ${toID})`);
-    return buildCachedMethodCallResult(
-      buildStandingCompositionRowset(
-        standingRuntime.getStandingCompositions(fromID, toID),
-      ),
-      {
-        serviceName: "standingMgr",
-        method: "GetStandingCompositions",
-        args: [fromID, toID],
-        versionCheck: "5 minutes",
-        sessionInfo: "corpid",
-        sessionInfoValue: toID,
-      },
+    return buildStandingCompositionList(
+      standingRuntime.getStandingCompositions(fromID, toID),
     );
   }
 }

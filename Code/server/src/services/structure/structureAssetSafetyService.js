@@ -11,9 +11,6 @@ const {
   buildList,
   unwrapMarshalValue,
 } = require(path.join(__dirname, "../_shared/serviceHelpers"));
-const {
-  buildCachedMethodCallResult,
-} = require(path.join(__dirname, "../cache/objectCacheRuntime"));
 const assetSafetyState = require(path.join(
   __dirname,
   "./structureAssetSafetyState",
@@ -194,15 +191,7 @@ class StructureAssetSafetyService extends BaseService {
       session && (session.corporationID || session.corpid),
     );
     log.debug(`[StructureAssetSafety] GetItemsInSafetyForCorp count=${wraps.length}`);
-    return buildCachedMethodCallResult(
-      buildList(wraps.map((wrap) => buildWrapPayload(wrap))),
-      {
-        serviceName: "structureAssetSafety",
-        method: "GetItemsInSafetyForCorp",
-        args: [],
-        versionCheck: "1 minute",
-      },
-    );
+    return buildList(wraps.map((wrap) => buildWrapPayload(wrap)));
   }
 
   Handle_GetWrapNames(args) {

@@ -15,7 +15,6 @@ const {
 } = require(path.join(__dirname, "./agentAuthority"));
 const {
   getEpicArcMessageMaps,
-  listDisabledMissionIDs,
 } = require(path.join(__dirname, "./missionAuthority"));
 const {
   buildCachedMethodCallResult,
@@ -607,7 +606,7 @@ class AgentMgrService extends BaseService {
   }
 
   Handle_GetDisabledMissions() {
-    return toMarshalSafe(listDisabledMissionIDs());
+    return toMarshalSafe([]);
   }
 
   Handle_GetAgentStaticInfo(args, session) {

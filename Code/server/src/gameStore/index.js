@@ -24,131 +24,8 @@ const persistenceWorker = require("./persistenceWorker");
 const SOURCE_DATA_DIR = path.join(__dirname, "data");
 const LOCAL_DATABASE_ROOT = path.resolve(__dirname, "../../..", "_local", "gameStore");
 const LOCAL_DATA_DIR = path.join(LOCAL_DATABASE_ROOT, "data");
-const TEST_STORE_ATTESTATION_FILE = ".evejs-test-store-attestation.json";
-const CANONICAL_TEST_COMMAND = "npm run test:isolated -- server/tests/<file>.test.js";
-const TEST_STORE_CLEANUP_SYMBOL = Symbol.for("evejs.testStore.cleanupHooksInstalled");
-const TEST_STORE_CLEANUP_IN_PROGRESS_SYMBOL = Symbol.for("evejs.testStore.cleanupInProgress");
-
-function realpathExisting(filePath) {
-  const resolved = path.resolve(filePath);
-  const missingSegments = [];
-  let existingCandidate = resolved;
-
-  while (true) {
-    try {
-      return path.resolve(
-        fs.realpathSync.native(existingCandidate),
-        ...missingSegments,
-      );
-    } catch (_) {
-      const parent = path.dirname(existingCandidate);
-      if (parent === existingCandidate) {
-        return resolved;
-      }
-      missingSegments.unshift(path.basename(existingCandidate));
-      existingCandidate = parent;
-    }
-  }
-}
-
-function samePath(left, right) {
-  return path.resolve(realpathExisting(left)) === path.resolve(realpathExisting(right));
-}
-
-function isSubpath(candidate, parent) {
-  const relative = path.relative(path.resolve(parent), path.resolve(candidate));
-  return relative === "" || (relative && !relative.startsWith("..") && !path.isAbsolute(relative));
-}
-
-function pathsOverlap(left, right) {
-  const resolvedLeft = realpathExisting(left);
-  const resolvedRight = realpathExisting(right);
-  return isSubpath(resolvedLeft, resolvedRight) || isSubpath(resolvedRight, resolvedLeft);
-}
-
-function protectedGameStoreRoots(attestation = null) {
-  return [
-    LOCAL_DATABASE_ROOT,
-    path.resolve(SOURCE_DATA_DIR, ".."),
-    process.env.EVEJS_TEST_STORE_BASELINE_ROOT,
-    attestation && attestation.baselineRoot,
-  ].filter(Boolean);
-}
-
-function isNodeTestLaunchFlag(arg) {
-  const value = String(arg || "");
-  return value === "--test" || value === "--test=true";
-}
-
-function isCurrentNodeTestRunnerProcess() {
-  return Boolean(
-    process.env.NODE_TEST_CONTEXT ||
-      process.env.NODE_TEST_WORKER_ID ||
-      process.execArgv.some(isNodeTestLaunchFlag),
-  );
-}
-
-function verifyNodeTestStoreAttestation() {
-  const dataDir = process.env.EVEJS_GAMESTORE_DATA_DIR;
-  const storeRoot = process.env.EVEJS_TEST_STORE_ROOT;
-  if (
-    process.env.EVEJS_TEST_STORE_ISOLATED !== "1" ||
-    !dataDir ||
-    !storeRoot
-  ) {
-    return false;
-  }
-  const attestationPath = path.resolve(
-    process.env.EVEJS_TEST_STORE_ATTESTATION ||
-      path.join(storeRoot, TEST_STORE_ATTESTATION_FILE),
-  );
-  if (!fs.existsSync(attestationPath)) {
-    return false;
-  }
-  if (!isSubpath(realpathExisting(attestationPath), realpathExisting(storeRoot))) {
-    return false;
-  }
-  if (!samePath(dataDir, path.join(storeRoot, "data"))) {
-    return false;
-  }
-  if (!isSubpath(realpathExisting(dataDir), realpathExisting(storeRoot))) {
-    return false;
-  }
-  try {
-    const attestation = JSON.parse(fs.readFileSync(attestationPath, "utf8"));
-    const attested =
-      attestation.schemaVersion === 1 &&
-      attestation.kind === "evejs-test-store" &&
-      attestation.createdBy === "server/tests/helpers/isolatedGameStore.js" &&
-      samePath(attestation.storeRoot, storeRoot) &&
-      samePath(attestation.dataDir, dataDir);
-    if (!attested) {
-      return false;
-    }
-    const storeRealpath = realpathExisting(storeRoot);
-    const dataRealpath = realpathExisting(dataDir);
-    return !protectedGameStoreRoots(attestation).some((protectedRoot) =>
-      pathsOverlap(storeRealpath, protectedRoot) || isSubpath(dataRealpath, realpathExisting(protectedRoot)));
-  } catch (_) {
-    return false;
-  }
-}
-
-function assertNodeTestIsolationBeforeOpen() {
-  if (!isCurrentNodeTestRunnerProcess()) {
-    return;
-  }
-  if (verifyNodeTestStoreAttestation()) {
-    return;
-  }
-  throw new Error(
-    "Refusing to import server/src/gameStore in an unisolated node:test process. " +
-      `Use the isolated runner before product imports: ${CANONICAL_TEST_COMMAND}`,
-  );
-}
 
 function resolveDataDir() {
-  assertNodeTestIsolationBeforeOpen();
   if (process.env.EVEJS_GAMESTORE_DATA_DIR) {
     return path.resolve(process.env.EVEJS_GAMESTORE_DATA_DIR);
   }
@@ -295,44 +172,14 @@ const SQLITE_TABLES = new Set([
   "contractRuntime",
 ]);
 const SQLITE_DB_PATH = path.resolve(DATA_DIR, "..", "gamestore.sqlite");
-let sqliteRecoveryRequired = true;
-let persistenceCallbacksReady = false;
 function ensureSqliteReady() {
   if (SQLITE_TABLES.size > 0 && sqliteStore.getDatabasePath() !== SQLITE_DB_PATH) {
     sqliteStore.init(SQLITE_DB_PATH);
-    sqliteRecoveryRequired = true;
-  }
-  if (SQLITE_TABLES.size > 0 && sqliteRecoveryRequired) {
-    // Clear the recursion guard before a recovery callback rebuilds a baseline
-    // from this same connection. On initial module load there cannot yet be an
-    // in-memory flight, so direct recovery is correct; after callback wiring,
-    // route reopen recovery through the controller so its exact table leases and
-    // the index's in-flight baseline are released together.
-    sqliteRecoveryRequired = false;
-    let recovered;
-    try {
-      recovered = persistenceCallbacksReady
-        ? persistenceWorker.recover(SQLITE_DB_PATH)
-        : sqliteStore.recoverPersistenceOperations();
-    } catch (error) {
-      // The controller retains any already-committed recovery batch when its
-      // baseline callback fails, so the next readiness check can safely retry
-      // exact callback delivery even though SQLite has no remaining outbox row.
-      sqliteRecoveryRequired = true;
-      throw error;
-    }
-    if (recovered.length > 0) {
-      dbWarn(
-        `recovered ${recovered.length} unacknowledged persistence operation` +
-          (recovered.length === 1 ? "" : "s") +
-          " before loading SQLite baselines",
-      );
-    }
   }
 }
 
 if (SQLITE_TABLES.size > 0) {
-  ensureSqliteReady();
+  sqliteStore.init(SQLITE_DB_PATH);
 }
 
 function isSqliteTable(table) {
@@ -346,8 +193,6 @@ const dirty = new Set();     // tables that need flushing
 const flushTimers = {};      // table name → pending setTimeout id
 const transientPaths = {};   // table name → Set of cache paths excluded from disk flush
 const flushBaselines = {};   // sqlite table → Map(key → last-persisted JSON string)
-const inFlightFlushes = new Map(); // sqlite table → exact unacknowledged operation
-const lastCompletedPersistenceOperationId = new Map(); // table → durable monotonic ID
 let preloaded = false;
 
 // ── Dirty-row tracking (flush fast path) ────────────────────────────
@@ -715,137 +560,11 @@ function preloadAll() {
 
 // ── Debounced async flush ───────────────────────────────────────────
 
-function advanceFlushBaseline(table, upserts = [], deletes = []) {
-  let baseline = flushBaselines[table];
-  if (!baseline) {
-    baseline = new Map();
-    flushBaselines[table] = baseline;
-  }
-  for (const [rowKey, serialized] of upserts) {
-    baseline.set(rowKey, serialized);
-  }
-  for (const rowKey of deletes) {
-    baseline.delete(rowKey);
-  }
-}
-
-function rebuildFlushBaselineFromDisk(table) {
-  ensureSqliteReady();
-  const baseline = new Map();
-  for (const { key, json } of sqliteStore.loadRows(table)) {
-    baseline.set(key, JSON.stringify(JSON.parse(json)));
-  }
-  flushBaselines[table] = baseline;
-}
-
-function handlePersistenceWorkerAcknowledged(operation) {
-  if (!operation || !operation.table || operation.operationId === undefined) {
-    throw new Error("persistence worker returned an invalid durable acknowledgment");
-  }
-  const inFlight = inFlightFlushes.get(operation.table);
-  if (!inFlight) {
-    if (
-      operation.operationId <=
-      (lastCompletedPersistenceOperationId.get(operation.table) || 0)
-    ) {
-      return;
-    }
-    throw new Error(
-      `unexpected persistence acknowledgment ${operation.operationId} for ${operation.table}`,
-    );
-  }
-  if (inFlight.operationId !== operation.operationId) {
-    throw new Error(
-      `stale persistence acknowledgment ${operation.operationId} cannot resolve ` +
-        `${inFlight.operationId} for ${operation.table}`,
-    );
-  }
-
-  advanceFlushBaseline(operation.table, inFlight.upserts, inFlight.deletes);
-  inFlightFlushes.delete(operation.table);
-  lastCompletedPersistenceOperationId.set(operation.table, operation.operationId);
-
-  // Mutations made after this batch was captured kept their dirty-row keys.
-  // Once the acknowledged baseline is current, let their normal debounce run.
-  if (
-    dirty.has(operation.table) &&
-    !flushTimers[operation.table] &&
-    process[TEST_STORE_CLEANUP_IN_PROGRESS_SYMBOL] !== true
-  ) {
-    scheduleFlush(operation.table);
-  }
-}
-
-function handlePersistenceWorkerRecovered(operations = []) {
-  if (!Array.isArray(operations)) {
-    throw new Error("persistence recovery callback must provide an operation array");
-  }
-  const recoveredTables = [];
-  for (const operation of operations) {
-    if (!operation || !operation.table || operation.operationId === undefined) {
-      throw new Error("persistence recovery callback contained an invalid operation");
-    }
-    const inFlight = inFlightFlushes.get(operation.table);
-    if (inFlight) {
-      if (inFlight.operationId !== operation.operationId) {
-        throw new Error(
-          `stale recovery ${operation.operationId} cannot resolve ` +
-            `${inFlight.operationId} for ${operation.table}`,
-        );
-      }
-      advanceFlushBaseline(operation.table, inFlight.upserts, inFlight.deletes);
-      inFlightFlushes.delete(operation.table);
-    } else if (
-      operation.operationId >
-      (lastCompletedPersistenceOperationId.get(operation.table) || 0)
-    ) {
-      // Controller recovery can happen after cache construction without a
-      // surviving in-memory in-flight record. Rebuild successfully before the
-      // operation is considered reconciled.
-      rebuildFlushBaselineFromDisk(operation.table);
-    }
-    lastCompletedPersistenceOperationId.set(
-      operation.table,
-      Math.max(
-        operation.operationId,
-        lastCompletedPersistenceOperationId.get(operation.table) || 0,
-      ),
-    );
-    recoveredTables.push(operation.table);
-  }
-  for (const table of new Set(recoveredTables)) {
-    if (
-      dirty.has(table) &&
-      !flushTimers[table] &&
-      process[TEST_STORE_CLEANUP_IN_PROGRESS_SYMBOL] !== true
-    ) {
-      scheduleFlush(table);
-    }
-  }
-}
-
 // Persist a SQLite-backed table by diffing its current cache state against
 // the last-persisted baseline and upserting/deleting only the rows that
 // actually changed — no whole-table rewrite.
 function flushSqliteTable(table, options = {}) {
   ensureSqliteReady();
-  if (
-    persistenceWorker.isEnabled() &&
-    !persistenceWorker.isActive() &&
-    inFlightFlushes.size > 0
-  ) {
-    // A replacement controller/worker must reconcile the prior durable journal
-    // before a new batch is created. This is triggered by the next real flush,
-    // not by a broad autonomous retry scheduler (PST-002 remains separate).
-    persistenceWorker.recover(SQLITE_DB_PATH);
-  }
-  if (inFlightFlushes.has(table)) {
-    // Per-table single-flight is part of the persistence protocol. A second
-    // diff against the still-unacknowledged baseline could omit a tombstone
-    // (for example, insert then delete before the first acknowledgment).
-    dirty.add(table);
-    return 0;
-  }
   const snapshot = buildFlushSnapshot(table) || {};
   let baseline = flushBaselines[table];
   if (!baseline) {
@@ -907,74 +626,67 @@ function flushSqliteTable(table, options = {}) {
     flushStats.full += 1;
   }
 
-  if (upserts.length === 0 && deletes.length === 0) {
-    fullDirty.delete(table);
-    delete dirtyRowKeys[table];
-    return 0;
-  }
-
-  // The journal INSERT is synchronous by design: the exact batch and its
-  // AUTOINCREMENT identity must be durable before dirty tracking is released or
-  // any asynchronous worker can observe the operation.
-  const operation = sqliteStore.enqueuePersistenceOperation(table, upserts, deletes);
-  const useWorker = persistenceWorker.isEnabled() && options.sync !== true;
-  inFlightFlushes.set(table, { ...operation, submittedToWorker: useWorker });
+  // The dirty-row record for this table is now captured in upserts/deletes;
+  // clear it so the next flush starts fresh.
   fullDirty.delete(table);
   delete dirtyRowKeys[table];
 
-  // A synchronous caller may block, so it reconciles the journal directly on
-  // the main connection. Async writes retain the outbox row until the matching
-  // worker acknowledgment is durably consumed.
+  // Route the durable write through the off-loop persistence worker when
+  // enabled (EVEJS_PERSISTENCE_WORKER=1). A sync flush whose worker has not yet
+  // spawned writes inline rather than spawning a thread just to drain it (this
+  // also avoids spawning a Worker during a process 'exit' handler). Disabled =
+  // the proven in-process synchronous path, unchanged.
+  const useWorker =
+    persistenceWorker.isEnabled() &&
+    (persistenceWorker.isActive() || options.sync !== true);
   if (useWorker) {
-    try {
-      persistenceWorker.submitWrite(SQLITE_DB_PATH, table, upserts, deletes, {
-        operationId: operation.operationId,
-      });
-    } catch (error) {
-      // The exact journal row and in-flight record deliberately remain intact.
-      // Startup or an explicit synchronous reconciliation can replay it without
-      // substituting an approximate full-state diff.
-      throw error;
-    }
+    persistenceWorker.submitWrite(SQLITE_DB_PATH, table, upserts, deletes, {
+      sync: options.sync === true,
+    });
   } else {
     try {
-      const reconciled = sqliteStore.reconcilePersistenceOperation(
-        operation.operationId,
-        table,
-      );
-      if (!reconciled) {
-        throw new Error(
-          `persistence operation ${operation.operationId} disappeared before reconciliation`,
-        );
-      }
+      sqliteStore.applyChanges(table, upserts, deletes);
     } catch (error) {
-      // The journal remains authoritative if the transaction rolled back.
+      // Synchronous write failed: tracking was already cleared above and the
+      // baseline not yet advanced, so force a full re-diff next flush rather
+      // than trusting a now-empty changed-row set. Re-throw for the caller's
+      // existing failure handling (flushTable re-adds the table to dirty).
+      fullDirty.add(table);
       throw error;
     }
-    advanceFlushBaseline(table, operation.upserts, operation.deletes);
-    inFlightFlushes.delete(table);
+  }
+
+  // Baseline advances optimistically. If an async worker write later fails,
+  // handlePersistenceWorkerError clears this table's baseline to force a full
+  // re-send on the next flush.
+  for (const [rowKey, serialized] of upserts) {
+    baseline.set(rowKey, serialized);
+  }
+  for (const rowKey of deletes) {
+    baseline.delete(rowKey);
   }
   return upserts.length + deletes.length;
 }
 
-// A failed or uncertain worker operation stays single-flight and journaled.
-// Never replace it with a full-state diff: only its exact tombstones/upserts are
-// safe to reconcile, either synchronously or during startup recovery.
-function handlePersistenceWorkerError(table, error, failure) {
+// Async worker write failed for a table: its baseline was advanced
+// optimistically, so clear it to force a full re-send on the next flush, then
+// reschedule one. (A null table means the worker crashed — recover every loaded
+// SQLite table.) Caveat: clearing the baseline re-sends upserts but loses any
+// deletes the failed batch carried; acceptable for the rare catastrophic-write
+// case, and corrected by the next real delete or a restart reseed.
+function handlePersistenceWorkerError(table, error) {
   dbErr(`persistence worker write failed${table ? ` for ${table}` : ""}: ${error}`);
-  if (failure && table) {
-    const inFlight = inFlightFlushes.get(table);
-    if (inFlight && inFlight.operationId !== failure.operationId) {
-      dbWarn(
-        `ignored failure ${failure.operationId} while ${inFlight.operationId} is in flight for ${table}`,
-      );
-    }
+  const tables = table ? [table] : Object.keys(cache).filter(isSqliteTable);
+  for (const affected of tables) {
+    delete flushBaselines[affected];
+    // Baseline is gone, so the next flush must re-send the whole table via the
+    // full diff — the partial fast path would diff against nothing.
+    fullDirty.add(affected);
+    delete dirtyRowKeys[affected];
+    scheduleFlush(affected);
   }
 }
-persistenceWorker.onAcknowledged(handlePersistenceWorkerAcknowledged);
-persistenceWorker.onRecovered(handlePersistenceWorkerRecovered);
 persistenceWorker.onError(handlePersistenceWorkerError);
-persistenceCallbacksReady = true;
 
 // Record which stored row a successful write/remove touched, for the flush fast
 // path. Conservative: anything that can't be mapped to a single localizable row
@@ -1047,28 +759,6 @@ function flushTable(table) {
   }
 }
 
-function reconcileInFlightFlush(table) {
-  const inFlight = inFlightFlushes.get(table);
-  if (!inFlight) {
-    return false;
-  }
-  const reconciled = inFlight.submittedToWorker
-    ? persistenceWorker.reconcileWrite(SQLITE_DB_PATH, inFlight.operationId)
-    : sqliteStore.reconcilePersistenceOperation(inFlight.operationId, table);
-  // The controller normally invokes the acknowledgment callback itself. Keep
-  // this fallback explicit for injected controllers used by focused tests.
-  if (inFlightFlushes.get(table) === inFlight) {
-    handlePersistenceWorkerAcknowledged(reconciled || inFlight);
-  }
-  const remaining = inFlightFlushes.get(table);
-  if (remaining && remaining.operationId === inFlight.operationId) {
-    throw new Error(
-      `persistence operation ${inFlight.operationId} remained unresolved after reconciliation`,
-    );
-  }
-  return true;
-}
-
 function flushTableSync(table, options = {}) {
   if (!ensureCached(table)) {
     log.warn(`[DATABASE] database table: '${table}' not found!`);
@@ -1080,21 +770,14 @@ function flushTableSync(table, options = {}) {
     delete flushTimers[table];
   }
 
+  if (!dirty.has(table)) {
+    return { success: true, errorMsg: null, flushed: false };
+  }
+
   try {
-    const sqliteTable = isSqliteTable(table);
-    if (sqliteTable) {
-      // A same-process close/reopen must route durable recovery through the
-      // controller before either worker-bound or direct in-flight reconciliation
-      // touches the connection.
-      ensureSqliteReady();
-    }
-    const reconciled = sqliteTable ? reconcileInFlightFlush(table) : false;
-    if (!dirty.has(table)) {
-      return { success: true, errorMsg: null, flushed: reconciled };
-    }
-    if (sqliteTable) {
-      // sync: true reconciles directly on the main connection. Any earlier
-      // async operation was resolved above before a newer diff was computed.
+    if (isSqliteTable(table)) {
+      // sync: true — block until the worker has drained this write (when the
+      // worker is active), preserving the caller's synchronous durability.
       flushSqliteTable(table, { sync: true });
     } else {
       safeWriteFileSync(
@@ -1140,26 +823,19 @@ function flushTablesSync(tables = []) {
  * nothing is lost when the process exits.
  */
 function flushAllSync() {
-  const dirtyTables = [...new Set([...dirty, ...inFlightFlushes.keys()])];
-  const results = [];
-  if (dirtyTables.length === 0) {
-    return { success: true, results };
-  }
+  const dirtyTables = [...dirty];
+  if (dirtyTables.length === 0) return;
 
   dbLog(`shutdown flush — writing ${dirtyTables.length} dirty table(s)...`);
 
-  let success = true;
   for (const table of dirtyTables) {
     const result = flushTableSync(table, { log: true });
-    results.push({ table, ...result });
     if (!result.success) {
-      success = false;
       dbErr(`shutdown flush FAILED for ${table}: ${result.errorMsg || "FLUSH_ERROR"}`);
     }
   }
 
   dbLog(pc.green("shutdown flush complete"));
-  return { success, results };
 }
 
 // ── Graceful shutdown ───────────────────────────────────────────────
@@ -1177,10 +853,6 @@ function flushDirtyTablesForShutdown(reason) {
 }
 
 function onShutdownSignal(signal, exitCode = 0) {
-  if (process[TEST_STORE_CLEANUP_SYMBOL] === true) {
-    process.exitCode = exitCode;
-    return;
-  }
   flushDirtyTablesForShutdown(signal);
   process.exit(exitCode);
 }
@@ -1194,20 +866,14 @@ for (const signal of ["SIGINT", "SIGTERM", "SIGBREAK", "SIGHUP"]) {
 }
 
 process.on("beforeExit", () => {
-  if (process[TEST_STORE_CLEANUP_SYMBOL] === true) {
-    return;
-  }
-  if (dirty.size > 0 || inFlightFlushes.size > 0) {
+  if (dirty.size > 0) {
     flushDirtyTablesForShutdown("beforeExit");
   }
 });
 
 process.on("exit", () => {
-  if (process[TEST_STORE_CLEANUP_SYMBOL] === true) {
-    return;
-  }
   // Last-chance sync flush for any remaining dirty tables
-  if (dirty.size > 0 || inFlightFlushes.size > 0) {
+  if (dirty.size > 0) {
     flushDirtyTablesForShutdown("exit");
   }
 });

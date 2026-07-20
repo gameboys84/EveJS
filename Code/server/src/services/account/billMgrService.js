@@ -2,9 +2,6 @@ const path = require("path");
 
 const BaseService = require(path.join(__dirname, "../baseService"));
 const {
-  throwWrappedUserError,
-} = require(path.join(__dirname, "../../common/machoErrors"));
-const {
   buildDict,
   buildFiletimeLong,
   buildKeyVal,
@@ -12,11 +9,7 @@ const {
   extractDictEntries,
 } = require(path.join(__dirname, "../_shared/serviceHelpers"));
 const {
-  buildNotEnoughMoneyUserErrorValues,
-} = require(path.join(__dirname, "./walletState"));
-const {
   buildAutomaticPaySettingsSnapshot,
-  getBillRecord,
   listBillsForCreditor,
   listBillsForDebtor,
   payBillFromCharacter,
@@ -96,28 +89,6 @@ function buildBillPayload(bill) {
         : -1,
     ],
   ]);
-}
-
-function throwBillPaymentFailure(result, bill = null) {
-  const errorMsg = result && result.errorMsg ? String(result.errorMsg) : "BILL_PAYMENT_FAILED";
-  if (errorMsg === "INSUFFICIENT_FUNDS") {
-    const balance =
-      result && result.data && result.data.balance !== undefined
-        ? result.data.balance
-        : 0;
-    throwWrappedUserError(
-      "NotEnoughMoney",
-      buildNotEnoughMoneyUserErrorValues(Number(bill && bill.amount) || 0, balance),
-    );
-  }
-
-  if (errorMsg === "ONLY_EXECUTOR_CAN_PAY") {
-    throwWrappedUserError("CrpAccessDenied");
-  }
-
-  throwWrappedUserError("CustomNotify", {
-    notify: errorMsg,
-  });
 }
 
 function parseAutomaticPaySettings(rawSettings) {
@@ -212,27 +183,13 @@ class BillManagerService extends BaseService {
           (args && args[1]) ??
           1000,
       ) || 1000;
-    const bill = getBillRecord(billID);
-    const result = payBillFromCorporation(
-      billID,
-      resolveCorporationID(session),
-      fromAccountKey,
-    );
-    if (!result || result.success !== true) {
-      throwBillPaymentFailure(result, bill);
-    }
-    processDueOfficeRentalBills({ session });
-    processDueWarBills({ session });
+    payBillFromCorporation(billID, resolveCorporationID(session), fromAccountKey);
     return null;
   }
 
   Handle_CharPayBill(args, session) {
     const billID = Number(args && args[0]) || 0;
-    const bill = getBillRecord(billID);
-    const result = payBillFromCharacter(billID, resolveCharacterID(session));
-    if (!result || result.success !== true) {
-      throwBillPaymentFailure(result, bill);
-    }
+    payBillFromCharacter(billID, resolveCharacterID(session));
     return null;
   }
 }

@@ -29,7 +29,6 @@ const {
   completeDockedFittingBootstrap,
   syncInventoryItemForSession,
   syncShipFittingStateForSession,
-  emitStripFittingDogmaMultiEventForSession,
   emitItemsChangedBatchForSession,
   emitFittingTransactionForSession,
   buildInventoryDogmaPrimeEntry,
@@ -51,8 +50,6 @@ const {
   updateInventoryItem,
 } = require(path.join(__dirname, "./itemStore"));
 const {
-  CORP_ROLE_DIRECTOR,
-  toRoleMaskBigInt,
   getCorporationOfficeByInventoryID,
   getCorporationOffices,
 } = require(path.join(__dirname, "../corporation/corporationRuntimeState"));
@@ -205,9 +202,6 @@ const {
   isShipServiceFlag,
   validateShipServiceAccess,
 } = require(path.join(__dirname, "../ship/shipServiceAccess"));
-const {
-  normalizeShipNameLabel,
-} = require(path.join(__dirname, "../ship/shipNameUtils"));
 
 const inventoryDebugPath = path.join(
   __dirname,
@@ -287,20 +281,7 @@ const SHIP_BAY_FLAGS = new Set([
   ...SPECIAL_SHIP_HOLD_FLAGS,
 ]);
 const CORP_HANGAR_FLAGS = new Set([115, 116, 117, 118, 119, 120, 121, 184]);
-const CORP_HANGAR_QUERY_ROLE_BY_FLAG = new Map([
-  [115, 1048576n],
-  [116, 2097152n],
-  [117, 4194304n],
-  [118, 8388608n],
-  [119, 16777216n],
-  [120, 33554432n],
-  [121, 67108864n],
-]);
 const CORP_HANGAR_BROADCAST_IDTYPE = "*corpid&corprole&solarsystemid";
-const OFFICE_TYPE_ID = 27;
-const OFFICE_GROUP_ID = 16;
-const OFFICE_CATEGORY_ID = 3;
-const FLAG_OFFICE_FOLDER = 2;
 const STRUCTURE_DEED_GROUP_ID = 4086;
 const MOBILE_DEPOT_GROUP_ID = 1246;
 const MOBILE_DEPOT_HOLD_CAPACITY_ATTRIBUTE = "specialMobileDepotHoldCapacity";
@@ -369,33 +350,6 @@ class InvBrokerService extends BaseService {
     return (
       (session && (session.corporationID || session.corpid)) ||
       0
-    );
-  }
-
-  _getSessionCorpRoleMask(session) {
-    if (!session) {
-      return 0n;
-    }
-    return [
-      session.corprole,
-      session.rolesAtAll,
-      session.corpRole,
-    ].reduce(
-      (mask, roleValue) => mask | toRoleMaskBigInt(roleValue, 0n),
-      0n,
-    );
-  }
-
-  _canQueryCorporationHangarFlag(session, flagID) {
-    const numericFlag = this._normalizeInventoryId(flagID, 0);
-    const requiredRole = CORP_HANGAR_QUERY_ROLE_BY_FLAG.get(numericFlag);
-    if (!requiredRole) {
-      return true;
-    }
-    const roleMask = this._getSessionCorpRoleMask(session);
-    return (
-      (roleMask & CORP_ROLE_DIRECTOR) === CORP_ROLE_DIRECTOR ||
-      (roleMask & requiredRole) === requiredRole
     );
   }
 
@@ -1317,25 +1271,6 @@ class InvBrokerService extends BaseService {
 
     const normalizedValue = Math.trunc(numericValue);
     return normalizedValue > 0 ? normalizedValue : null;
-  }
-
-  _emitSetLabelCfgDataChanged(session, itemID, label) {
-    if (!session || typeof session.sendNotification !== "function") {
-      return;
-    }
-
-    session.sendNotification("OnCfgDataChanged", "charid", [
-      "evelocations",
-      buildList([
-        itemID,
-        label,
-        null,
-        0.0,
-        0.0,
-        0.0,
-        null,
-      ]),
-    ]);
   }
 
   _normalizeCommodityDict(value) {
@@ -3223,33 +3158,6 @@ class InvBrokerService extends BaseService {
     return ["Ship", shipID, "ShipCargo"];
   }
 
-  _buildDockedHangarLocationContext(locationID) {
-    const numericLocationID = this._normalizeInventoryId(locationID, 0);
-    if (numericLocationID <= 0) {
-      return null;
-    }
-    if (this._getStructureForInventoryID(numericLocationID)) {
-      return ["Structure", numericLocationID, "StructureItemHangar"];
-    }
-    if (worldData.getStationByID(numericLocationID)) {
-      return ["Station", numericLocationID, "StationHangar"];
-    }
-    return null;
-  }
-
-  _emitStripFittingMoveChanges(session, changes = []) {
-    const normalizedChanges = (Array.isArray(changes) ? changes : [])
-      .filter((change) => change && change.item);
-    for (const change of normalizedChanges) {
-      emitItemsChangedBatchForSession(session, [change], {
-        idType: "charid",
-        locationContext: this._buildDockedHangarLocationContext(
-          change.item && change.item.locationID,
-        ),
-      });
-    }
-  }
-
   _emitMtuSpaceComponentLootEvents(session, sourceLocationID, destination, lootedItems = []) {
     if (!session || typeof session.sendNotification !== "function") {
       return false;
@@ -5129,17 +5037,10 @@ class InvBrokerService extends BaseService {
     const seenItemIDs = new Set();
     const items = [];
 
-    if (numericFlag !== null && !this._canQueryCorporationHangarFlag(session, numericFlag)) {
-      return [];
-    }
-
     for (const locationID of locationIDs) {
       for (const item of listContainerItems(corporationID, locationID, numericFlag)) {
         const itemID = this._normalizeInventoryId(item && item.itemID, 0);
         if (itemID <= 0 || seenItemIDs.has(itemID)) {
-          continue;
-        }
-        if (!this._canQueryCorporationHangarFlag(session, item && item.flagID)) {
           continue;
         }
         seenItemIDs.add(itemID);
@@ -5163,22 +5064,23 @@ class InvBrokerService extends BaseService {
       return null;
     }
 
+    const stationItem = this._buildStationItemOverrides(
+      session,
+      this._normalizeInventoryId(office.stationID, this._getStationId(session)),
+    );
     return {
-      itemID: this._normalizeInventoryId(
-        office.itemID,
-        this._normalizeInventoryId(office.officeID, 0),
-      ),
-      typeID: OFFICE_TYPE_ID,
+      itemID: this._normalizeInventoryId(office.officeID, 0),
+      typeID: stationItem.typeID,
       ownerID: this._getCorporationId(session),
       locationID: this._normalizeInventoryId(
         office.stationID,
         this._getStationId(session),
       ),
-      flagID: FLAG_OFFICE_FOLDER,
-      quantity: -1,
-      groupID: OFFICE_GROUP_ID,
-      categoryID: OFFICE_CATEGORY_ID,
-      customInfo: null,
+      flagID: 0,
+      quantity: 1,
+      groupID: STATION_GROUP_ID,
+      categoryID: STATION_CATEGORY_ID,
+      customInfo: "",
       singleton: 1,
       stacksize: 1,
     };
@@ -5253,10 +5155,6 @@ class InvBrokerService extends BaseService {
     const containerID = boundContext && Number(boundContext.inventoryID)
       ? Number(boundContext.inventoryID)
       : stationId;
-
-    if (boundContext && boundContext.kind === "staleInventory") {
-      return [];
-    }
 
     if (containerID === charId) {
       return this._getCharacterContainerItems(session, numericFlag);
@@ -5603,9 +5501,7 @@ class InvBrokerService extends BaseService {
       overrides.stacksize ?? (singleton > 0 ? 1 : quantity);
     const groupID = overrides.groupID ?? shipMetadata.groupID;
     const categoryID = overrides.categoryID ?? shipMetadata.categoryID;
-    const customInfo = Object.prototype.hasOwnProperty.call(overrides, "customInfo")
-      ? overrides.customInfo
-      : "";
+    const customInfo = overrides.customInfo ?? "";
 
     // Keep DBRowDescriptor-compatible order first, then convenience attrs.
     return [
@@ -5864,21 +5760,8 @@ class InvBrokerService extends BaseService {
     const boundShip =
       findCharacterShip(charId, numericItemId) ||
       findShipItemById(numericItemId);
-    const genericItem = findItemById(numericItemId);
-    const nativeWreckRecord = this._getNativeWreckRecord(numericItemId);
-    const structureInventory = this._getStructureForInventoryID(numericItemId);
     const isControlledStructureInventory =
       this._isControlledStructureInventoryID(session, numericItemId);
-    const isKnownInventoryTarget = Boolean(
-      boundShip ||
-        genericItem ||
-        nativeWreckRecord ||
-        structureInventory ||
-        corporationOffice ||
-        isControlledStructureInventory ||
-        numericItemId === charId ||
-        numericItemId === stationId,
-    );
     const explicitLocationID =
       this._extractKwarg(kwargs, "locationID") ??
       (args && args.length > 2 ? args[2] : undefined);
@@ -5946,8 +5829,6 @@ class InvBrokerService extends BaseService {
           ? "stationHangar"
           : boundShip
             ? "shipInventory"
-            : !isKnownInventoryTarget
-              ? "staleInventory"
             : "container",
     }, session);
     if (boundShip) {
@@ -5963,66 +5844,7 @@ class InvBrokerService extends BaseService {
 
   Handle_SetLabel(args, session) {
     this._traceInventory("SetLabel", session, { args });
-    const itemID = this._normalizeInventoryId(
-      unwrapMarshalValue(args && args.length > 0 ? args[0] : 0),
-      0,
-    );
-    const item = findItemById(itemID);
-    if (!item) {
-      log.warn(`[InvBroker] SetLabel failed for missing item=${itemID}`);
-      return null;
-    }
-
-    const characterID = resolveSessionCharacterID(session);
-    if (
-      characterID > 0 &&
-      this._normalizeInventoryId(item.ownerID, 0) !== characterID
-    ) {
-      throwWrappedUserError("ItemNotYours");
-    }
-
-    const rawLabel = unwrapMarshalValue(args && args.length > 1 ? args[1] : "");
-    const label =
-      Number(item.categoryID) === 6
-        ? normalizeShipNameLabel(rawLabel)
-        : String(rawLabel ?? "")
-          .replace(/[\r\n]+/g, " ")
-          .trim()
-          .slice(0, 100);
-    if (!label) {
-      log.debug(`[InvBroker] SetLabel ignored empty label for item=${itemID}`);
-      return null;
-    }
-
-    const updateResult = updateInventoryItem(itemID, (currentItem) => ({
-      ...currentItem,
-      itemName: label,
-    }));
-    if (!updateResult.success) {
-      log.warn(
-        `[InvBroker] SetLabel failed for item=${itemID}: ${updateResult.errorMsg || "UNKNOWN_ERROR"}`,
-      );
-      return null;
-    }
-
-    const sessionShipIDs = [
-      this._getShipId(session),
-      session && session.activeShipID,
-      session && session.shipID,
-      session && session.shipid,
-    ].map((value) => this._normalizeInventoryId(value, 0));
-    if (sessionShipIDs.includes(itemID)) {
-      session.shipName = label;
-      if (session._space && typeof session._space === "object") {
-        session._space.shipName = label;
-      }
-    }
-
-    if (Number(updateResult.data && updateResult.data.categoryID) === 6) {
-      this._emitSetLabelCfgDataChanged(session, itemID, label);
-    }
-
-    log.debug(`[InvBroker] SetLabel item=${itemID} label=${label}`);
+    log.debug("[InvBroker] SetLabel");
     return null;
   }
 
@@ -6516,12 +6338,6 @@ class InvBrokerService extends BaseService {
       return null;
     }
 
-    const previousFittingSnapshot = getShipFittingSnapshot(charID, shipRecord.itemID, {
-      shipItem: shipRecord,
-      forceRefresh: true,
-      reason: "invbroker.strip-fitting.before",
-    });
-
     const firstNonChargeFittedItem = fittedItems.find((fittedItem) => (
       fittedItem &&
       !SLOT_FAMILY_FLAGS.rig.includes(fittedItem.flagID) &&
@@ -6594,19 +6410,20 @@ class InvBrokerService extends BaseService {
       return null;
     }
 
-    this._emitStripFittingMoveChanges(session, allChanges);
+    this._emitInventoryMoveChanges(session, allChanges);
     this._refreshBallparkShipPresentation(session, allChanges);
     this._refreshBallparkInventoryPresentation(session, allChanges);
 
-    const dogmaChanges = allChanges.slice();
-    setImmediate(() => {
-      emitStripFittingDogmaMultiEventForSession(session, shipRecord.itemID, dogmaChanges, {
-        previousSnapshot: previousFittingSnapshot,
-        shipItem: shipRecord,
-      });
+    // After all moves, getLoadedChargeItems returns empty. Syncing with
+    // emitChargeInventoryRows:true sends the client an explicit "no charges"
+    // state for this ship, clearing any stale ammo displayed in the fitting window.
+    syncShipFittingStateForSession(session, shipRecord.itemID, {
+      includeOfflineModules: true,
+      includeCharges: true,
+      emitChargeInventoryRows: true,
     });
 
-    return true;
+    return null;
   }
 
   Handle_DestroyFitting(args, session) {

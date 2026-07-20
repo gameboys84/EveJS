@@ -668,9 +668,9 @@ class ClientSession {
       broadcastID: notifyType, // ServiceCallGPCS expects notifyType to be the broadcastID
     });
 
-    // TQ broadcast notifications wrap the object/RPC body in a leading 0
-    // before the [1, args] call tuple.
-    const unpickledPayload = [0, [1, payloadTuple]];
+    // explicitly marshal [1, payloadTuple] so BroadcastStuffGPCS properly parses the args array
+    // 1 = object/RPC call, 0 = simple byte transfer
+    const unpickledPayload = [1, payloadTuple];
     const innerMarshalStartedAtMs = Date.now();
     const marshalledPayload = marshalEncode(unpickledPayload);
     const innerMarshalElapsedMs = Date.now() - innerMarshalStartedAtMs;

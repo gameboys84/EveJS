@@ -3,7 +3,6 @@ const path = require("path");
 const BaseService = require(path.join(__dirname, "../baseService"));
 const log = require(path.join(__dirname, "../../utils/logger"));
 const {
-  extractDictEntries,
   normalizeNumber,
 } = require(path.join(__dirname, "../_shared/serviceHelpers"));
 const {
@@ -34,23 +33,6 @@ function getSessionShipID(session) {
       ),
     0,
   );
-}
-
-function getKwargValue(kwargs, key) {
-  for (const [entryKey, entryValue] of extractDictEntries(kwargs)) {
-    if (String(entryKey) === String(key)) {
-      return entryValue;
-    }
-  }
-  if (
-    kwargs &&
-    typeof kwargs === "object" &&
-    !Array.isArray(kwargs) &&
-    Object.prototype.hasOwnProperty.call(kwargs, key)
-  ) {
-    return kwargs[key];
-  }
-  return null;
 }
 
 function buildDockingApproachUserErrorValues(dockingDebug = null) {
@@ -159,13 +141,10 @@ class StructureDockingService extends BaseService {
     return null;
   }
 
-  Handle_Undock(args, session, kwargs) {
+  Handle_Undock(args, session) {
     const structureID = normalizePositiveInt(args && args[0], 0);
     const requestedShipID = normalizePositiveInt(args && args[1], 0);
     const activeShipID = getSessionShipID(session);
-    const ignoreContraband = Boolean(
-      normalizeNumber(getKwargValue(kwargs, "ignoreContraband"), 0),
-    );
 
     log.info(
       `[StructureDocking] Undock char=${session && session.characterID} structure=${structureID} ship=${requestedShipID || activeShipID || 0}`,
@@ -183,9 +162,7 @@ class StructureDockingService extends BaseService {
       throwWrappedUserError("DeniedShipChanged");
     }
 
-    const result = transitions.undockSession(session, {
-      ignoreContraband,
-    });
+    const result = transitions.undockSession(session);
     if (!result || !result.success) {
       log.warn(
         `[StructureDocking] Undock failed for char=${session && session.characterID}: ${(result && result.errorMsg) || "UNKNOWN_ERROR"}`,
@@ -193,7 +170,7 @@ class StructureDockingService extends BaseService {
       return null;
     }
 
-    return null;
+    return result.data ? result.data.boundResult || null : null;
   }
 }
 

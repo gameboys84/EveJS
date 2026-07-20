@@ -4,25 +4,8 @@ const {
   TABLE,
   readStaticTable,
 } = require(path.join(__dirname, "../_shared/referenceData"));
-const {
-  isDisabledMissionIdentifier,
-  isDisabledMissionSourceURL,
-  isDisabledMissionTemplateIdentifier,
-  productionMissionPolicy,
-} = require(path.join(__dirname, "../../config/productionMissionPolicy"));
 
 let cache = null;
-const BANNED_DUNGEON_TEMPLATE_IDS = new Set(
-  productionMissionPolicy.disabledMissions
-    .flatMap(({ templateIDs }) => templateIDs)
-    .map((templateID) => templateID.toLowerCase()),
-);
-const BANNED_SOURCE_MISSION_IDS = new Set(
-  productionMissionPolicy.disabledMissions.flatMap(({ missionID, templateIDs }) => [
-    String(missionID),
-    ...templateIDs.map((templateID) => templateID.split(":").pop().toLowerCase()),
-  ]),
-);
 
 function toInt(value, fallback = 0) {
   const numeric = Number(value);
@@ -35,30 +18,6 @@ function clone(value) {
 
 function normalizeObject(value) {
   return value && typeof value === "object" ? value : {};
-}
-
-function isBannedDungeonTemplateID(templateID) {
-  const normalizedTemplateID = String(templateID || "").trim().toLowerCase();
-  return isDisabledMissionTemplateIdentifier(normalizedTemplateID) ||
-    isDisabledMissionSourceURL(normalizedTemplateID) ||
-    isDisabledMissionIdentifier(normalizedTemplateID);
-}
-
-function isBannedDungeonTemplateRecord(record = null, fallbackTemplateID = "") {
-  const sourceMissionID = String(record && record.sourceMissionID || "")
-    .trim()
-    .toLowerCase();
-  return isBannedDungeonTemplateID(fallbackTemplateID) ||
-    isBannedDungeonTemplateID(record && record.templateID) ||
-    isBannedDungeonTemplateID(record && record.sourceMissionID) ||
-    isDisabledMissionIdentifier(record && record.missionID) ||
-    BANNED_SOURCE_MISSION_IDS.has(sourceMissionID) ||
-    [
-      record && record.sourceUrl,
-      record && record.sourceURL,
-      record && record.adminMetadata && record.adminMetadata.sourceUrl,
-      record && record.adminMetadata && record.adminMetadata.sourceURL,
-    ].some(isDisabledMissionSourceURL);
 }
 
 function normalizePayload(payload = {}) {
@@ -78,51 +37,8 @@ function normalizePayload(payload = {}) {
   };
 }
 
-function sanitizePayload(payload = {}) {
-  const templatesByID = Object.fromEntries(
-    Object.entries(payload.templatesByID || {}).filter(([templateID, template]) =>
-      !isBannedDungeonTemplateRecord(template, templateID)),
-  );
-  const availableTemplateIDs = new Set(Object.keys(templatesByID));
-  const indexes = {};
-  for (const [indexName, rawIndex] of Object.entries(payload.indexes || {})) {
-    const sanitizedIndex = {};
-    for (const [key, rawTemplateIDs] of Object.entries(normalizeObject(rawIndex))) {
-      if (Array.isArray(rawTemplateIDs)) {
-        const templateIDs = rawTemplateIDs.filter((templateID) =>
-          !isBannedDungeonTemplateID(templateID) &&
-          availableTemplateIDs.has(String(templateID)));
-        if (templateIDs.length > 0) {
-          sanitizedIndex[key] = templateIDs;
-        }
-        continue;
-      }
-      if (
-        !isBannedDungeonTemplateID(rawTemplateIDs) &&
-        availableTemplateIDs.has(String(rawTemplateIDs))
-      ) {
-        sanitizedIndex[key] = rawTemplateIDs;
-      }
-    }
-    if (Object.keys(sanitizedIndex).length > 0) {
-      indexes[indexName] = sanitizedIndex;
-    }
-  }
-  return {
-    ...payload,
-    counts: {
-      ...payload.counts,
-      templateCount: Object.keys(templatesByID).length,
-    },
-    templatesByID,
-    indexes,
-  };
-}
-
 function buildCache() {
-  const payload = sanitizePayload(
-    normalizePayload(readStaticTable(TABLE.DUNGEON_AUTHORITY)),
-  );
+  const payload = normalizePayload(readStaticTable(TABLE.DUNGEON_AUTHORITY));
   const templatesByID = new Map();
   const templatesBySourceDungeonID = new Map();
   const templatesBySource = new Map();
@@ -137,9 +53,6 @@ function buildCache() {
   const spawnProfilesByFamily = new Map();
 
   for (const [templateID, template] of Object.entries(payload.templatesByID || {})) {
-    if (isBannedDungeonTemplateRecord(template, templateID)) {
-      continue;
-    }
     const normalizedTemplate = {
       ...template,
       templateID,
@@ -294,9 +207,6 @@ function getPayload() {
 }
 
 function getTemplateByID(templateID) {
-  if (isBannedDungeonTemplateID(templateID)) {
-    return null;
-  }
   const template = ensureCache().templatesByID.get(String(templateID || "").trim());
   return template ? clone(template) : null;
 }
@@ -379,13 +289,10 @@ module.exports = {
   getPayload,
   getSpawnProfile,
   getTemplateByID,
-  isBannedDungeonTemplateID,
-  isBannedDungeonTemplateRecord,
   listUniverseSpawnFamilies,
   listTemplatesByArchetypeID,
   listTemplatesByDungeonNameID,
   listTemplatesByFamily,
   listTemplatesByResourceTypeID,
   listTemplatesBySource,
-  sanitizePayload,
 };

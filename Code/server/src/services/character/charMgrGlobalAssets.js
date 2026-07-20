@@ -4,7 +4,7 @@ const config = require(path.join(__dirname, "../../config"));
 const log = require(path.join(__dirname, "../../utils/logger"));
 const worldData = require(path.join(__dirname, "../../space/worldData"));
 const {
-  buildDbRowset,
+  buildRowset,
 } = require(path.join(__dirname, "../_shared/serviceHelpers"));
 const {
   listCharacterItems,
@@ -24,17 +24,13 @@ const TYPE_PLEX = 44992;
 const MAX_SNAPSHOT_CACHE_SIZE = 64;
 const STATION_ROWSET_HEADER = [
   "stationID",
-  "solarSystemID",
   "typeID",
+  "stationTypeID",
+  "solarSystemID",
+  "constellationID",
+  "regionID",
   "itemCount",
   "upkeepState",
-];
-const STATION_DBROW_COLUMNS = [
-  ["stationID", 0x14],
-  ["solarSystemID", 0x14],
-  ["typeID", 0x03],
-  ["itemCount", 0x03],
-  ["upkeepState", 0x11],
 ];
 const INVENTORY_ROW_DESCRIPTOR_COLUMNS = [
   ["itemID", 20],
@@ -434,8 +430,11 @@ class CharMgrGlobalAssets {
       )
       .map((row) => [
         toInteger(row.stationID, 0),
-        toInteger(row.solarSystemID, 0),
         row.typeID === null ? null : toInteger(row.typeID, 0),
+        row.stationTypeID === null ? null : toInteger(row.stationTypeID, 0),
+        toInteger(row.solarSystemID, 0),
+        toInteger(row.constellationID, 0),
+        toInteger(row.regionID, 0),
         toInteger(row.itemCount, 0),
         row.upkeepState === undefined ? null : row.upkeepState,
       ]);
@@ -535,10 +534,10 @@ class CharMgrGlobalAssets {
 
   Handle_ListStations(_args, session) {
     const snapshot = this._buildAssetSnapshot(session);
-    return buildDbRowset(
-      STATION_DBROW_COLUMNS,
+    return buildRowset(
+      STATION_ROWSET_HEADER,
       this._buildStationRows(snapshot.topLevelEntries),
-      "carbon.common.script.sys.crowset.CRowset",
+      "eve.common.script.sys.rowset.Rowset",
     );
   }
 

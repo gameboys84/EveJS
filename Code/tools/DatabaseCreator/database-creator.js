@@ -6,10 +6,6 @@ const path = require("path");
 const readline = require("readline");
 const crypto = require("crypto");
 const {
-  policyViolationCount,
-  sanitizeAuthorityTable,
-} = require("./production-mission-policy");
-const {
   STRUCTURE_SIZE,
   STRUCTURE_FAMILY,
   STRUCTURE_GROUP_ID,
@@ -2424,18 +2420,6 @@ function readRequiredStaticTableOverride(tableName) {
       `Missing required static table ${tableName}: ${path.join(STATIC_TABLE_ROOT, tableName, "data.json")}`,
     );
   }
-  return sanitizeAndValidateProductionMissionPolicy(tableName, staticTable);
-}
-
-function sanitizeAndValidateProductionMissionPolicy(tableName, staticTable) {
-  sanitizeAuthorityTable(tableName, staticTable);
-  const violationCount = policyViolationCount(tableName, staticTable);
-  if (violationCount > 0) {
-    throw new Error(
-      `Static table ${tableName} violates production mission policy ` +
-        `(${violationCount} violation(s))`,
-    );
-  }
   return staticTable;
 }
 
@@ -3247,5 +3231,4 @@ module.exports = {
   buildTables,
   buildCorporations,
   buildLocalAccountsAndCharacters,
-  sanitizeAndValidateProductionMissionPolicy,
 };

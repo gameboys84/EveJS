@@ -2,9 +2,9 @@ const path = require("path");
 
 const sessionRegistry = require(path.join(__dirname, "../chat/sessionRegistry"));
 const {
-  buildDbRowset,
   buildFiletimeLong,
   buildList,
+  buildRowset,
   currentFileTime,
   extractList,
   normalizeNumber,
@@ -40,26 +40,20 @@ const OPERATOR_STR_STARTS_WITH = 11;
 const OPERATOR_STR_ENDS_WITH = 12;
 const OPERATOR_STR_IS = 13;
 
-const MEMBER_TRACKING_DBROW_COLUMNS = [
-  ["characterID", 0x03],
-  ["corporationID", 0x03],
-  ["title", 0x82],
-  ["roles", 0x14],
-  ["grantableRoles", 0x14],
-  ["baseID", 0x03],
-  ["startDateTime", 0x40],
-  ["logonDateTime", 0x40],
-  ["logoffDateTime", 0x40],
-  ["lastOnline", 0x03],
-  ["locationID", 0x14],
-  ["shipTypeID", 0x03],
-  ["rolesAtHQ", 0x14],
-  ["grantableRolesAtHQ", 0x14],
-  ["rolesAtBase", 0x14],
-  ["grantableRolesAtBase", 0x14],
-  ["rolesAtOther", 0x14],
-  ["grantableRolesAtOther", 0x14],
-  ["factionID", 0x03],
+const MEMBER_TRACKING_HEADER = [
+  "characterID",
+  "corporationID",
+  "roles",
+  "grantableRoles",
+  "title",
+  "baseID",
+  "startDateTime",
+  "locationID",
+  "lastOnline",
+  "shipTypeID",
+  "factionID",
+  "logonDateTime",
+  "logoffDateTime",
 ];
 
 function getOwnerRecord(ownerID) {
@@ -320,39 +314,8 @@ function getLastOnlineHours(characterID, member) {
 }
 
 function buildCorporationMemberTrackingRowset(corporationID) {
-  return buildDbRowset(
-    MEMBER_TRACKING_DBROW_COLUMNS,
-    listCorporationMembers(corporationID).map((member) => {
-      const characterRecord = getCharacterRecord(member.characterID) || {};
-      const onlineSession = sessionRegistry.findSessionByCharacterID(member.characterID);
-      return [
-        member.characterID,
-        member.corporationID,
-        member.title || "",
-        { type: "long", value: toRoleMaskBigInt(member.roles, 0n) },
-        { type: "long", value: toRoleMaskBigInt(member.grantableRoles, 0n) },
-        member.baseID || null,
-        buildFiletimeLong(member.startDate),
-        onlineSession ? buildFiletimeLong(currentFileTime()) : null,
-        null,
-        getLastOnlineHours(member.characterID, member),
-        member.locationID || characterRecord.locationID || characterRecord.stationID || null,
-        member.shipTypeID || characterRecord.shipTypeID || null,
-        { type: "long", value: toRoleMaskBigInt(member.rolesAtHQ, 0n) },
-        { type: "long", value: toRoleMaskBigInt(member.grantableRolesAtHQ, 0n) },
-        { type: "long", value: toRoleMaskBigInt(member.rolesAtBase, 0n) },
-        { type: "long", value: toRoleMaskBigInt(member.grantableRolesAtBase, 0n) },
-        { type: "long", value: toRoleMaskBigInt(member.rolesAtOther, 0n) },
-        { type: "long", value: toRoleMaskBigInt(member.grantableRolesAtOther, 0n) },
-        characterRecord.warFactionID || characterRecord.factionID || null,
-      ];
-    }),
-    "carbon.common.script.sys.crowset.CRowset",
-  );
-}
-
-function buildCorporationMemberTrackingList(corporationID) {
-  return buildList(
+  return buildRowset(
+    MEMBER_TRACKING_HEADER,
     listCorporationMembers(corporationID).map((member) => {
       const characterRecord = getCharacterRecord(member.characterID) || {};
       const onlineSession = sessionRegistry.findSessionByCharacterID(member.characterID);
@@ -372,11 +335,11 @@ function buildCorporationMemberTrackingList(corporationID) {
         null,
       ]);
     }),
+    "eve.common.script.sys.rowset.Rowset",
   );
 }
 
 module.exports = {
-  buildCorporationMemberTrackingList,
   buildCorporationMemberTrackingRowset,
   queryCorporationMemberIDs,
 };

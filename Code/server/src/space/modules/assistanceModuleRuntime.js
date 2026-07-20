@@ -193,20 +193,6 @@ function isStructureEntity(entity) {
   );
 }
 
-function isAssistanceTargetEntity(effectData, entity) {
-  return Boolean(
-    entity && (
-      entity.kind === "ship" ||
-      (
-        entity.kind === "drone" &&
-        isRemoteRepairFamily(
-          effectData && (effectData.family || effectData.assistanceFamily),
-        )
-      )
-    ),
-  );
-}
-
 function isRemoteRepairFamily(value) {
   return REMOTE_REPAIR_FAMILIES.has(String(value || ""));
 }
@@ -751,7 +737,7 @@ function resolveAssistanceModuleActivation({
       stopReason: "target",
     };
   }
-  if (!isAssistanceTargetEntity(definition, targetEntity)) {
+  if (!targetEntity || targetEntity.kind !== "ship") {
     return {
       matched: true,
       success: false,
@@ -993,7 +979,7 @@ function executeAssistanceModuleCycle({
       stopReason: "target",
     };
   }
-  if (!isAssistanceTargetEntity(effectState, targetEntity)) {
+  if (!targetEntity || targetEntity.kind !== "ship") {
     return {
       success: false,
       errorMsg: "TARGET_NOT_FOUND",

@@ -20,16 +20,8 @@ const chatRuntime = require(path.join(
   "../../_secondary/chat/chatRuntime",
 ));
 
-// Local/corp/fleet chat runs over XMPP MUC (member roster + messages) and the
-// protobuf local-chat gateway (companion). The legacy LSC `OnLSC` push was
-// removed: the V24 client has no live `OnLSC` consumer (the string exists only
-// in eve/common/lib/marshalstrings.py; there is no `def OnLSC`, no LSC service
-// registration, and no __notifyevents__ entry), and the golden "Logging In To
-// Space" capture contains zero OnLSC/presence traffic for Local. All Local
-// membership + delivery now flows through chatRuntime (gateway) and
-// xmppStubServer (XMPP); this module only builds the LSC RPC response shapes
-// (the LSC service is still advertised in machoNet.GetInitVals for parity, but
-// the current client never calls it).
+const joinedChannels = new Map();
+const delayedLocalMembers = new Map();
 
 const CHANNEL_MODE_CONVERSATIONALIST = 3;
 const CHANNEL_HEADERS = [
@@ -143,13 +135,112 @@ function isDelayedLocalChannel(channel) {
   );
 }
 
-// Authoritative Local occupant set for the LSC RPC response. chatRuntime is the
-// single source of truth for who is visible in a Local room (all pilots in
-// immediate systems; only speakers in delayed wormhole/Pochven/Zarzakh rooms).
-function getLocalChannelMembers(channel) {
-  return chatRuntime
-    .getVisibleLocalSessions(channel.comparisonKey || getLocalChannelName(channel.id))
-    .filter((session) => session && session.socket && !session.socket.destroyed);
+function getChannelMembers(channel) {
+  const members = joinedChannels.get(channel.key);
+  if (!members) {
+    return [];
+  }
+
+  return Array.from(members).filter(
+    (session) => session && session.socket && !session.socket.destroyed,
+  );
+}
+
+function getVisibleDelayedMembers(channel) {
+  const runtimeMembers = chatRuntime.getVisibleLocalSessions(
+    channel.comparisonKey || getLocalChannelName(channel.id),
+  );
+  if (runtimeMembers.length > 0) {
+    return runtimeMembers;
+  }
+
+  const members = delayedLocalMembers.get(channel.key);
+  if (!members) {
+    return [];
+  }
+  return Array.from(members).filter(
+    (session) => session && session.socket && !session.socket.destroyed,
+  );
+}
+
+function getImmediateLocalMembers(channel) {
+  const runtimeMembers = chatRuntime.getVisibleLocalSessions(
+    channel.comparisonKey || getLocalChannelName(channel.id),
+  ).filter(
+    (session) => session && session.socket && !session.socket.destroyed,
+  );
+  if (runtimeMembers.length > 0) {
+    return runtimeMembers;
+  }
+
+  return getChannelMembers(channel);
+}
+
+function getSessionCharacterID(session) {
+  return Number(
+    session && (session.characterID || session.charid || session.userid) || 0,
+  ) || 0;
+}
+
+function getBroadcastChannelMembers(channel, options = {}) {
+  const excludeSession = options.excludeSession || null;
+  const excludeCharacterID = Number(options.excludeCharacterID || 0) || 0;
+  return getDisplayedChannelMembers(channel).filter((session) => {
+    if (!session || session === excludeSession) {
+      return false;
+    }
+    if (excludeCharacterID && getSessionCharacterID(session) === excludeCharacterID) {
+      return false;
+    }
+    return true;
+  });
+}
+
+function getDisplayedChannelMembers(channel) {
+  if (isDelayedLocalChannel(channel)) {
+    return getVisibleDelayedMembers(channel);
+  }
+
+  return getImmediateLocalMembers(channel);
+}
+
+function trackDelayedLocalSpeaker(channel, session) {
+  if (!channel || !session) {
+    return false;
+  }
+
+  const runtimeResult = chatRuntime.trackLocalSpeaker(session);
+
+  if (!delayedLocalMembers.has(channel.key)) {
+    delayedLocalMembers.set(channel.key, new Set());
+  }
+
+  const members = delayedLocalMembers.get(channel.key);
+  const alreadyTracked = members.has(session);
+  members.add(session);
+  return Boolean(runtimeResult && runtimeResult.becameVisible) || !alreadyTracked;
+}
+
+function forgetDelayedLocalSpeaker(channel, session) {
+  if (!channel || !session) {
+    return false;
+  }
+
+  const runtimeResult = chatRuntime.forgetLocalSpeaker(session, {
+    roomName: channel.comparisonKey || getLocalChannelName(channel.id),
+    solarSystemID: Number(channel.id || 0) || 0,
+  });
+
+  const members = delayedLocalMembers.get(channel.key);
+  if (!members) {
+    return runtimeResult;
+  }
+
+  const wasTracked = members.delete(session);
+  if (members.size === 0) {
+    delayedLocalMembers.delete(channel.key);
+  }
+  return runtimeResult || wasTracked;
 }
 
 function getEstimatedMemberCount(channel) {
@@ -216,7 +307,7 @@ function buildCharacterExtra(session) {
 }
 
 function buildChannelChars(channel) {
-  const lines = getLocalChannelMembers(channel).map((session) =>
+  const lines = getDisplayedChannelMembers(channel).map((session) =>
     buildList([
       session.characterID || session.userid || 0,
       session.corporationID || 0,
@@ -235,6 +326,51 @@ function buildChannelDescriptor(channel) {
   return [[channel.type, channel.id]];
 }
 
+function buildSenderInfo(session) {
+  return [
+    session.allianceID || 0,
+    session.corporationID || 0,
+    [
+      session.characterID || session.userid || 0,
+      session.characterName || session.userName || "Unknown",
+      session.characterTypeID || 1373,
+    ],
+    { type: "long", value: toBigInt(session.role || 0) },
+    { type: "long", value: 0n },
+    0,
+  ];
+}
+
+function buildSystemSenderInfo() {
+  return [
+    0,
+    1,
+    [1, "EVE System", 1],
+    { type: "long", value: 1n },
+    { type: "long", value: 0n },
+    0,
+  ];
+}
+
+function sendOnLsc(session, channel, method, sender, argumentsTuple = []) {
+  if (
+    !session ||
+    !session.socket ||
+    session.socket.destroyed ||
+    typeof session.sendNotification !== "function"
+  ) {
+    return;
+  }
+
+  session.sendNotification("OnLSC", channel.type, [
+    buildChannelDescriptor(channel),
+    getEstimatedMemberCount(channel),
+    method,
+    sender,
+    argumentsTuple,
+  ]);
+}
+
 function getChannelsForSession(session) {
   const channel = getLocalChannelForSession(session);
   return buildRowset(CHANNEL_HEADERS, [buildChannelInfoLine(channel)]);
@@ -243,6 +379,21 @@ function getChannelsForSession(session) {
 function joinLocalChannel(session) {
   const channel = getLocalChannelForSession(session);
   chatRuntime.joinLocalLsc(session);
+
+  if (!joinedChannels.has(channel.key)) {
+    joinedChannels.set(channel.key, new Set());
+  }
+
+  const members = joinedChannels.get(channel.key);
+  const alreadyJoined = members.has(session);
+  members.add(session);
+
+  if (!alreadyJoined && !isDelayedLocalChannel(channel)) {
+    const sender = buildSenderInfo(session);
+    for (const member of getBroadcastChannelMembers(channel)) {
+      sendOnLsc(member, channel, "JoinChannel", sender, []);
+    }
+  }
 
   return {
     channel,
@@ -257,6 +408,29 @@ function joinLocalChannel(session) {
 function leaveLocalChannel(session) {
   const channel = getLocalChannelForSession(session);
   chatRuntime.leaveLocalLsc(session);
+  const members = joinedChannels.get(channel.key);
+  if (!members || !members.has(session)) {
+    return null;
+  }
+
+  members.delete(session);
+  const shouldBroadcastLeave =
+    !isDelayedLocalChannel(channel) || forgetDelayedLocalSpeaker(channel, session);
+  if (shouldBroadcastLeave) {
+    const sender = buildSenderInfo(session);
+    for (const member of getBroadcastChannelMembers(channel, {
+      excludeSession: session,
+      excludeCharacterID: getSessionCharacterID(session),
+    })) {
+      sendOnLsc(member, channel, "LeaveChannel", sender, []);
+    }
+  }
+
+  if (members.size === 0) {
+    joinedChannels.delete(channel.key);
+    delayedLocalMembers.delete(channel.key);
+  }
+
   return channel;
 }
 
@@ -265,24 +439,153 @@ function moveLocalSession(session, previousChannelID = 0) {
     return null;
   }
 
+  const oldChannelID = Number(previousChannelID || 0) || 0;
   const newChannel = getLocalChannelForSession(session);
-  const runtimeResult = chatRuntime.moveLocalLsc(session, previousChannelID);
+  if (!oldChannelID || oldChannelID === Number(newChannel.id || 0)) {
+    chatRuntime.moveLocalLsc(session, previousChannelID);
+    moveSessionToCurrentLocalRoom(session);
+    return {
+      previousChannelID: oldChannelID,
+      newChannel,
+      moved: false,
+    };
+  }
+
+  const oldChannel = {
+    ...newChannel,
+    key: `solarsystemid2:${oldChannelID}`,
+    id: oldChannelID,
+    comparisonKey: getLocalChannelName(oldChannelID),
+  };
+  const oldMembers = joinedChannels.get(oldChannel.key) || null;
+  const wasJoined = Boolean(oldMembers && oldMembers.has(session));
+
+  if (wasJoined) {
+    oldMembers.delete(session);
+    const shouldBroadcastLeave =
+      !isDelayedLocalChannel(oldChannel) ||
+      forgetDelayedLocalSpeaker(oldChannel, session);
+    if (shouldBroadcastLeave) {
+      const sender = buildSenderInfo(session);
+      for (const member of getBroadcastChannelMembers(oldChannel, {
+        excludeSession: session,
+        excludeCharacterID: getSessionCharacterID(session),
+      })) {
+        sendOnLsc(member, oldChannel, "LeaveChannel", sender, []);
+      }
+    }
+    if (oldMembers.size === 0) {
+      joinedChannels.delete(oldChannel.key);
+      delayedLocalMembers.delete(oldChannel.key);
+    }
+
+    if (!joinedChannels.has(newChannel.key)) {
+      joinedChannels.set(newChannel.key, new Set());
+    }
+    const newMembers = joinedChannels.get(newChannel.key);
+    const alreadyJoined = newMembers.has(session);
+    newMembers.add(session);
+    if (!alreadyJoined && !isDelayedLocalChannel(newChannel)) {
+      const sender = buildSenderInfo(session);
+      for (const member of getBroadcastChannelMembers(newChannel)) {
+        sendOnLsc(member, newChannel, "JoinChannel", sender, []);
+      }
+    }
+  }
+
+  if (!wasJoined && !isDelayedLocalChannel(oldChannel)) {
+    const sender = buildSenderInfo(session);
+    for (const member of getBroadcastChannelMembers(oldChannel, {
+      excludeSession: session,
+      excludeCharacterID: getSessionCharacterID(session),
+    })) {
+      sendOnLsc(member, oldChannel, "LeaveChannel", sender, []);
+    }
+  }
+
+  chatRuntime.moveLocalLsc(session, previousChannelID);
   moveSessionToCurrentLocalRoom(session);
 
+  if (!wasJoined && !isDelayedLocalChannel(newChannel)) {
+    const sender = buildSenderInfo(session);
+    for (const member of getBroadcastChannelMembers(newChannel)) {
+      sendOnLsc(member, newChannel, "JoinChannel", sender, []);
+    }
+  }
+
   return {
-    previousChannelID: Number(previousChannelID || 0) || 0,
+    previousChannelID: oldChannelID,
     newChannel,
-    moved: Boolean(runtimeResult && runtimeResult.moved),
+    moved: wasJoined,
   };
 }
 
 function unregisterSession(session) {
+  const departureChannel = getLocalChannelForSession(session);
+  const departureCharacterID = getSessionCharacterID(session);
   chatRuntime.unregisterSession(session);
   unregisterXmppCharacterSession(session);
+  let broadcastedDeparture = false;
+  for (const [key, members] of joinedChannels.entries()) {
+    if (!members.has(session)) {
+      continue;
+    }
+
+    members.delete(session);
+    const [type, rawId] = key.split(":");
+    const channel = {
+      ...getLocalChannelForSession(session),
+      key,
+      type,
+      id: Number(rawId),
+      comparisonKey: getLocalChannelName(rawId),
+    };
+    const shouldBroadcastLeave =
+      !isDelayedLocalChannel(channel) || forgetDelayedLocalSpeaker(channel, session);
+    if (shouldBroadcastLeave) {
+      const sender = buildSenderInfo(session);
+      for (const member of getBroadcastChannelMembers(channel, {
+        excludeSession: session,
+        excludeCharacterID: departureCharacterID,
+      })) {
+        sendOnLsc(member, channel, "LeaveChannel", sender, []);
+      }
+      if (!isDelayedLocalChannel(channel)) {
+        broadcastedDeparture = true;
+      }
+    }
+
+    if (members.size === 0) {
+      joinedChannels.delete(key);
+      delayedLocalMembers.delete(key);
+    }
+  }
+
+  if (!broadcastedDeparture && !isDelayedLocalChannel(departureChannel)) {
+    const sender = buildSenderInfo(session);
+    for (const member of getBroadcastChannelMembers(departureChannel, {
+      excludeSession: session,
+      excludeCharacterID: departureCharacterID,
+    })) {
+      sendOnLsc(member, departureChannel, "LeaveChannel", sender, []);
+    }
+  }
 }
 
 function broadcastLocalMessage(session, message) {
+  const channel = getLocalChannelForSession(session);
   chatRuntime.broadcastLocalMessage(session, message);
+  if (isDelayedLocalChannel(channel) && trackDelayedLocalSpeaker(channel, session)) {
+    const sender = buildSenderInfo(session);
+    for (const member of getBroadcastChannelMembers(channel)) {
+      sendOnLsc(member, channel, "JoinChannel", sender, []);
+    }
+  }
+
+  const sender = buildSenderInfo(session);
+  for (const member of getBroadcastChannelMembers(channel)) {
+    sendOnLsc(member, channel, "SendMessage", sender, [message]);
+  }
 }
 
 function refreshSessionChatRolePresence(session) {
@@ -343,7 +646,10 @@ function resolveSystemMessageTarget(session, specificChannel = null) {
 }
 
 function sendSystemMessage(session, message, specificChannel = null) {
-  const { roomJid } = resolveSystemMessageTarget(session, specificChannel);
+  const { channel, roomJid } = resolveSystemMessageTarget(session, specificChannel);
+  if (channel) {
+    sendOnLsc(session, channel, "SendMessage", buildSystemSenderInfo(), [message]);
+  }
   sendSessionSystemMessage(session, message, roomJid);
 }
 

@@ -1280,7 +1280,6 @@ function buildSlimItemDict(entity) {
       "modules",
       buildList(Array.isArray(entity.modules) ? entity.modules : []),
     ]);
-    entries.push(["docked", toInt32(entity.docked, 0)]);
     entries.push(["damage", buildStructureSlimDamage(entity)]);
     if (Array.isArray(entity.dunRotation) && entity.dunRotation.length === 3) {
       entries.push(["dunRotation", entity.dunRotation]);

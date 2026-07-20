@@ -52,22 +52,6 @@ const HANDLED_REQUEST_TYPES = Object.freeze([
   "eve_public.corporationgoal.api.RedeemAllMyRewardsRequest",
   "eve_public.corporationgoal.api.GetMineWithRewardsRequest",
 ]);
-const HANDLED_REQUEST_TYPE_ALIASES = Object.freeze(
-  HANDLED_REQUEST_TYPES.map((requestType) =>
-    requestType.replace(".api.", ".api.requests_pb2."),
-  ),
-);
-const ALL_HANDLED_REQUEST_TYPES = Object.freeze([
-  ...HANDLED_REQUEST_TYPES,
-  ...HANDLED_REQUEST_TYPE_ALIASES,
-]);
-
-function normalizeRequestTypeName(requestTypeName) {
-  return String(requestTypeName || "").replace(
-    ".api.requests_pb2.",
-    ".api.",
-  );
-}
 
 function buildGoalIdentifier(goalID) {
   return {
@@ -204,15 +188,13 @@ function createCorpGoalsGatewayService() {
 
   return {
     name: "corporation-goals",
-    handledRequestTypes: ALL_HANDLED_REQUEST_TYPES,
+    handledRequestTypes: HANDLED_REQUEST_TYPES,
     getEmptySuccessResponseType(requestTypeName) {
-      const normalizedRequestTypeName = normalizeRequestTypeName(requestTypeName);
-      return HANDLED_REQUEST_TYPES.includes(normalizedRequestTypeName)
-        ? normalizedRequestTypeName.replace(/Request$/, "Response")
+      return HANDLED_REQUEST_TYPES.includes(requestTypeName)
+        ? requestTypeName.replace(/Request$/, "Response")
         : null;
     },
     handleRequest(requestTypeName, requestEnvelope) {
-      requestTypeName = normalizeRequestTypeName(requestTypeName);
       if (!HANDLED_REQUEST_TYPES.includes(requestTypeName)) {
         return null;
       }

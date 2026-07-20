@@ -39,11 +39,6 @@ const RESOURCE_DEPLETION_RECOVERY_HOURS = 96;
 const RESOURCE_SH_MAX_BANDS = 30;
 const RESOURCE_SH_COEFFICIENT_BYTES = 4;
 const DEFAULT_ECU_TYPE_ID = 2848;
-// The synthetic resource layer stores normalized values, while the client ECU
-// formula consumes the much larger spherical-harmonic value domain. This scale
-// is calibrated by the supplied Henebene I Base Metals capture: four exact
-// heads at radius 0.010121 produce the observed 1,951 base units.
-const RESOURCE_HARMONIC_VALUE_SCALE = 412.224;
 
 const COMMAND = Object.freeze({
   CREATEPIN: 1,
@@ -1085,10 +1080,9 @@ function getPinProducts(pin) {
     const cycleOutput = cycleTime > 0
       ? Math.trunc((1 + noiseFactor) * qtyPerCycle) * (cycleTime / SECOND_TICKS) / 900
       : qtyPerCycle;
-    // The client exposes the ECU's maximum noisy cycle, not qtyPerCycle, as
-    // the amount that may be reserved by routes.
-    return programType && cycleOutput > 0
-      ? { [String(programType)]: Math.floor(cycleOutput) }
+    const quantity = Math.max(getEcuMaxVolume(pin && pin.typeID), cycleOutput);
+    return programType && quantity > 0
+      ? { [String(programType)]: Math.floor(quantity) }
       : {};
   }
 
@@ -1158,7 +1152,7 @@ function assertExtractorPin(pin, ownerID) {
 }
 
 function assertExtractorHeadWithinArea(pin, latitude, longitude) {
-  const areaOfInfluence = getEcuAttribute(
+  const areaOfInfluence = planetStaticData.getTypeAttribute(
     pin && pin.typeID,
     planetStaticData.ATTRIBUTE.ECU_AREA_OF_INFLUENCE,
     0,
@@ -1406,49 +1400,8 @@ function runEcuCycle(pin, runTime) {
   }
 
   return {
-    [String(pin.programType)]: getEcuProgramOutput(pin, runTime),
+    [String(pin.programType)]: normalizeInteger(pin.qtyPerCycle, 0),
   };
-}
-
-function getEcuProgramOutput(pin, runTime) {
-  const baseValue = Math.max(0, normalizeInteger(pin && pin.qtyPerCycle, 0));
-  const cycleTime = Math.max(0, normalizeInteger(pin && pin.cycleTime, 0));
-  if (baseValue <= 0 || cycleTime <= 0) {
-    return 0;
-  }
-
-  const currentTime = filetimeBigInt(runTime, 0n);
-  const startTime = filetimeBigInt(
-    pin && pin.installTime,
-    filetimeBigInt(pin && pin.lastRunTime, currentTime),
-  );
-  const elapsedTicks = Number(currentTime - startTime);
-  const cycleNumber = Math.max(
-    Math.floor((elapsedTicks + SECOND_TICKS) / cycleTime) - 1,
-    0,
-  );
-  const barWidth = (cycleTime / SECOND_TICKS) / 900;
-  const t = (cycleNumber + 0.5) * barWidth;
-  const decayFactor = getEcuAttribute(
-    pin && pin.typeID,
-    planetStaticData.ATTRIBUTE.ECU_DECAY_FACTOR,
-    0,
-  );
-  const noiseFactor = getEcuAttribute(
-    pin && pin.typeID,
-    planetStaticData.ATTRIBUTE.ECU_NOISE_FACTOR,
-    0,
-  );
-  const decayValue = baseValue / (1 + (t * decayFactor));
-  const phaseShift = baseValue ** 0.7;
-  const noiseWave = Math.max(0, (
-    Math.cos(phaseShift + (t / 12)) +
-    Math.cos((phaseShift / 2) + (t / 5)) +
-    Math.cos(t / 2)
-  ) / 3);
-  return Math.max(0, Math.trunc(
-    barWidth * decayValue * (1 + (noiseFactor * noiseWave)),
-  ));
 }
 
 function getRouteSourceID(route) {
@@ -1463,85 +1416,33 @@ function getRouteDestinationID(route) {
     : 0;
 }
 
-function getProcessInputBufferState(pin) {
-  const schematic = getProcessSchematic(pin);
-  if (!schematic || !Array.isArray(schematic.inputs) || schematic.inputs.length < 1) {
-    return 1;
-  }
-
-  const filledRatio = schematic.inputs.reduce((total, input) => (
-    total + (getContentsQuantity(pin, input.typeID) / input.quantity)
-  ), 0);
-  return 1 - (filledRatio / schematic.inputs.length);
+function sortRoutesForOutput(colony, routes) {
+  return [...routes].sort((left, right) => {
+    const leftDestinationType = getPinEntityType(findPin(colony, getRouteDestinationID(left)));
+    const rightDestinationType = getPinEntityType(findPin(colony, getRouteDestinationID(right)));
+    const leftPriority = leftDestinationType === "process" ? 0 : 1;
+    const rightPriority = rightDestinationType === "process" ? 0 : 1;
+    if (leftPriority !== rightPriority) {
+      return leftPriority - rightPriority;
+    }
+    return normalizeInteger(left.routeID, 0) - normalizeInteger(right.routeID, 0);
+  });
 }
 
-function compareOutputRouteEntries(left, right) {
-  if (left.priority !== right.priority) {
-    return left.priority - right.priority;
-  }
-  if (left.destinationPinID !== right.destinationPinID) {
-    return left.destinationPinID - right.destinationPinID;
-  }
-  if (left.commodityTypeID !== right.commodityTypeID) {
-    return left.commodityTypeID - right.commodityTypeID;
-  }
-  return left.commodityQuantity - right.commodityQuantity;
-}
-
-function getSortedOutputRoutes(colony, sourcePinID, commodities = {}) {
+function getSourceRoutes(colony, sourcePinID, commodityTypeID = 0) {
   const normalizedSourcePinID = normalizeInteger(sourcePinID, 0);
-  const availableCommodities = normalizeContents(commodities);
-  const aggregatedRoutes = new Map();
-
-  for (const route of Array.isArray(colony.routes) ? colony.routes : []) {
-    const commodityTypeID = normalizeInteger(route && route.commodityTypeID, 0);
-    const destinationPinID = getRouteDestinationID(route);
-    const quantity = normalizeInteger(route && route.commodityQuantity, 0);
-    if (
-      getRouteSourceID(route) !== normalizedSourcePinID ||
-      quantity <= 0 ||
-      !Object.prototype.hasOwnProperty.call(availableCommodities, String(commodityTypeID))
-    ) {
-      continue;
-    }
-
-    const key = `${destinationPinID}:${commodityTypeID}`;
-    const existing = aggregatedRoutes.get(key);
-    if (existing) {
-      existing.commodityQuantity += quantity;
-    } else {
-      aggregatedRoutes.set(key, {
-        path: [normalizedSourcePinID, destinationPinID],
-        destinationPinID,
-        commodityTypeID,
-        commodityQuantity: quantity,
-      });
-    }
-  }
-
-  const processorRoutes = [];
-  const storageRoutes = [];
-  for (const route of aggregatedRoutes.values()) {
-    const destinationPin = findPin(colony, route.destinationPinID);
-    if (!destinationPin) {
-      continue;
-    }
-    if (getPinEntityType(destinationPin) === "process") {
-      processorRoutes.push({
-        ...route,
-        priority: getProcessInputBufferState(destinationPin),
-      });
-    } else if (isStorageEntityType(getPinEntityType(destinationPin))) {
-      storageRoutes.push({
-        ...route,
-        priority: getPinFreeSpace(destinationPin),
-      });
-    }
-  }
-
-  processorRoutes.sort(compareOutputRouteEntries);
-  storageRoutes.sort(compareOutputRouteEntries);
-  return [processorRoutes, storageRoutes];
+  const normalizedCommodityTypeID = normalizeInteger(commodityTypeID, 0);
+  return sortRoutesForOutput(
+    colony,
+    (Array.isArray(colony.routes) ? colony.routes : []).filter((route) => (
+      getRouteSourceID(route) === normalizedSourcePinID &&
+      normalizeInteger(route.commodityQuantity, 0) > 0 &&
+      (
+        normalizedCommodityTypeID <= 0 ||
+        normalizeInteger(route.commodityTypeID, 0) === normalizedCommodityTypeID
+      )
+    )),
+  );
 }
 
 function getDestinationRoutes(colony, destinationPinID, commodityTypeID = 0) {
@@ -1588,32 +1489,15 @@ function routeCommodityOutput(colony, sourcePin, commodities = {}, options = {})
 
   const sourceConsumes = options.consumeSource === true;
   let movedTotal = 0;
-  const remainingCommodities = normalizeContents(commodities);
-  const storageAdditionsByPinID = new Map();
-  const routeGroups = getSortedOutputRoutes(
-    colony,
-    sourcePin.pinID,
-    remainingCommodities,
-  );
+  for (const [typeIDKey, quantity] of Object.entries(normalizeContents(commodities))) {
+    const typeID = normalizeInteger(typeIDKey, 0);
+    let remainingQuantity = sourceConsumes
+      ? Math.min(quantity, getContentsQuantity(sourcePin, typeID))
+      : quantity;
 
-  for (let groupIndex = 0; groupIndex < routeGroups.length; groupIndex += 1) {
-    const routes = routeGroups[groupIndex];
-    for (let routeIndex = 0; routeIndex < routes.length; routeIndex += 1) {
-      const route = routes[routeIndex];
-      const typeID = route.commodityTypeID;
-      const typeKey = String(typeID);
-      let maxQuantity = normalizeInteger(remainingCommodities[typeKey], 0);
-      if (sourceConsumes) {
-        maxQuantity = Math.min(maxQuantity, getContentsQuantity(sourcePin, typeID));
-      }
-      if (groupIndex === 1) {
-        maxQuantity = Math.min(
-          maxQuantity,
-          Math.ceil(maxQuantity / (routes.length - routeIndex)),
-        );
-      }
-      if (maxQuantity <= 0) {
-        continue;
+    for (const route of getSourceRoutes(colony, sourcePin.pinID, typeID)) {
+      if (remainingQuantity <= 0) {
+        break;
       }
 
       const { movedQuantity, destinationPin } = moveCommodityOverRoute(
@@ -1621,7 +1505,7 @@ function routeCommodityOutput(colony, sourcePin, commodities = {}, options = {})
         route,
         sourcePin,
         typeID,
-        maxQuantity,
+        remainingQuantity,
         { consumeSource: sourceConsumes },
       );
       if (movedQuantity <= 0) {
@@ -1629,38 +1513,21 @@ function routeCommodityOutput(colony, sourcePin, commodities = {}, options = {})
       }
 
       movedTotal += movedQuantity;
-      remainingCommodities[typeKey] -= movedQuantity;
-      if (remainingCommodities[typeKey] <= 0) {
-        delete remainingCommodities[typeKey];
-      }
+      remainingQuantity -= movedQuantity;
 
       if (
         destinationPin &&
         isStorageEntityType(getPinEntityType(destinationPin)) &&
         !isStorageEntityType(getPinEntityType(sourcePin))
       ) {
-        const destinationPinID = normalizeInteger(destinationPin.pinID, 0);
-        if (!storageAdditionsByPinID.has(destinationPinID)) {
-          storageAdditionsByPinID.set(destinationPinID, {});
-        }
-        const additions = storageAdditionsByPinID.get(destinationPinID);
-        additions[typeKey] = (additions[typeKey] || 0) + movedQuantity;
+        routeCommodityOutput(
+          colony,
+          destinationPin,
+          { [String(typeID)]: getContentsQuantity(destinationPin, typeID) },
+          { consumeSource: true, depth: normalizeInteger(options.depth, 0) + 1 },
+        );
       }
     }
-
-    if (Object.keys(remainingCommodities).length < 1) {
-      break;
-    }
-  }
-
-  for (const [destinationPinID, additions] of storageAdditionsByPinID.entries()) {
-    const destinationPin = findPin(colony, destinationPinID);
-    routeCommodityOutput(
-      colony,
-      destinationPin,
-      additions,
-      { consumeSource: true, depth: normalizeInteger(options.depth, 0) + 1 },
-    );
   }
   return movedTotal;
 }
@@ -1741,7 +1608,7 @@ function getNextPinRunTime(pin, targetTime) {
     if (expiryTime !== null && nextRunTime > expiryTime) {
       return null;
     }
-    return nextRunTime < targetTime ? nextRunTime : null;
+    return nextRunTime <= targetTime ? nextRunTime : null;
   }
 
   if (entityType === "process" && pin.state === STATE_ACTIVE) {
@@ -1750,7 +1617,7 @@ function getNextPinRunTime(pin, targetTime) {
       return null;
     }
     const nextRunTime = filetimeBigInt(pin.lastRunTime, targetTime) + BigInt(cycleTime);
-    return nextRunTime < targetTime ? nextRunTime : null;
+    return nextRunTime <= targetTime ? nextRunTime : null;
   }
 
   return null;
@@ -2294,11 +2161,11 @@ function getEcuAttribute(ecuTypeID, attributeID, fallback) {
 
 function getEcuMaxVolume(ecuTypeID) {
   return Math.max(
-    0,
+    3000,
     getEcuAttribute(
       ecuTypeID,
-      planetStaticData.ATTRIBUTE.ECU_MAX_VOLUME,
-      9.2,
+      planetStaticData.ATTRIBUTE.PIN_EXTRACTION_QUANTITY,
+      3000,
     ),
   );
 }
@@ -2413,9 +2280,7 @@ function estimateProgramResult({
     const modifier = headModifiers.get(normalizeInteger(head[0], 0)) || 1;
     return total + (resourceValue * modifier);
   }, 0);
-  const qtyToDistribute = Math.max(1, Math.trunc(
-    maxVolume * summedHeadValue * RESOURCE_HARMONIC_VALUE_SCALE,
-  ));
+  const qtyToDistribute = Math.max(1, Math.trunc(maxVolume * summedHeadValue));
 
   return {
     qtyToDistribute,
@@ -2476,7 +2341,7 @@ function recordResourceDepletionEvent({
       1,
     ),
   );
-  const maxVolume = getEcuMaxVolume(ecuTypeID) * RESOURCE_HARMONIC_VALUE_SCALE;
+  const maxVolume = getEcuMaxVolume(ecuTypeID);
   const pressurePerHead = normalizeInteger(result.qtyToDistribute, 0) /
     Math.max(1, maxVolume * normalizedHeads.length);
   const strength = clamp(pressurePerHead * 0.16 * depletionRate, 0.01, 0.2);
@@ -3995,10 +3860,5 @@ module.exports = {
     stableHash,
     validateColonyNetwork,
     getExpeditedTransferTimeTicks,
-    assertExtractorHeadWithinArea,
-    getEcuProgramOutput,
-    getPinProducts,
-    routeCommodityOutput,
-    runColonySimulation,
   },
 };

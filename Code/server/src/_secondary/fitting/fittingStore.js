@@ -174,26 +174,6 @@ function writeStoreRoot(root) {
   database.write(SAVED_FITTINGS_TABLE, "/", root, { force: true });
 }
 
-function writeStoreMeta(nextMeta) {
-  if (!storeRoot || typeof storeRoot !== "object") {
-    return;
-  }
-  database.write(SAVED_FITTINGS_TABLE, "/_meta", nextMeta);
-  storeRoot._meta = nextMeta;
-}
-
-function writeOwnerRecord(ownerID, ownerRecord) {
-  const numericOwnerID = toInt(ownerID, 0);
-  if (numericOwnerID <= 0 || !storeRoot || typeof storeRoot !== "object") {
-    return;
-  }
-  if (!storeRoot.owners || typeof storeRoot.owners !== "object") {
-    storeRoot.owners = {};
-  }
-  database.write(SAVED_FITTINGS_TABLE, `/owners/${numericOwnerID}`, ownerRecord);
-  storeRoot.owners[String(numericOwnerID)] = ownerRecord;
-}
-
 function normalizeOwnerScope(value, fallback = OWNER_SCOPE.CHARACTER) {
   switch (String(value || "").trim().toLowerCase()) {
     case OWNER_SCOPE.CORPORATION:
@@ -342,15 +322,18 @@ function ensureOwnerRecord(ownerID, ownerScope = null) {
       scope: normalizeOwnerScope(ownerScope || inferOwnerScope(numericOwnerID)),
       fittings: {},
     };
-    writeOwnerRecord(numericOwnerID, ownerRecord);
+    owners[ownerKey] = ownerRecord;
+    storeRoot.owners = owners;
+    database.write(SAVED_FITTINGS_TABLE, `/owners/${ownerKey}`, ownerRecord);
     bumpOwnerRevision(numericOwnerID);
   } else {
     if (!ownerRecord.fittings || typeof ownerRecord.fittings !== "object") {
-      ownerRecord = {
-        ...ownerRecord,
-        fittings: {},
-      };
-      writeOwnerRecord(numericOwnerID, ownerRecord);
+      ownerRecord.fittings = {};
+      database.write(
+        SAVED_FITTINGS_TABLE,
+        `/owners/${ownerKey}/fittings`,
+        ownerRecord.fittings,
+      );
       bumpOwnerRevision(numericOwnerID);
     }
     const normalizedScope = normalizeOwnerScope(
@@ -358,11 +341,12 @@ function ensureOwnerRecord(ownerID, ownerScope = null) {
       ownerScope || inferOwnerScope(numericOwnerID),
     );
     if (ownerRecord.scope !== normalizedScope) {
-      ownerRecord = {
-        ...ownerRecord,
-        scope: normalizedScope,
-      };
-      writeOwnerRecord(numericOwnerID, ownerRecord);
+      ownerRecord.scope = normalizedScope;
+      database.write(
+        SAVED_FITTINGS_TABLE,
+        `/owners/${ownerKey}/scope`,
+        ownerRecord.scope,
+      );
       bumpOwnerRevision(numericOwnerID);
     }
   }
@@ -445,10 +429,12 @@ function allocateNextFittingID() {
     1,
     toInt(storeRoot && storeRoot._meta && storeRoot._meta.nextFittingID, 1),
   );
-  writeStoreMeta({
-    ...(storeRoot._meta || {}),
-    nextFittingID: nextFittingID + 1,
-  });
+  storeRoot._meta.nextFittingID = nextFittingID + 1;
+  database.write(
+    SAVED_FITTINGS_TABLE,
+    "/_meta/nextFittingID",
+    storeRoot._meta.nextFittingID,
+  );
   return nextFittingID;
 }
 
@@ -464,10 +450,12 @@ function allocateNextFittingIDs(count = 1) {
     toInt(storeRoot && storeRoot._meta && storeRoot._meta.nextFittingID, 1),
   );
   const allocated = Array.from({ length: amount }, (_, index) => firstFittingID + index);
-  writeStoreMeta({
-    ...(storeRoot._meta || {}),
-    nextFittingID: firstFittingID + amount,
-  });
+  storeRoot._meta.nextFittingID = firstFittingID + amount;
+  database.write(
+    SAVED_FITTINGS_TABLE,
+    "/_meta/nextFittingID",
+    storeRoot._meta.nextFittingID,
+  );
   return allocated;
 }
 
@@ -792,13 +780,12 @@ function saveFitting(ownerID, rawFitting, ownerScope = null) {
     ownerID: numericOwnerID,
     savedDate: currentFileTime().toString(),
   };
-  writeOwnerRecord(numericOwnerID, {
-    ...ownerRecord,
-    fittings: {
-      ...(ownerRecord.fittings || {}),
-      [String(fittingID)]: storedRecord,
-    },
-  });
+  ownerRecord.fittings[String(fittingID)] = storedRecord;
+  database.write(
+    SAVED_FITTINGS_TABLE,
+    `/owners/${numericOwnerID}/fittings/${fittingID}`,
+    storedRecord,
+  );
   bumpOwnerRevision(numericOwnerID);
   return {
     success: true,
@@ -841,13 +828,12 @@ function updateFitting(ownerID, fittingID, rawFitting, ownerScope = null) {
     ownerID: numericOwnerID,
     savedDate: currentFileTime().toString(),
   };
-  writeOwnerRecord(numericOwnerID, {
-    ...ownerRecord,
-    fittings: {
-      ...(ownerRecord.fittings || {}),
-      [String(numericFittingID)]: storedRecord,
-    },
-  });
+  ownerRecord.fittings[String(numericFittingID)] = storedRecord;
+  database.write(
+    SAVED_FITTINGS_TABLE,
+    `/owners/${numericOwnerID}/fittings/${numericFittingID}`,
+    storedRecord,
+  );
   bumpOwnerRevision(numericOwnerID);
   return {
     success: true,
@@ -897,7 +883,6 @@ function saveManyFittings(ownerID, rawFittings, ownerScope = null) {
   }
 
   const allocatedIDs = allocateNextFittingIDs(stagedRecords.length);
-  const nextFittings = { ...(ownerRecord.fittings || {}) };
   const mappings = stagedRecords.map((entry, index) => {
     const fittingID = allocatedIDs[index];
     const storedRecord = {
@@ -906,16 +891,18 @@ function saveManyFittings(ownerID, rawFittings, ownerScope = null) {
       ownerID: numericOwnerID,
       savedDate: currentFileTime().toString(),
     };
-    nextFittings[String(fittingID)] = storedRecord;
+    ownerRecord.fittings[String(fittingID)] = storedRecord;
     return {
       tempFittingID: entry.tempFittingID,
       realFittingID: fittingID,
     };
   });
-  writeOwnerRecord(numericOwnerID, {
-    ...ownerRecord,
-    fittings: nextFittings,
-  });
+  database.write(
+    SAVED_FITTINGS_TABLE,
+    `/owners/${numericOwnerID}/fittings`,
+    ownerRecord.fittings,
+    { force: true },
+  );
   bumpOwnerRevision(numericOwnerID);
 
   return {
@@ -949,23 +936,18 @@ function updateFittingNameAndDescription(fittingID, ownerID, name, description, 
     return { success: false, errorMsg: "FITTING_INVALID_TEXT" };
   }
 
-  const storedRecord = {
-    ...existingRecord,
-    name: normalizedName,
-    description: normalizedDescription,
-    savedDate: currentFileTime().toString(),
-  };
-  writeOwnerRecord(numericOwnerID, {
-    ...ownerRecord,
-    fittings: {
-      ...(ownerRecord.fittings || {}),
-      [String(numericFittingID)]: storedRecord,
-    },
-  });
+  existingRecord.name = normalizedName;
+  existingRecord.description = normalizedDescription;
+  existingRecord.savedDate = currentFileTime().toString();
+  database.write(
+    SAVED_FITTINGS_TABLE,
+    `/owners/${numericOwnerID}/fittings/${numericFittingID}`,
+    existingRecord,
+  );
   bumpOwnerRevision(numericOwnerID);
   return {
     success: true,
-    data: cloneValue(storedRecord),
+    data: cloneValue(existingRecord),
   };
 }
 
@@ -987,12 +969,11 @@ function deleteFitting(ownerID, fittingID, ownerScope = null) {
     };
   }
 
-  const nextFittings = { ...(ownerRecord.fittings || {}) };
-  delete nextFittings[String(numericFittingID)];
-  writeOwnerRecord(numericOwnerID, {
-    ...ownerRecord,
-    fittings: nextFittings,
-  });
+  delete ownerRecord.fittings[String(numericFittingID)];
+  database.remove(
+    SAVED_FITTINGS_TABLE,
+    `/owners/${numericOwnerID}/fittings/${numericFittingID}`,
+  );
   bumpOwnerRevision(numericOwnerID);
   return {
     success: true,
@@ -1011,18 +992,19 @@ function deleteManyFittings(ownerID, fittingIDs, ownerScope = null) {
   const ownerRecord = ensureOwnerRecord(numericOwnerID, ownerScope);
   const deletedFittingIDs = [];
   const uniqueIDs = [...new Set(ids.map((value) => toInt(value, 0)).filter((value) => value > 0))];
-  const nextFittings = { ...((ownerRecord && ownerRecord.fittings) || {}) };
   for (const fittingID of uniqueIDs) {
-    if (nextFittings[String(fittingID)]) {
-      delete nextFittings[String(fittingID)];
+    if (ownerRecord && ownerRecord.fittings && ownerRecord.fittings[String(fittingID)]) {
+      delete ownerRecord.fittings[String(fittingID)];
       deletedFittingIDs.push(fittingID);
     }
   }
   if (deletedFittingIDs.length > 0) {
-    writeOwnerRecord(numericOwnerID, {
-      ...ownerRecord,
-      fittings: nextFittings,
-    });
+    database.write(
+      SAVED_FITTINGS_TABLE,
+      `/owners/${numericOwnerID}/fittings`,
+      ownerRecord.fittings,
+      { force: true },
+    );
     bumpOwnerRevision(numericOwnerID);
   }
   return {

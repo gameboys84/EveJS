@@ -11,7 +11,6 @@ const {
   resolveBoundNodeId,
 } = require(path.join(__dirname, "../_shared/serviceHelpers"));
 const {
-  CORP_ROLE_CAN_RENT_OFFICE,
   CORP_ROLE_DIRECTOR,
   getCorporationRuntime,
   getCorporationOffices,
@@ -22,7 +21,6 @@ const {
 } = require(path.join(__dirname, "./corporationRuntimeState"));
 const {
   notifyOfficeBillRefresh,
-  notifyOfficeRentItemChange,
   notifyOfficeRentalChange,
   notifyOfficeUnrentItemChange,
 } = require(path.join(__dirname, "./corporationNotifications"));
@@ -212,14 +210,6 @@ function getStructureOwnerCorporationID(structure) {
   );
 }
 
-function getStationOwnerCorporationID(stationID) {
-  const station = getStationRecord(null, stationID);
-  return normalizePositiveInteger(
-    station && (station.corporationID || station.ownerID),
-    0,
-  );
-}
-
 function buildOfficeRentalWalletDescription(stationID) {
   return `Corporation office rental at ${stationID}`;
 }
@@ -231,15 +221,13 @@ function throwNotEnoughOfficeRentMoney(amount, balance) {
   );
 }
 
-function chargeOfficeRental(corporationID, structure, stationID, rentalCost) {
+function chargeStructureOfficeRental(corporationID, structure, stationID, rentalCost) {
   const amount = Number(rentalCost || 0);
-  if (amount <= 0) {
+  if (!structure || amount <= 0) {
     return;
   }
 
-  const ownerCorporationID = structure
-    ? getStructureOwnerCorporationID(structure)
-    : getStationOwnerCorporationID(stationID);
+  const ownerCorporationID = getStructureOwnerCorporationID(structure);
   const description = buildOfficeRentalWalletDescription(stationID);
   const debitResult = adjustCorporationWalletDivisionBalance(
     corporationID,
@@ -277,38 +265,12 @@ function chargeOfficeRental(corporationID, structure, stationID, rentalCost) {
   }
 }
 
-function getSessionCorpRoleMask(session) {
-  if (!session) {
-    return 0n;
-  }
-  return [
-    session.corprole,
-    session.rolesAtAll,
-    session.corpRole,
-  ].reduce(
-    (mask, roleValue) => mask | toRoleMaskBigInt(roleValue, 0n),
+function sessionHasDirectorRole(session) {
+  const roleMask = toRoleMaskBigInt(
+    session && (session.corprole || session.rolesAtAll || session.corpRole),
     0n,
   );
-}
-
-function sessionHasDirectorRole(session) {
-  const roleMask = getSessionCorpRoleMask(session);
   return (roleMask & CORP_ROLE_DIRECTOR) === CORP_ROLE_DIRECTOR;
-}
-
-function sessionCanRentOffice(session) {
-  const roleMask = getSessionCorpRoleMask(session);
-  return (
-    (roleMask & CORP_ROLE_DIRECTOR) === CORP_ROLE_DIRECTOR ||
-    (roleMask & CORP_ROLE_CAN_RENT_OFFICE) === CORP_ROLE_CAN_RENT_OFFICE
-  );
-}
-
-function ensureCanRentOffice(session) {
-  if (sessionCanRentOffice(session)) {
-    return;
-  }
-  throwWrappedUserError("CrpAccessDenied");
 }
 
 function ensureCanUnrentOffice(session) {
@@ -540,7 +502,7 @@ class OfficeManagerService extends BaseService {
   }
 
   Handle_PrimeOfficeItem(args, session) {
-    return true;
+    return null;
   }
 
   Handle_GetPriceQuote(args, session) {
@@ -551,22 +513,21 @@ class OfficeManagerService extends BaseService {
     const corporationID = resolveCorporationID(session);
     const { stationID, structure } = resolveOfficeLocationContext(args, session, this.serviceManager);
     if (!corporationID || !stationID) {
-      return false;
+      return null;
     }
     const corporationRuntime = getCorporationRuntime(corporationID);
     if (!corporationRuntime) {
-      return false;
+      return null;
     }
-    ensureCanRentOffice(session);
     const existingOfficeAtLocation = Object.values(corporationRuntime.offices || {}).find(
       (office) => Number(office.stationID) === Number(stationID) && isActiveOffice(office),
     );
     if (existingOfficeAtLocation) {
-      return false;
+      return null;
     }
     ensureStructureOfficeAccess(session, structure);
     const rentalCost = getOfficeRentalCost(args, session, this.serviceManager);
-    chargeOfficeRental(corporationID, structure, stationID, rentalCost);
+    chargeStructureOfficeRental(corporationID, structure, stationID, rentalCost);
     let changedOffice = null;
     const startDate = currentFileTime();
     const dueDate = addOfficeRentalPeriod(startDate);
@@ -590,6 +551,7 @@ class OfficeManagerService extends BaseService {
       return runtimeTable;
     });
     if (changedOffice) {
+      notifyOfficeRentalChange(corporationID, changedOffice);
       const nextBill = createNextOfficeRentalBill(
         corporationID,
         stationID,
@@ -609,18 +571,11 @@ class OfficeManagerService extends BaseService {
           office.billID = Number(nextBill.billID) || null;
           office.dueDate = String(nextBill.dueDateTime || office.dueDate);
           office.expiryDate = office.dueDate;
-          changedOffice.billID = office.billID;
-          changedOffice.dueDate = office.dueDate;
-          changedOffice.expiryDate = office.expiryDate;
           return runtimeTable;
         });
       }
-      notifyOfficeRentItemChange(corporationID, changedOffice);
-      notifyOfficeRentalChange(corporationID, changedOffice);
-      queueOfficeBillRefresh(session, corporationID);
-      return true;
     }
-    return false;
+    return null;
   }
 
   Handle_UnrentOffice(args, session) {
@@ -768,7 +723,7 @@ class OfficeManagerService extends BaseService {
   }
 
   afterCallResponse(method, session) {
-    if ((method !== "RentOffice" && method !== "UnrentOffice") || !session) {
+    if (method !== "UnrentOffice" || !session) {
       return;
     }
     const pendingRefreshes = session._pendingOfficeBillRefreshCorporationIDs;

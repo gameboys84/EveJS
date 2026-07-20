@@ -53,9 +53,6 @@ const {
   buildWeaponBankStateDict,
 } = require(path.join(__dirname, "../moduleGrouping/moduleGroupingRuntime"));
 const {
-  buildActivationHeatStateDict,
-} = require(path.join(__dirname, "../dogma/activationHeatState"));
-const {
   findFittingByID,
 } = require(path.join(__dirname, "../../_secondary/fitting/fittingStore"));
 const {
@@ -100,9 +97,6 @@ const {
 const {
   getItemKillCountPlayer,
 } = require(path.join(__dirname, "./shipKillCounterState"));
-const {
-  normalizeShipNameLabel,
-} = require(path.join(__dirname, "./shipNameUtils"));
 const DBTYPE_I4 = 0x03;
 const DBTYPE_R8 = 0x05;
 const DBTYPE_BOOL = 0x0b;
@@ -380,10 +374,11 @@ class ShipService extends BaseService {
   }
 
   _setMultifitShipName(shipID, name, session = null) {
-    const label = normalizeShipNameLabel(name);
-    if (!label) {
+    const trimmedName = String(name || "").trim();
+    if (!trimmedName) {
       return;
     }
+    const label = trimmedName.slice(0, 20);
     const updateResult = updateInventoryItem(shipID, (currentItem) => ({
       ...currentItem,
       itemName: label,
@@ -524,6 +519,10 @@ class ShipService extends BaseService {
   }
 
   _buildActivationResponse(activeShip, session) {
+    // The live 23.02 client build in use here still expects a 4-slot
+    // activation tuple during ship boarding/activation. The first three slots
+    // are the usual instance/charge/weapon-bank caches; the fourth is kept as
+    // an empty reserved payload for compatibility with the running client.
     const charID = resolveSessionCharacterID(session);
     const shipID =
       (activeShip && (activeShip.itemID || activeShip.shipID)) ||
@@ -564,7 +563,7 @@ class ShipService extends BaseService {
       },
       this._buildChargeStateDict(charID, shipID),
       buildWeaponBankStateDict(shipID, { characterID: charID }),
-      buildActivationHeatStateDict(buildCurrentFileTime()),
+      { type: "dict", entries: [] },
     ];
   }
 
@@ -1151,12 +1150,6 @@ class ShipService extends BaseService {
     const stationID = getDockedLocationID(session) || 0;
     const charID = session && session.characterID ? session.characterID : 0;
     const rows = [];
-    const rawRequestedName =
-      extractKwarg(kwargs, "name") ?? (args && args.length > 1 ? args[1] : "");
-    const requestedName =
-      shipIds.length === 1
-        ? normalizeShipNameLabel(rawRequestedName)
-        : "";
 
     log.info(
       `[Ship] AssembleShip station=${stationID} shipIDs=${JSON.stringify(shipIds)}`,
@@ -1184,24 +1177,9 @@ class ShipService extends BaseService {
         continue;
       }
 
-      let finalItem = updateResult.data;
-      if (requestedName) {
-        const labelResult = updateInventoryItem(shipItem.itemID, (currentItem) => ({
-          ...currentItem,
-          itemName: requestedName,
-        }));
-        if (labelResult.success) {
-          finalItem = labelResult.data;
-        } else {
-          log.warn(
-            `[Ship] AssembleShip failed to label ship=${shipID}: ${labelResult.errorMsg || "UNKNOWN_ERROR"}`,
-          );
-        }
-      }
-
       syncInventoryItemForSession(
         session,
-        finalItem,
+        updateResult.data,
         {
           locationID: updateResult.previousData.locationID,
           flagID: updateResult.previousData.flagID,
@@ -1214,7 +1192,7 @@ class ShipService extends BaseService {
         },
       );
 
-      rows.push(buildInventoryItemRow(finalItem));
+      rows.push(buildInventoryItemRow(updateResult.data));
     }
 
     return [
@@ -1357,7 +1335,9 @@ class ShipService extends BaseService {
         );
         return null;
       }
-      return null;
+      return transitionResult.data && transitionResult.data.capsule
+        ? transitionResult.data.capsule.itemID
+        : null;
     }
     return this._leaveShip(session, shipID, "LeaveShip");
   }
@@ -1497,7 +1477,9 @@ class ShipService extends BaseService {
         );
         return null;
       }
-      return null;
+      return transitionResult.data && transitionResult.data.capsule
+        ? transitionResult.data.capsule.itemID
+        : null;
     }
     return this._leaveShip(session, null, "Eject");
   }

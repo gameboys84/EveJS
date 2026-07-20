@@ -2,10 +2,8 @@ const path = require("path");
 
 const worldData = require(path.join(__dirname, "../../space/worldData"));
 const {
-  buildDbRowset,
   buildKeyVal,
   buildList,
-  buildPackedRow,
   buildRowset,
 } = require(path.join(__dirname, "../_shared/serviceHelpers"));
 const {
@@ -47,33 +45,6 @@ const ITEM_ROWSET_HEADER = [
   "customInfo",
   "stacksize",
   "singleton",
-];
-const ASSET_LOCATION_DBROW_COLUMNS = [
-  ["locationID", 0x14],
-  ["solarsystemID", 0x14],
-  ["typeID", 0x03],
-];
-const ASSET_DELIVERY_LOCATION_DBROW_COLUMNS = [
-  ["locationID", 0x14],
-  ["itemCount", 0x14],
-  ["solarsystemID", 0x14],
-  ["typeID", 0x03],
-];
-const ASSET_SEARCH_DBROW_COLUMNS = [
-  ["locationID", 0x14],
-];
-const ASSET_ITEM_DBROW_COLUMNS = [
-  ["itemID", 0x14],
-  ["typeID", 0x03],
-  ["ownerID", 0x03],
-  ["locationID", 0x14],
-  ["flagID", 0x02],
-  ["quantity", 0x03],
-  ["groupID", 0x03],
-  ["categoryID", 0x03],
-  ["customInfo", 0x81],
-  ["stacksize", 0x03],
-  ["singleton", 0x03],
 ];
 const assetSnapshotCacheByCorporationID = new Map();
 
@@ -383,44 +354,6 @@ function buildLocationList(locations = []) {
   );
 }
 
-function buildAssetLocationCrowset(locations = [], which = "offices") {
-  const includeItemCount =
-    normalizeWhich(which) === "deliveries" ||
-    normalizeWhich(which) === "capsuleerdeliveries";
-  const columns = includeItemCount
-    ? ASSET_DELIVERY_LOCATION_DBROW_COLUMNS
-    : ASSET_LOCATION_DBROW_COLUMNS;
-  return buildDbRowset(
-    columns,
-    locations.map((location) => {
-      const base = {
-        locationID: toInt(location && location.locationID, 0),
-        solarsystemID:
-          location && location.solarSystemID ? toInt(location.solarSystemID, 0) : null,
-        typeID: location && location.typeID ? toInt(location.typeID, 0) : null,
-      };
-      if (includeItemCount) {
-        return {
-          ...base,
-          itemCount: toInt(location && location.itemCount, 0),
-        };
-      }
-      return base;
-    }),
-    "carbon.common.script.sys.crowset.CRowset",
-  );
-}
-
-function buildAssetSearchCrowset(locations = []) {
-  return buildDbRowset(
-    ASSET_SEARCH_DBROW_COLUMNS,
-    locations.map((location) => ({
-      locationID: toInt(location && location.locationID, 0),
-    })),
-    "carbon.common.script.sys.crowset.CRowset",
-  );
-}
-
 function buildAssetItemRowset(items = []) {
   return buildRowset(
     ITEM_ROWSET_HEADER,
@@ -440,31 +373,6 @@ function buildAssetItemRowset(items = []) {
       ]),
     ),
     "eve.common.script.sys.rowset.Rowset",
-  );
-}
-
-function buildAssetItemCrowset(items = []) {
-  return buildDbRowset(
-    ASSET_ITEM_DBROW_COLUMNS,
-    items.map((item) =>
-      buildPackedRow(
-        ASSET_ITEM_DBROW_COLUMNS,
-        {
-          itemID: toInt(item && item.itemID, 0),
-          typeID: toInt(item && item.typeID, 0),
-          ownerID: toInt(item && item.ownerID, 0),
-          locationID: toInt(item && item.locationID, 0),
-          flagID: toInt(item && item.flagID, 0),
-          quantity: toInt(item && item.quantity, 0),
-          groupID: toInt(item && item.groupID, 0),
-          categoryID: toInt(item && item.categoryID, 0),
-          customInfo: String((item && item.customInfo) || ""),
-          stacksize: toInt(item && item.stacksize, 0),
-          singleton: toInt(item && item.singleton, 0),
-        },
-      ),
-    ),
-    "carbon.common.script.sys.crowset.CRowset",
   );
 }
 
@@ -505,14 +413,6 @@ function searchAssetLocations(corporationID, which, filters = {}) {
   const bucket = normalizeWhich(which);
   const snapshot = buildCorporationAssetSnapshot(corporationID);
   const itemsByLocation = snapshot.items[bucket];
-  const hasFilter =
-    toInt(filters.categoryID, 0) > 0 ||
-    toInt(filters.groupID, 0) > 0 ||
-    toInt(filters.typeID, 0) > 0 ||
-    toInt(filters.minimumQuantity, 0) > 0;
-  if (!hasFilter) {
-    return snapshot.locations[bucket] || [];
-  }
   return (snapshot.locations[bucket] || []).filter((location) => {
     const items = itemsByLocation.get(toInt(location && location.locationID, 0)) || [];
     return items.some((item) => matchesFilters(item, filters));
@@ -520,10 +420,7 @@ function searchAssetLocations(corporationID, which, filters = {}) {
 }
 
 module.exports = {
-  buildAssetItemCrowset,
   buildAssetItemRowset,
-  buildAssetLocationCrowset,
-  buildAssetSearchCrowset,
   buildLocationList,
   listAssetItemsForLocation,
   listAssetLocations,

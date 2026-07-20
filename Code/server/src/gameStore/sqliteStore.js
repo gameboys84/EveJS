@@ -29,7 +29,6 @@ let dbPath = null;
 // SQL identifiers are interpolated into DDL/DML, so hard-fail on anything
 // that is not a plain table name. Every real table name is camelCase ascii.
 const SAFE_TABLE_NAME = /^[A-Za-z0-9_]+$/;
-const INTERNAL_TABLE_NAMES = new Set(["_migrations", "_persistence_outbox"]);
 
 const ensuredTables = new Set();
 const upsertStatements = new Map();
@@ -259,23 +258,6 @@ function init(targetPath) {
   db.exec(
     "CREATE TABLE IF NOT EXISTS _migrations (table_name TEXT PRIMARY KEY, migrated_at TEXT NOT NULL)",
   );
-  // Durable handoff journal for asynchronous persistence writes. The
-  // AUTOINCREMENT sequence is intentionally never reset: operation identities
-  // must not be reused after an acknowledged row is deleted or the process is
-  // restarted. Only one unresolved operation may exist for a logical table, so
-  // same-table writes cannot be applied out of order.
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS _persistence_outbox (
-      operation_id INTEGER PRIMARY KEY AUTOINCREMENT,
-      table_name TEXT NOT NULL UNIQUE,
-      upserts_json TEXT NOT NULL,
-      deletes_json TEXT NOT NULL,
-      state TEXT NOT NULL DEFAULT 'pending'
-        CHECK (state IN ('pending', 'applied')),
-      created_at TEXT NOT NULL,
-      applied_at TEXT
-    )
-  `);
   dbPath = targetPath;
   return db;
 }
@@ -338,350 +320,6 @@ function getDeleteStatement(table) {
   return deleteStatements.get(table);
 }
 
-function normalizePersistenceOperationId(operationId) {
-  if (!Number.isSafeInteger(operationId) || operationId <= 0) {
-    throw new Error(
-      `invalid persistence operation ID: ${JSON.stringify(operationId)}`,
-    );
-  }
-  return operationId;
-}
-
-function normalizePersistenceTable(table, label = "persistence table") {
-  if (typeof table !== "string") {
-    throw new Error(`${label} must be a string`);
-  }
-  assertSafeTableName(table);
-  if (INTERNAL_TABLE_NAMES.has(table.toLowerCase()) || /^sqlite_/i.test(table)) {
-    throw new Error(`${label} may not name an internal SQLite table`);
-  }
-  return table;
-}
-
-function validatePersistenceUpserts(upserts, label = "persistence upserts") {
-  if (!Array.isArray(upserts)) {
-    throw new Error(`${label} must be an array`);
-  }
-  return upserts.map((entry, index) => {
-    if (!Array.isArray(entry) || entry.length !== 2) {
-      throw new Error(`${label}[${index}] must be a [key, json] pair`);
-    }
-    const [key, json] = entry;
-    if (typeof key !== "string") {
-      throw new Error(`${label}[${index}][0] must be a string key`);
-    }
-    if (typeof json !== "string") {
-      throw new Error(`${label}[${index}][1] must be a JSON string`);
-    }
-    try {
-      JSON.parse(json);
-    } catch (error) {
-      throw new Error(
-        `${label}[${index}][1] is not valid JSON: ${error.message}`,
-      );
-    }
-    return [key, json];
-  });
-}
-
-function validatePersistenceDeletes(deletes, label = "persistence deletes") {
-  if (!Array.isArray(deletes)) {
-    throw new Error(`${label} must be an array`);
-  }
-  return deletes.map((key, index) => {
-    if (typeof key !== "string") {
-      throw new Error(`${label}[${index}] must be a string key`);
-    }
-    return key;
-  });
-}
-
-function parsePersistencePayload(raw, label, operationId) {
-  if (typeof raw !== "string") {
-    throw new Error(
-      `persistence operation ${operationId} has a non-string ${label} payload`,
-    );
-  }
-  try {
-    return JSON.parse(raw);
-  } catch (error) {
-    throw new Error(
-      `persistence operation ${operationId} has malformed ${label} JSON: ${error.message}`,
-    );
-  }
-}
-
-function parsePersistenceOperationRow(row) {
-  if (!row) {
-    return null;
-  }
-  const operationId = normalizePersistenceOperationId(row.operation_id);
-  const table = normalizePersistenceTable(
-    row.table_name,
-    `persistence operation ${operationId} table`,
-  );
-  const upserts = validatePersistenceUpserts(
-    parsePersistencePayload(row.upserts_json, "upserts", operationId),
-    `persistence operation ${operationId} upserts`,
-  );
-  const deletes = validatePersistenceDeletes(
-    parsePersistencePayload(row.deletes_json, "deletes", operationId),
-    `persistence operation ${operationId} deletes`,
-  );
-  if (row.state !== "pending" && row.state !== "applied") {
-    throw new Error(
-      `persistence operation ${operationId} has invalid state: ${JSON.stringify(row.state)}`,
-    );
-  }
-  if (typeof row.created_at !== "string" || row.created_at.length === 0) {
-    throw new Error(`persistence operation ${operationId} has invalid created_at`);
-  }
-  if (row.state === "pending" && row.applied_at !== null) {
-    throw new Error(
-      `pending persistence operation ${operationId} unexpectedly has applied_at`,
-    );
-  }
-  if (
-    row.state === "applied" &&
-    (typeof row.applied_at !== "string" || row.applied_at.length === 0)
-  ) {
-    throw new Error(
-      `applied persistence operation ${operationId} is missing applied_at`,
-    );
-  }
-  return {
-    operationId,
-    table,
-    upserts,
-    deletes,
-    state: row.state,
-    createdAt: row.created_at,
-    appliedAt: row.applied_at,
-  };
-}
-
-function persistenceOperationSelectSql(whereClause = "") {
-  return `SELECT operation_id, table_name, upserts_json, deletes_json,
-                 state, created_at, applied_at
-          FROM _persistence_outbox ${whereClause}`;
-}
-
-function getPersistenceOperation(operationId) {
-  const normalizedId = normalizePersistenceOperationId(operationId);
-  const row = requireDb()
-    .prepare(persistenceOperationSelectSql("WHERE operation_id = ?"))
-    .get(normalizedId);
-  return parsePersistenceOperationRow(row);
-}
-
-function listPersistenceOperations() {
-  return requireDb()
-    .prepare(persistenceOperationSelectSql("ORDER BY operation_id ASC"))
-    .all()
-    .map(parsePersistenceOperationRow);
-}
-
-function assertExpectedPersistenceTable(operation, expectedTable) {
-  const normalizedTable = normalizePersistenceTable(
-    expectedTable,
-    "expected persistence table",
-  );
-  if (operation.table !== normalizedTable) {
-    throw new Error(
-      `persistence operation ${operation.operationId} targets ${operation.table}, not ${normalizedTable}`,
-    );
-  }
-  return normalizedTable;
-}
-
-function enqueuePersistenceOperation(table, upserts = [], deletes = []) {
-  const normalizedTable = normalizePersistenceTable(table);
-  const normalizedUpserts = validatePersistenceUpserts(upserts);
-  const normalizedDeletes = validatePersistenceDeletes(deletes);
-  const createdAt = new Date().toISOString();
-
-  // Make creation of the target table precede journal insertion. A durable
-  // outbox row must always name a table that exact replay can write.
-  ensureSqlTable(normalizedTable);
-  const result = requireDb()
-    .prepare(
-      `INSERT INTO _persistence_outbox(
-         table_name, upserts_json, deletes_json, state, created_at, applied_at
-       ) VALUES (?, ?, ?, 'pending', ?, NULL)`,
-    )
-    .run(
-      normalizedTable,
-      JSON.stringify(normalizedUpserts),
-      JSON.stringify(normalizedDeletes),
-      createdAt,
-    );
-  const operationId = normalizePersistenceOperationId(result.lastInsertRowid);
-  return {
-    operationId,
-    table: normalizedTable,
-    upserts: normalizedUpserts,
-    deletes: normalizedDeletes,
-    state: "pending",
-    createdAt,
-    appliedAt: null,
-  };
-}
-
-function applyChangeStatements(table, upserts, deletes) {
-  const upsert = getUpsertStatement(table);
-  const remove = getDeleteStatement(table);
-  for (const [key, json] of upserts) {
-    upsert.run(String(key), json);
-  }
-  for (const key of deletes) {
-    remove.run(String(key));
-  }
-  return upserts.length + deletes.length;
-}
-
-function applyPersistenceOperation(operationId, expectedTable) {
-  const normalizedId = normalizePersistenceOperationId(operationId);
-  const normalizedExpectedTable =
-    expectedTable === undefined
-      ? undefined
-      : normalizePersistenceTable(
-        expectedTable,
-        "expected persistence table",
-      );
-  const txn = requireDb().transaction(() => {
-    const operation = getPersistenceOperation(normalizedId);
-    if (!operation) {
-      // A stale worker may begin after synchronous reconciliation removed the
-      // row. Treat the already-reconciled operation as a harmless no-op.
-      return null;
-    }
-    if (normalizedExpectedTable !== undefined) {
-      assertExpectedPersistenceTable(operation, normalizedExpectedTable);
-    }
-    applyChangeStatements(
-      operation.table,
-      operation.upserts,
-      operation.deletes,
-    );
-    const appliedAt = operation.appliedAt || new Date().toISOString();
-    const updated = requireDb()
-      .prepare(
-        `UPDATE _persistence_outbox
-         SET state = 'applied', applied_at = ?
-         WHERE operation_id = ? AND table_name = ?`,
-      )
-      .run(appliedAt, operation.operationId, operation.table);
-    if (updated.changes !== 1) {
-      throw new Error(
-        `failed to mark persistence operation ${operation.operationId} applied`,
-      );
-    }
-    return {
-      ...operation,
-      state: "applied",
-      appliedAt,
-    };
-  });
-  return txn.immediate();
-}
-
-function acknowledgePersistenceOperation(operationId, expectedTable) {
-  const normalizedId = normalizePersistenceOperationId(operationId);
-  normalizePersistenceTable(expectedTable, "expected persistence table");
-  const txn = requireDb().transaction(() => {
-    const operation = getPersistenceOperation(normalizedId);
-    if (!operation) {
-      throw new Error(`persistence operation ${normalizedId} does not exist`);
-    }
-    assertExpectedPersistenceTable(operation, expectedTable);
-    if (operation.state !== "applied") {
-      throw new Error(
-        `persistence operation ${normalizedId} cannot be acknowledged from state ${operation.state}`,
-      );
-    }
-    const removed = requireDb()
-      .prepare(
-        `DELETE FROM _persistence_outbox
-         WHERE operation_id = ? AND table_name = ? AND state = 'applied'`,
-      )
-      .run(operation.operationId, operation.table);
-    if (removed.changes !== 1) {
-      throw new Error(
-        `failed to acknowledge persistence operation ${operation.operationId}`,
-      );
-    }
-    return operation;
-  });
-  return txn.immediate();
-}
-
-function reconcilePersistenceOperation(operationId, expectedTable) {
-  const normalizedId = normalizePersistenceOperationId(operationId);
-  normalizePersistenceTable(expectedTable, "expected persistence table");
-  const txn = requireDb().transaction(() => {
-    const operation = getPersistenceOperation(normalizedId);
-    if (!operation) {
-      return null;
-    }
-    assertExpectedPersistenceTable(operation, expectedTable);
-    applyChangeStatements(
-      operation.table,
-      operation.upserts,
-      operation.deletes,
-    );
-    const removed = requireDb()
-      .prepare(
-        "DELETE FROM _persistence_outbox WHERE operation_id = ? AND table_name = ?",
-      )
-      .run(operation.operationId, operation.table);
-    if (removed.changes !== 1) {
-      throw new Error(
-        `failed to reconcile persistence operation ${operation.operationId}`,
-      );
-    }
-    return {
-      ...operation,
-      state: "applied",
-      appliedAt: operation.appliedAt || new Date().toISOString(),
-    };
-  });
-  return txn.immediate();
-}
-
-function recoverPersistenceOperations() {
-  // Read, validate, replay, and remove the entire journal in one transaction.
-  // Any malformed record or failed table write rolls back every change and
-  // leaves every recovery record intact.
-  const txn = requireDb().transaction(() => {
-    const operations = listPersistenceOperations();
-    const recovered = [];
-    for (const operation of operations) {
-      applyChangeStatements(
-        operation.table,
-        operation.upserts,
-        operation.deletes,
-      );
-      const removed = requireDb()
-        .prepare(
-          "DELETE FROM _persistence_outbox WHERE operation_id = ? AND table_name = ?",
-        )
-        .run(operation.operationId, operation.table);
-      if (removed.changes !== 1) {
-        throw new Error(
-          `failed to recover persistence operation ${operation.operationId}`,
-        );
-      }
-      recovered.push({
-        ...operation,
-        state: "applied",
-        appliedAt: operation.appliedAt || new Date().toISOString(),
-      });
-    }
-    return recovered;
-  });
-  return txn.immediate();
-}
-
 // Raw `[{ key, json }]` rows as stored — index.js uses these to build both the
 // in-memory cache (assembled) and its per-row flush baseline.
 function loadRows(table) {
@@ -712,10 +350,18 @@ function applyChanges(table, upserts = [], deletes = []) {
     return 0;
   }
   ensureSqlTable(table);
-  const txn = requireDb().transaction(() =>
-    applyChangeStatements(table, upserts, deletes),
-  );
-  return txn();
+  const upsert = getUpsertStatement(table);
+  const remove = getDeleteStatement(table);
+  const txn = requireDb().transaction(() => {
+    for (const [key, json] of upserts) {
+      upsert.run(String(key), json);
+    }
+    for (const key of deletes) {
+      remove.run(String(key));
+    }
+  });
+  txn();
+  return upserts.length + deletes.length;
 }
 
 /**
@@ -769,13 +415,6 @@ module.exports = {
   rowValueForKey,
   rowGroupsFor,
   ROW_KEY_SEP,
-  enqueuePersistenceOperation,
-  getPersistenceOperation,
-  listPersistenceOperations,
-  applyPersistenceOperation,
-  acknowledgePersistenceOperation,
-  reconcilePersistenceOperation,
-  recoverPersistenceOperations,
   applyChanges,
   replaceAll,
   rowCount,

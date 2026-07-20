@@ -165,29 +165,6 @@ function notifyCorporationDividendPaid(corporationID, characterID, amount, isMem
   });
 }
 
-// CorpLiquidationMsg (typeID 85): a one-member corporation was liquidated when
-// its CEO resigned. TQ sends the resigning character as both sender and
-// receiver; the client body renders the corporation and payout fields.
-function notifyCorporationLiquidation(corporationID, characterID, amount) {
-  const numericCorporationID = normalizePositiveInteger(corporationID, null);
-  const numericCharacterID = normalizePositiveInteger(characterID, null);
-  if (!numericCorporationID || !numericCharacterID) {
-    return null;
-  }
-  const payout = Number(amount) || 0;
-  return createNotification(numericCharacterID, {
-    typeID: NOTIFICATION_TYPE.CORP_LIQUIDATION,
-    senderID: numericCharacterID,
-    groupID: NOTIFICATION_GROUP.CORP,
-    processed: false,
-    data: {
-      corpID: numericCorporationID,
-      amount: payout,
-      payout,
-    },
-  });
-}
-
 // CorpVoteCEORevokedMsg (typeID 26): a corporation vote removed the standing CEO,
 // so the deposed CEO is told. The client renders only the corporation name (from
 // corpID), so corpID is the sole data field and the corporation is the sender;
@@ -210,7 +187,6 @@ function notifyCorporationCeoRevoked(corporationID, revokedCeoCharacterID) {
 module.exports = {
   notifyCorporationCeoRevoked,
   notifyCorporationDividendPaid,
-  notifyCorporationLiquidation,
   notifyCorporationMemberKicked,
   notifyCorporationMemberLeft,
   notifyCorporationMembers,

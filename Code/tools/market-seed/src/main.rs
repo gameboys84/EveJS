@@ -1,7 +1,6 @@
 mod config;
 
 use std::collections::{BTreeMap, BTreeSet};
-use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -531,7 +530,7 @@ fn doctor(config: &MarketSeedConfig) -> Result<()> {
 }
 
 fn load_seed_input(config: &MarketSeedConfig, args: &BuildArgs) -> Result<SeedInputData> {
-    let static_dir = resolve_static_data_dir(&config.input.static_data_dir)?;
+    let static_dir = &config.input.static_data_dir;
     let stations_path = static_dir.join("stations").join("data.json");
     let solar_systems_path = static_dir.join("solarSystems").join("data.json");
     let item_types_path = static_dir.join("itemTypes").join("data.json");
@@ -648,59 +647,6 @@ fn load_seed_input(config: &MarketSeedConfig, args: &BuildArgs) -> Result<SeedIn
         stations,
         item_types,
     })
-}
-
-fn resolve_static_data_dir(configured_dir: &Path) -> Result<PathBuf> {
-    let candidates = static_data_dir_candidates(configured_dir);
-    for candidate in &candidates {
-        if has_required_static_tables(candidate) {
-            return Ok(candidate.clone());
-        }
-    }
-
-    let attempted = candidates
-        .iter()
-        .map(|candidate| format!("  - {}", candidate.to_string_lossy()))
-        .collect::<Vec<_>>()
-        .join("\n");
-    bail!(
-        "generated EvEJS market/static data was not found. Tried:\n{}\nRun DatabaseCreator.bat first.",
-        attempted
-    );
-}
-
-fn static_data_dir_candidates(configured_dir: &Path) -> Vec<PathBuf> {
-    let mut candidates = Vec::<PathBuf>::new();
-    push_unique_path(&mut candidates, configured_dir.to_path_buf());
-
-    if let Some(path) = env::var_os("EVEJS_GAMESTORE_DATA_DIR") {
-        push_unique_path(&mut candidates, PathBuf::from(path));
-    }
-    if let Some(path) = env::var_os("EVEJS_NEWDB_DATA_DIR") {
-        push_unique_path(&mut candidates, PathBuf::from(path));
-    }
-
-    push_unique_path(
-        &mut candidates,
-        PathBuf::from("../../_local/gameStore/data"),
-    );
-    push_unique_path(
-        &mut candidates,
-        PathBuf::from("../../_local/newDatabase/data"),
-    );
-    candidates
-}
-
-fn push_unique_path(paths: &mut Vec<PathBuf>, path: PathBuf) {
-    if !paths.iter().any(|existing| existing == &path) {
-        paths.push(path);
-    }
-}
-
-fn has_required_static_tables(dir: &Path) -> bool {
-    dir.join("stations").join("data.json").exists()
-        && dir.join("solarSystems").join("data.json").exists()
-        && dir.join("itemTypes").join("data.json").exists()
 }
 
 fn resolve_seed_selection(

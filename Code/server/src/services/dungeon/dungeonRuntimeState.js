@@ -6,12 +6,6 @@ const { isDeepStrictEqual } = require("util");
 const {
   createTableRepository,
 } = require(path.join(__dirname, "../../gameStore/tableRepository"));
-const {
-  isRetiredMissionTemplateIdentifier,
-} = require(path.join(__dirname, "../../config/productionMissionPolicy"));
-const {
-  isRetiredOrdinaryEncounterMissionForAgent,
-} = require(path.join(__dirname, "../agent/missionAuthority"));
 const repo = createTableRepository("service:dungeon", { strict: true });
 
 const DUNGEON_RUNTIME_TABLE = "dungeonRuntimeState";
@@ -44,79 +38,6 @@ function normalizeText(value, fallback = "") {
 
 function normalizeLowerText(value, fallback = "") {
   return normalizeText(value, fallback).toLowerCase();
-}
-
-function isRetiredMissionTemplateID(templateID) {
-  return isRetiredMissionTemplateIdentifier(templateID);
-}
-
-function isRetiredMissionIdentifier(value) {
-  return isRetiredMissionTemplateIdentifier(value);
-}
-
-function isRetiredMissionInstanceRecord(instanceRecord = {}) {
-  const metadata = instanceRecord && instanceRecord.metadata;
-  if ([
-    instanceRecord && instanceRecord.templateID,
-    metadata && metadata.missionContentID,
-    metadata && metadata.missionPresentationTemplateID,
-    metadata && metadata.missionRuntimeTemplateID,
-    metadata && metadata.missionTemplateID,
-  ].some(isRetiredMissionIdentifier)) {
-    return true;
-  }
-  if (!metadata || metadata.missionContentID == null) {
-    return false;
-  }
-  return isRetiredOrdinaryEncounterMissionForAgent(
-    metadata.missionAgentID,
-    metadata.missionContentID,
-    {
-      contentID: metadata.missionContentID,
-      dungeonID: instanceRecord.sourceDungeonID,
-      dungeonTemplateID:
-        metadata.missionRuntimeTemplateID || instanceRecord.templateID,
-      missionTemplateID: metadata.missionPresentationTemplateID,
-    },
-  );
-}
-
-function listContentEntityItemIDs(instanceRecord = {}) {
-  const refs = instanceRecord &&
-    instanceRecord.spawnState &&
-    instanceRecord.spawnState.contentEntityRefsByKey;
-  return [...new Set(Object.values(
-    refs && typeof refs === "object" && !Array.isArray(refs) ? refs : {},
-  )
-    .map((ref) => Math.max(0, toInt(ref && ref.itemID, 0)))
-    .filter((itemID) => itemID > 0))];
-}
-
-function cleanupRetiredMissionInstanceInventory(table = {}) {
-  const retiredItemIDs = new Set();
-  const retainedItemIDs = new Set();
-  for (const instanceRecord of Object.values(table.instancesByID || {})) {
-    const target = isRetiredMissionInstanceRecord(instanceRecord)
-      ? retiredItemIDs
-      : retainedItemIDs;
-    for (const itemID of listContentEntityItemIDs(instanceRecord)) {
-      target.add(itemID);
-    }
-  }
-
-  if (retiredItemIDs.size <= 0) {
-    return;
-  }
-  const { removeInventoryItem } = require(path.join(
-    __dirname,
-    "../inventory/itemStore",
-  ));
-  for (const itemID of retiredItemIDs) {
-    if (retainedItemIDs.has(itemID)) {
-      continue;
-    }
-    removeInventoryItem(itemID, { removeContents: true });
-  }
 }
 
 function cloneValue(value) {
@@ -359,9 +280,6 @@ function normalizeUniverseReconcileMeta(value = {}) {
 function normalizeState(table = {}) {
   const instancesByID = {};
   for (const [instanceKey, instanceRecord] of Object.entries(table.instancesByID || {})) {
-    if (isRetiredMissionInstanceRecord(instanceRecord)) {
-      continue;
-    }
     const normalized = normalizeInstanceRecord({
       ...instanceRecord,
       instanceID: toInt(
@@ -426,16 +344,12 @@ function appendIndex(map, key, value) {
 }
 
 function buildCache(sourceState = null) {
-  let state;
-  if (sourceState) {
-    state = normalizeState(sourceState);
-  } else {
-    const result = repo.read(DUNGEON_RUNTIME_TABLE, "/");
-    const persistedState = result && result.success ? result.data : {};
-    cleanupRetiredMissionInstanceInventory(persistedState);
-    state = normalizeState(persistedState);
-    applyPersistedDiff(state);
-  }
+  const state = sourceState
+    ? normalizeState(sourceState)
+    : (() => {
+      const result = repo.read(DUNGEON_RUNTIME_TABLE, "/");
+      return normalizeState(result && result.success ? result.data : {});
+    })();
   const instancesByID = new Map();
   const summariesByID = new Map();
   const instanceIDsBySystem = new Map();
@@ -827,8 +741,6 @@ module.exports = {
   getStateSnapshot,
   getUniverseReconcileMeta,
   isActiveLifecycleState,
-  isRetiredMissionInstanceRecord,
-  isRetiredMissionTemplateID,
   listExpiredActiveInstanceSummaries,
   listInstanceSummariesByLifecycle,
   listInstanceSummariesByFamily,

@@ -47,25 +47,6 @@ const worldData = require(path.join(__dirname, "../../space/worldData"));
 
 const MAX_STRUCTURE_BIO_LENGTH = 1000;
 
-function buildWarHQPayload(structure) {
-  return buildKeyVal([
-    ["typeID", Number(structure && structure.typeID) || 0],
-    ["structureID", Number(structure && (structure.structureID || structure.itemID)) || 0],
-    ["upkeepState", Number(structure && structure.upkeepState) || 1],
-    ["wars", buildList([])],
-    ["ownerID", Number(structure && (structure.ownerCorpID || structure.ownerID)) || 0],
-    ["solarSystemID", Number(structure && structure.solarSystemID) || 0],
-    [
-      "itemName",
-      String(
-        (structure && (structure.itemName || structure.name)) ||
-          `Structure ${Number(structure && (structure.structureID || structure.itemID)) || 0}`,
-      ),
-    ],
-    ["inSpace", structure && structure.inSpace === false ? 0 : 1],
-  ]);
-}
-
 function normalizePositiveInt(value, fallback = 0) {
   const numeric = Number(value);
   return Number.isInteger(numeric) && numeric > 0 ? numeric : fallback;
@@ -597,12 +578,14 @@ class StructureDirectoryService extends BaseService {
         isHighSecurityStructure(structure)
       ));
     log.debug(`[StructureDirectoryService] GetValidWarHQs owner=${ownerID} count=${structures.length}`);
-      return buildList(
-        structures
-          .sort((left, right) => left.structureID - right.structureID)
-          .map((structure) => buildWarHQPayload(structure)),
-      );
-    }
+    return buildList(
+      structures
+        .sort((left, right) => left.structureID - right.structureID)
+        .map((structure) => buildStructureInfoPayload(structure, session, {
+          includeAccessibleServices: false,
+        })),
+    );
+  }
 
   Handle_GetJumpBridgesWithMyAccess(args, session, kwargs) {
     log.debug("[StructureDirectoryService] GetJumpBridgesWithMyAccess called");

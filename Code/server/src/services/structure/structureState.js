@@ -488,19 +488,6 @@ function isCharacterOwnerID(ownerID, characterRecords = null) {
   return Boolean(records[String(numericOwnerID)]);
 }
 
-function countCharactersDockedInStructure(structureID) {
-  const targetStructureID = toPositiveInt(structureID, 0);
-  if (!targetStructureID) {
-    return 0;
-  }
-  return Object.values(readCharacterRecords())
-    .filter((record) => (
-      record &&
-      toPositiveInt(record.structureID, 0) === targetStructureID
-    ))
-    .length;
-}
-
 function buildImpendingAbandonNotificationData(structure, isCorpOwned, daysUntilAbandon) {
   const structureID = toPositiveInt(structure && structure.structureID, 0);
   const structureTypeID = toPositiveInt(structure && structure.typeID, 0);
@@ -3734,7 +3721,6 @@ Object.assign(module.exports, {
   listStructuresForSystem,
   listOwnedStructures,
   listDockableStructuresForCharacter,
-  countCharactersDockedInStructure,
   clearStructureCaches,
   createStructure,
   upsertStructureRecord,

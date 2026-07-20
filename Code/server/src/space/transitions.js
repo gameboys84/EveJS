@@ -65,12 +65,6 @@ const {
   currentFileTime,
 } = require(path.join(__dirname, "../services/_shared/serviceHelpers"));
 const {
-  getAppliedSkinRecord,
-} = require(path.join(__dirname, "../services/ship/shipCosmeticsState"));
-const {
-  getEnabledCosmeticsEntries,
-} = require(path.join(__dirname, "../services/ship/shipLogoFittingState"));
-const {
   buildEmergencyWarpReturnSpaceState,
   clearEmergencyWarpReturnState,
   getEmergencyWarpReturnState,
@@ -89,7 +83,6 @@ const {
 const crimewatchState = require(path.join(__dirname, "../services/security/crimewatchState"));
 const worldData = require(path.join(__dirname, "./worldData"));
 const spaceRuntime = require(path.join(__dirname, "./runtime"));
-const destiny = require(path.join(__dirname, "./destiny"));
 const hostileModuleRuntime = require(path.join(
   __dirname,
   "./modules/hostileModuleRuntime",
@@ -109,14 +102,11 @@ const STARGATE_JUMP_RANGE_METERS = 2500;
 const STARGATE_JUMP_IN_SURFACE_CLEARANCE_METERS = 12000;
 const STARGATE_JUMP_QUEUE_SPACE = 1000;
 const STARGATE_JUMP_QUEUE_TIMEOUT_SECONDS = 180;
-const SPACE_BOARDING_RANGE_METERS = 6550;
+const SPACE_BOARDING_RANGE_METERS = 2500;
 const SESSION_CHANGE_COOLDOWN_MS = 7000;
 const FILETIME_EPOCH_OFFSET = 116444736000000000n;
 const FILETIME_TICKS_PER_MS = 10000n;
 const UNDOCK_INVULNERABILITY_DURATION_TICKS = 300000000n;
-const UNDOCK_INVULNERABILITY_DURATION_MS = Number(
-  UNDOCK_INVULNERABILITY_DURATION_TICKS / FILETIME_TICKS_PER_MS,
-);
 const TYPE_ORCA = 28606;
 const stargateJumpQueuesByDestination = new Map();
 const DOCKED_SHIP_CONTENT_REFRESH_FLAGS = new Set([
@@ -143,7 +133,6 @@ const SCRIPTED_HIC_STARGATE_EXEMPT_GROUP_IDS = new Set([
   513, // Freighter
   902, // Jump Freighter
 ]);
-const BOARDED_CAPSULE_REMOVED_JUNK_LOCATION_ID = 10;
 
 let contrabandInspectionRuntimeModule = null;
 
@@ -240,252 +229,6 @@ function syncInventoryChangesToSession(session, changes = [], options = {}) {
   return syncedCount;
 }
 
-function buildEmptyDict() {
-  return { type: "dict", entries: [] };
-}
-
-function buildEnabledCosmeticsDictForShip(shipID) {
-  try {
-    const entries = getEnabledCosmeticsEntries(shipID);
-    return {
-      type: "dict",
-      entries: entries.map((entry) => [
-        Number(entry.backendSlot) || 0,
-        Number(entry.cosmeticType) || 0,
-      ]),
-    };
-  } catch (error) {
-    log.warn(
-      `[SpaceTransition] Failed to build cosmetics dict ship=${shipID}: ${error.message}`,
-    );
-    return buildEmptyDict();
-  }
-}
-
-function getAppliedShipSkinID(shipID) {
-  try {
-    const record = getAppliedSkinRecord(shipID);
-    return Number(record && record.skinID) || 0;
-  } catch (error) {
-    log.warn(
-      `[SpaceTransition] Failed to resolve current skin ship=${shipID}: ${error.message}`,
-    );
-    return 0;
-  }
-}
-
-function sendShipCosmeticsChanged(session, shipID) {
-  const normalizedShipID = Number(shipID || 0) || 0;
-  if (
-    normalizedShipID <= 0 ||
-    !session ||
-    typeof session.sendNotification !== "function"
-  ) {
-    return false;
-  }
-
-  session.sendNotification("OnShipCosmeticsChanged", "clientID", [
-    normalizedShipID,
-    buildEnabledCosmeticsDictForShip(normalizedShipID),
-  ]);
-  return true;
-}
-
-function sendCurrentShipSkinChange(session, shipID) {
-  const normalizedShipID = Number(shipID || 0) || 0;
-  if (
-    normalizedShipID <= 0 ||
-    !session ||
-    typeof session.sendNotification !== "function"
-  ) {
-    return false;
-  }
-
-  session.sendNotification("OnCurrentShipSkinChange", "clientID", [
-    normalizedShipID,
-    getAppliedShipSkinID(normalizedShipID),
-  ]);
-  return true;
-}
-
-function sendPodOrCorvetteAssembly(session, capsuleItem) {
-  const capsuleID = Number(capsuleItem && capsuleItem.itemID) || 0;
-  const capsuleTypeID = Number(capsuleItem && capsuleItem.typeID) || CAPSULE_TYPE_ID;
-  if (
-    capsuleID <= 0 ||
-    !session ||
-    typeof session.sendNotification !== "function"
-  ) {
-    return false;
-  }
-
-  session.sendNotification("OnPodOrCorvetteAssembly", "charid", [
-    capsuleID,
-    capsuleTypeID,
-  ]);
-  return true;
-}
-
-function buildBoardedCapsuleRemovedNotificationState(item) {
-  if (!item || typeof item !== "object") {
-    return null;
-  }
-
-  return {
-    ...item,
-    locationID: BOARDED_CAPSULE_REMOVED_JUNK_LOCATION_ID,
-    flagID: 0,
-    quantity: Number(item.singleton) === 2 ? -2 : -1,
-    stacksize: 1,
-    singleton: Number(item.singleton) || 1,
-  };
-}
-
-function emitBoardedCapsuleItemsChanged(session, capsuleItem, previousState = {}) {
-  const removedState = buildBoardedCapsuleRemovedNotificationState(capsuleItem);
-  if (!removedState) {
-    return false;
-  }
-
-  return emitItemsChangedForSession(
-    session,
-    removedState,
-    {
-      locationID:
-        previousState.locationID !== undefined
-          ? previousState.locationID
-          : capsuleItem.locationID,
-      flagID:
-        previousState.flagID !== undefined ? previousState.flagID : capsuleItem.flagID,
-      quantity:
-        previousState.quantity !== undefined
-          ? previousState.quantity
-          : capsuleItem.quantity,
-      singleton:
-        previousState.singleton !== undefined
-          ? previousState.singleton
-          : capsuleItem.singleton,
-      stacksize:
-        previousState.stacksize !== undefined
-          ? previousState.stacksize
-          : capsuleItem.stacksize,
-    },
-    {
-      idType: "charid",
-      locationContext: null,
-    },
-  );
-}
-
-function buildEntitySlimChangePayload(entity) {
-  return destiny.buildOnSlimItemChangePayload(
-    entity.itemID,
-    destiny.buildSlimItemObject(entity),
-  );
-}
-
-function buildEntityAgility(entity) {
-  return Number(entity && (entity.inertia ?? entity.agility)) || 0;
-}
-
-function buildEntityMaxSpeed(entity) {
-  return Number(entity && (entity.maxVelocity ?? entity.maxSpeed)) || 0;
-}
-
-function sendEjectHandoffDestiny(session, scene, abandonedShipEntity, capsuleEntity) {
-  if (!session || !scene || !abandonedShipEntity || !capsuleEntity) {
-    return false;
-  }
-
-  const stamp =
-    typeof scene.getNextDestinyStamp === "function"
-      ? scene.getNextDestinyStamp()
-      : undefined;
-  const capsulePosition =
-    capsuleEntity.position ||
-    capsuleEntity.targetPoint ||
-    abandonedShipEntity.position ||
-    { x: 0, y: 0, z: 0 };
-  const updates = [
-    {
-      stamp,
-      payload: destiny.buildOnSpecialFXPayload(
-        capsuleEntity.itemID,
-        "effects.Jettison",
-        {
-          targetID: abandonedShipEntity.itemID,
-          start: true,
-          active: false,
-          duration: 4000,
-          graphicInfo: { poseID: 0 },
-        },
-      ),
-    },
-    {
-      stamp,
-      payload: destiny.buildSetBallPositionPayload(
-        capsuleEntity.itemID,
-        capsulePosition,
-      ),
-    },
-    {
-      stamp,
-      payload: destiny.buildSetBallInteractivePayload(abandonedShipEntity.itemID, false),
-    },
-    {
-      stamp,
-      payload: destiny.buildStopPayload(abandonedShipEntity.itemID),
-    },
-    {
-      stamp,
-      payload: buildEntitySlimChangePayload(abandonedShipEntity),
-    },
-    {
-      stamp,
-      payload: destiny.buildSetBallAgilityPayload(
-        abandonedShipEntity.itemID,
-        buildEntityAgility(abandonedShipEntity),
-      ),
-    },
-    {
-      stamp,
-      payload: destiny.buildSetMaxSpeedPayload(
-        abandonedShipEntity.itemID,
-        buildEntityMaxSpeed(abandonedShipEntity),
-      ),
-    },
-    {
-      stamp,
-      payload: destiny.buildSetBallInteractivePayload(capsuleEntity.itemID, true),
-    },
-    {
-      stamp,
-      payload: buildEntitySlimChangePayload(capsuleEntity),
-    },
-    {
-      stamp,
-      payload: destiny.buildSetBallAgilityPayload(
-        capsuleEntity.itemID,
-        buildEntityAgility(capsuleEntity),
-      ),
-    },
-    {
-      stamp,
-      payload: destiny.buildSetMaxSpeedPayload(
-        capsuleEntity.itemID,
-        buildEntityMaxSpeed(capsuleEntity),
-      ),
-    },
-    {
-      stamp,
-      payload: buildEntitySlimChangePayload(capsuleEntity),
-    },
-  ];
-
-  scene.sendDestinyUpdates(session, updates, false);
-  return true;
-}
-
 function applyTqDockingTransitionSessionChangeShape(plan) {
   if (!plan || !plan.sessionChanges) {
     return plan;
@@ -537,93 +280,6 @@ function sendInvulnerabilityCancelled(session, shipID) {
   }
 
   session.sendNotification("OnInvulnCancelled", "shipid", [normalizedShipID]);
-  return true;
-}
-
-function clearPendingUndockInvulnerability(session) {
-  if (!session || !session._undockInvulnerabilityCancelTimer) {
-    return false;
-  }
-  clearTimeout(session._undockInvulnerabilityCancelTimer);
-  session._undockInvulnerabilityCancelTimer = null;
-  return true;
-}
-
-function markUndockInvulnerabilityState(session, shipID, durationMs) {
-  const scene = spaceRuntime.getSceneForSession(session);
-  const entity = scene && typeof scene.getEntityByID === "function"
-    ? scene.getEntityByID(shipID)
-    : null;
-  if (!entity) {
-    return false;
-  }
-  entity.undockInvulnerabilityActive = true;
-  entity.undockInvulnerabilityUntilMs =
-    scene.getCurrentSimTimeMs() + Math.max(0, Number(durationMs) || 0);
-  return true;
-}
-
-function scheduleUndockInvulnerabilityCancellation(session, shipID, options = {}) {
-  clearPendingUndockInvulnerability(session);
-  const delayMs = Math.max(
-    0,
-    Number.isFinite(Number(options.delayMs))
-      ? Number(options.delayMs)
-      : UNDOCK_INVULNERABILITY_DURATION_MS,
-  );
-  markUndockInvulnerabilityState(session, shipID, delayMs);
-  const timer = setTimeout(() => {
-    if (!session || session._undockInvulnerabilityCancelTimer !== timer) {
-      return;
-    }
-    session._undockInvulnerabilityCancelTimer = null;
-    const scene = spaceRuntime.getSceneForSession(session);
-    if (scene && typeof scene.flushDirectDestinyNotificationBatchIfIdle === "function") {
-      scene.flushDirectDestinyNotificationBatchIfIdle();
-    }
-    sendInvulnerabilityCancelled(session, shipID);
-    if (scene && typeof scene.flushDirectDestinyNotificationBatchIfIdle === "function") {
-      scene.flushDirectDestinyNotificationBatchIfIdle();
-    }
-    const entity = scene && typeof scene.getEntityByID === "function"
-      ? scene.getEntityByID(shipID)
-      : null;
-    if (entity) {
-      entity.undockInvulnerabilityActive = false;
-      entity.undockInvulnerabilityUntilMs = 0;
-    }
-    if (scene && typeof scene.syncSessionStructureTetherState === "function") {
-      const tetherSync = scene.syncSessionStructureTetherState(session, {
-        forceReplayFx: true,
-        repairOnEngage: true,
-        replayFx: false,
-      });
-      const tetherStructureID =
-        tetherSync &&
-        tetherSync.success &&
-        tetherSync.data &&
-        tetherSync.data.active
-          ? tetherSync.data.structureID
-          : 0;
-      if (
-        tetherStructureID > 0 &&
-        typeof scene.sendTqUndockTetherPresentationToSession === "function"
-      ) {
-        scene.sendTqUndockTetherPresentationToSession(
-          session,
-          shipID,
-          tetherStructureID,
-        );
-      }
-    }
-    if (scene && typeof scene.flushDirectDestinyNotificationBatchIfIdle === "function") {
-      scene.flushDirectDestinyNotificationBatchIfIdle();
-    }
-  }, delayMs);
-  if (typeof timer.unref === "function") {
-    timer.unref();
-  }
-  session._undockInvulnerabilityCancelTimer = timer;
   return true;
 }
 
@@ -841,21 +497,6 @@ function consumeBoardedCapsule(scene, session, capsuleEntity, options = {}) {
     };
   }
 
-  const capsuleItem = findItemById(capsuleEntity.itemID) || capsuleEntity;
-  emitBoardedCapsuleItemsChanged(session, capsuleItem, {
-    locationID:
-      options && options.previousLocationID !== undefined
-        ? options.previousLocationID
-        : capsuleItem.locationID,
-    flagID:
-      options && options.previousFlagID !== undefined
-        ? options.previousFlagID
-        : capsuleItem.flagID,
-    quantity: capsuleItem.quantity,
-    singleton: capsuleItem.singleton,
-    stacksize: capsuleItem.stacksize,
-  });
-
   const removeEntityResult = scene.removeDynamicEntity(capsuleEntity.itemID, {
     allowSessionOwned: true,
     forceVisibleSessions: session ? [session] : [],
@@ -874,6 +515,14 @@ function consumeBoardedCapsule(scene, session, capsuleEntity, options = {}) {
   if (!removeItemResult.success) {
     return removeItemResult;
   }
+
+  syncInventoryChangesToSession(
+    session,
+    removeItemResult.data && removeItemResult.data.changes,
+    {
+      emitCfgLocation: true,
+    },
+  );
 
   return {
     success: true,
@@ -1512,18 +1161,13 @@ function refreshSameSceneSessionView(
   return true;
 }
 
-function flushSameSceneShipSwapNotificationPlan(session, plan, options = {}) {
-  const sessionChangeOptions = {
-    // Normal same-scene ship swaps keep the live session id and use TQ's empty
-    // nodes-of-interest routing for the shipid handoff. Combat destruction can
-    // opt into the older remote-style session id separately.
-    nodesOfInterest: [],
-  };
-  if (Object.prototype.hasOwnProperty.call(options, "sessionId")) {
-    sessionChangeOptions.sessionId = options.sessionId;
-  }
+function flushSameSceneShipSwapNotificationPlan(session, plan) {
   return flushCharacterSessionNotificationPlan(session, plan, {
-    sessionChangeOptions,
+    sessionChangeOptions: {
+      // Same-scene ship swaps keep the live session id and use TQ's empty
+      // nodes-of-interest routing for the shipid handoff.
+      nodesOfInterest: [],
+    },
   });
 }
 
@@ -1887,7 +1531,7 @@ function syncDockedShipContentsForSession(session, dockedShip) {
   }
 }
 
-function undockSession(session, options = {}) {
+function undockSession(session) {
   if (!session || !session.characterID) {
     return {
       success: false,
@@ -1946,7 +1590,6 @@ function undockSession(session, options = {}) {
         errorMsg: "UNDOCK_RESTRICTED_BY_STRUCTURE",
       };
     }
-    const ignoreContraband = Boolean(options.ignoreContraband);
     const contrabandInspection = inspectContrabandForTransition(
       session,
       activeShip.itemID,
@@ -1979,15 +1622,9 @@ function undockSession(session, options = {}) {
       moveResult.data = restoreResult.data;
     }
 
-    const itemChangeData = dockable.kind === "structure"
-      ? {
-          ...moveResult.data,
-          clientCustomInfo: "UndockingStructure:",
-        }
-      : moveResult.data;
     emitItemsChangedForSession(
       session,
-      itemChangeData,
+      moveResult.data,
       {
         locationID: moveResult.previousData.locationID,
         flagID: moveResult.previousData.flagID,
@@ -2047,16 +1684,6 @@ function undockSession(session, options = {}) {
       deferUniverseSiteReconcile: true,
       universeSiteReconcileReason: "undock",
     });
-    const scene = spaceRuntime.getSceneForSession(session);
-    if (dockable.kind === "structure" && scene) {
-      if (session._space) {
-        session._space.pendingUndockStructureSlimItemChangeID = dockedLocationID;
-      }
-      scene.syncStructureEntitiesFromState({
-        broadcast: true,
-        excludedSession: session,
-      });
-    }
     queuePostSpaceAttachFittingHydration(session, moveResult.data.itemID, {
       inventoryBootstrapPending: false,
       hydrationProfile: "undock",
@@ -2070,9 +1697,6 @@ function undockSession(session, options = {}) {
     });
     flushPendingCommandSessionEffects(session);
     sendUndockInvulnerabilityUpdated(session, moveResult.data.itemID);
-    scheduleUndockInvulnerabilityCancellation(session, moveResult.data.itemID, {
-      delayMs: options.undockInvulnerabilityDelayMs,
-    });
 
     log.info(
       `[SpaceTransition] Undocked ${session.characterName || session.characterID} ship=${moveResult.data.itemID} location=${dockedLocationID} kind=${dockable.kind} system=${dockable.solarSystemID}`,
@@ -2084,7 +1708,6 @@ function undockSession(session, options = {}) {
         station: dockable.record,
         ship: moveResult.data,
         contrabandInspection,
-        ignoreContraband,
         boundResult: buildBoundResult(session),
       },
     };
@@ -2150,7 +1773,6 @@ function dockSession(session, stationID) {
 
   try {
     deactivateActiveModulesForSpaceTransition(session, "dock");
-    clearPendingUndockInvulnerability(session);
     sendInvulnerabilityCancelled(session, activeShip.itemID);
     sendMachoObjectDisconnects(session);
     spaceRuntime.detachSession(session, {
@@ -2506,17 +2128,6 @@ function ejectSession(session, options = {}) {
       options.refreshAbandonedShipViewForVictim !== false;
     const syncAllSessionsVisibilityAfterSwap =
       options.syncAllSessionsVisibilityAfterSwap !== false;
-    const beforeSameSceneShipSwapNotificationPlanFlush =
-      typeof options.beforeSameSceneShipSwapNotificationPlanFlush === "function"
-        ? options.beforeSameSceneShipSwapNotificationPlanFlush
-        : null;
-    const sendEjectSpecialFx = options.sendEjectSpecialFx !== false;
-    const disconnectBoundObjectsBeforeSwap =
-      options.disconnectBoundObjectsBeforeSwap === true;
-    const hasSameSceneShipSwapSessionId = Object.prototype.hasOwnProperty.call(
-      options,
-      "sameSceneShipSwapSessionId",
-    );
     const currentSystemID = Number(session._space.systemID || session.solarsystemid2 || session.solarsystemid || 0);
     const characterRecord = getCharacterRecord(session.characterID) || {};
     const preferredStationID =
@@ -2541,10 +2152,6 @@ function ejectSession(session, options = {}) {
       };
     }
 
-    if (disconnectBoundObjectsBeforeSwap) {
-      sendMachoObjectDisconnects(session);
-    }
-
     const abandonedShipEntity = spaceRuntime.disembarkSession(session, {
       broadcast: true,
       lifecycleReason: "disembark",
@@ -2565,8 +2172,6 @@ function ejectSession(session, options = {}) {
       return capsuleMoveResult;
     }
 
-    sendPodOrCorvetteAssembly(session, capsuleMoveResult.data);
-
     const activeShipResult = setActiveShipForCharacter(
       session.characterID,
       capsuleMoveResult.data.itemID,
@@ -2574,6 +2179,21 @@ function ejectSession(session, options = {}) {
     if (!activeShipResult.success) {
       return activeShipResult;
     }
+
+    syncInventoryItemForSession(
+      session,
+      capsuleMoveResult.data,
+      {
+        locationID: capsuleMoveResult.previousData.locationID,
+        flagID: capsuleMoveResult.previousData.flagID,
+        quantity: capsuleMoveResult.previousData.quantity,
+        singleton: capsuleMoveResult.previousData.singleton,
+        stacksize: capsuleMoveResult.previousData.stacksize,
+      },
+      {
+        emitCfgLocation: false,
+      },
+    );
 
     const updateResult = updateCharacterRecord(session.characterID, (record) =>
       buildLocationIdentityPatch(record, currentSystemID, {
@@ -2622,36 +2242,7 @@ function ejectSession(session, options = {}) {
       inventoryBootstrapPending: false,
       hydrationProfile: "capsule",
     });
-    if (beforeSameSceneShipSwapNotificationPlanFlush) {
-      const hookResult = beforeSameSceneShipSwapNotificationPlanFlush({
-        session,
-        scene,
-        activeShip,
-        abandonedShipEntity,
-        capsuleEntity,
-        capsule: capsuleMoveResult.data,
-        currentSystemID,
-        notificationPlan: applyResult.notificationPlan,
-      });
-      if (hookResult && hookResult.success === false) {
-        return hookResult;
-      }
-    }
-    retargetCharacterSessionNotificationPlanShip(
-      applyResult.notificationPlan,
-      activeShip.itemID,
-      capsuleMoveResult.data.itemID,
-    );
-    flushSameSceneShipSwapNotificationPlan(
-      session,
-      applyResult.notificationPlan,
-      hasSameSceneShipSwapSessionId
-        ? { sessionId: options.sameSceneShipSwapSessionId }
-        : {},
-    );
-    sendShipCosmeticsChanged(session, activeShip.itemID);
-    sendShipCosmeticsChanged(session, capsuleMoveResult.data.itemID);
-    sendCurrentShipSkinChange(session, capsuleMoveResult.data.itemID);
+    flushSameSceneShipSwapNotificationPlan(session, applyResult.notificationPlan);
     repairSameSceneSessionViewState(session);
     const egoAddBallsStamp = resolveSameSceneEgoAddBallsStamp(scene, session);
     scene.sendAddBallsToSession(session, [capsuleEntity], {
@@ -2698,14 +2289,23 @@ function ejectSession(session, options = {}) {
       scene.syncDynamicVisibilityForAllSessions();
     }
 
-    if (sendEjectSpecialFx) {
-      sendEjectHandoffDestiny(
-        session,
-        scene,
-        abandonedShipEntity,
-        capsuleEntity,
-      );
-    }
+    scene.broadcastSpecialFx(activeShip.itemID, "effects.ShipEjector", {
+      targetID: capsuleMoveResult.data.itemID,
+      start: true,
+      active: false,
+      duration: 4000,
+      graphicInfo: {
+        poseID: 0,
+      },
+    }, abandonedShipEntity);
+    scene.broadcastSpecialFx(capsuleMoveResult.data.itemID, "effects.CapsuleFlare", {
+      start: true,
+      active: false,
+      duration: 4000,
+      graphicInfo: {
+        poseID: 0,
+      },
+    }, capsuleEntity);
 
     log.info(
       `[SpaceTransition] Ejected ${session.characterName || session.characterID} from ship=${activeShip.itemID} into capsule=${capsuleMoveResult.data.itemID} system=${currentSystemID}`,
@@ -2893,14 +2493,7 @@ function boardSpaceShip(session, shipID) {
       };
     }
 
-    retargetCharacterSessionNotificationPlanShip(
-      applyResult.notificationPlan,
-      currentShip.itemID,
-      targetShipID,
-    );
     flushSameSceneShipSwapNotificationPlan(session, applyResult.notificationPlan);
-    sendShipCosmeticsChanged(session, targetShipID);
-    sendShipCosmeticsChanged(session, currentShip.itemID);
     repairSameSceneSessionViewState(session);
     const egoAddBallsStamp = resolveSameSceneEgoAddBallsStamp(scene, session);
     if (!targetWasPreAcquired) {
@@ -2915,6 +2508,8 @@ function boardSpaceShip(session, shipID) {
         scene.flushDirectDestinyNotificationBatch();
       }
     }
+    scene.broadcastSlimItemChanges([boardedEntity]);
+    scene.broadcastBallRefresh([boardedEntity], session);
 
     let previousCapsuleConsumed = false;
     if (shouldConsumePreviousCapsule) {
@@ -2924,8 +2519,6 @@ function boardSpaceShip(session, shipID) {
         abandonedCurrentEntity,
         {
           stampOverride: resolveSameSceneEgoAddBallsStamp(scene, session),
-          previousLocationID: currentSystemID,
-          previousFlagID: 0,
         },
       );
       if (!capsuleConsumeResult.success) {
@@ -2936,13 +2529,6 @@ function boardSpaceShip(session, shipID) {
       } else {
         previousCapsuleConsumed = true;
       }
-    }
-
-    scene.broadcastSlimItemChanges([boardedEntity]);
-    scene.broadcastBallRefresh([boardedEntity], session);
-    sendShipCosmeticsChanged(session, targetShipID);
-    if (shouldConsumePreviousCapsule) {
-      sendShipCosmeticsChanged(session, currentShip.itemID);
     }
 
     scene.syncDynamicVisibilityForAllSessions();

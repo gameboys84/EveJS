@@ -60,33 +60,9 @@ function ensureTranscriptDir() {
 
 function readTlsCredentials() {
   if (!fs.existsSync(certPath) || !fs.existsSync(keyPath)) {
-    // Self-heal on a fresh checkout: generate a CA-signed XMPP TLS cert (and the
-    // shared CA, if missing) instead of refusing to start. The generated CA is
-    // what PlayerConnect distributes to players.
-    try {
-      const {
-        ensureXmppTlsCertificate,
-      } = require("../../_secondary/express/localTlsCertificate");
-      let commonName = "localhost";
-      try {
-        const { getXmppConnectHost } = require("./xmppConfig");
-        commonName = getXmppConnectHost() || "localhost";
-      } catch (hostError) {
-        commonName = "localhost";
-      }
-      ensureXmppTlsCertificate({
-        outCertPath: certPath,
-        outKeyPath: keyPath,
-        commonName,
-      });
-      log.info(
-        `[XMPP] Generated a self-signed TLS certificate at ${certDir} (first run).`,
-      );
-    } catch (error) {
-      throw new Error(
-        `Missing XMPP TLS certificate files at ${certDir} and auto-generation failed: ${error.message}`,
-      );
-    }
+    throw new Error(
+      `Missing XMPP TLS certificate files at ${certDir}`,
+    );
   }
 
   return {
@@ -202,21 +178,8 @@ function parsePlainAuth(xml) {
   }
 }
 
-// Golden bind: the real client requests resource `eveclient`
-// (`2124510715@tranquility.chat.eveonline.com/eveclient`). Honor the resource
-// the client asked for in its bind IQ, defaulting to the golden `eveclient`
-// value rather than a server-invented token.
 function buildBoundJid(client) {
-  const requestedResource = client && client.resource ? String(client.resource).trim() : "";
-  return buildXmppUserJid(
-    (client && client.userName) || "capsuleer",
-    requestedResource || "eveclient",
-  );
-}
-
-function extractBindResource(xml) {
-  const match = /<resource>([\s\S]*?)<\/resource>/i.exec(String(xml || ""));
-  return match ? decodeXml(match[1]).trim() : "";
+  return buildXmppUserJid(client.userName || "capsuleer", "evejs");
 }
 
 function nextMessageId() {
@@ -601,15 +564,11 @@ function getClientCharacterId(client, session = null) {
 }
 
 function buildOwnerInfo(charData, charId) {
-  const genderValue = charData.gender ?? charData.genderID ?? null;
   return JSON.stringify([
     charId,
     charData.characterName || String(charId),
     Number(charData.typeID || 1373),
-    // Golden serializes the eveowners gender column (info[3]) as a JSON boolean
-    // (e.g. `[2124382650, "heichi233", 1376, true, null]`); the client json.loads
-    // it into the DBTYPE_I2 gender column where true/false == 1/0.
-    Boolean(Number(genderValue)),
+    charData.gender ?? charData.genderID ?? null,
     charData.ownerNameID ?? null,
   ]);
 }
@@ -649,33 +608,19 @@ function getUserDataForJid(jid) {
   return getUserDataForCharacterId(charId);
 }
 
-// Golden renders an absent alliance/war-faction as the literal `None`
-// (`warfactionid=None allianceid=None`), not `0`. The client coerces both forms
-// via int(...) with ValueError -> 0, so `None` is tolerated identically.
-function renderEveUserDataId(value) {
-  const numeric = Number(value || 0);
-  return Number.isFinite(numeric) && numeric > 0 ? String(numeric) : "None";
-}
-
-// Golden `eve_user_data` attribute set/order is exactly
-// `info, corpid, role, warfactionid, allianceid` — with the character typeID
-// living in `info[2]` and NO standalone `typeid` attribute. Match it on both the
-// MUC-presence path and the `urn:xmpp:eve_user_data` IQ path (shared here).
 function buildEveUserDataElement(userData) {
   if (!userData) {
-    // Degenerate case: character not resolvable. Golden never emits corpid=0
-    // (the client rejects it and retries), so this only occurs for an unknown
-    // character; keep the golden attribute set/order without `typeid`.
-    return "<eve_user_data corpid='0' role='0' warfactionid='None' allianceid='None'/>";
+    return "<eve_user_data corpid='0' allianceid='0' warfactionid='0' typeid='1373' role='0'/>";
   }
 
   return [
     "<eve_user_data",
-    ` info='${escapeXml(userData.info)}'`,
-    ` corpid='${escapeXml(Number(userData.corporationID || 0))}'`,
+    ` corpid='${escapeXml(userData.corporationID)}'`,
+    ` allianceid='${escapeXml(userData.allianceID)}'`,
+    ` warfactionid='${escapeXml(userData.warFactionID)}'`,
+    ` typeid='${escapeXml(userData.typeID)}'`,
     ` role='${escapeXml(userData.role)}'`,
-    ` warfactionid='${renderEveUserDataId(userData.warFactionID)}'`,
-    ` allianceid='${renderEveUserDataId(userData.allianceID)}'`,
+    ` info='${escapeXml(userData.info)}'`,
     "/>",
   ].join("");
 }
@@ -2786,7 +2731,7 @@ function handleSocket(socket) {
     stage: "stream1",
     userName: "capsuleer",
     password: "",
-    boundJid: buildXmppUserJid("capsuleer", "eveclient"),
+    boundJid: buildXmppUserJid("capsuleer", "evejs"),
     nick: "capsuleer",
     lastRoomJid: "",
     localWelcomeSent: false,
@@ -2846,10 +2791,6 @@ function handleSocket(socket) {
 
       if (client.stage === "bind" && client.buffer.includes("<bind")) {
         const id = extractId(client.buffer);
-        const requestedResource = extractBindResource(client.buffer);
-        if (requestedResource) {
-          client.resource = requestedResource;
-        }
         client.boundJid = buildBoundJid(client);
         sendXml(
           client,
@@ -2901,10 +2842,8 @@ function startXmppStub() {
     },
     handleSocket,
   );
-  server.listen(config.xmppServerPort, config.xmppServerBindHost, () => {
-    log.success(
-      `[XMPP] stub chat listener running on ${config.xmppServerBindHost}:${config.xmppServerPort}`,
-    );
+  server.listen(config.xmppServerPort, "0.0.0.0", () => {
+    log.success(`[XMPP] stub chat listener running on port ${config.xmppServerPort}`);
   });
   server.on("error", (error) => {
     log.err(`[XMPP] stub server error: ${error.message}`);
@@ -2938,8 +2877,6 @@ module.exports = {
 };
 
 module.exports.__test__ = {
-  buildEveUserDataElement,
-  buildOwnerInfo,
   getRoomDescriptor,
   handleGroupMessage,
   handleJoinPresence,

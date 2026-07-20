@@ -260,7 +260,6 @@ function createBill({
   dueDateTime = null,
   externalID = -1,
   externalID2 = -1,
-  emitBillReceived = true,
 } = {}) {
   const normalizedDebtorID = normalizeOwnerID(debtorID);
   const normalizedCreditorID = normalizeOwnerID(creditorID);
@@ -289,9 +288,7 @@ function createBill({
 
   const createdBill = getBillRecord(createdBillID);
   if (createdBill) {
-    if (emitBillReceived !== false) {
-      notifyBillReceived(createdBill.debtorID, createdBill.billID);
-    }
+    notifyBillReceived(createdBill.debtorID, createdBill.billID);
     // CharBillMsg (9): persistent center row for a character debtor (corp/alliance
     // debtors are notified by their own issuing producers). Lazy-required to avoid
     // a load-time cycle through the notification/corporation services.

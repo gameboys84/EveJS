@@ -169,9 +169,17 @@ function createMovementStopSpeedCommands(deps = {}) {
             now,
             1,
           );
-      // TQ's CmdStop packet for the citadel-undock golden path contains only
-      // Stop(shipID); SetSpeedFraction(0) is a separate command family.
+      // CCP's server runs identical C++ physics to the client, so their
+      // SetBallVelocity on stop is a no-op confirmation.  Our JS physics
+      // drifts slightly from the client's C++ integration, and any velocity
+      // direction mismatch causes the client to snap the ship heading.
+      // Sending only SetSpeedFraction(0) + Stop lets the client decelerate
+      // smoothly from its own locally-computed velocity.
       const updates = [
+        {
+          stamp,
+          payload: destiny.buildSetSpeedFractionPayload(entity.itemID, 0),
+        },
         {
           stamp,
           payload: destiny.buildStopPayload(entity.itemID),

@@ -16,8 +16,6 @@ const {
   removeInventoryItem,
 } = require(path.join(__dirname, "../services/inventory/itemStore"));
 const {
-  emitFittingTransactionForSession,
-  emitItemsChangedBatchForSession,
   getCharacterRecord,
   getActiveShipRecord,
 } = require(path.join(__dirname, "../services/character/characterState"));
@@ -909,51 +907,6 @@ function destroyAttachedSessionCapsuleFallback(session, options = {}) {
   };
 }
 
-function emitShipDeathInventoryChangeForSession(session, change) {
-  if (!change || !change.item) {
-    return false;
-  }
-  return emitItemsChangedBatchForSession(session, [change], {
-    idType: "charid",
-  });
-}
-
-function emitShipDeathInventoryChangesForSession(session, changes = []) {
-  let emittedCount = 0;
-  for (const change of Array.isArray(changes) ? changes : []) {
-    if (emitShipDeathInventoryChangeForSession(session, change)) {
-      emittedCount += 1;
-    }
-  }
-  return emittedCount;
-}
-
-function emitDestroyedShipContentChangesForSession(
-  session,
-  destroyedShipID,
-  destroyData = {},
-  options = {},
-) {
-  if (!session || !destroyData) {
-    return 0;
-  }
-  const changes = [
-    ...(Array.isArray(destroyData.movedChanges) ? destroyData.movedChanges : []),
-    ...(Array.isArray(destroyData.destroyChanges) ? destroyData.destroyChanges : []),
-  ];
-  if (changes.length === 0) {
-    return 0;
-  }
-  if (
-    emitFittingTransactionForSession(session, destroyedShipID, changes, {
-      shipItem: options.shipRecord || null,
-    })
-  ) {
-    return changes.length;
-  }
-  return emitShipDeathInventoryChangesForSession(session, changes);
-}
-
 function destroySessionShip(session, options = {}) {
   if (!session || !session.characterID || !session._space) {
     return {
@@ -979,13 +932,6 @@ function destroySessionShip(session, options = {}) {
   }
 
   session.sessionChangeReason = options.sessionChangeReason || "selfdestruct";
-  const systemID = toPositiveInt(
-    session._space && session._space.systemID,
-    toPositiveInt(activeShip.locationID, 0),
-  );
-  let destroyResult = null;
-  let destructionScene = null;
-  let syncedDestroyedShipContentChangeCount = 0;
   const ejectResult = ejectSession(session, {
     // Combat destruction is not manual eject parity. Replaying the abandoned
     // hull back to the victim before we destroy it re-seeds the stale ship
@@ -994,63 +940,46 @@ function destroySessionShip(session, options = {}) {
     sendAbandonedShipSlimToVictim: false,
     refreshAbandonedShipViewForVictim: false,
     syncAllSessionsVisibilityAfterSwap: false,
-    sendEjectSpecialFx: false,
-    disconnectBoundObjectsBeforeSwap: true,
-    sameSceneShipSwapSessionId: 0n,
-    beforeSameSceneShipSwapNotificationPlanFlush({
-      scene,
-      abandonedShipEntity,
-    }) {
-      destructionScene = scene || null;
-      if (!scene || !abandonedShipEntity) {
-        destroyResult = {
-          success: false,
-          errorMsg: "ABANDONED_SHIP_NOT_FOUND",
-        };
-        return { success: true };
-      }
-      destroyResult = destroyShipEntityWithWreck(systemID, abandonedShipEntity, {
-        ownerCharacterID: session.characterID,
-        shipRecord: activeShip,
-        forceVisibleSessions: [session],
-      });
-      if (destroyResult.success) {
-        syncedDestroyedShipContentChangeCount =
-          emitDestroyedShipContentChangesForSession(
-            session,
-            activeShip.itemID,
-            destroyResult.data || {},
-            { shipRecord: activeShip },
-          );
-      }
-      return { success: true };
-    },
   });
   if (!ejectResult.success || !ejectResult.data) {
     return ejectResult;
   }
 
-  if (!destroyResult) {
+  const systemID = toPositiveInt(
+    session._space && session._space.systemID,
+    toPositiveInt(activeShip.locationID, 0),
+  );
+  const scene = spaceRuntime.ensureScene(systemID);
+  const abandonedEntity = scene ? scene.getEntityByID(activeShip.itemID) : null;
+  if (!scene || !abandonedEntity) {
     return {
       success: false,
-      errorMsg: "SHIP_DESTRUCTION_NOT_RUN",
+      errorMsg: "ABANDONED_SHIP_NOT_FOUND",
     };
   }
+
+  const destroyResult = destroyShipEntityWithWreck(systemID, abandonedEntity, {
+    ownerCharacterID: session.characterID,
+    shipRecord: activeShip,
+    forceVisibleSessions: [session],
+  });
   if (!destroyResult.success) {
     return destroyResult;
   }
 
-  const scene = destructionScene || spaceRuntime.ensureScene(systemID);
-  purgeDestroyedShipEntityFromScene(scene, activeShip.itemID);
+  const purgedStaleDestroyedEntity = purgeDestroyedShipEntityFromScene(
+    scene,
+    activeShip.itemID,
+  );
 
   const capsuleEntity =
-    scene && session && session._space
+    session && session._space
       ? scene.getEntityByID(toPositiveInt(session._space.shipID, 0))
       : null;
   if (capsuleEntity && session && session._space) {
     reseedDestroyedPilotSession(scene, session, capsuleEntity);
   }
-  if (scene && typeof scene.syncDynamicVisibilityForAllSessions === "function") {
+  if (purgedStaleDestroyedEntity) {
     scene.syncDynamicVisibilityForAllSessions(scene.getCurrentSimTimeMs());
   }
 
@@ -1063,8 +992,6 @@ function destroySessionShip(session, options = {}) {
       movedChanges: destroyResult.data.movedChanges,
       destroyChanges: destroyResult.data.destroyChanges,
       wreckChanges: destroyResult.data.wreckChanges,
-      destroyedShipContentChangesSyncedToSession: true,
-      syncedDestroyedShipContentChangeCount,
       boundResult: ejectResult.data.boundResult,
     },
   };

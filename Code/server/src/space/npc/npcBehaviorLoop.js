@@ -1629,17 +1629,6 @@ function isEntityInActiveWarp(entity) {
   );
 }
 
-function isEntityCloakedForCombatTargeting(entity) {
-  return toPositiveInt(
-    entity && (
-      entity.isCloaked ??
-      entity.cloakMode ??
-      entity.cloaked
-    ),
-    0,
-  ) > 0;
-}
-
 function isValidCombatTarget(entity, target, options = {}) {
   const isCapsuleTarget = isCapsuleEntity(target);
   const allowedCapsuleOwnerID = toPositiveInt(options.allowedCapsuleOwnerID, 0);
@@ -1666,7 +1655,6 @@ function isValidCombatTarget(entity, target, options = {}) {
     targetClass &&
     target.itemID !== entity.itemID &&
     !isEntityInActiveWarp(target) &&
-    !isEntityCloakedForCombatTargeting(target) &&
     !isFriendlyCombatTarget(entity, target) &&
     !isIgnoredInvulnerablePlayer(target) &&
     (

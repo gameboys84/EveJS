@@ -47,36 +47,8 @@ const assetSafetyState = require(path.join(
 ));
 
 const TYPE_OFFICE_RENTAL = 26;
-const OFFICE_TYPE_ID = 27;
 const OFFICE_RENTAL_PERIOD_DAYS = 30n;
 const FILETIME_TICKS_PER_DAY = 24n * 60n * 60n * 10000000n;
-
-function compareOfficeRentalBillsForProcessing(left, right) {
-  const leftDue = normalizeFileTime(left && left.dueDateTime, 0n);
-  const rightDue = normalizeFileTime(right && right.dueDateTime, 0n);
-  if (leftDue !== rightDue) {
-    return leftDue > rightDue ? 1 : -1;
-  }
-
-  const debtorDelta =
-    normalizePositiveInteger(left && left.debtorID, 0) -
-    normalizePositiveInteger(right && right.debtorID, 0);
-  if (debtorDelta !== 0) {
-    return debtorDelta;
-  }
-
-  const stationDelta =
-    normalizePositiveInteger(left && left.externalID2, 0) -
-    normalizePositiveInteger(right && right.externalID2, 0);
-  if (stationDelta !== 0) {
-    return stationDelta;
-  }
-
-  return (
-    normalizePositiveInteger(left && left.billID, 0) -
-    normalizePositiveInteger(right && right.billID, 0)
-  );
-}
 
 function filetimeLongData(value) {
   return {
@@ -106,46 +78,6 @@ function buildOfficeRentalBillNotificationData(bill) {
         ? Number(bill.externalID2) || -1
         : -1,
   };
-}
-
-function buildOfficeRentalBillIssuedNotificationData(bill, options = {}) {
-  return {
-    debtorID: normalizePositiveInteger(bill && bill.debtorID, 0),
-    creditorID: normalizePositiveInteger(bill && bill.creditorID, 0),
-    billTypeID: Number(bill && bill.billTypeID) || BILL_TYPE_RENTAL,
-    amount: Number(bill && bill.amount) || 0,
-    externalID2: normalizePositiveInteger(bill && bill.externalID2, 0),
-    externalID: OFFICE_TYPE_ID,
-    currentDate: filetimeLongData(
-      options.currentFileTime || options.baseFileTime || currentFileTime(),
-    ),
-    dueDate: filetimeLongData(bill && bill.dueDateTime),
-  };
-}
-
-function createOfficeRentalBillIssuedNotifications(bill, options = {}) {
-  const debtorCorporationID = normalizePositiveInteger(bill && bill.debtorID, 0);
-  if (!debtorCorporationID) {
-    return;
-  }
-  const data = buildOfficeRentalBillIssuedNotificationData(bill, options);
-  for (const characterID of [...new Set(getCharacterIDsInCorporation(debtorCorporationID))]) {
-    const result = createNotification(characterID, {
-      typeID: NOTIFICATION_TYPE.CORP_ALL_BILL,
-      senderID: data.creditorID,
-      groupID: NOTIFICATION_GROUP.BILLS,
-      processed: false,
-      data,
-      emitLive: options.emitLive !== false,
-    });
-    if (!result || result.success !== true) {
-      log.warn(
-        `[OfficeRentalBilling] Failed to create live rental bill notification ` +
-        `corporation=${debtorCorporationID} character=${characterID}: ` +
-        `${result && result.errorMsg ? result.errorMsg : "UNKNOWN"}`,
-      );
-    }
-  }
 }
 
 function createStructureOfficeRentalBillNotifications(bill) {
@@ -254,7 +186,6 @@ function createNextStructureOfficeRentalBill(
     dueDateTime: String(addOfficeRentalPeriod(options.baseFileTime || currentFileTime())),
     externalID: TYPE_OFFICE_RENTAL,
     externalID2: stationID,
-    emitBillReceived: false,
   });
   if (bill) {
     createStructureOfficeRentalBillNotifications(bill);
@@ -282,7 +213,7 @@ function createNextOfficeRentalBill(corporationID, stationID, rentalCost, option
   if (!creditorID) {
     return null;
   }
-  const bill = createBill({
+  return createBill({
     billTypeID: BILL_TYPE_RENTAL,
     amount,
     debtorID: corporationID,
@@ -290,12 +221,7 @@ function createNextOfficeRentalBill(corporationID, stationID, rentalCost, option
     dueDateTime: String(addOfficeRentalPeriod(options.baseFileTime || currentFileTime())),
     externalID: TYPE_OFFICE_RENTAL,
     externalID2: stationID,
-    emitBillReceived: false,
   });
-  if (bill) {
-    createOfficeRentalBillIssuedNotifications(bill, options);
-  }
-  return bill;
 }
 
 function cancelOfficeRentalBillsForOffice(corporationID, stationID) {
@@ -345,14 +271,9 @@ function updateOfficeAfterPaidBill(office, bill, nextBill) {
     if (!currentOffice) {
       return runtimeTable;
     }
+    currentOffice.expiryDate = String(addOfficeRentalPeriod(bill.dueDateTime));
     if (nextBill) {
-      currentOffice.billID = Number(nextBill.billID) || currentOffice.billID || null;
-      currentOffice.dueDate = String(nextBill.dueDateTime || currentOffice.dueDate);
-      currentOffice.expiryDate = currentOffice.dueDate;
       currentOffice.rentalCost = Number(nextBill.amount || currentOffice.rentalCost || 0);
-    } else {
-      currentOffice.expiryDate = String(addOfficeRentalPeriod(bill.dueDateTime));
-      currentOffice.dueDate = currentOffice.expiryDate;
     }
     return runtimeTable;
   });
@@ -397,7 +318,7 @@ function removeStructureOfficeForUnpaidBill(office, structure, options = {}) {
   return removed;
 }
 
-function impoundStationOfficeForUnpaidBill(office, options = {}) {
+function impoundStationOfficeForUnpaidBill(office) {
   const corporationID = normalizePositiveInteger(office && office.corporationID, 0);
   const officeID = normalizePositiveInteger(office && office.officeID, 0);
   if (!corporationID || !officeID) {
@@ -415,9 +336,7 @@ function impoundStationOfficeForUnpaidBill(office, options = {}) {
       return runtimeTable;
     }
     currentOffice.impounded = true;
-    const impoundedAt = String(options.nowFileTime || currentFileTime());
-    currentOffice.expiryDate = impoundedAt;
-    currentOffice.dueDate = impoundedAt;
+    currentOffice.expiryDate = String(currentFileTime());
     impounded = true;
     return runtimeTable;
   });
@@ -427,7 +346,7 @@ function impoundStationOfficeForUnpaidBill(office, options = {}) {
   return impounded;
 }
 
-function processPaidOfficeRentalBill(bill, office, structure, options = {}) {
+function processPaidOfficeRentalBill(bill, office, structure) {
   const nextAmount = getCurrentOfficeRentalCost(office, structure);
   const nextBill = structure
     ? createNextStructureOfficeRentalBill(
@@ -437,21 +356,19 @@ function processPaidOfficeRentalBill(bill, office, structure, options = {}) {
         nextAmount,
         {
           baseFileTime: bill.dueDateTime,
-          emitLive: options.emitLive,
         },
       )
-    : createNextOfficeRentalBill(
-        bill.debtorID,
-        bill.externalID2,
-        nextAmount,
-        {
-          baseFileTime: bill.dueDateTime,
-          emitLive: options.emitLive,
-        },
-      );
+    : createBill({
+        billTypeID: BILL_TYPE_RENTAL,
+        amount: nextAmount,
+        debtorID: bill.debtorID,
+        creditorID: bill.creditorID,
+        dueDateTime: String(addOfficeRentalPeriod(bill.dueDateTime)),
+        externalID: TYPE_OFFICE_RENTAL,
+        externalID2: bill.externalID2,
+      });
   updateOfficeAfterPaidBill(office, bill, nextBill);
   markBillProcessed(bill.billID, "renewed", {
-    processedDateTime: options.nowFileTime,
     renewedBillID: nextBill ? nextBill.billID : 0,
   });
   return {
@@ -466,7 +383,7 @@ function processPaidOfficeRentalBill(bill, office, structure, options = {}) {
 function processUnpaidOfficeRentalBill(bill, office, structure, options = {}) {
   const removed = structure
     ? removeStructureOfficeForUnpaidBill(office, structure, options)
-    : impoundStationOfficeForUnpaidBill(office, options);
+    : impoundStationOfficeForUnpaidBill(office);
   if (!removed) {
     return {
       billID: bill.billID,
@@ -475,9 +392,7 @@ function processUnpaidOfficeRentalBill(bill, office, structure, options = {}) {
       action: "blocked",
     };
   }
-  markBillProcessed(bill.billID, "defaulted", {
-    processedDateTime: options.nowFileTime,
-  });
+  markBillProcessed(bill.billID, "defaulted");
   return {
     billID: bill.billID,
     officeID: office.officeID,
@@ -491,14 +406,12 @@ function processDueOfficeRentalBills(options = {}) {
     nowFileTime: options.nowFileTime || currentFileTime(),
     billTypeID: BILL_TYPE_RENTAL,
     externalID: TYPE_OFFICE_RENTAL,
-  }).sort(compareOfficeRentalBillsForProcessing);
+  });
   const processed = [];
   for (const dueBill of dueBills) {
     const office = findCorporationOfficeForBill(dueBill);
     if (!office) {
-      markBillProcessed(dueBill.billID, "orphaned", {
-        processedDateTime: options.nowFileTime,
-      });
+      markBillProcessed(dueBill.billID, "orphaned");
       processed.push({
         billID: dueBill.billID,
         action: "orphaned",
@@ -514,7 +427,7 @@ function processDueOfficeRentalBills(options = {}) {
     }
 
     if (bill.paid) {
-      processed.push(processPaidOfficeRentalBill(bill, office, structure, options));
+      processed.push(processPaidOfficeRentalBill(bill, office, structure));
       continue;
     }
 

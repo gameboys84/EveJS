@@ -151,9 +151,8 @@ function buildDbRowset(
   columns = [],
   rows = [],
   name = "eve.common.script.sys.rowset.Rowset",
-  virtualColumns = [],
 ) {
-  const descriptor = buildPackedRowDescriptor(columns, virtualColumns);
+  const descriptor = buildPackedRowDescriptor(columns);
   const normalizedRows = Array.isArray(rows) ? rows : [];
 
   if (name === "carbon.common.script.sys.crowset.CRowset") {
@@ -180,83 +179,6 @@ function buildDbRowset(
       ["lines", buildList(normalizedRows)],
     ]),
   };
-}
-
-function findRowsetColumnIndex(columns = [], keyColumn = null) {
-  if (!keyColumn) {
-    return -1;
-  }
-  return (Array.isArray(columns) ? columns : []).findIndex(
-    ([columnName]) => columnName === keyColumn,
-  );
-}
-
-function getIndexedRowKey(entry, row, columns = [], keyColumn = null) {
-  if (Array.isArray(entry) && entry.length >= 2) {
-    return entry[0];
-  }
-
-  const keyIndex = findRowsetColumnIndex(columns, keyColumn);
-  if (Array.isArray(row) && keyIndex >= 0) {
-    return row[keyIndex];
-  }
-  if (row && typeof row === "object") {
-    if (Object.prototype.hasOwnProperty.call(row, keyColumn)) {
-      return row[keyColumn];
-    }
-    if (row.fields && Object.prototype.hasOwnProperty.call(row.fields, keyColumn)) {
-      return row.fields[keyColumn];
-    }
-    if (Array.isArray(row.values) && keyIndex >= 0) {
-      return row.values[keyIndex];
-    }
-  }
-
-  return null;
-}
-
-function buildDbIndexRowset(
-  columns = [],
-  keyedRows = [],
-  keyColumn = null,
-  name = "carbon.common.script.sys.crowset.CIndexedRowset",
-  virtualColumns = [],
-) {
-  const descriptor = buildPackedRowDescriptor(columns, virtualColumns);
-  const normalizedRows = Array.isArray(keyedRows) ? keyedRows : [];
-
-  if (name === "carbon.common.script.sys.crowset.CIndexedRowset") {
-    const dictRows = normalizedRows
-      .map((entry) => {
-        const row = Array.isArray(entry) && entry.length >= 2 ? entry[1] : entry;
-        return [
-          getIndexedRowKey(entry, row, columns, keyColumn),
-          buildPackedRowFromRowsetLine(columns, descriptor, row),
-        ];
-      })
-      .filter(([key]) => key !== null && key !== undefined);
-
-    return {
-      type: "objectex2",
-      header: [
-        [{ type: "token", value: name }],
-        buildDict([
-          ["header", descriptor],
-          ["idName", keyColumn],
-          ["columnName", keyColumn],
-        ]),
-      ],
-      list: [],
-      dict: dictRows,
-    };
-  }
-
-  return buildIndexRowset(
-    columns.map(([columnName]) => columnName),
-    normalizedRows,
-    keyColumn,
-    name,
-  );
 }
 
 function buildIndexRowset(
@@ -831,7 +753,6 @@ module.exports = {
   buildPackedRowDescriptor,
   buildPackedRow,
   buildDbRowset,
-  buildDbIndexRowset,
   buildIndexRowset,
   buildPagedResultSet,
   buildPythonSet,

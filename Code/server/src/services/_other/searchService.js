@@ -21,10 +21,6 @@ const {
 const {
   listAgents,
 } = require(path.join(__dirname, "../agent/agentAuthority"));
-const {
-  TABLE,
-  readStaticRows,
-} = require(path.join(__dirname, "../_shared/referenceData"));
 
 const MATCH_BY = {
   PARTIAL_TERMS: 0,
@@ -43,7 +39,6 @@ const RESULT_TYPE = {
   SOLAR_SYSTEM: 7,
   REGION: 8,
   STATION: 9,
-  ITEM_TYPE: 10,
 };
 
 const MAX_RESULT_COUNT = 500;
@@ -96,15 +91,14 @@ function appendMapListEntry(map, key, value) {
 }
 
 function getStaticGroupSourceRows(groupID) {
+  const world = worldData.ensureLoaded();
   switch (Number(groupID) || 0) {
     case RESULT_TYPE.SOLAR_SYSTEM:
-      return worldData.ensureLoaded().solarSystems;
+      return world.solarSystems;
     case RESULT_TYPE.STATION:
     case RESULT_TYPE.CONSTELLATION:
     case RESULT_TYPE.REGION:
-      return worldData.ensureLoaded().stations;
-    case RESULT_TYPE.ITEM_TYPE:
-      return readStaticRows(TABLE.ITEM_TYPES);
+      return world.stations;
     default:
       return null;
   }
@@ -120,8 +114,6 @@ function getStaticGroupEntryName(groupID, row) {
       return String(row && row.constellationName || "");
     case RESULT_TYPE.REGION:
       return String(row && row.regionName || "");
-    case RESULT_TYPE.ITEM_TYPE:
-      return String(row && (row.name || row.typeName) || "");
     default:
       return "";
   }
@@ -137,8 +129,6 @@ function getStaticGroupEntryID(groupID, row) {
       return Number(row && row.constellationID) || 0;
     case RESULT_TYPE.REGION:
       return Number(row && row.regionID) || 0;
-    case RESULT_TYPE.ITEM_TYPE:
-      return Number(row && row.typeID) || 0;
     default:
       return 0;
   }

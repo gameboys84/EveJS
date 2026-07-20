@@ -323,17 +323,6 @@ function toFiniteNumber(value, fallback = 0) {
   return Number.isFinite(numeric) ? numeric : fallback;
 }
 
-function isCloakedTargetEntity(entity) {
-  return toInt(
-    entity && (
-      entity.isCloaked ??
-      entity.cloakMode ??
-      entity.cloaked
-    ),
-    0,
-  ) > 0;
-}
-
 function roundNumber(value, digits = 6) {
   return Number(toFiniteNumber(value, 0).toFixed(digits));
 }
@@ -890,13 +879,6 @@ function resolveHostileModuleActivation({
       errorMsg: "TARGET_NOT_FOUND",
     };
   }
-  if (isCloakedTargetEntity(targetEntity)) {
-    return {
-      matched: true,
-      success: false,
-      errorMsg: "TARGET_NOT_FOUND",
-    };
-  }
 
   if (
     !callbacks.isEntityLockedTarget ||
@@ -1215,13 +1197,6 @@ function executeHostileModuleCycle({
       ? callbacks.getEntityByID(toInt(effectState.targetID, 0))
       : scene.getEntityByID(toInt(effectState.targetID, 0));
   if (!targetEntity || targetEntity.kind !== "ship") {
-    return {
-      success: false,
-      errorMsg: "TARGET_NOT_FOUND",
-      stopReason: "target",
-    };
-  }
-  if (isCloakedTargetEntity(targetEntity)) {
     return {
       success: false,
       errorMsg: "TARGET_NOT_FOUND",

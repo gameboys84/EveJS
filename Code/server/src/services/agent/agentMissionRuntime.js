@@ -21,8 +21,6 @@ const {
 const {
   getMissionByID,
   getMissionArcInfo,
-  isMissionOfferAllowedForAgent,
-  isOrdinarySecurityAgent,
   isSupportedLevelOneClientDungeonID,
   listMissionIDsByTemplate,
   listMissionIDsForAgent: listClientMissionIDsForAgent,
@@ -359,6 +357,16 @@ function getDungeonMissionTemplateRecord(missionRecord = null) {
 }
 
 function getMissionInstanceTemplateRecord(missionRecord = null) {
+  // TEMP DEBUG HOOK (EveAnomUtility content testing): when EVEJS_FORCE_MISSION_TEMPLATE is set, every
+  // mission that materializes a dungeon is forced to that template id (e.g. "eve-survival:Score1gu"), so any
+  // security agent serves the authored mission. Unset the env var to disable. Safe to delete this block.
+  const forcedTemplateID = normalizeText(process.env.EVEJS_FORCE_MISSION_TEMPLATE, "");
+  if (forcedTemplateID) {
+    const forcedTemplate = getMissionTemplateRecord(forcedTemplateID);
+    if (forcedTemplate) {
+      return forcedTemplate;
+    }
+  }
   const runtimeMissionTemplate = getRuntimeMissionTemplateRecord(missionRecord);
   if (
     runtimeMissionTemplate &&
@@ -4011,7 +4019,9 @@ function buildMissionRecord(
       objectiveMode === OBJECTIVE_TYPE_DUNGEON
         ? // The retail client's GetDungeon() only resolves real catalog dungeon ids; a synthetic/placeholder
           // id returns None and crashes agentDialogueUtil._ProcessDungeonData (empty agent window). Prefer
-          // the matched template's source dungeon, then the mission's authoritative catalog dungeon.
+          // the mission's authoritative catalog dungeon (killMission.dungeonID), then the matched template's
+          // source dungeon, before the placeholder. EVEJS_FORCE_MISSION_DUNGEON_ID remains for ad-hoc tests.
+          normalizePositiveInteger(process.env.EVEJS_FORCE_MISSION_DUNGEON_ID, 0) ||
           normalizePositiveInteger(runtimeMissionTemplate && runtimeMissionTemplate.sourceDungeonID, 0) ||
           normalizePositiveInteger(
             clientMissionRecord &&
@@ -4453,6 +4463,7 @@ function buildMissionObjectivePayload(agentRecord, missionRecord, missionTemplat
         // window). Resolve a REAL catalog dungeon id at render time: the stored id only if it's already a
         // real catalog id, else the matched dungeon template's source, else the mission's authoritative
         // killMission dungeon, else the placeholder.
+        normalizePositiveInteger(process.env.EVEJS_FORCE_MISSION_DUNGEON_ID, 0) ||
         (normalizePositiveInteger(missionRecord.dungeonID, 0) < PLACEHOLDER_DUNGEON_ID_OFFSET
           ? normalizePositiveInteger(missionRecord.dungeonID, 0)
           : 0) ||
@@ -4820,7 +4831,7 @@ function offerMission(characterID, agentRecord) {
     const forcedMissionID = normalizePositiveInteger(process.env.EVEJS_FORCE_MISSION_ID, 0);
     if (forcedMissionID) {
       const forcedClientMission = getMissionByID(forcedMissionID);
-      if (isMissionOfferAllowedForAgent(agentRecord, forcedClientMission)) {
+      if (forcedClientMission) {
         const forcedRecord = buildMissionRecord(
           state,
           characterState,
@@ -4835,11 +4846,7 @@ function offerMission(characterID, agentRecord) {
       }
     }
 
-    // Ordinary Security agents must be backed by an allowlisted client mission.
-    // Their scraped template pools are intentionally not a fallback offer source.
-    const pool = isOrdinarySecurityAgent(agentRecord)
-      ? []
-      : getMissionTemplatePool(normalizedAgentID);
+    const pool = getMissionTemplatePool(normalizedAgentID);
     const availableClientMission = pickMissionForAgent(agentRecord, normalizeInteger(
       characterState.missionSelectionCursorByAgentID[String(normalizedAgentID)],
       0,
@@ -4958,7 +4965,9 @@ function acceptMission(characterID, agentRecord) {
       `missionSiteID=${normalizePositiveInteger(preparedMissionRecord && preparedMissionRecord.missionSiteID, 0)} ` +
       `runtimeTemplateID="${normalizeText(getMissionInstanceTemplateRecord(preparedMissionRecord) && getMissionInstanceTemplateRecord(preparedMissionRecord).templateID, "")}" ` +
       `pos=${dbgPos ? `${Math.round(dbgPos.x)},${Math.round(dbgPos.y)},${Math.round(dbgPos.z)}` : "none"} ` +
-      `forceID=${normalizePositiveInteger(process.env.EVEJS_FORCE_MISSION_ID, 0)}`,
+      `forceID=${normalizePositiveInteger(process.env.EVEJS_FORCE_MISSION_ID, 0)} ` +
+      `forceTemplate="${normalizeText(process.env.EVEJS_FORCE_MISSION_TEMPLATE, "")}" ` +
+      `forceDungeon=${normalizePositiveInteger(process.env.EVEJS_FORCE_MISSION_DUNGEON_ID, 0)}`,
     );
   } catch (debugError) {
     log.warn(`[MissionDebug] accept logging failed: ${debugError.message}`);

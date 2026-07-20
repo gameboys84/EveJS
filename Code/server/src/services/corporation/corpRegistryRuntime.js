@@ -4,7 +4,6 @@ const BaseService = require(path.join(__dirname, "../baseService"));
 const log = require(path.join(__dirname, "../../utils/logger"));
 const {
   buildBoundObjectResponse,
-  buildDbIndexRowset,
   buildDbRowset,
   buildDict,
   buildFiletimeLong,
@@ -17,12 +16,6 @@ const {
   currentFileTime,
   extractList,
 } = require(path.join(__dirname, "../_shared/serviceHelpers"));
-const {
-  buildCachedMethodCallResult,
-} = require(path.join(__dirname, "../cache/objectCacheRuntime"));
-const {
-  findSessionByCharacterID,
-} = require(path.join(__dirname, "../chat/sessionRegistry"));
 const {
   getCharacterRecord,
 } = require(path.join(__dirname, "../character/characterState"));
@@ -71,7 +64,6 @@ const {
   updateRuntimeState,
   createAllianceWithRuntime,
   createCorporationWithRuntime,
-  deleteCorporationWithRuntime,
   setCorporationAlliance,
   syncMemberStateToCharacterRecord,
 } = require(path.join(__dirname, "./corporationRuntimeState"));
@@ -87,10 +79,8 @@ const {
 } = require(path.join(__dirname, "./corpMemberQueryState"));
 const {
   adjustCorporationWalletDivisionBalance,
-  getCorporationWalletDivisionsInfo,
   getCorporationWalletBalance,
   normalizeCorporationWalletKey,
-  setCorporationWalletDivisionBalance,
 } = require(path.join(__dirname, "./corpWalletState"));
 const {
   buildCorporationAllianceApplicationsIndexRowset,
@@ -106,6 +96,7 @@ const {
   getCharacterAllyBaseCost,
 } = require(path.join(__dirname, "./warCostState"));
 const {
+  buildKillmailPayload,
   listKillmailsForCorporation,
 } = require(path.join(__dirname, "../killmail/killmailState"));
 const {
@@ -134,11 +125,8 @@ const {
   notifyAllianceMemberChanged,
   notifyCorporationApplicationChanged,
   notifyCorporationChanged,
-  notifyCorporationLiquidationShareTransfer,
   notifyCorporationMemberChanged,
-  notifyCorporationRemoved,
   notifyCorporationWelcomeMailChanged,
-  refreshCharacterSession,
 } = require(path.join(__dirname, "./corporationNotifications"));
 const {
   notifyCorporationApplicationAccepted,
@@ -151,7 +139,6 @@ const {
 } = require(path.join(__dirname, "./corpApplicationNotifications"));
 const {
   notifyCorporationDividendPaid,
-  notifyCorporationLiquidation,
   notifyCorporationMemberKicked,
   notifyCorporationMemberLeft,
   notifyCorporationNewCeo,
@@ -185,24 +172,26 @@ const MEMBER_HEADER = [
 const MEMBER_DBROW_COLUMNS = [
   ["characterID", 0x03],
   ["corporationID", 0x03],
+  ["startDate", 0x40],
+  ["title", 0x82],
   ["divisionID", 0x03],
   ["squadronID", 0x03],
-  ["title", 0x82],
   ["roles", 0x40],
   ["grantableRoles", 0x40],
-  ["startDateTime", 0x40],
-  ["baseID", 0x03],
   ["rolesAtHQ", 0x40],
   ["grantableRolesAtHQ", 0x40],
   ["rolesAtBase", 0x40],
   ["grantableRolesAtBase", 0x40],
   ["rolesAtOther", 0x40],
   ["grantableRolesAtOther", 0x40],
+  ["baseID", 0x03],
   ["titleMask", 0x03],
+  ["blockRoles", 0x40],
   ["accountKey", 0x03],
-  ["rowDate", 0x40],
-  ["blockRoles", 0x0b],
-  ["ownerName", 0x82],
+  ["isCEO", 0x03],
+  ["lastOnline", 0x40],
+  ["locationID", 0x03],
+  ["shipTypeID", 0x03],
 ];
 const TITLE_HEADER = [
   "titleID",
@@ -215,18 +204,6 @@ const TITLE_HEADER = [
   "grantableRolesAtBase",
   "rolesAtOther",
   "grantableRolesAtOther",
-];
-const TITLE_DBROW_COLUMNS = [
-  ["titleID", 0x03],
-  ["titleName", 0x82],
-  ["roles", 0x14],
-  ["grantableRoles", 0x14],
-  ["rolesAtHQ", 0x14],
-  ["grantableRolesAtHQ", 0x14],
-  ["rolesAtBase", 0x14],
-  ["grantableRolesAtBase", 0x14],
-  ["rolesAtOther", 0x14],
-  ["grantableRolesAtOther", 0x14],
 ];
 const BULLETIN_HEADER = [
   "bulletinID",
@@ -241,45 +218,12 @@ const BULLETIN_HEADER = [
 const BULLETIN_DBROW_COLUMNS = [
   ["bulletinID", 0x03],
   ["ownerID", 0x03],
-  ["createCharacterID", 0x03],
   ["createDateTime", 0x40],
-  ["editCharacterID", 0x03],
   ["editDateTime", 0x40],
+  ["editCharacterID", 0x03],
   ["title", 0x82],
   ["body", 0x82],
   ["sortOrder", 0x03],
-];
-const LABEL_DBROW_COLUMNS = [
-  ["labelID", 0x14],
-  ["name", 0x82],
-  ["color", 0x03],
-];
-const KILLMAIL_DBROW_COLUMNS = [
-  ["killID", 0x03],
-  ["solarSystemID", 0x03],
-  ["victimCharacterID", 0x03],
-  ["victimCorporationID", 0x03],
-  ["victimAllianceID", 0x03],
-  ["victimFactionID", 0x03],
-  ["victimShipTypeID", 0x03],
-  ["finalCharacterID", 0x03],
-  ["finalCorporationID", 0x03],
-  ["finalAllianceID", 0x03],
-  ["finalFactionID", 0x03],
-  ["finalShipTypeID", 0x03],
-  ["finalWeaponTypeID", 0x03],
-  ["killBlob", 0x82],
-  ["killTime", 0x40],
-  ["victimDamageTaken", 0x03],
-  ["finalSecurityStatus", 0x05],
-  ["finalDamageDone", 0x03],
-  ["moonID", 0x03],
-  ["warID", 0x03],
-  ["iskLost", 0x06],
-  ["bountyClaimed", 0x06],
-  ["loyaltyPoints", 0x03],
-  ["iskDestroyed", 0x06],
-  ["killRightSupplied", 0x03],
 ];
 const OWNER_HEADER = [
   "ownerID",
@@ -671,229 +615,6 @@ function moveCharacterToCorporation(
   };
 }
 
-function sendResignCeoHqClearSessionChange(characterID) {
-  const session = findSessionByCharacterID(characterID);
-  if (!session || typeof session.sendSessionChange !== "function") {
-    return false;
-  }
-  const previousHqID = session.hqID ?? null;
-  if (previousHqID === null || previousHqID === undefined) {
-    return false;
-  }
-  session.hqID = null;
-  session.sendSessionChange({
-    hqID: [previousHqID, null],
-  });
-  return true;
-}
-
-function drainCorporationWalletsForLiquidation(corporationID) {
-  let totalPayout = 0;
-  for (const division of getCorporationWalletDivisionsInfo(corporationID)) {
-    const accountKey = normalizeCorporationWalletKey(division && division.key);
-    const balance = roundIsk(division && division.balance);
-    if (balance > 0) {
-      totalPayout = roundIsk(totalPayout + balance);
-    }
-    setCorporationWalletDivisionBalance(corporationID, accountKey, 0, {
-      entryTypeID: JOURNAL_ENTRY_TYPE.PLAYER_DONATION,
-      ownerID1: corporationID,
-      ownerID2: 0,
-      referenceID: corporationID,
-      description: "Corporation liquidation",
-    });
-  }
-  return totalPayout;
-}
-
-function transferLiquidationSharesToCharacter(corporationID, characterID) {
-  const runtime = getCorporationRuntime(corporationID) || {};
-  const shares = runtime.shares && typeof runtime.shares === "object"
-    ? runtime.shares
-    : {};
-  const corporationShares = Math.max(
-    0,
-    normalizeInteger(shares[String(corporationID)], 0),
-  );
-  if (corporationShares <= 0) {
-    return 0;
-  }
-
-  updateCorporationRuntime(corporationID, (nextRuntime) => {
-    nextRuntime.shares =
-      nextRuntime.shares && typeof nextRuntime.shares === "object"
-        ? nextRuntime.shares
-        : {};
-    delete nextRuntime.shares[String(corporationID)];
-    nextRuntime.shares[String(characterID)] =
-      normalizeInteger(nextRuntime.shares[String(characterID)], 0) +
-      corporationShares;
-    return nextRuntime;
-  });
-  notifyCorporationLiquidationShareTransfer(
-    corporationID,
-    characterID,
-    corporationShares,
-  );
-  return corporationShares;
-}
-
-function payLiquidationPayoutToCharacter(corporationID, characterID, amount) {
-  const payout = roundIsk(amount);
-  if (payout > 0) {
-    adjustCharacterBalance(characterID, payout, {
-      description: "Corporation liquidation",
-      ownerID1: corporationID,
-      ownerID2: characterID,
-      referenceID: corporationID,
-      entryTypeID: JOURNAL_ENTRY_TYPE.PLAYER_DONATION,
-    });
-  }
-  notifyCorporationLiquidation(corporationID, characterID, payout);
-  return payout;
-}
-
-function moveResigningCeoToFallbackCorporation({
-  characterID,
-  fromCorporationID,
-  toCorporationID,
-}) {
-  const targetCorporation = getCorporationRecord(toCorporationID);
-  if (!targetCorporation) {
-    return {
-      success: false,
-      errorMsg: "TARGET_CORPORATION_NOT_FOUND",
-    };
-  }
-
-  const affiliationResult = setCharacterAffiliation(
-    characterID,
-    targetCorporation.corporationID,
-    targetCorporation.allianceID || null,
-  );
-  if (!affiliationResult.success) {
-    return affiliationResult;
-  }
-
-  updateCorporationRuntime(fromCorporationID, (runtime) => {
-    if (runtime.members && typeof runtime.members === "object") {
-      delete runtime.members[String(characterID)];
-    }
-    return runtime;
-  });
-  ensureCharacterMemberState(targetCorporation.corporationID, characterID);
-  syncMemberStateToCharacterRecord(targetCorporation.corporationID, characterID);
-
-  return {
-    success: true,
-    data: {
-      characterID,
-      corporationID: targetCorporation.corporationID,
-      allianceID: targetCorporation.allianceID || null,
-    },
-  };
-}
-
-function refreshResignedCeoSession(characterID) {
-  refreshCharacterSession(characterID, {
-    sessionChangeKeys: [
-      "corpid",
-      "corpAccountKey",
-      "hqID",
-      "corprole",
-      "rolesAtAll",
-      "rolesAtBase",
-      "rolesAtHQ",
-      "rolesAtOther",
-    ],
-    deferCorpAccountKey: true,
-    clearCorpAccountKey: true,
-    includeRoleChanges: true,
-    suppressCorpAccountKeyWithCorpChange: false,
-    selectionEvent: false,
-    emitNotifications: true,
-    logSelection: false,
-    inventoryBootstrap: false,
-  });
-}
-
-function liquidateCorporationForResigningCeo(corporationID, characterID) {
-  const corporationRecord = getCorporationRecord(corporationID);
-  if (!corporationRecord || corporationRecord.isNPC) {
-    return {
-      success: false,
-      errorMsg: "CORPORATION_NOT_FOUND",
-    };
-  }
-  const targetCorporationID = resolveFallbackCorporationID(characterID);
-  const targetCorporation = getCorporationRecord(targetCorporationID);
-  if (!targetCorporation) {
-    return {
-      success: false,
-      errorMsg: "TARGET_CORPORATION_NOT_FOUND",
-    };
-  }
-
-  const previousCorporation = buildCorporationSnapshot(corporationID);
-  const previousFromMember = buildCorporationMemberSnapshot(
-    corporationID,
-    characterID,
-  );
-  const previousToMember = buildCorporationMemberSnapshot(
-    targetCorporation.corporationID,
-    characterID,
-  );
-
-  transferLiquidationSharesToCharacter(corporationID, characterID);
-  const payout = drainCorporationWalletsForLiquidation(corporationID);
-  payLiquidationPayoutToCharacter(corporationID, characterID, payout);
-  notifyCorporationRemoved(corporationID, previousCorporation, {
-    clientCharacterIDs: [characterID],
-  });
-  sendResignCeoHqClearSessionChange(characterID);
-
-  const moveResult = moveResigningCeoToFallbackCorporation({
-    characterID,
-    fromCorporationID: corporationID,
-    toCorporationID: targetCorporation.corporationID,
-  });
-  if (!moveResult.success) {
-    return moveResult;
-  }
-
-  refreshResignedCeoSession(characterID);
-  notifyCorporationMemberChanged(corporationID, characterID, previousFromMember, {
-    idTypes: ["corpid", "clientID"],
-    clientCharacterIDs: [characterID],
-    refreshSession: false,
-  });
-  notifyCorporationMemberChanged(
-    targetCorporation.corporationID,
-    characterID,
-    previousToMember,
-    {
-      idTypes: ["corpid", "clientID"],
-      clientCharacterIDs: [characterID],
-      refreshSession: false,
-    },
-  );
-
-  const deleteResult = deleteCorporationWithRuntime(corporationID);
-  if (!deleteResult.success) {
-    return deleteResult;
-  }
-
-  return {
-    success: true,
-    data: {
-      corporationID,
-      characterID,
-      fallbackCorporationID: targetCorporation.corporationID,
-      payout,
-    },
-  };
-}
-
 function archiveApplication(runtime, application, overrides = {}) {
   const archivedApplication = { ...application, ...overrides };
   runtime.applicationHistory = Array.isArray(runtime.applicationHistory)
@@ -1061,40 +782,35 @@ function buildCorporationKeyVal(corporationID) {
 }
 
 function buildMemberRow(member) {
-  const characterID = Number(member.characterID || 0);
-  const characterRecord = characterID ? getCharacterRecord(characterID) || {} : {};
-  const ownerRecord = getOwnerLookupRecord(characterID) || {};
   return buildPackedRow(MEMBER_DBROW_COLUMNS, {
-    characterID,
+    characterID: Number(member.characterID || 0),
     corporationID: Number(member.corporationID || 0),
+    startDate: member.startDate || "0",
+    title: member.title || "",
     divisionID: Number(member.divisionID || 0),
     squadronID: Number(member.squadronID || 0),
-    title: member.title || "",
     roles: toRoleMaskBigInt(member.roles, 0n),
     grantableRoles: toRoleMaskBigInt(member.grantableRoles, 0n),
-    startDateTime: member.startDate || "0",
-    baseID: member.baseID || null,
     rolesAtHQ: toRoleMaskBigInt(member.rolesAtHQ, 0n),
     grantableRolesAtHQ: toRoleMaskBigInt(member.grantableRolesAtHQ, 0n),
     rolesAtBase: toRoleMaskBigInt(member.rolesAtBase, 0n),
     grantableRolesAtBase: toRoleMaskBigInt(member.grantableRolesAtBase, 0n),
     rolesAtOther: toRoleMaskBigInt(member.rolesAtOther, 0n),
     grantableRolesAtOther: toRoleMaskBigInt(member.grantableRolesAtOther, 0n),
+    baseID: member.baseID || null,
     titleMask: Number(member.titleMask || 0),
+    blockRoles: member.blockRoles ? toRoleMaskBigInt(member.blockRoles, 0n) : null,
     accountKey: Number(member.accountKey || CORPORATION_WALLET_KEY_START),
-    rowDate: member.rowDate || member.startDate || "0",
-    blockRoles: toRoleMaskBigInt(member.blockRoles, 0n) !== 0n ? 1 : 0,
-    ownerName:
-      characterRecord.characterName ||
-      characterRecord.ownerName ||
-      ownerRecord.ownerName ||
-      `Character ${characterID}`,
+    isCEO: member.isCEO ? 1 : 0,
+    lastOnline: member.lastOnline || "0",
+    locationID: member.locationID || null,
+    shipTypeID: member.shipTypeID || null,
   });
 }
 
-function buildTitleRowValues(title) {
-  return [
-    Number(title.titleID || 0),
+function buildTitleRow(title) {
+  return buildRow(TITLE_HEADER, [
+    title.titleID,
     title.titleName || "",
     buildLong(title.roles),
     buildLong(title.grantableRoles),
@@ -1104,7 +820,7 @@ function buildTitleRowValues(title) {
     buildLong(title.grantableRolesAtBase),
     buildLong(title.rolesAtOther),
     buildLong(title.grantableRolesAtOther),
-  ];
+  ]);
 }
 
 function buildApplicationRow(application) {
@@ -1115,10 +831,9 @@ function buildBulletinRow(bulletin) {
   return buildPackedRow(BULLETIN_DBROW_COLUMNS, {
     bulletinID: Number(bulletin.bulletinID || 0),
     ownerID: Number(bulletin.ownerID || 0),
-    createCharacterID: Number(bulletin.createCharacterID || bulletin.editCharacterID || 0),
     createDateTime: bulletin.createDateTime || "0",
-    editCharacterID: Number(bulletin.editCharacterID || 0),
     editDateTime: bulletin.editDateTime || "0",
+    editCharacterID: Number(bulletin.editCharacterID || 0),
     title: bulletin.title || "",
     body: bulletin.body || "",
     sortOrder: Number(bulletin.sortOrder || 0),
@@ -1150,83 +865,12 @@ function buildContactKeyVal(contactID, contact) {
   ]);
 }
 
-function buildLabelRowValues(labelID, label) {
-  return [
-    toMarshalMaskValue(labelID),
-    label.name || "",
-    Number(label.color || 0),
-  ];
-}
-
-function buildKillmailRows(records = []) {
-  return buildDbRowset(
-    KILLMAIL_DBROW_COLUMNS,
-    records.map((record) => [
-      Number(record && record.killID) || 0,
-      normalizePositiveInteger(record && record.solarSystemID, null),
-      normalizePositiveInteger(record && record.victimCharacterID, null),
-      normalizePositiveInteger(record && record.victimCorporationID, null),
-      normalizePositiveInteger(record && record.victimAllianceID, null),
-      normalizePositiveInteger(record && record.victimFactionID, null),
-      normalizePositiveInteger(record && record.victimShipTypeID, null),
-      normalizePositiveInteger(record && record.finalCharacterID, null),
-      normalizePositiveInteger(record && record.finalCorporationID, null),
-      normalizePositiveInteger(record && record.finalAllianceID, null),
-      normalizePositiveInteger(record && record.finalFactionID, null),
-      normalizePositiveInteger(record && record.finalShipTypeID, null),
-      normalizePositiveInteger(record && record.finalWeaponTypeID, null),
-      normalizeText(record && record.killBlob, ""),
-      buildFiletimeLong(record && record.killTime ? record.killTime : currentFileTime()),
-      Math.max(0, normalizeInteger(record && record.victimDamageTaken, 0)),
-      Number(record && record.finalSecurityStatus) || 0,
-      Math.max(0, normalizeInteger(record && record.finalDamageDone, 0)),
-      normalizePositiveInteger(record && record.moonID, null),
-      normalizePositiveInteger(record && record.warID, null),
-      Number(record && record.iskLost) || 0,
-      Number(record && record.bountyClaimed) || 0,
-      normalizeInteger(record && record.loyaltyPoints, 0),
-      Number(record && record.iskDestroyed) || 0,
-      normalizePositiveInteger(record && record.killRightSupplied, null),
-    ]),
-    "carbon.common.script.sys.crowset.CRowset",
-  );
-}
-
-function buildActiveRoleErrorDetails(member) {
-  const activeRoleFields = [
-    "roles",
-    "grantableRoles",
-    "rolesAtHQ",
-    "grantableRolesAtHQ",
-    "rolesAtBase",
-    "grantableRolesAtBase",
-    "rolesAtOther",
-    "grantableRolesAtOther",
-    "blockRoles",
-  ].filter((fieldName) => toRoleMaskBigInt(member && member[fieldName], 0n) !== 0n);
-  return buildDict([
-    ["rolelist", buildList(activeRoleFields)],
+function buildLabelKeyVal(labelID, label) {
+  return buildKeyVal([
+    ["labelID", toMarshalMaskValue(labelID)],
+    ["name", label.name || ""],
+    ["color", Number(label.color || 0)],
   ]);
-}
-
-function buildCachedResult(result, {
-  serviceName,
-  method,
-  args = [],
-  versionCheck = "5 minutes",
-  sessionInfo = null,
-  sessionInfoValue = undefined,
-  proxyCache = false,
-} = {}) {
-  return buildCachedMethodCallResult(result, {
-    serviceName,
-    method,
-    args,
-    versionCheck,
-    sessionInfo,
-    sessionInfoValue,
-    proxyCache,
-  });
 }
 
 function buildApplicationsByCharacter(runtime) {
@@ -1418,13 +1062,11 @@ class CorpRegistryRuntimeService extends BaseService {
 
   Handle_GetLabels(args, session) {
     const runtime = getCorporationRuntime(resolveCorporationID(session)) || {};
-    return buildDbIndexRowset(
-      LABEL_DBROW_COLUMNS,
+    return buildDict(
       Object.entries(runtime.labels || {}).map(([labelID, label]) => [
         toMarshalMaskValue(labelID),
-        buildLabelRowValues(labelID, label),
+        buildLabelKeyVal(labelID, label),
       ]),
-      "labelID",
     );
   }
 
@@ -1524,23 +1166,11 @@ class CorpRegistryRuntimeService extends BaseService {
   Handle_GetBulletins(args, session) {
     const corporationID = resolveCorporationID(session);
     const runtime = getCorporationRuntime(corporationID) || {};
-    return buildDbRowset(
-      BULLETIN_DBROW_COLUMNS,
+    return buildList(
       (runtime.bulletins || [])
         .slice()
         .sort((left, right) => Number(left.sortOrder || 0) - Number(right.sortOrder || 0))
-        .map((bulletin) => ({
-          bulletinID: Number(bulletin.bulletinID || 0),
-          ownerID: Number(bulletin.ownerID || corporationID),
-          createCharacterID: Number(bulletin.createCharacterID || bulletin.editCharacterID || 0),
-          createDateTime: bulletin.createDateTime || "0",
-          editCharacterID: Number(bulletin.editCharacterID || 0),
-          editDateTime: bulletin.editDateTime || "0",
-          title: bulletin.title || "",
-          body: bulletin.body || "",
-          sortOrder: Number(bulletin.sortOrder || 0),
-        })),
-      "carbon.common.script.sys.crowset.CRowset",
+        .map((bulletin) => buildBulletinRow(bulletin)),
     );
   }
 
@@ -2084,18 +1714,7 @@ class CorpRegistryRuntimeService extends BaseService {
   }
 
   Handle_GetMemberTrackingInfo(args, session) {
-    const corporationID = resolveCorporationID(session);
-    return buildCachedResult(
-      buildMemberTrackingRows(corporationID),
-      {
-        serviceName: "corpRegistry",
-        method: "GetMemberTrackingInfo",
-        args: [corporationID],
-        versionCheck: "5 minutes",
-        sessionInfo: "corpid",
-        sessionInfoValue: corporationID,
-      },
-    );
+    return buildMemberTrackingRows(resolveCorporationID(session));
   }
 
   Handle_GetMemberTrackingInfoSimple(args, session) {
@@ -2109,13 +1728,11 @@ class CorpRegistryRuntimeService extends BaseService {
 
   Handle_GetTitles(args, session) {
     const runtime = getCorporationRuntime(resolveCorporationID(session)) || {};
-    return buildDbIndexRowset(
-      TITLE_DBROW_COLUMNS,
+    return buildDict(
       Object.values(runtime.titles || {}).map((title) => [
         Number(title.titleID),
-        buildTitleRowValues(title),
+        buildTitleRow(title),
       ]),
-      "titleID",
     );
   }
 
@@ -2752,7 +2369,7 @@ class CorpRegistryRuntimeService extends BaseService {
       return [0, "CrpCEOCanNotQuit", {}];
     }
     if (memberHasActiveRoles(member)) {
-      return [0, "CrpCantQuitNotInStasis", buildActiveRoleErrorDetails(member)];
+      return [0, "CrpCantQuitNotInStasis", {}];
     }
     return [1, null, {}];
   }
@@ -2893,25 +2510,6 @@ class CorpRegistryRuntimeService extends BaseService {
       return null;
     }
 
-    if (
-      members.length <= 1 &&
-      members.some(
-        (member) =>
-          Number(member && member.characterID) === Number(actingCharacterID),
-      )
-    ) {
-      const liquidationResult = liquidateCorporationForResigningCeo(
-        corporationID,
-        actingCharacterID,
-      );
-      if (!liquidationResult.success) {
-        log.warn(
-          `[CorpRegistry] ResignFromCEO liquidation failed for corp=${corporationID} char=${actingCharacterID}: ${liquidationResult.errorMsg || "UNKNOWN"}`,
-        );
-      }
-      return null;
-    }
-
     return buildList(
       members
         .map((member) => member.characterID)
@@ -2922,39 +2520,25 @@ class CorpRegistryRuntimeService extends BaseService {
   Handle_GetRecentKills(args, session) {
     const corporationID = resolveCorporationID(session);
     const limit = args && args.length > 0 ? Number(args[0]) || 0 : 0;
-    const rawStartKillID = args && args.length > 1 ? args[1] : null;
-    const startKillID = rawStartKillID ? Number(rawStartKillID) || 0 : null;
-    const rowset = buildKillmailRows(
+    const startKillID = args && args.length > 1 ? Number(args[1]) || 0 : 0;
+    return buildList(
       listKillmailsForCorporation(corporationID, "kills", {
         limit,
         startKillID,
-      }),
+      }).map((record) => buildKillmailPayload(record)),
     );
-    return buildCachedResult(rowset, {
-      serviceName: "corpRegistry",
-      method: "GetRecentKills",
-      args: [limit, rawStartKillID],
-      versionCheck: "15 minutes",
-    });
   }
 
   Handle_GetRecentLosses(args, session) {
     const corporationID = resolveCorporationID(session);
     const limit = args && args.length > 0 ? Number(args[0]) || 0 : 0;
-    const rawStartKillID = args && args.length > 1 ? args[1] : null;
-    const startKillID = rawStartKillID ? Number(rawStartKillID) || 0 : null;
-    const rowset = buildKillmailRows(
+    const startKillID = args && args.length > 1 ? Number(args[1]) || 0 : 0;
+    return buildList(
       listKillmailsForCorporation(corporationID, "losses", {
         limit,
         startKillID,
-      }),
+      }).map((record) => buildKillmailPayload(record)),
     );
-    return buildCachedResult(rowset, {
-      serviceName: "corpRegistry",
-      method: "GetRecentLosses",
-      args: [limit, rawStartKillID],
-      versionCheck: "15 minutes",
-    });
   }
 
   Handle_GetInfoWindowDataForChar(args, session) {

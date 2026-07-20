@@ -954,12 +954,6 @@
 
   "logPacketPayloadDetails": false,
 
-  // Local interface used by the main game TCP listener. Keep this on 127.0.0.1 unless a container or similarly isolated network boundary provides the external localhost-only restriction.
-  // Valid values: Bind address such as "127.0.0.1" or "0.0.0.0".
-  // Default: "127.0.0.1".
-
-  "gameServerBindHost": "127.0.0.1",
-
   // TCP port used by the main game server listener.
   // Valid values: Available TCP port number.
   // Default: 26000.
@@ -1117,12 +1111,6 @@
 
   "proxyUnhandledHostPolicy": "block",
 
-  // Local interface used by the XMPP chat listener. Keep this on 127.0.0.1 unless a container or similarly isolated network boundary provides the external localhost-only restriction.
-  // Valid values: Bind address such as "127.0.0.1" or "0.0.0.0".
-  // Default: "127.0.0.1".
-
-  "xmppServerBindHost": "127.0.0.1",
-
   // TCP port used by the local XMPP chat stub server.
   // Valid values: Available TCP port number.
   // Default: 5222.
@@ -1146,12 +1134,6 @@
   // Default: "conference.localhost".
 
   "xmppConferenceDomain": "conference.localhost",
-
-  // Shared secret that gates the /playerconnect/* helper endpoints (health ping + CA download) used by the PlayerConnect bundle. When empty, those endpoints are disabled.
-  // Valid values: Any non-empty string, or empty to disable the PlayerConnect endpoints.
-  // Default: "".
-
-  "playerConnectToken": "test",
 
   // Enables the stubbed omega-license path for modern eve_public flows.
   // Valid values: true or false.
