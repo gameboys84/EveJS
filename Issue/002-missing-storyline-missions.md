@@ -111,7 +111,7 @@ isOrdinarySecurityAgent ? [] : getMissionTemplatePool(agentRecord,...)
 
 普通安全代理没有回退模板池。
 4. **剧情任务仅通过显式的 storyline/epicArc/heraldry 等标记才可能被提供。** 如果玩家与剧情任务的交互依赖之前的"松散安全代理→eve-survival模板→任务"链路，这条链路现在已被切断。
-5. **环境变量调试钩子被移除。** v0.12.1 曾有的 `EVEJS_FORCE_MISSION_TEMPLATE`、`EVEJS_FORCE_MISSION_DUNGEON_ID`、`EVEJS_FORCE_MISSION_ID` 在 v0.12.2 中被移除。
+5. **部分环境变量调试钩子被移除。** v0.12.1 曾有的 `EVEJS_FORCE_MISSION_TEMPLATE` 和 `EVEJS_FORCE_MISSION_DUNGEON_ID` 在 v0.12.2 中被移除；但 `EVEJS_FORCE_MISSION_ID` 仍保留（agentMissionRuntime.js:4820）。
 
 #### 第五步：生产任务策略配置内容
 
@@ -185,7 +185,7 @@ Handle_GetMyJournalDetails → getJournalDetails (line 5247)
 | 问题 | 位置 | 说明 |
 |------|------|------|
 | agentAuthority 模板丢失 | HEAD fc00f8d 差 | missionTemplateCount 0→640，已恢复 |
-| dungeonAuthority 缺少 eve-survival 模板 | 两个命名空间不重叠 | `eve-survival:*` (agent端) vs `agent.missionTemplatizedContent_*` (dungeon端)；`getMissionTemplatePool` 返回 [] |
+| dungeonAuthority 运行时缺少 eve-survival 模板 | 构建时清洗 | 源文件有 eve-survival 模板（约 200 万行），但 `enforce-production-mission-policy.js` 在构建时通过 `sanitizeDungeonAuthority` 全部清洗；`getMissionTemplatePool` 运行时返回 [] |
 | isExplicitStorylineAgent 依赖数据标志 | missionAuthority.js:598 | 靠 `importantMission:true` 而非 agentTypeID 判断；fragile 但不是当前阻断 |
 
 #### ⚪ 设计意图（非 bug）
@@ -478,8 +478,8 @@ node --max-old-space-size=8192 database-creator.js \
 
 #### 修复 eve-survival 模板解析（必须）
 
-恢复的 639 个 `eve-survival:*` missionTemplateIDs 在 dungeonAuthority 中无定义，`getMissionTemplatePool` 返回 `[]`。可选方案:
-- 在 dungeonAuthority 中补充 eve-survival 模板定义
+恢复的 639 个 `eve-survival:*` missionTemplateIDs 在运行时 dungeonAuthority 中无定义（构建时被清洗），`getMissionTemplatePool` 返回 `[]`。可选方案:
+- 在 dungeonAuthority 源文件中补充 eve-survival 模板定义并禁用构建时清洗
 - 或修改 `getMissionTemplatePool` 使其不依赖 dungeon 定义即可工作
 
 #### 验证清单
@@ -487,3 +487,72 @@ node --max-old-space-size=8192 database-creator.js \
 - [ ] 修复 dead code 后，新建角色完成 16 个普通任务 → 验证剧情 offer 是否出现
 - [ ] 修复后，type-6 剧情代理对话 → 验证任务是否正常提供
 - [ ] 验证普通 type-2 代理仍保持 deny-by-default 行为（不应回归）
+
+---
+
+## 补充发现（2026-07-21 验证后新增）
+
+> 通过对比 Tmp/EveJS-0.12.1（只读参考）与 Code 的代码差异，发现以下文档中未涉及的重要内容。
+
+### S1. 死代码问题在 v0.12.1 中同样存在
+
+对比 `Tmp/EveJS-0.12.1/server/src/services/agent/agentMissionRuntime.js:5234` 与 `Code/server/src/services/agent/agentMissionRuntime.js:5225`：
+
+| 版本 | 代码行为 |
+|------|---------|
+| v0.12.1 | `recordStorylineQualifyingCompletion(...)` → `return cloneValue(missionRecord)` （返回值被丢弃） |
+| v0.12.2 | 完全相同 |
+
+三个死代码函数（`recordPendingStorylineOffer`、`markStorylineMilestoneIssued`、`findNearestStorylineAgent`）在 v0.12.1 中同样**零调用**。
+
+**结论**：`pendingOffersByAgentID` 的死代码不是 v0.12.2 引入的回归，而是**历史遗留问题**。
+
+### S2. 任务提供逻辑的关键差异（v0.12.1 → v0.12.2）
+
+#### `listMissionIDsForAgent` 函数对比
+
+| 步骤 | v0.12.1 | v0.12.2 |
+|------|---------|---------|
+| agent-specific 索引命中 | 过滤后返回 | 直接返回（不过滤） |
+| 普通安全代理门控 | **无** | **有** → 仅返回 4 个 golden 任务 |
+| 剧情代理路径 | **无专门路径** | **有** → 过滤 `isScriptedStorylineMissionRecord` |
+| template-bound 检查 | 有 eve-survival 模板 → 返回 | 无 eve-survival 模板 → 返回空 |
+| 最终回退 | `filterUnsupported(preferred)` | `filterUnsupported(preferred)` |
+
+#### `offerMission` 函数对比
+
+| 步骤 | v0.12.1 | v0.12.2 |
+|------|---------|---------|
+| pool 获取 | **所有 agents** 获取 `getMissionTemplatePool` | 仅非普通安全代理获取 pool |
+| forcedMission 检查 | `if (forcedClientMission)` 真值检查 | `isMissionOfferAllowedForAgent()` 门控 |
+
+#### v0.12.2 新增：`sanitizePayload`
+
+- 过滤 `isPermanentlyDisabledMissionRecord`（任务 4743 等）
+- 过滤 `isGeneratedScrapedMissionRecord`（generated/scraped 任务）
+- 重建索引只保留存活任务
+
+### S3. 待后续处理项（低优先级）
+
+以下内容确认存在问题，但暂不深入分析，留待后续改进：
+
+#### 死代码管线（历史遗留，两个版本共有）
+
+**问题**：完成 16 个普通任务后触发的"特殊剧情 offer"路径永远不通。
+
+**影响范围**：
+- 玩家完成 16 个同派系普通任务后，不会收到剧情代理的特殊任务邀请
+- journal 中 `pendingStorylineRows` 永远为空
+
+**涉及函数**：
+- `recordPendingStorylineOffer` (missionRuntimeState.js:947) — 零调用
+- `markStorylineMilestoneIssued` (missionRuntimeState.js:880) — 零调用
+- `findNearestStorylineAgent` (storylineAgentSelector.js:167) — 零调用
+
+**可能的修复方向**（待后续分析确认）：
+- 在 `agentMissionRuntime.js` 的 `completeMission` 流程中，当 `recordStorylineQualifyingCompletion` 返回 `reachedMilestone === true` 时：
+  1. 调用 `findNearestStorylineAgent` 找到最近的同阵营剧情代理
+  2. 调用 `recordPendingStorylineOffer` 将 offer 写入角色状态
+  3. 这样 `buildPendingStorylineOfferJournalRows` 才能在 journal 中显示
+
+**注意**：此问题不影响剧情代理直接提供的任务（type-6/type-7 代理通过 `preferredMissionIDs` 路径），仅影响"完成 N 轮普通任务后触发"的特殊剧情 offer。

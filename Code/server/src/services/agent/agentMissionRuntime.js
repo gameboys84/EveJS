@@ -57,8 +57,12 @@ const {
   normalizeEpicArcProgress,
   recordEpicArcCompletion,
   recordEpicArcMissionStatus,
+  recordPendingStorylineOffer,
   recordStorylineQualifyingCompletion,
 } = require(path.join(__dirname, "./missionRuntimeState"));
+const {
+  findNearestStorylineAgent,
+} = require(path.join(__dirname, "./storylineAgentSelector"));
 const {
   resolveItemByTypeID,
 } = require(path.join(__dirname, "../inventory/itemTypeRegistry"));
@@ -5222,9 +5226,31 @@ function completeMission(characterID, agentRecord) {
         { nowMs: Date.now() },
       );
     }
-    recordStorylineQualifyingCompletion(characterState, agentRecord, missionRecord, {
-      completedAtFileTime,
-    });
+    const storylineResult = recordStorylineQualifyingCompletion(
+      characterState,
+      agentRecord,
+      missionRecord,
+      { completedAtFileTime },
+    );
+    if (storylineResult.reachedMilestone) {
+      const storylineAgent = findNearestStorylineAgent({
+        startSolarSystemID: agentRecord.solarSystemID,
+        factionID: agentRecord.factionID,
+        missionLevel: agentRecord.level,
+      });
+      if (storylineAgent) {
+        recordPendingStorylineOffer(characterState, {
+          agentID: storylineAgent.agentID,
+          factionID: agentRecord.factionID,
+          missionLevel: agentRecord.level,
+          counterKey: storylineResult.counterKey,
+          completedCount: storylineResult.completedCount,
+          sourceAgentID: agentRecord.agentID,
+          sourceMissionID: missionRecord.missionID,
+          jumpDistance: storylineAgent.jumpDistance,
+        });
+      }
+    }
     return cloneValue(missionRecord);
   });
 
