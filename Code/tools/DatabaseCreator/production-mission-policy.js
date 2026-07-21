@@ -18,6 +18,12 @@ const {
   "productionMissionPolicy",
 ));
 
+const cleaningOverride = process.env.EVEJS_ENABLE_COMMUNITY_CONTENT_CLEANING;
+const isCommunityContentCleaningEnabled = cleaningOverride === undefined
+  || cleaningOverride === ""
+  || cleaningOverride === "1"
+  || cleaningOverride.toLowerCase() === "true";
+
 const GENERATED_EVE_SURVIVAL_SOURCE = "eve-survival-generated";
 const EVE_SURVIVAL_SOURCE_KEYS = new Set([
   "eve-survival",
@@ -249,6 +255,17 @@ function rebuildMissionCounts(payload) {
 }
 
 function sanitizeMissionAuthority(payload) {
+  if (isCommunityContentCleaningEnabled === false) {
+    return {
+      beforeMissionCount: Object.keys(payload.missionsByID || {}).length,
+      afterMissionCount: Object.keys(payload.missionsByID || {}).length,
+      removedGeneratedMissionCount: 0,
+      removedBannedMissionCount: 0,
+      removedSourceMetadataCount: 0,
+      rebuiltIndexes: false,
+      rebuiltCounts: false,
+    };
+  }
   const missionsByID = payload.missionsByID || {};
   const beforeMissionCount = Object.keys(missionsByID).length;
   let removedGeneratedMissionCount = 0;
@@ -318,6 +335,16 @@ function setCount(payload, countName, value) {
 }
 
 function sanitizeDungeonAuthority(payload) {
+  if (isCommunityContentCleaningEnabled === false) {
+    return {
+      beforeTemplateCount: Object.keys(payload.templatesByID || {}).length,
+      afterTemplateCount: Object.keys(payload.templatesByID || {}).length,
+      removedEveSurvivalTemplateCount: 0,
+      removedBannedTemplateCount: 0,
+      removedIndexReferenceCount: 0,
+      metadataChangeCount: 0,
+    };
+  }
   const templatesByID = payload.templatesByID || {};
   const beforeTemplateCount = Object.keys(templatesByID).length;
   let removedEveSurvivalTemplateCount = 0;
@@ -393,6 +420,19 @@ function sanitizeDungeonAuthority(payload) {
 }
 
 function sanitizeAgentAuthority(payload) {
+  if (isCommunityContentCleaningEnabled === false) {
+    const templateCount = Object.values(payload.missionPoolsByKindAndLevel || {}).flat().length
+      + Object.values(payload.agentsByID || {}).reduce((sum, agent) => {
+        return sum + (Array.isArray(agent && agent.missionTemplateIDs) ? agent.missionTemplateIDs.length : 0);
+      }, 0);
+    return {
+      removedPoolReferenceCount: 0,
+      removedAgentReferenceCount: 0,
+      changedAgentCount: 0,
+      metadataChangeCount: 0,
+      retainedTemplateCount: templateCount,
+    };
+  }
   let removedPoolReferenceCount = 0;
   const missionPoolsByKindAndLevel = {};
   for (const [poolKey, templateIDs] of Object.entries(payload.missionPoolsByKindAndLevel || {})) {

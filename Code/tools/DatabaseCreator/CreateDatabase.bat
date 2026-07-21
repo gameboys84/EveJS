@@ -68,6 +68,12 @@ if not exist "%SDE_DIR%\_sde.jsonl" (
 )
 
 echo   Generating EvEJS local database...
+if /I "%~2"=="--keep-community-content" (
+  set "EVEJS_ENABLE_COMMUNITY_CONTENT_CLEANING=0"
+  echo   [Config] Community content cleaning DISABLED (keeping eve-survival content)
+) else (
+  set "EVEJS_ENABLE_COMMUNITY_CONTENT_CLEANING=1"
+)
 node --max-old-space-size=8192 "%~dp0database-creator.js" --sde-dir "%SDE_DIR%" --out "%DATA_DIR%" --build "%SDE_BUILD%" --sde-url "%SDE_URL%" --force
 set "EVEJS_EXIT=%errorlevel%"
 

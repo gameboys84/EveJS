@@ -8,15 +8,15 @@
 
 ## 一、概述
 
-本文档分析 EveJS 中剧情任务相关系统的**代码、数据、版本变化**，以及 v0.12.1 → v0.12.2 版本间剧情任务"消失"的根因。
+本文档分析 EveJS 中剧情任务相关系统的**代码、数据、版本变化**，以及 v0.12.1 → v0.12.2 版本间剧情任务"消失"的根因和修复方案。
 
 ### 关键结论
 
 1. **代码未被删除** — 所有代理/剧情/Campaign 相关服务文件均存在且正常注册。
 2. **剧情任务记录未删除** — 静态表中仍有 1,249 条 `isStoryline` 任务。
-3. **数据链路被切断（主因）** — 当前 HEAD 的 `agentAuthority/data.json` 中所有 10,941 个 agent 的 `missionTemplateIDs` 为空（`missionTemplateCount: 0`），而 v0.12.1 补充提交 (fc00f8d) 中该值为 640 个模板 / 1.46M 引用。
+3. **数据链路被切断（主因）** — v0.12.2 新增的 `production-mission-policy.js` 清洗脚本删除了 eve-survival 模板和引用，导致剧情代理人无法提供任务。
 4. **运行时门控收紧** — `missionAuthority.js` 引入 deny-by-default 策略，普通安全代理仅能白名单提供 4 个 golden 任务。
-5. **退休模板前缀** — `productionMissionPolicy.json` 的 `retiredTemplatePrefixes: ["eve-survival:"]` 会过滤所有剧情模板。
+5. **修复方案** — 通过环境变量 `EVEJS_ENABLE_COMMUNITY_CONTENT_CLEANING=0` 或命令行参数 `--keep-community-content` 关闭清洗，保留 eve-survival 数据。
 
 ---
 
@@ -352,6 +352,26 @@ v0.12.0/v0.12.1 中存在、v0.12.2 中移除的环境变量:
 
 **关键发现**: Sister Alitura 的 `missionTemplateIDs` 全部指向 `eve-survival:*` 模板（如 `eve-survival:AfterTheSeven1`, `eve-survival:AirShow1` 等）。这些模板在运行时被 `enforce-production-mission-policy.js` 清洗，导致她无法提供任务。
 
+#### Sister Alitura 任务链（血色星辰 The Blood-Stained Stars）
+
+AgentID: 3019356 | agentTypeID: 10 | 派系: Mordu Legion (500016)
+
+| 序号 | Mission ID | 名称 | 类型 |
+|------|-----------|------|------|
+| 1 | 14117 | A Beacon Beckons | encounter |
+| 2 | 14118 | Agent Inquiry | talkToAgent |
+| 3 | 14122 | Jet-Canning a Janitor | encounter |
+| 4 | 14123 | Chivvying a Chef | encounter |
+| 5 | 14124 | Delivering a Doctor | encounter |
+| 6 | 14125 | Engineering a Rescue | encounter |
+| 7 | 14126 | Going Gallente | talkToAgent |
+| 8 | 14138 | Royal Jelly | encounter |
+| 9 | 14139 | Tracking the Queen (Part 1) | encounter |
+| 10 | 14140 | Nature Pictures | courier |
+| ... | ... | ... | ... |
+
+**注意**: 这些任务标记为 `isEpicArc: True`（史诗弧），不是普通 `isStoryline`。它们是顺序解锁的，完成一个后才能进行下一个。
+
 **玩家实际体验** (v0.12.1):
 1. 打开 F11 Journal → 剧情任务标签 → 能看到 Sister Alitura 和任务简介
 2. 接受任务 → 完成任务 → 出现死循环（请求新任务 → 接受/取消 → 回到请求新任务）
@@ -490,3 +510,58 @@ v0.12.0/v0.12.1 中存在、v0.12.2 中移除的环境变量:
 | 教程 (Opportunity) | ❌ 已退役 | ❌ 不存在 | 符合原版 |
 | NPE/AIR 教程 | ✅ | ✅ | 部分 |
 | 登录活动 (Campaign) | ✅ | ✅ | 部分 |
+
+---
+
+## 十一、修复方案（2026-07-21）
+
+### 11.1 问题根因
+
+v0.12.2 新增的 `tools/DatabaseCreator/production-mission-policy.js` 清洗脚本会删除：
+- `dungeonAuthority` 中所有 `eve-survival:*` 模板（548 个）
+- `agentAuthority` 中代理人对 eve-survival 模板的引用
+- `missionAuthority` 中 ID 在 900000000-901000000 范围内的生成任务
+
+这导致剧情代理人（Type-6/7/10）的 `missionTemplateIDs` 被清空，无法通过 `getMissionTemplatePool` 获取模板。
+
+### 11.2 修复方式
+
+通过**环境变量**或**命令行参数**控制清洗开关：
+
+```bash
+# 默认：开启清洗（原始行为）
+CreateDatabase.bat
+
+# 关闭清洗：保留 eve-survival 内容
+CreateDatabase.bat --force --keep-community-content
+
+# 或者通过环境变量
+set EVEJS_ENABLE_COMMUNITY_CONTENT_CLEANING=0
+CreateDatabase.bat --force
+```
+
+### 11.3 修改文件
+
+| 文件 | 修改 |
+|------|------|
+| `tools/DatabaseCreator/production-mission-policy.js` | 读取 `EVEJS_ENABLE_COMMUNITY_CONTENT_CLEANING` 环境变量控制清洗开关 |
+| `tools/DatabaseCreator/CreateDatabase.bat` | 支持 `--keep-community-content` 参数 |
+| `server/src/services/agent/agentMissionRuntime.js` | journal Storyline 标签页显示逻辑（显示一个剧情任务） |
+| `server/src/services/agent/missionAuthority.js` | 新增 `getAgentIDToMissionIDs` 导出函数 |
+
+### 11.4 运行时数据生成
+
+```bash
+# 重新生成运行时数据（保留 eve-survival 内容）
+cd Code
+tools\DatabaseCreator\CreateDatabase.bat --force --keep-community-content
+```
+
+### 11.5 验证清单
+
+- [ ] 运行时 `dungeonAuthority` 包含 548 个 eve-survival 模板
+- [ ] 运行时 `agentAuthority` 中剧情代理人的 `missionTemplateIDs` 非空
+- [ ] journal Storyline 标签页显示剧情代理人
+- [ ] 与剧情代理人对话可接受任务
+- [ ] 任务完成后下一个任务自动解锁
+- [ ] 无任务时代理人显示常规对话（非占位任务）

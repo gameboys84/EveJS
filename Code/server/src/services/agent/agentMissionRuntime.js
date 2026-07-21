@@ -20,6 +20,7 @@ const {
   listMissionTemplateIDsForAgent,
 } = require(path.join(__dirname, "./agentAuthority"));
 const {
+  getAgentIDToMissionIDs,
   getMissionByID,
   getMissionArcInfo,
   isMissionOfferAllowedForAgent,
@@ -4290,39 +4291,54 @@ function buildPendingStorylineOfferJournalRows(
   if (offerRows.length > 0) {
     return offerRows;
   }
-  // No pending offers: show available storyline agents so the Storyline tab
-  // is never empty. This makes storyline agents visible from the start of the
-  // game without requiring 16 normal mission completions.
-  return listAvailableStorylineAgentJournalRows(characterID, activeAgentIDs);
+  return buildSingleStorylineAgentJournalRow(characterID, activeAgentIDs);
 }
 
-const STORYLINE_AGENT_TYPE_IDS = new Set([6, 7, 10]);
-
-function listAvailableStorylineAgentJournalRows(characterID, activeAgentIDs = new Set()) {
+function buildSingleStorylineAgentJournalRow(characterID, activeAgentIDs = new Set()) {
   const characterFactionID = getCharacterFactionID(characterID);
-  return listAgents()
-    .filter((agentRecord) => {
-      if (!agentRecord || !STORYLINE_AGENT_TYPE_IDS.has(toPositiveInteger(agentRecord.agentTypeID, 0))) {
+  const storylineAgent = findStorylineAgentForCharacter(characterID, characterFactionID, activeAgentIDs);
+  if (!storylineAgent) {
+    return [];
+  }
+  const agentID = toPositiveInteger(storylineAgent && storylineAgent.agentID, 0);
+  const missionList = getAgentIDToMissionIDs(agentID);
+  if (missionList.length > 0) {
+    const nextMissionID = missionList[0];
+    const missionRecord = getMissionByID(nextMissionID);
+    if (missionRecord) {
+      return [buildMissionJournalRow(characterID, storylineAgent, missionRecord)];
+    }
+  }
+  return [buildMissionJournalRow(characterID, storylineAgent, buildStorylineAgentDialogueRecord(storylineAgent))];
+}
+
+function findStorylineAgentForCharacter(characterID, characterFactionID, activeAgentIDs = new Set()) {
+  const candidates = listAgents().filter((agentRecord) => {
+    if (!agentRecord) {
+      return false;
+    }
+    const agentTypeID = toPositiveInteger(agentRecord.agentTypeID, 0);
+    if (agentTypeID !== 6 && agentTypeID !== 7 && agentTypeID !== 10) {
+      return false;
+    }
+    if (activeAgentIDs.has(toPositiveInteger(agentRecord.agentID, 0))) {
+      return false;
+    }
+    if (characterFactionID > 0 && toPositiveInteger(agentRecord.factionID, 0) > 0) {
+      if (toPositiveInteger(agentRecord.factionID, 0) !== characterFactionID) {
         return false;
       }
-      if (activeAgentIDs.has(toPositiveInteger(agentRecord.agentID, 0))) {
-        return false;
-      }
-      if (characterFactionID > 0 && toPositiveInteger(agentRecord.factionID, 0) > 0) {
-        if (toPositiveInteger(agentRecord.factionID, 0) !== characterFactionID) {
-          return false;
-        }
-      }
-      return true;
-    })
-    .slice(0, 50)
-    .map((agentRecord) => {
-      const projectedMissionRecord = buildAvailableStorylineAgentMissionRecord(agentRecord);
-      return projectedMissionRecord
-        ? buildMissionJournalRow(characterID, agentRecord, projectedMissionRecord)
-        : null;
-    })
-    .filter(Boolean);
+    }
+    return true;
+  });
+  if (candidates.length <= 0) {
+    return null;
+  }
+  candidates.sort((left, right) => (
+    toPositiveInteger(left.agentTypeID, 0) - toPositiveInteger(right.agentTypeID, 0) ||
+    toPositiveInteger(left.agentID, 0) - toPositiveInteger(right.agentID, 0)
+  ));
+  return candidates[0];
 }
 
 function getCharacterFactionID(characterID) {
@@ -4330,22 +4346,18 @@ function getCharacterFactionID(characterID) {
   return toPositiveInteger(characterRecord && characterRecord.factionID, 0);
 }
 
-function buildAvailableStorylineAgentMissionRecord(agentRecord) {
-  if (!agentRecord) {
-    return null;
-  }
+function buildStorylineAgentDialogueRecord(agentRecord) {
   return {
     missionID: 0,
-    agentID: toPositiveInteger(agentRecord.agentID, 0),
-    missionKind: normalizeText(agentRecord.missionKind, "encounter"),
+    agentID: toPositiveInteger(agentRecord && agentRecord.agentID, 0),
+    missionKind: normalizeText(agentRecord && agentRecord.missionKind, "encounter"),
     missionFlavor: "storyline",
     isStoryline: true,
-    isGenericStoryline: toPositiveInteger(agentRecord.agentTypeID, 0) === 6,
     contentTemplate: null,
-    status: "offered",
-    title: `${agentRecord.ownerName || "Storyline Agent"} (${normalizeText(agentRecord.missionKind, "encounter")})`,
-    missionBriefing: `Storyline agent available. Talk to ${agentRecord.ownerName || "this agent"} for details.`,
-    briefingMessage: `Talk to ${agentRecord.ownerName || "this agent"} to accept the storyline mission.`,
+    status: "dialogue",
+    title: agentRecord && agentRecord.ownerName || "Storyline Agent",
+    missionBriefing: `Talk to ${agentRecord && agentRecord.ownerName || "this agent"}.`,
+    briefingMessage: "",
   };
 }
 

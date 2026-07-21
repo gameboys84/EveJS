@@ -419,7 +419,7 @@ git show HEAD:server/src/gameStore/index.js | grep -A5 "resolveDataDir\|LOCAL_DA
 | 编号 | 问题 | 状态 | 详情 |
 |------|------|------|------|
 | #001 | v0.12.2 残骸无法拾取物品 | 🔍 待验证 | 见 `Issue/001-wreck-loot-not-pickable.md` |
-| #002 | v0.12.2 剧情任务(Storyline)全部消失 | 🔍 已定位根因 | 见 `Issue/002-missing-storyline-missions.md` |
+| #002 | v0.12.2 剧情任务(Storyline)全部消失 | ✅ 已修复（待验证） | 见 `Issue/002-missing-storyline-missions.md` |
 
 ---
 
@@ -544,7 +544,60 @@ git show --stat fc00f8d
 
 # 重新生成运行时数据
 cd Code && tools/DatabaseCreator/CreateDatabase.bat
+
+# 保留 eve-survival 内容（修复剧情任务问题）
+cd Code && tools/DatabaseCreator/CreateDatabase.bat --force --keep-community-content
 ```
+
+---
+
+## 十二、运行时数据生成（重要）
+
+### 机制
+
+```
+CreateDatabase.bat
+  └─ database-creator.js
+       └─ sanitizeAndValidateProductionMissionPolicy()
+            └─ sanitizeAuthorityTable()  ← 清洗入口
+                 └─ 基于 productionMissionPolicy.json + 环境变量
+```
+
+### 清洗开关
+
+| 方式 | 命令 | 效果 |
+|------|------|------|
+| 默认 | `CreateDatabase.bat` | 清洗开启（删除 eve-survival 内容） |
+| 环境变量 | `set EVEJS_ENABLE_COMMUNITY_CONTENT_CLEANING=0` | 清洗关闭 |
+| 命令行参数 | `CreateDatabase.bat --keep-community-content` | 清洗关闭 |
+
+### 为什么需要关闭清洗
+
+v0.12.2 新增的清洗脚本会删除：
+- `dungeonAuthority` 中 548 个 eve-survival 模板
+- `agentAuthority` 中代理人对 eve-survival 模板的引用
+- `missionAuthority` 中 ID 在 900000000-901000000 的生成任务
+
+这导致剧情代理人（Type-6/7/10）无法提供任务（Issue #002）。
+
+### 生成运行时数据
+
+```bash
+# 默认（清洗开启）
+cd Code && tools/DatabaseCreator/CreateDatabase.bat
+
+# 保留 eve-survival 内容（修复剧情任务）
+cd Code && tools/DatabaseCreator/CreateDatabase.bat --force --keep-community-content
+```
+
+### 运行时数据位置
+
+| 位置 | 说明 |
+|------|------|
+| `Code/_local/gameStore/data/` | 运行时数据（由 CreateDatabase.bat 生成） |
+| `Code/server/src/gameStore/data/` | 备用数据（仅 authoredSpaceProps 和 fighterAbilities） |
+
+服务器优先读取 `_local/gameStore/data/`，如果不存在则回退到 `server/src/gameStore/data/`。
 
 ### 关键文件版本对照表
 ```

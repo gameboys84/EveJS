@@ -903,6 +903,7 @@ function getMissionArcInfo(missionID) {
 module.exports = {
   buildAgentPreferenceKeys,
   clearCache,
+  getAgentIDToMissionIDs,
   getEpicArcMessageMaps,
   getMissionArcInfo,
   getMissionByID,
@@ -924,3 +925,9 @@ module.exports = {
   listMissionIDsForAgent,
   pickMissionForAgent,
 };
+
+function getAgentIDToMissionIDs(agentID) {
+  const cache = ensureCache();
+  const specific = cache.agentIDToMissionIDs.get(String(agentID));
+  return specific && specific.length > 0 ? cloneValue(specific) : [];
+}

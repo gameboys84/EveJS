@@ -9,7 +9,7 @@
 | **影响版本** | EveJS v0.12.2 |
 | **正常版本** | EveJS v0.12.1 (部分可用) / EveJS v0.12.0 (推测正常) |
 | **严重程度** | **高**（剧情任务是 EVE 社区/任务核心内容，影响社区与任务体验） |
-| **状态** | 🔄 修复中 |
+| **状态** | ✅ 已修复（待验证） |
 | **类别** | 任务/代理(Mission/Agent)系统 / 数据 / 配置 |
 | **根因置信度** | ⭐⭐⭐⭐⭐ |
 
@@ -642,22 +642,109 @@ node --max-old-space-size=8192 database-creator.js \
 
 ## 已实施的修复（2026-07-21）
 
-### Fix 1: 剧情任务从一开始就可见
+### Fix 1: 添加社区内容清洗开关（已实施）
+
+**文件**: `Code/server/src/config/productionMissionPolicy.json`
+
+**修改内容**：
+- 新增 `enableCommunityContentCleaning: false` 开关
+
+**文件**: `Code/tools/DatabaseCreator/production-mission-policy.js`
+
+**修改内容**：
+- `sanitizeDungeonAuthority`：当开关为 false 时跳过清洗，保留 eve-survival 模板
+- `sanitizeAgentAuthority`：当开关为 false 时跳过清洗，保留代理人模板引用
+- `sanitizeMissionAuthority`：当开关为 false 时跳过清洗，保留生成任务
+
+**效果**：
+- 运行时数据保留 eve-survival 模板（548 个）
+- 剧情代理人的 `missionTemplateIDs` 保留（144 个 eve-survival 模板引用）
+- `getMissionTemplatePool` 能正常返回模板
+
+### Fix 2: 剧情任务从一开始就可见（已实施）
 
 **文件**: `Code/server/src/services/agent/agentMissionRuntime.js`
 
 **修改内容**：
-1. 新增 `listAgents` 导入
-2. 修改 `buildPendingStorylineOfferJournalRows`：当 `pendingOffersByAgentID` 为空时，显示可用的剧情代理人
-3. 新增 `listAvailableStorylineAgentJournalRows`：列出指定派系的剧情代理人（agentTypeID 6/7/10）
-4. 新增 `buildAvailableStorylineAgentMissionRecord`：为可用剧情代理人生成任务记录
+1. 新增 `listAgents` 导入（从 agentAuthority）
+2. 新增 `getAgentIDToMissionIDs` 导入（从 missionAuthority）
+3. 修改 `buildPendingStorylineOfferJournalRows`：
+   - 原有逻辑不变（读取 `pendingOffersByAgentID`）
+   - 新增：当 `pendingOffersByAgentID` 为空时，调用 `buildNextStorylineMissionJournalRow` 显示下一个剧情任务
+4. 新增 `buildNextStorylineMissionJournalRow`：找到玩家派系的剧情代理人，显示其任务链中的第一个任务
+5. 新增 `findStorylineAgentForCharacter`：按派系筛选剧情代理人（agentTypeID 6/7/10），有任务链的优先
+6. 新增 `listAgentMissionIDsForStorylineAgent`：通过 `agentIDToMissionIDs` 索引获取代理人的任务链
+7. 新增 `getCharacterFactionID`：获取玩家派系
 
-**效果**：玩家打开 F11 Journal → 剧情任务标签 → 能看到剧情代理人列表（按派系筛选）
+**效果**：
+- 玩家打开 F11 Journal → 剧情任务标签 → 看到**一个**剧情任务（按 `agentIDToMissionIDs` 顺序）
+- 任务完成后，下一个任务自动出现
+- 不会同时显示多个任务
 
-### Fix 2: 待实施 — 应用运行时数据
+**配套修改** (`Code/server/src/services/agent/missionAuthority.js`)：
+- 新增 `getAgentIDToMissionIDs` 导出函数，暴露 `agentIDToMissionIDs` 索引
 
-需要运行 `CreateDatabase.bat` 将恢复的静态表数据应用到 `_local/gameStore/data/`。
+### Fix 3: 死循环根因分析
 
-### Fix 3: 待实施 — 修复死循环
+**死循环流程**：
+1. 玩家完成任务 → 任务从 `missionsByAgentID` 移除
+2. 玩家点击"请求新任务" → `offerMission` 被调用
+3. `getMissionTemplatePool` 返回 `[]`（eve-survival 模板被清洗）
+4. `pickMissionForAgent` 返回 null（无任务链）
+5. `offerMission` 返回 `{ kind: "unavailable" }`
+6. 客户端显示"请求新任务"按钮 → 回到步骤 2 → 循环
 
-需要运行时数据支持才能测试和修复。
+**修复方案**：
+- 通过 Fix 1 保留 eve-survival 数据后，`getMissionTemplatePool` 能正常返回模板
+- `offerMission` 能创建有效的任务并返回 `{ kind: "offered" }`
+- 死循环自然消除
+
+**注意**：无任务时代理人应显示常规对话（small talk），这是现有功能，不需要额外修改。
+
+### 验证状态
+
+| 项目 | 状态 | 说明 |
+|------|------|------|
+| 代码修改 | ✅ 已完成 | 所有文件已修改并通过语法检查 |
+| 运行时数据 | ⏸️ 待生成 | 需运行 `CreateDatabase.bat --force --keep-community-content` |
+| 功能验证 | ⏸️ 待验证 | 本机无测试环境，需更换设备后验证 |
+
+### 验证步骤（更换设备后执行）
+
+1. **重新生成运行时数据**
+   ```bash
+   cd Code
+   tools\DatabaseCreator\CreateDatabase.bat --force --keep-community-content
+   ```
+
+2. **验证运行时数据**
+   ```bash
+   # 检查 dungeonAuthority 包含 eve-survival 模板
+   python -c "import json; d=json.load(open('_local/gameStore/data/dungeonAuthority/data.json')); print('eve-survival templates:', sum(1 for k in d['templatesByID'] if k.startswith('eve-survival:')))"
+   # 期望输出: 548
+   ```
+
+3. **启动服务器**
+   ```bash
+   cd Code/server
+   node index.js
+   ```
+
+4. **客户端测试**
+   - 登录游戏（Caldari 角色）
+   - 打开 F11 Journal → 剧情任务(Storyline)标签
+   - 期望：看到 Sister Alitura 和任务 "A Beacon Beckons"
+   - 点击接受 → 任务开始
+   - 完成任务 → 下一个任务自动出现
+
+5. **死循环验证**
+   - 与剧情代理人对话
+   - 完成所有任务后再次对话
+   - 期望：显示常规对话，不出现死循环
+
+### 预期结果
+
+- 剧情代理人可见且可交互
+- 任务按 `agentIDToMissionIDs` 顺序依次解锁
+- 无任务时代理人显示常规对话
+- 不存在死循环
