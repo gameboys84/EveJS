@@ -7,19 +7,24 @@
 | **问题编号** | #002 |
 | **发现日期** | 2026-07-20 |
 | **影响版本** | EveJS v0.12.2 |
-| **正常版本** | EveJS v0.12.1 |
+| **正常版本** | EveJS v0.12.1 (部分可用) / EveJS v0.12.0 (推测正常) |
 | **严重程度** | **高**（剧情任务是 EVE 社区/任务核心内容，影响社区与任务体验） |
-| **状态** | 🔍 待验证（已定位根因，待决策修复方向）|
+| **状态** | 🔄 修复中 |
 | **类别** | 任务/代理(Mission/Agent)系统 / 数据 / 配置 |
 | **根因置信度** | ⭐⭐⭐⭐⭐ |
 
 ### 问题描述
 
-在 **v0.12.1** 版本中，剧情任务（Storyline Missions / 社区任务）虽然不完整,但玩家在游戏中可以看到**几种剧情任务的说明**并能与其交互。升级到 **v0.12.2** 后，一个剧情任务都看不到了（"剧情任务一个都不存在"）。
+在 **v0.12.1** 版本中，玩家打开 F11 Journal → 剧情任务(Storyline)标签 → 能看到剧情代理人（如 Sister Alitura）和任务简介，可对话、可接受任务。但完成任务后存在**死循环 bug**（请求新任务 → 接受/取消 → 回到请求新任务界面）。
 
-**预期行为**: 剧情任务应继续可见、可交互，至少保持 v0.12.1 的水平。
+升级到 **v0.12.2** 后，点击剧情任务标签 → **完全空白**，看不到任何代理人或任务简介。
 
-**实际行为**: v0.12.2 中全部剧情任务消失。
+**预期行为**:
+1. 剧情任务从一开始就可见、可交互（无需完成 16 个普通任务）
+2. 完成 16 个普通任务后触发的应是**另一种特殊任务**，不是剧情任务
+3. 任务流程应正常，不存在死循环
+
+**实际行为**: v0.12.2 中剧情任务完全不可见。
 
 ### 排查过程
 
@@ -556,3 +561,103 @@ node --max-old-space-size=8192 database-creator.js \
   3. 这样 `buildPendingStorylineOfferJournalRows` 才能在 journal 中显示
 
 **注意**：此问题不影响剧情代理直接提供的任务（type-6/type-7 代理通过 `preferredMissionIDs` 路径），仅影响"完成 N 轮普通任务后触发"的特殊剧情 offer。
+
+---
+
+## v0.12.0 对比分析（待补充）
+
+> **状态**: ⏸️ 待获取运行时数据后继续分析
+
+### 对比版本
+
+| 版本 | 目录 | 说明 |
+|------|------|------|
+| v0.12.0 | `Tmp/EveJS-0.12.0/` | 推测剧情任务正常 |
+| v0.12.1 | `Tmp/EveJS-0.12.1/` | 剧情任务部分可用（有死循环 bug） |
+| v0.12.2 | `Code/` | 剧情任务完全不可见 |
+
+### 代码差异（v0.12.0 → v0.12.2）
+
+| 文件 | 变化 |
+|------|------|
+| `missionAuthority.js` | +423 行：新增 `sanitizePayload`、`isOrdinarySecurityAgent`、`isExplicitStorylineAgent` 等门控 |
+| `missionRuntimeState.js` | +269 行：新增退休清理逻辑 |
+| `agentMissionRuntime.js` | +29 行：移除调试钩子、新增门控 |
+| `agentMgrService.js` | +2 行：新增 `listDisabledMissionIDs` |
+
+### 待确认
+
+- [ ] 获取 v0.12.0 运行时数据（`_local/gameStore/data/`）进行对比
+- [ ] 确认 v0.12.0 中剧情任务是否真的正常
+- [ ] 定位 v0.12.0 → v0.12.2 中导致剧情任务不可见的具体变更
+
+---
+
+## 修复方案（2026-07-21 更新）
+
+### 修复目标
+
+1. **剧情任务从一开始就可见** — 无需完成 16 个普通任务
+2. **16 个普通任务后触发的特殊任务** — 不是剧情任务，是另一种奖励
+3. **修复死循环 bug** — 任务流程正常
+
+### 修复方案
+
+#### 方案 1：角色创建时初始化剧情 offer（推荐）
+
+在 `missionRuntimeState.js` 的 `createDefaultStorylineProgress()` 中，预填充 `pendingOffersByAgentID`，使剧情代理从一开始就可见。
+
+**优点**：最小改动，立即可见
+**缺点**：需要确定预填充哪些代理
+
+#### 方案 2：修改 `buildPendingStorylineOfferJournalRows`
+
+修改该函数，使其不仅读取 `pendingOffersByAgentID`，还显示可用的剧情代理。
+
+**优点**：更灵活
+**缺点**：改动较大
+
+#### 方案 3：修复死循环 + 初始化剧情 offer
+
+同时修复死循环 bug 和初始化剧情 offer。
+
+**死循环现象** (v0.12.1)：
+1. 完成任务
+2. 点击"请求新任务" → 出现接受/取消提示
+3. 点击接受 → 回到"请求新任务"界面
+4. 重复步骤 2-3
+
+**死循环原因推测**：
+- 运行时数据被清洗（`eve-survival:*` 模板缺失）
+- `offerMission` 创建的任务缺少有效的 contentID
+- 客户端接受任务后因数据无效而立即移除
+- 玩家回到代理人对话框，再次点击"请求新任务" → 循环
+
+**修复方向**：
+- 运行 `CreateDatabase.bat` 应用恢复的静态数据
+- 确保 `offerMission` 创建的任务有有效的 contentID
+- 确保任务不会立即被标记为完成
+
+---
+
+## 已实施的修复（2026-07-21）
+
+### Fix 1: 剧情任务从一开始就可见
+
+**文件**: `Code/server/src/services/agent/agentMissionRuntime.js`
+
+**修改内容**：
+1. 新增 `listAgents` 导入
+2. 修改 `buildPendingStorylineOfferJournalRows`：当 `pendingOffersByAgentID` 为空时，显示可用的剧情代理人
+3. 新增 `listAvailableStorylineAgentJournalRows`：列出指定派系的剧情代理人（agentTypeID 6/7/10）
+4. 新增 `buildAvailableStorylineAgentMissionRecord`：为可用剧情代理人生成任务记录
+
+**效果**：玩家打开 F11 Journal → 剧情任务标签 → 能看到剧情代理人列表（按派系筛选）
+
+### Fix 2: 待实施 — 应用运行时数据
+
+需要运行 `CreateDatabase.bat` 将恢复的静态表数据应用到 `_local/gameStore/data/`。
+
+### Fix 3: 待实施 — 修复死循环
+
+需要运行时数据支持才能测试和修复。

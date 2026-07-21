@@ -246,10 +246,12 @@ isOrdinarySecurityAgent ? [] : getMissionTemplatePool(agentRecord, ...)
 
 ### 5.4 被移除的调试钩子
 
-v0.12.1 中存在、v0.12.2 中移除的环境变量:
-- `EVEJS_FORCE_MISSION_TEMPLATE`
-- `EVEJS_FORCE_MISSION_DUNGEON_ID`
-- `EVEJS_FORCE_MISSION_ID`
+v0.12.0/v0.12.1 中存在、v0.12.2 中移除的环境变量:
+- `EVEJS_FORCE_MISSION_TEMPLATE` — 临时调试钩子（标注 "Safe to delete this block"），用于 EveAnomUtility 内容测试
+- `EVEJS_FORCE_MISSION_DUNGEON_ID` — ad-hoc 测试钩子
+
+保留的环境变量:
+- `EVEJS_FORCE_MISSION_ID` — 仍保留（agentMissionRuntime.js:4820）
 
 ---
 
@@ -295,23 +297,71 @@ v0.12.1 中存在、v0.12.2 中移除的环境变量:
 }
 ```
 
-**agentTypeID 含义**:
+**agentTypeID 完整含义**:
 
-| typeID | 含义 | 数量 |
-|--------|------|------|
-| 2 | 普通安全代理 | 8,751 |
-| 6 | 通用剧情 (GENERIC_STORYLINE) | 651 |
-| 7 | 剧情 (STORYLINE) | 11 |
-| 8 | 其他 | 696 |
-| 10 | 类剧情 | — |
+| typeID | 名称 | 数量 | Level | importantMission | 任务类型 | 说明 |
+|--------|------|------|-------|-----------------|---------|------|
+| 2 | 普通安全代理 | 8,751 | 1-5 | ❌ | encounter/courier/mining/trade/distribution | 标准代理人，按派系/公司/等级分布 |
+| 3 | 职业代理 | 14 | 1 | ❌ | courier | 特定职业方向 |
+| 4 | 研究代理 | 244 | 1-4 | ❌ | research | 科技研究类任务 |
+| 5 | 特殊代理 | 143 | 1-4 | ❌ | courier | CONCORD/特殊组织 |
+| **6** | **通用剧情代理** | **651** | **1** | **✅** | encounter/courier/mining | **剧情任务核心代理人**，全部有 eve-survival 模板 |
+| **7** | **剧情代理** | **11** | **1** | **✅** | encounter/courier | 高级剧情代理人 |
+| 8 | 军团代理 | 696 | 1-5 | ❌ | courier | 军团相关任务 |
+| 9 | 军团战斗代理 | 260 | 1-4 | ❌ | encounter | 军团相关任务 |
+| **10** | **类剧情代理** | **47** | **1-4** | **✅** | encounter/courier/mining | **高级剧情类任务，包含血色星辰起点** |
+| 11 | 其他代理 | 12 | 1 | ❌ | courier | 特殊任务 |
+| 12 | 其他代理 | 100 | 1 | ❌ | encounter | 特殊任务 |
+| 13 | 其他代理 | 12 | 1 | ❌ | courier | 特殊任务 |
 
 `importantMission: true` 当 `[6,7,10].includes(agentTypeID)`。
+
+### 6.3.1 Type-6 剧情代理人派系分布
+
+| 派系 | 数量 | courier | encounter | mining |
+|------|------|---------|-----------|--------|
+| Caldari State | 135 | 57 | 48 | 30 |
+| Amarr Empire | 131 | 59 | 44 | 28 |
+| Gallente Federation | 142 | 80 | 47 | 15 |
+| Minmatar Republic | 82 | 22 | 47 | 13 |
+| 其他 15 个派系 | 161 | 混合 | 混合 | 混合 |
+
+**关键数据**: 所有 651 个 Type-6 代理的 `missionTemplateIDs` 都指向 `eve-survival:*` 模板。
 
 ### 6.3 剧情代理发现
 
 `storylineAgentSelector.js`: 662 个剧情代理 (agentTypeID 6/7) 按太阳系索引，通过 BFS (`findNearestStorylineAgent`) 在星门网络中搜索最近同阵营剧情代理。
 
-### 6.4 运行时状态
+### 6.4 剧情任务起点：Sister Alitura（血色星辰）
+
+**Sister Alitura** (agentID: 3019356) 是 EVE Online 中著名的剧情任务起点代理人：
+
+| 字段 | 值 |
+|------|-----|
+| 名称 | Sister Alitura |
+| agentTypeID | **10** (类剧情代理) |
+| 所属 | Sisters of EVE (姐妹会) |
+| factionID | 500016 (Mordu Legion) |
+| corporationID | 1000130 |
+| missionKind | encounter |
+| level | 1 |
+| importantMission | True |
+| solarSystemID | 30005001 |
+| 任务线 | **The Blood-Stained Stars** (血色星辰) — 史诗级任务线 |
+| 位置 | 阿尔蒙星域 (Armon) 的姐妹会办公署 |
+
+**关键发现**: Sister Alitura 的 `missionTemplateIDs` 全部指向 `eve-survival:*` 模板（如 `eve-survival:AfterTheSeven1`, `eve-survival:AirShow1` 等）。这些模板在运行时被 `enforce-production-mission-policy.js` 清洗，导致她无法提供任务。
+
+**玩家实际体验** (v0.12.1):
+1. 打开 F11 Journal → 剧情任务标签 → 能看到 Sister Alitura 和任务简介
+2. 接受任务 → 完成任务 → 出现死循环（请求新任务 → 接受/取消 → 回到请求新任务）
+3. 但至少 NPC 可见、可对话、可交互
+
+**玩家实际体验** (v0.12.2):
+1. 打开 F11 Journal → 剧情任务标签 → **完全空白**，无任何内容
+2. 无法看到任何剧情代理或任务简介
+
+### 6.5 运行时状态
 
 `missionRuntimeState` 存储每位角色的:
 - `storylineProgress`: 按 faction×level 的计数器、里程碑、`pendingOffersByAgentID`、`issuedMilestones`

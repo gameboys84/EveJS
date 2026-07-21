@@ -16,6 +16,7 @@ const {
 } = require(path.join(__dirname, "../_shared/referenceData"));
 const {
   getAgentByID,
+  listAgents,
   listMissionTemplateIDsForAgent,
 } = require(path.join(__dirname, "./agentAuthority"));
 const {
@@ -57,12 +58,8 @@ const {
   normalizeEpicArcProgress,
   recordEpicArcCompletion,
   recordEpicArcMissionStatus,
-  recordPendingStorylineOffer,
   recordStorylineQualifyingCompletion,
 } = require(path.join(__dirname, "./missionRuntimeState"));
-const {
-  findNearestStorylineAgent,
-} = require(path.join(__dirname, "./storylineAgentSelector"));
 const {
   resolveItemByTypeID,
 } = require(path.join(__dirname, "../inventory/itemTypeRegistry"));
@@ -4270,7 +4267,7 @@ function buildPendingStorylineOfferJournalRows(
     typeof characterState.storylineProgress.pendingOffersByAgentID === "object"
       ? characterState.storylineProgress.pendingOffersByAgentID
       : {};
-  return Object.values(pendingOffers)
+  const offerRows = Object.values(pendingOffers)
     .map((offerRecord) => {
       const agentID = normalizePositiveInteger(offerRecord && offerRecord.agentID, 0);
       if (
@@ -4290,6 +4287,66 @@ function buildPendingStorylineOfferJournalRows(
         : null;
     })
     .filter(Boolean);
+  if (offerRows.length > 0) {
+    return offerRows;
+  }
+  // No pending offers: show available storyline agents so the Storyline tab
+  // is never empty. This makes storyline agents visible from the start of the
+  // game without requiring 16 normal mission completions.
+  return listAvailableStorylineAgentJournalRows(characterID, activeAgentIDs);
+}
+
+const STORYLINE_AGENT_TYPE_IDS = new Set([6, 7, 10]);
+
+function listAvailableStorylineAgentJournalRows(characterID, activeAgentIDs = new Set()) {
+  const characterFactionID = getCharacterFactionID(characterID);
+  return listAgents()
+    .filter((agentRecord) => {
+      if (!agentRecord || !STORYLINE_AGENT_TYPE_IDS.has(toPositiveInteger(agentRecord.agentTypeID, 0))) {
+        return false;
+      }
+      if (activeAgentIDs.has(toPositiveInteger(agentRecord.agentID, 0))) {
+        return false;
+      }
+      if (characterFactionID > 0 && toPositiveInteger(agentRecord.factionID, 0) > 0) {
+        if (toPositiveInteger(agentRecord.factionID, 0) !== characterFactionID) {
+          return false;
+        }
+      }
+      return true;
+    })
+    .slice(0, 50)
+    .map((agentRecord) => {
+      const projectedMissionRecord = buildAvailableStorylineAgentMissionRecord(agentRecord);
+      return projectedMissionRecord
+        ? buildMissionJournalRow(characterID, agentRecord, projectedMissionRecord)
+        : null;
+    })
+    .filter(Boolean);
+}
+
+function getCharacterFactionID(characterID) {
+  const characterRecord = getCharacterRecord(characterID);
+  return toPositiveInteger(characterRecord && characterRecord.factionID, 0);
+}
+
+function buildAvailableStorylineAgentMissionRecord(agentRecord) {
+  if (!agentRecord) {
+    return null;
+  }
+  return {
+    missionID: 0,
+    agentID: toPositiveInteger(agentRecord.agentID, 0),
+    missionKind: normalizeText(agentRecord.missionKind, "encounter"),
+    missionFlavor: "storyline",
+    isStoryline: true,
+    isGenericStoryline: toPositiveInteger(agentRecord.agentTypeID, 0) === 6,
+    contentTemplate: null,
+    status: "offered",
+    title: `${agentRecord.ownerName || "Storyline Agent"} (${normalizeText(agentRecord.missionKind, "encounter")})`,
+    missionBriefing: `Storyline agent available. Talk to ${agentRecord.ownerName || "this agent"} for details.`,
+    briefingMessage: `Talk to ${agentRecord.ownerName || "this agent"} to accept the storyline mission.`,
+  };
 }
 
 function buildMissionBriefingInfo(agentRecord, missionRecord, missionTemplate) {
@@ -5226,31 +5283,9 @@ function completeMission(characterID, agentRecord) {
         { nowMs: Date.now() },
       );
     }
-    const storylineResult = recordStorylineQualifyingCompletion(
-      characterState,
-      agentRecord,
-      missionRecord,
-      { completedAtFileTime },
-    );
-    if (storylineResult.reachedMilestone) {
-      const storylineAgent = findNearestStorylineAgent({
-        startSolarSystemID: agentRecord.solarSystemID,
-        factionID: agentRecord.factionID,
-        missionLevel: agentRecord.level,
-      });
-      if (storylineAgent) {
-        recordPendingStorylineOffer(characterState, {
-          agentID: storylineAgent.agentID,
-          factionID: agentRecord.factionID,
-          missionLevel: agentRecord.level,
-          counterKey: storylineResult.counterKey,
-          completedCount: storylineResult.completedCount,
-          sourceAgentID: agentRecord.agentID,
-          sourceMissionID: missionRecord.missionID,
-          jumpDistance: storylineAgent.jumpDistance,
-        });
-      }
-    }
+    recordStorylineQualifyingCompletion(characterState, agentRecord, missionRecord, {
+      completedAtFileTime,
+    });
     return cloneValue(missionRecord);
   });
 
