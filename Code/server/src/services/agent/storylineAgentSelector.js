@@ -204,8 +204,9 @@ function findNearestStorylineAgent({
       ));
 
     if (candidates.length > 0) {
+      const found = candidates[0];
       return {
-        ...cloneValue(candidates[0]),
+        ...cloneValue(found),
         offerLevel: normalizedMissionLevel,
         jumpDistance: current.jumpDistance,
         startSolarSystemID: normalizedStartSystemID,

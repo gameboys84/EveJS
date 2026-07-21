@@ -624,9 +624,8 @@ class AgentMgrService extends BaseService {
   }
 
   Handle_GetMyJournalDetails(args, session) {
-    const journalDetails = agentMissionRuntime.getJournalDetails(
-      normalizePositiveInteger(session && session.characterID, 0),
-    );
+    const charID = normalizePositiveInteger(session && session.characterID, 0);
+    const journalDetails = agentMissionRuntime.getJournalDetails(charID);
     const boundAgentID = this._resolveBoundAgentID(session, 0);
     return toMarshalSafe(
       boundAgentID > 0

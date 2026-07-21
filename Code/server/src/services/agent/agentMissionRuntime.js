@@ -23,6 +23,7 @@ const {
   getAgentIDToMissionIDs,
   getMissionByID,
   getMissionArcInfo,
+  getPreferredMissionID,
   isMissionOfferAllowedForAgent,
   isOrdinarySecurityAgent,
   isSupportedLevelOneClientDungeonID,
@@ -39,6 +40,7 @@ const dungeonRuntime = require(path.join(__dirname, "../dungeon/dungeonRuntime")
 // TEMP DEBUG HOOK (EveAnomUtility content testing): lightweight logger so the accept path can
 // report the mission's deadspace fields. Remove with the other EVEJS_FORCE_* hooks.
 const log = require(path.join(__dirname, "../../utils/logger"));
+log.info(`[DEBUG] module loaded at ${new Date().toISOString()}`);
 const {
   getCharacterRecord,
   syncInventoryItemForSession,
@@ -165,6 +167,15 @@ function normalizeInteger(value, fallback = 0) {
 function normalizePositiveInteger(value, fallback = 0) {
   const numericValue = normalizeInteger(value, 0);
   return numericValue > 0 ? numericValue : fallback;
+}
+
+function toPositiveInteger(value, fallback = 0) {
+  const numericValue = Number(value);
+  if (!Number.isFinite(numericValue)) {
+    return fallback;
+  }
+  const normalized = Math.trunc(numericValue);
+  return normalized > 0 ? normalized : fallback;
 }
 
 function normalizeText(value, fallback = "") {
@@ -4271,11 +4282,10 @@ function buildPendingStorylineOfferJournalRows(
   const offerRows = Object.values(pendingOffers)
     .map((offerRecord) => {
       const agentID = normalizePositiveInteger(offerRecord && offerRecord.agentID, 0);
-      if (
-        !agentID ||
-        activeAgentIDs.has(agentID) ||
-        normalizeText(offerRecord && offerRecord.status, "pending") !== "pending"
-      ) {
+      if (!agentID || activeAgentIDs.has(agentID)) {
+        return null;
+      }
+      if (normalizeText(offerRecord && offerRecord.status, "pending") !== "pending") {
         return null;
       }
       const agentRecord = getAgentRecord(agentID);
@@ -4296,20 +4306,44 @@ function buildPendingStorylineOfferJournalRows(
 
 function buildSingleStorylineAgentJournalRow(characterID, activeAgentIDs = new Set()) {
   const characterFactionID = getCharacterFactionID(characterID);
-  const storylineAgent = findStorylineAgentForCharacter(characterID, characterFactionID, activeAgentIDs);
+  const storylineAgent = findStorylineAgentForCharacter(characterID, characterFactionID, new Set());
   if (!storylineAgent) {
     return [];
   }
-  const agentID = toPositiveInteger(storylineAgent && storylineAgent.agentID, 0);
-  const missionList = getAgentIDToMissionIDs(agentID);
-  if (missionList.length > 0) {
-    const nextMissionID = missionList[0];
-    const missionRecord = getMissionByID(nextMissionID);
-    if (missionRecord) {
-      return [buildMissionJournalRow(characterID, storylineAgent, missionRecord)];
-    }
+  // Try to find a real storyline mission for this agent's faction/level
+  const storylineMission = findStorylineMissionForAgent(storylineAgent);
+  let rawRow = null;
+  if (storylineMission) {
+    rawRow = buildMissionJournalRow(characterID, storylineAgent, storylineMission);
   }
-  return [buildMissionJournalRow(characterID, storylineAgent, buildStorylineAgentDialogueRecord(storylineAgent))];
+  if (!rawRow) {
+    rawRow = buildMissionJournalRow(characterID, storylineAgent, buildStorylineAgentDialogueRecord(storylineAgent));
+  }
+  if (!rawRow) {
+    return [];
+  }
+  const row = [...rawRow];
+  row[1] = true;
+  row[2] = "UI/Agents/MissionTypes/Storyline";
+  return [row];
+}
+
+function findStorylineMissionForAgent(agentRecord) {
+  const agentFactionID = toPositiveInteger(agentRecord && agentRecord.factionID, 0);
+  const agentLevel = toPositiveInteger(agentRecord && agentRecord.level, 1);
+  const preferredKeys = ["storylineEncounter", "storylineCourier", "storylineTrade", "genericStorylineEncounter", "genericStorylineCourier", "genericStorylineTrade"];
+  for (const key of preferredKeys) {
+    const missionID = getPreferredMissionID(key);
+    if (missionID === null || missionID === undefined) continue;
+    const record = getMissionByID(missionID);
+    if (!record) continue;
+    const missionLevel = toPositiveInteger(record.missionLevel, 0);
+    const missionFactionID = toPositiveInteger(record.factionID, 0);
+    if (missionLevel > 0 && missionLevel !== agentLevel) continue;
+    if (agentFactionID > 0 && missionFactionID > 0 && missionFactionID !== agentFactionID) continue;
+    return record;
+  }
+  return null;
 }
 
 function findStorylineAgentForCharacter(characterID, characterFactionID, activeAgentIDs = new Set()) {
@@ -5323,15 +5357,18 @@ function getJournalDetails(characterID) {
     return [[], []];
   }
 
-  const missionRows = Object.values(characterState.missionsByAgentID || {})
+  const allMissions = Object.values(characterState.missionsByAgentID || {});
+
+  const missionRows = allMissions
     .map((missionRecord) => {
       const syncedMissionRecord =
         getMissionRecordForRead(characterID, missionRecord && missionRecord.agentID) ||
         missionRecord;
       const agentRecord = getAgentRecord(missionRecord && missionRecord.agentID);
-      return agentRecord
-        ? buildMissionJournalRow(characterID, agentRecord, syncedMissionRecord)
-        : null;
+      if (!agentRecord) {
+        return null;
+      }
+      return buildMissionJournalRow(characterID, agentRecord, syncedMissionRecord);
     })
     .filter(Boolean);
   const activeAgentIDs = new Set(
@@ -5343,7 +5380,33 @@ function getJournalDetails(characterID) {
     activeAgentIDs,
   );
 
-  return [missionRows.concat(pendingStorylineRows), []];
+  // Fallback: if no pending storyline offers but there is an active storyline mission, show it
+  let storylineTabRows = pendingStorylineRows;
+  if (storylineTabRows.length === 0) {
+    const activeStorylineMission = allMissions.find((m) =>
+      m && (m.isStoryline === true || m.missionFlavor === "storyline" || m.missionFlavor === "genericStoryline" || m.missionFlavor === "epicArc"),
+    );
+    if (activeStorylineMission) {
+      const agentRecord = getAgentRecord(activeStorylineMission.agentID);
+      if (agentRecord) {
+        const rawRow = buildMissionJournalRow(characterID, agentRecord, activeStorylineMission);
+        if (rawRow) {
+          const row = [...rawRow];
+          row[1] = true;
+          row[2] = "UI/Agents/MissionTypes/Storyline";
+          storylineTabRows = [row];
+        }
+      }
+    }
+  }
+
+  // Fallback: if no storyline data at all, find a storyline agent to display
+  if (storylineTabRows.length === 0 && pendingStorylineRows.length === 0) {
+    storylineTabRows = buildSingleStorylineAgentJournalRow(characterID, activeAgentIDs);
+  }
+
+  const allRows = missionRows.concat(storylineTabRows);
+  return [allRows, []];
 }
 
 function getMyEpicArcStatus(characterID) {
