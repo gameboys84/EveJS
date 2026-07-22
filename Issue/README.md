@@ -86,7 +86,7 @@ NNN-<简短英文描述>.md
 
 | 编号 | 文件 | 标题 | 影响版本 | 严重程度 | 状态 | 类别 |
 |------|------|------|---------|---------|------|------|
-| #001 | [001-wreck-loot-not-pickable.md](001-wreck-loot-not-pickable.md) | 残骸无法拾取物品 | v0.12.2 | 高 | 🔍 待验证 | 掉落/残骸系统 |
+| #001 | [001-wreck-loot-not-pickable.md](001-wreck-loot-not-pickable.md) | 残骸掉落/拾取/刷新异常（社区 vs 官方数据差异） | v0.12.2 | 高 | 🔍 根因已定位 | 掉落/残骸系统 |
 | #002 | [002-missing-storyline-missions.md](002-missing-storyline-missions.md) | 剧情任务标签页为空 | v0.12.2 | 高 | 🔄 修复中 | 任务/代理系统 |
 
 ---

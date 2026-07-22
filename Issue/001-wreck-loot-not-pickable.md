@@ -1,4 +1,4 @@
-# 问题 #001: v0.12.2 版本中消灭敌人后残骸无法拾取物品
+# 问题 #001: 残骸掉落/拾取/刷新异常（社区数据 vs 官方数据行为差异）
 
 ### 基本信息
 
@@ -7,195 +7,115 @@
 | **问题编号** | #001 |
 | **发现日期** | 2026-07-20 |
 | **影响版本** | EveJS v0.12.2 |
-| **正常版本** | EveJS v0.12.1 |
-| **严重程度** | 高 (影响核心游戏体验) |
-| **状态** | 🔍 待验证（根因假设已建立） |
+| **严重程度** | 高（影响核心游戏体验） |
+| **状态** | 🔍 根因已定位，待修复 |
 | **类别** | 掉落系统 / 残骸系统 |
 
 ### 问题描述
 
-在 v0.12.2 版本中，消灭敌人（NPC）后：
-- ✅ 残骸正常生成，玩家可见
-- ❌ 无法从残骸中拾取到任何物品
-- ❌ 残骸表现为"空"状态
+消灭敌人（NPC）后，残骸的掉落、拾取和刷新机制存在异常。**社区数据（eve-survival 爬取）和官方数据（CCP SDE）表现不一致**。
 
-对比 v0.12.1 版本：
-- ✅ 残骸正常生成
-- ✅ 可以从残骸中正常拾取物品
-- ✅ 拾取几率较高，能获得价值较高的物品
+### 社区数据 vs 官方数据行为对比
 
-### 排查过程
+| 行为 | 社区数据（eve-survival） | 官方数据（CCP SDE） |
+|------|------------------------|-------------------|
+| **总览列表** | ❌ 敌人不出现在总览中，只能通过点击星空模型锁定 | ✅ 敌人正常出现在总览中 |
+| **残骸位置** | ✅ 残骸出现在死亡位置 | ❌ 残骸位置与死亡位置不一致（强制创建） |
+| **掉落物品** | ✅ 高价值物品掉落 | ❌ 残骸始终为空 |
+| **残骸总览** | ✅ 残骸显示在总览中，有明暗状态区分已查看/未查看 | ❌ 残骸不在总览中 |
+| **拾取后刷新** | ❌ 物品仍显示但无法拾取，图标状态异常 | ❌ 无物品可拾取，无同步问题 |
 
-#### 第一步：核心代码比对
+### 具体问题
 
-逐一比对了两个版本中所有与掉落/残骸相关的源代码文件：
+#### 问题 1: 社区数据 NPC 不出现在总览列表
+
+社区数据的 NPC 不会出现在总览（Overview）列表中，导致无法通过总览进行锁定操作，只能点选星空中的模型进行锁定。
+
+#### 问题 2: 社区数据残骸拾取后状态不同步
+
+全部拾取残骸内物品后：
+- ❌ 残骸内部物品仍显示（看起来像没刷新）
+- ✅ 物品已无法拾取
+- ❌ 残骸图标仍显示"有物品"状态（应为空残骸图标）
+- ✅ 状态变为已查看的灰色图标
+- ❌ 可以再次打开，物品仍显示但无法拾取
+
+**预期行为**: 拾取后残骸应变为空残骸图标，物品列表清空。
+
+#### 问题 3: 官方数据残骸位置异常
+
+官方数据的 NPC 死亡后，残骸位置与死亡位置不一致，感觉像是强制创建出来的一个残骸。
+
+#### 问题 4: 官方数据残骸无掉落
+
+官方数据的残骸内一直没有物品掉落，可以正常打开但无物品可拾取。
+
+### 根因分析（代码级验证）
+
+#### 根因 1: 残骸状态同步双重缺陷（已确认 ✅）
+
+**Bug A** — `nativeNpcWreckService.js:375` 拾取后调用 `refreshNativeWreckRuntimeEntity` 时**缺少 `{ broadcast: true }`**：
+```js
+// 当前代码（错误）
+refreshNativeWreckRuntimeEntity(wreckRecord.systemID, wreckRecord.wreckID);
+// 应改为
+refreshNativeWreckRuntimeEntity(wreckRecord.systemID, wreckRecord.wreckID, { broadcast: true });
+```
+
+**Bug B** — `nativeNpcWreckService.js:178` 调用了**不存在的方法**：
+```js
+// 当前代码（方法不存在）
+scene.sendSlimItemChangesToAllSessions([entity]);
+// 应为（runtime.js:27565 定义的真实方法）
+scene.broadcastSlimItemChanges([entity]);
+```
+
+**影响**: 拾取后服务端的 `isEmpty` 已正确更新，但客户端永远收不到通知 → 图标不刷新、物品列表残留。
+
+#### 根因 2: 社区数据 NPC 总览列表缺失（已确认 ✅）
+
+社区数据 NPC 通过 `dungeonUniverseSiteService.js` 生成（不走标准 NPC 生成路径），存在三个复合问题：
+
+| # | 问题 | 位置 | 影响 |
+|---|------|------|------|
+| 1 | `suppressSlimName:true` + `nameID:null` | `dungeonAuthority/data.json` → `nativeNpcService.js:1244` | slimItem 无 name → 客户端总览过滤掉无名船只 |
+| 2 | `ownerIDOverride` 应用了但 `corporationID`/`allianceID`/`warFactionID` 未覆盖 | `nativeNpcService.js:1278-1284` | faction 字段来自 resolved profile 而非 dungeon entry → 可能被 faction 过滤器排除 |
+| 3 | `dunObjectID`/`objectiveTargetGroup` 未传播到 NPC 实体 | `dungeonUniverseSiteService.js:4932` | 客户端 dungeon-objective 过滤器无法关联 |
+
+**修复方向**: 在 `dungeonUniverseSiteService.js:4932` 处统一处理 name、faction 和 objective 字段。
+
+#### 根因 3: 残骸位置偏移（待验证 ⚠️）
+
+服务端位置链（`nativeNpcWreckService.js:500` → `runtime.js:18471` → `spawnDynamicEntity`）无偏移。观察到的位置差异可能是客户端 `freshAcquire: false` 获取通道的渲染时序问题（`nativeNpcWreckService.js:232-238`）。需运行时验证。
+
+#### 根因 4: 官方数据残骸无掉落（待验证 ⚠️）
+
+掉落本身有随机性（`emptyChance`、加权随机），静态分析无法确认。需运行时对比两种数据源的 lootTableID 解析路径。
+
+### 代码比对结论
+
+已逐一比对两个版本中所有与掉落/残骸相关的源代码文件：
 
 | 文件路径 | 功能 | 比对结果 |
 |---------|------|---------|
 | `server/src/space/npc/npcLoot.js` | 掉落生成核心逻辑 | ✅ 完全一致 |
-| `server/src/space/npc/nativeNpcWreckService.js` | 残骸创建与物品转移 | ✅ 完全一致 |
+| `server/src/space/npc/nativeNpcWreckService.js` | 残骸创建与物品转移 | ⚠️ 发现 2 个 bug |
 | `server/src/space/npc/nativeNpcStore.js` | 残骸数据存储 | ✅ 完全一致 |
 | `server/src/space/npc/npcData.js` | NPC 数据索引 | ✅ 完全一致 |
-| `server/src/space/npc/nativeNpcService.js` | NPC 实体创建 | ✅ 完全一致 |
-| `server/src/space/npc/beltRatRuntime.js` | 海盗生成逻辑 | ✅ 完全一致 |
 | `server/src/space/wreckUtils.js` | 残骸工具函数 | ✅ 完全一致 |
-| `server/src/services/inventory/itemStore.js` | 物品存储核心 | ✅ 完全一致 |
-| `server/src/services/inventory/spaceDebrisState.js` | 碎片状态 | ✅ 完全一致 |
-| `tools/.../npcLootTables/data.json` | 掉落表数据 | ✅ 完全一致 |
-| `tools/.../npcProfiles/data.json` | NPC 配置文件 | ✅ 完全一致 |
-| `tools/.../npcLoadouts/data.json` | NPC 装备数据 | ✅ 完全一致 |
-| `tools/.../npcSpawnPools/data.json` | 生成池数据 | ✅ 完全一致 |
-| `tools/.../npcSpawnGroups/data.json` | 生成组数据 | ✅ 完全一致 |
-| `tools/.../npcBehaviorProfiles/data.json` | 行为配置数据 | ✅ 完全一致 |
 
-**结论**: 核心掉落/残骸代码完全一致，问题不在算法逻辑层。
+**结论**: 核心掉落算法一致，问题在残骸状态同步逻辑和社区数据 NPC 生成路径。
 
-#### 第二步：变更文件分析
+### 修复方案
 
-分析了 v0.12.2 中所有变更的文件，评估与掉落系统的关联性：
-
-| 变更文件 | 变更内容 | 影响评估 |
-|---------|---------|---------|
-| `sqliteStore.js` | 新增 _persistence_outbox 持久化日志 | ⚠️ 可能影响 |
-| `gameStore/index.js` | 新增测试存储验证逻辑 | ⚠️ 可能影响 |
-| `persistenceWorker.js` | 持久化工作器改进 | ⚠️ 可能影响 |
-| `shipDestruction.js` | 玩家飞船销毁流程重构 | ❌ 不影响 NPC 残骸 |
-| `runtime.js` | Bastion 模块/结构体支持 | ❌ 不影响 |
-| `npcBehaviorLoop.js` | 隐身目标检测 | ❌ 不影响 |
-| `dogmaService.js` | 武器热量状态 | ❌ 不影响 |
-| `invBrokerService.js` | 公司仓库权限控制 | ❌ 不影响残骸拾取 |
-| `clientSession.js` | 广播载荷格式变更 | ❌ 不太可能 |
-
-#### 第三步：数据层比对
-
-比对了两个版本的静态数据文件：
-
-| 数据文件 | 比对结果 |
-|---------|---------|
-| `npcLootTables/data.json` | ✅ 完全一致 |
-| `npcProfiles/data.json` | ✅ 完全一致 |
-| `npcLoadouts/data.json` | ✅ 一致 |
-| `npcSpawnPools/data.json` | ✅ 一致 |
-| `npcSpawnGroups/data.json` | ✅ 一致 |
-| `npcBehaviorProfiles/data.json` | ✅ 一致 |
-
-### 根因假设（按可能性排序）
-
-#### 假设 1: SQLite 异步持久化路径变更导致数据同步问题 ⭐⭐⭐⭐⭐
-
-**依据**: v0.12.2 对 `sqliteStore.js` 进行了重大改动，新增 `_persistence_outbox` 持久化日志表：
-
-```sql
-CREATE TABLE IF NOT EXISTS _persistence_outbox (
-  operation_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  table_name TEXT NOT NULL UNIQUE,
-  upserts_json TEXT NOT NULL,
-  deletes_json TEXT NOT NULL,
-  state TEXT NOT NULL DEFAULT 'pending'
-    CHECK (state IN ('pending', 'applied')),
-  created_at TEXT NOT NULL,
-  applied_at TEXT
-);
-```
-
-**推测机制**:
-- 新的异步持久化路径可能延迟了 `npcWreckItems` 表的写入
-- 玩家尝试拾取时，物品记录可能尚未提交到 SQLite
-- 或者读取时缓存与 SQLite 不同步
-- `table_name TEXT NOT NULL UNIQUE` 约束意味着同一表只能有一个未完成操作，后续写入可能被阻塞
-
-#### 假设 2: 数据库迁移导致数据关联丢失 ⭐⭐⭐
-
-**依据**: 如果从 v0.12.1 的数据库迁移到 v0.12.2 时未正确处理：
-
-**可能情况**:
-- `npcProfiles` 中的 `lootTableID` 字段迁移后丢失
-- `npcLootTables` 表数据未正确导入新的 SQLite 数据库
-- 外键关联断裂
-
-#### 假设 3: isEmpty 标志设置时机错误 ⭐⭐⭐
-
-**依据**: `buildNativeWreckRuntimeEntity` 中的 isEmpty 判断逻辑：
-
-```javascript
-entity.isEmpty = nativeNpcStore.listNativeWreckItemsForWreck(wreckID).length === 0;
-```
-
-**推测机制**: 如果残骸实体生成时物品尚未写入（异步时序问题），`isEmpty` 会被错误设为 `true`，导致客户端认为残骸是空的。
-
-#### 假设 4: 运行时数据加载差异 ⭐⭐
-
-**依据**: v0.12.2 的 `gameStore/index.js` 新增了大量测试存储验证逻辑，可能改变了数据加载顺序或时机。
-
-#### 假设 5: 配置差异 ⭐
-
-**依据**: 两个版本的 `evejs.config.local.json` 存在细微差异，可能间接影响 NPC 生成或残骸生命周期。
-
-### 建议排查步骤
-
-> 日志格式遵循项目规范：`log.info("[Tag] key=value")`，使用 `src/utils/logger`。
-
-1. **添加运行时日志验证掉落生成**
-   ```javascript
-   // 在 nativeNpcWreckService.js 的 destroyNativeNpcEntityWithWreck 中添加:
-   log.info(`[WreckLoot] npc=${entityID} lootTableID=${nativeEntityRecord.lootTableID} rolledEntries=${rolledLootEntries.length}`);
-   ```
-
-2. **验证残骸物品是否正确写入存储**
-   ```javascript
-   // 在残骸生成后检查:
-   const wreckItems = nativeNpcStore.listNativeWreckItemsForWreck(wreckID);
-   log.info(`[WreckLoot] wreck=${wreckID} storedItems=${wreckItems.length}`);
-   ```
-
-3. **检查 isEmpty 标志**
-   ```javascript
-   // 在 buildNativeWreckRuntimeEntity 中:
-   log.info(`[WreckLoot] wreck=${wreckID} isEmpty=${entity.isEmpty} itemCount=${nativeNpcStore.listNativeWreckItemsForWreck(wreckID).length}`);
-   ```
-
-4. **对比数据库内容**
-   - 运行两个版本，对比 `gamestore.sqlite` 中 `npcLootTables` 表
-   - 检查 `npcProfiles` 中 `lootTableID` 字段是否正确加载
-
-5. **检查 _persistence_outbox 状态**
-   ```sql
-   SELECT * FROM _persistence_outbox WHERE state = 'pending';
-   ```
-
-### 建议修复方向
-
-1. **方案 A**: 在残骸生成后立即验证物品是否正确写入，如未写入则报错或重试
-   ```javascript
-   // 在 destroyNativeNpcEntityWithWreck 末尾添加:
-   const finalWreckItems = nativeNpcStore.listNativeWreckItemsForWreck(wreckRecord.wreckID);
-   if (finalWreckItems.length === 0 && rolledLootEntries.length > 0) {
-     log.err(`[WreckLoot] Items rolled but not persisted! wreck=${wreckRecord.wreckID} rolled=${rolledLootEntries.length} stored=${finalWreckItems.length}`);
-   }
-   ```
-
-2. **方案 B**: 检查并修复 SQLite 持久化路径，确保 `npcWreckItems` 表的写入是同步的或在读取前已完成
-
-3. **方案 C**: 如果是数据库迁移问题，重新运行迁移脚本
-   ```bash
-   node src/gameStore/migrateJsonToSqlite.js npcLootTables npcProfiles
-   ```
-
-### 关于 v0.12.1 高价值物品掉落说明
-
-v0.12.1 中"高价值物品几率较大"的原因是 `generic_random_any` 掉落表被使用——它从整个物品池随机选择，不限制品质等级。而标准海盗掉落表 (`loot_belt_normal_*`) 使用 rule 模式，限制了低品质物品。
-
-掉落表类型对比：
-
-| 掉落表 | 模式 | 品质限制 | 高价值物品 |
-|--------|------|---------|-----------|
-| `generic_random_any` | 随机 | 无 | ✅ 可能 |
-| `loot_belt_normal_small` | rule | 低品质 | ❌ 不可能 |
-| `loot_belt_normal_medium` | rule | 低品质 | ❌ 不可能 |
-| `loot_belt_normal_large` | rule | 低品质 | ❌ 不可能 |
+| 方案 | 描述 | 优先级 | 状态 |
+|------|------|--------|------|
+| **A. 修复残骸状态同步** | 修复 Bug A（添加 broadcast）+ Bug B（方法名） | 高 | 代码已定位 |
+| **B. 修复社区数据 NPC 总览** | 在 `dungeonUniverseSiteService.js:4932` 统一处理 name/faction/objective | 高 | 代码已定位 |
+| **C. 验证残骸位置** | 运行时验证是否为客户端渲染问题 | 中 | 待验证 |
+| **D. 验证官方数据掉落** | 运行时对比 lootTableID 解析路径 | 中 | 待验证 |
 
 ### 相关文件
 
-- `Doc/EveJS_Project_Overview.md` - 项目概述与版本对比
-- `Doc/Loot_Wreck_System_Analysis.md` - 掉落系统深度分析
-- `Doc/Service_Modules_Reference.md` - 服务模块参考
+- [Doc/Loot_Wreck_System_Analysis.md](../Doc/Loot_Wreck_System_Analysis.md) — 掉落系统深度分析
+- [Issue/002-missing-storyline-missions.md](002-missing-storyline-missions.md) — 剧情任务问题
