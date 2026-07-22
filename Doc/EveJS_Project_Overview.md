@@ -10,29 +10,59 @@
 - **持久化**: SQLite（运行时表）+ JSON（静态数据/SDE）
 - **客户端目标**: EVE Online 24.01 build 3396210
 
-### 项目结构
+### 项目结构（实测 2026-07-22）
 ```
-EveJS-v0.X/
-├── server/                  # 服务器主目录
-│   ├── index.js             # 入口文件
-│   ├── src/
-│   │   ├── config/          # 配置系统
-│   │   ├── network/         # TCP/MachoNet 网络层
-│   │   ├── services/        # 游戏服务 (~70+ 服务目录)
-│   │   ├── space/           # 空间模拟引擎
-│   │   ├── gameStore/       # 数据存储层
-│   │   ├── _secondary/      # 辅助服务 (聊天/网关/图片)
-│   │   ├── common/          # MachoNet 序列化原语
-│   │   └── utils/           # 工具类
-│   ├── scripts/             # 验证/一致性测试脚本
-│   ├── externalservices/    # 外部服务
-│   └── tools/               # 工具
-├── tools/
-│   └── DatabaseCreator/     # 数据库创建工具
-│       └── staticTables/    # 静态数据表
-├── doc/                     # 项目文档
-└── evejs.config.local.json  # 本地配置
+EveJS/
+├── CLAUDE.md                   # AI 项目说明
+├── README.md / README.en.md    # 项目对外说明
+├── LICENSE                     # AGPL-3.0
+├── .gitignore                  # 仅排除 Tmp/
+│
+├── Code/                       # 当前开发版本
+│   ├── evejs.config.local.json # 本地配置（最高优先级）
+│   ├── .gitignore              # 排除 node_modules, _local, *.sqlite 等
+│   ├── server/                 # 服务器主目录
+│   │   ├── index.js            # 入口文件
+│   │   ├── src/
+│   │   │   ├── config/         # 配置系统 (index.js ~2650行)
+│   │   │   ├── network/        # TCP/MachoNet 网络层
+│   │   │   ├── services/       # 游戏服务 (70 目录, 206 *Service.js)
+│   │   │   ├── space/          # 空间模拟引擎 (含 runtime.js 1.2MB)
+│   │   │   │   ├── npc/        # NPC 系统 (26 文件 + 3 子目录)
+│   │   │   │   ├── combat/     # 战斗系统
+│   │   │   │   ├── modules/    # 模块系统
+│   │   │   │   └── destiny.js  # 命运权威 (66KB)
+│   │   │   ├── gameStore/      # 数据存储层
+│   │   │   ├── _secondary/     # 辅助服务 (聊天/网关/图片)
+│   │   │   ├── common/         # MachoNet 序列化原语
+│   │   │   └── utils/          # 工具类
+│   │   ├── scripts/            # 验证脚本 (48 个 .js)
+│   │   └── externalservices/   # 外部服务
+│   ├── _local/                 # 运行时数据 (gitignored, 141 子目录)
+│   │   └── gameStore/data/     # 服务器实际读取的数据
+│   └── tools/
+│       └── DatabaseCreator/    # 数据库创建工具
+│           └── staticTables/   # 静态数据表 (30 个目录)
+│
+├── Doc/                        # 项目分析文档
+├── Issue/                      # 问题跟踪
+├── Movie/                      # 测试录像
+└── Tmp/                        # 历史版本文件和其它临时文件，方便对比使用 (gitignored)
 ```
+
+### 关键规模数据
+
+| 指标 | 数值 |
+|------|------|
+| 服务目录数 | 70 |
+| *Service.js 文件数 | 206 |
+| 静态表目录数 | 30 |
+| 运行时数据目录数 | 141 |
+| 验证脚本数 | 48 |
+| agentAuthority 静态表大小 | ~71.4 MB (1,896,106 行) |
+| dungeonAuthority 静态表大小 | ~84.5 MB (2,869,522 行) |
+| missionAuthority 静态表大小 | ~15.4 MB (362,837 行) |
+| 最大源文件 | runtime.js ~1.2 MB |
 
 ---
 
@@ -362,118 +392,11 @@ EveJS-v0.X/
 
 ---
 
-## 六、v0.12.2 残骸无法拾取物品问题分析
+## 六、已知问题
 
-### 6.1 问题描述
+> 问题详情和修复进展见 `Issue/` 目录。
 
-在 v0.12.2 版本中，消灭敌人后：
-- 残骸正常生成
-- 但无法从残骸中拾取到物品
-- 相比之下，v0.12.1 版本可以正常拾取，且几率较高能获得高价值物品
-
-### 6.2 代码对比结果
-
-经过详细对比两个版本的源代码，发现以下关键文件**完全一致**：
-
-| 文件 | 功能 | 一致性 |
-|------|------|--------|
-| `npcLoot.js` | 掉落物生成算法 | ✅ 完全一致 |
-| `nativeNpcWreckService.js` | 残骸创建与物品转移 | ✅ 完全一致 |
-| `nativeNpcStore.js` | 残骸数据存储 | ✅ 完全一致 |
-| `npcData.js` | NPC 数据索引 | ✅ 完全一致 |
-| `nativeNpcService.js` | NPC 实体创建 | ✅ 完全一致 |
-| `beltRatRuntime.js` | 海盗生成逻辑 | ✅ 完全一致 |
-| `itemStore.js` | 物品存储核心 | ✅ 完全一致 |
-| `wreckUtils.js` | 残骸工具 | ✅ 完全一致 |
-| `npcLootTables/data.json` | 掉落表数据 | ✅ 完全一致 |
-| `npcProfiles/data.json` | NPC 配置文件 | ✅ 完全一致 |
-| `npcLoadouts/data.json` | NPC 装备数据 | ✅ 完全一致 |
-
-### 6.3 问题根因分析
-
-由于核心掉落/残骸代码完全一致，问题可能出在以下几个方面：
-
-#### 可能性 1: 数据持久化差异 (最可能)
-
-v0.12.2 对 `sqliteStore.js` 进行了重大改动，新增了 `_persistence_outbox` 持久化日志表。这改变了写入路径：
-
-```sql
-CREATE TABLE IF NOT EXISTS _persistence_outbox (
-  operation_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  table_name TEXT NOT NULL UNIQUE,
-  upserts_json TEXT NOT NULL,
-  deletes_json TEXT NOT NULL,
-  state TEXT NOT NULL DEFAULT 'pending'
-    CHECK (state IN ('pending', 'applied')),
-  created_at TEXT NOT NULL,
-  applied_at TEXT
-);
-```
-
-**潜在问题**: 如果新的异步持久化路径存在 bug，可能导致：
-- 残骸物品写入 `npcWreckItems` 表后未被正确读取
-- 或者读取时缓存与 SQLite 不同步
-
-#### 可能性 2: 运行时数据加载差异
-
-v0.12.2 的 `gameStore/index.js` 新增了测试存储验证逻辑，可能影响了数据加载顺序或时机。
-
-#### 可能性 3: 配置差异
-
-两个版本的 `evejs.config.local.json` 存在细微差异，可能影响：
-- NPC 生成时的 lootTableID 分配
-- 残骸生命周期 (`spaceDebrisLifetimeMs`)
-
-#### 可能性 4: 数据库迁移问题
-
-如果 v0.12.2 使用了新的 SQLite 数据库但未正确迁移旧数据，可能导致：
-- 掉落表 (`npcLootTables`) 数据缺失
-- NPC 配置文件中的 `lootTableID` 字段为空
-
-### 6.4 排查建议
-
-1. **检查运行时掉落表加载**
-   ```javascript
-   // 在 destroyNativeNpcEntityWithWreck 中添加日志
-   const lootTable = getNpcLootTable(nativeEntityRecord.lootTableID);
-   console.log('LootTableID:', nativeEntityRecord.lootTableID);
-   console.log('Resolved LootTable:', lootTable);
-   console.log('Rolled Entries:', rolledLootEntries);
-   ```
-
-2. **检查残骸物品是否正确写入**
-   ```javascript
-   // 在残骸生成后检查
-   const wreckItems = nativeNpcStore.listNativeWreckItemsForWreck(wreckID);
-   console.log('Wreck Items Count:', wreckItems.length);
-   ```
-
-3. **检查 isEmpty 标志**
-   ```javascript
-   // 在 buildNativeWreckRuntimeEntity 中
-   console.log('isEmpty:', entity.isEmpty);
-   ```
-
-4. **对比数据库内容**
-   - 检查两个版本的 `gamestore.sqlite` 中 `npcLootTables` 表内容是否一致
-   - 检查 `npcProfiles` 中 `lootTableID` 字段是否正确
-
-5. **检查 emptyChance 配置**
-   - 小型船: 22% 空残骸率
-   - 中型船: 18% 空残骸率
-   - 大型船: 8% 空残骸率
-
-### 6.5 结论
-
-基于代码对比，**v0.12.2 的残骸掉落问题不是由掉落算法或残骸创建逻辑的代码变更引起的**。两个版本的核心掉落/残骸代码完全一致。
-
-问题最可能的原因是：
-1. **数据层问题**: SQLite 持久化路径变更导致的数据同步问题
-2. **数据迁移问题**: 数据库迁移过程中掉落表数据丢失
-3. **运行时数据加载**: 数据加载顺序或缓存一致性问题
-
-建议通过添加运行时日志来确认：
-- NPC 死亡时 `lootTableID` 是否正确解析
-- `rollNpcLootEntries()` 是否返回了非空数组
-- 残骸物品是否正确写入 `npcWreckItems` 表
-- 客户端查询残骸内容时返回的物品列表是否为空
+| 编号 | 问题 | 状态 |
+|------|------|------|
+| #001 | 残骸无法拾取物品 | 🔍 待验证 |
+| #002 | 剧情任务标签页为空 | 🔄 修复中 |

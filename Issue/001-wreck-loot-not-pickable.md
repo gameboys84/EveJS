@@ -9,7 +9,7 @@
 | **影响版本** | EveJS v0.12.2 |
 | **正常版本** | EveJS v0.12.1 |
 | **严重程度** | 高 (影响核心游戏体验) |
-| **状态** | 🔍 待验证 |
+| **状态** | 🔍 待验证（根因假设已建立） |
 | **类别** | 掉落系统 / 残骸系统 |
 
 ### 问题描述
@@ -133,26 +133,25 @@ entity.isEmpty = nativeNpcStore.listNativeWreckItemsForWreck(wreckID).length ===
 
 ### 建议排查步骤
 
+> 日志格式遵循项目规范：`log.info("[Tag] key=value")`，使用 `src/utils/logger`。
+
 1. **添加运行时日志验证掉落生成**
    ```javascript
-   // 在 destroyNativeNpcEntityWithWreck 中添加:
-   const lootTable = getNpcLootTable(nativeEntityRecord.lootTableID);
-   console.log('[LOOT DEBUG] lootTableID:', nativeEntityRecord.lootTableID);
-   console.log('[LOOT DEBUG] resolved lootTable:', lootTable);
-   console.log('[LOOT DEBUG] rolled entries:', rolledLootEntries.length);
+   // 在 nativeNpcWreckService.js 的 destroyNativeNpcEntityWithWreck 中添加:
+   log.info(`[WreckLoot] npc=${entityID} lootTableID=${nativeEntityRecord.lootTableID} rolledEntries=${rolledLootEntries.length}`);
    ```
 
 2. **验证残骸物品是否正确写入存储**
    ```javascript
    // 在残骸生成后检查:
    const wreckItems = nativeNpcStore.listNativeWreckItemsForWreck(wreckID);
-   console.log('[LOOT DEBUG] wreck items count:', wreckItems.length);
+   log.info(`[WreckLoot] wreck=${wreckID} storedItems=${wreckItems.length}`);
    ```
 
 3. **检查 isEmpty 标志**
    ```javascript
    // 在 buildNativeWreckRuntimeEntity 中:
-   console.log('[LOOT DEBUG] isEmpty:', entity.isEmpty);
+   log.info(`[WreckLoot] wreck=${wreckID} isEmpty=${entity.isEmpty} itemCount=${nativeNpcStore.listNativeWreckItemsForWreck(wreckID).length}`);
    ```
 
 4. **对比数据库内容**
@@ -171,11 +170,7 @@ entity.isEmpty = nativeNpcStore.listNativeWreckItemsForWreck(wreckID).length ===
    // 在 destroyNativeNpcEntityWithWreck 末尾添加:
    const finalWreckItems = nativeNpcStore.listNativeWreckItemsForWreck(wreckRecord.wreckID);
    if (finalWreckItems.length === 0 && rolledLootEntries.length > 0) {
-     console.error('[LOOT BUG] Items rolled but not persisted!', {
-       wreckID: wreckRecord.wreckID,
-       rolledCount: rolledLootEntries.length,
-       storedCount: finalWreckItems.length
-     });
+     log.err(`[WreckLoot] Items rolled but not persisted! wreck=${wreckRecord.wreckID} rolled=${rolledLootEntries.length} stored=${finalWreckItems.length}`);
    }
    ```
 

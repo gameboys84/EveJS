@@ -241,174 +241,35 @@ function transferNativeWreckItemToCharacterLocation(options) {
 
 ---
 
-## 四、v0.12.2 残骸无法拾取问题深度分析
+## 四、系统日志
 
-### 4.1 问题现象
+> 本项目使用自定义日志系统 (`src/utils/logger/index.js`)，不使用 `console.log`。
 
-- ✅ 残骸正常生成（可见）
-- ❌ 无法从残骸中拾取物品
-- ❌ 与 v0.12.1 对比：v0.12.1 可正常拾取，且高价值物品几率较大
-
-### 4.2 核心代码一致性验证
-
-经过逐文件比对，以下文件在 v0.12.1 和 v0.12.2 中**完全相同**：
-
-| 文件路径 | 功能 |
-|---------|------|
-| `server/src/space/npc/npcLoot.js` | 掉落生成核心逻辑 |
-| `server/src/space/npc/nativeNpcWreckService.js` | 残骸创建与物品转移 |
-| `server/src/space/npc/nativeNpcStore.js` | 残骸数据存储层 |
-| `server/src/space/npc/npcData.js` | NPC 数据索引 |
-| `server/src/space/npc/nativeNpcService.js` | NPC 创建 |
-| `server/src/space/npc/beltRatRuntime.js` | 海盗生成 |
-| `server/src/space/wreckUtils.js` | 残骸工具 |
-| `server/src/services/inventory/itemStore.js` | 物品存储 |
-| `server/src/services/inventory/spaceDebrisState.js` | 碎片状态 |
-| `tools/.../npcLootTables/data.json` | 掉落表数据 |
-| `tools/.../npcProfiles/data.json` | NPC 配置文件 |
-| `tools/.../npcLoadouts/data.json` | NPC 装备 |
-| `tools/.../npcSpawnPools/data.json` | 生成池 |
-| `tools/.../npcSpawnGroups/data.json` | 生成组 |
-| `tools/.../npcBehaviorProfiles/data.json` | 行为配置 |
-
-### 4.3 变更文件分析
-
-v0.12.2 中变更的文件与掉落/残骸系统**无直接关联**：
-
-| 变更文件 | 变更内容 | 影响掉落? |
-|---------|---------|----------|
-| `sqliteStore.js` | 新增 _persistence_outbox | ⚠️ 可能 |
-| `gameStore/index.js` | 测试存储验证 | ⚠️ 可能 |
-| `persistenceWorker.js` | 持久化改进 | ⚠️ 可能 |
-| `shipDestruction.js` | 玩家飞船销毁 | ❌ 不影响 NPC 残骸 |
-| `runtime.js` | Bastion/结构体 | ❌ 不影响 |
-| `npcBehaviorLoop.js` | 隐身检测 | ❌ 不影响 |
-| `dogmaService.js` | 武器热量 | ❌ 不影响 |
-| `invBrokerService.js` | 公司仓库权限 | ❌ 不影响残骸拾取 |
-
-### 4.4 根因假设与验证
-
-#### 假设 1: SQLite 持久化路径变更 (最可能)
-
-**依据**: v0.12.2 新增 `_persistence_outbox` 表，改变了写入机制
-
-```sql
-CREATE TABLE IF NOT EXISTS _persistence_outbox (
-  operation_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  table_name TEXT NOT NULL UNIQUE,  -- 同一表只能有一个未完成操作
-  upserts_json TEXT NOT NULL,
-  deletes_json TEXT NOT NULL,
-  state TEXT NOT NULL DEFAULT 'pending'
-    CHECK (state IN ('pending', 'applied')),
-  created_at TEXT NOT NULL,
-  applied_at TEXT
-);
-```
-
-**潜在问题**:
-- 新的异步持久化可能延迟了 `npcWreckItems` 表的写入
-- 当玩家尝试拾取时，物品记录可能尚未提交到 SQLite
-- 或者读取时从缓存读取到过期数据
-
-**验证方法**:
-```javascript
-// 在 destroyNativeNpcEntityWithWreck 末尾添加:
-const wreckItems = nativeNpcStore.listNativeWreckItemsForWreck(wreckRecord.wreckID);
-console.log('[DEBUG] Wreck items after creation:', wreckItems.length);
-console.log('[DEBUG] Items:', JSON.stringify(wreckItems, null, 2));
-
-// 在 transferNativeWreckItemToCharacterLocation 开头添加:
-console.log('[DEBUG] Transfer request:', options);
-const item = nativeNpcStore.getNativeWreckItem(options.wreckItemID);
-console.log('[DEBUG] Item found:', item);
-```
-
-#### 假设 2: 数据迁移导致掉落表 ID 丢失
-
-**依据**: 如果从 v0.12.1 的数据库迁移到 v0.12.2，可能丢失关联
-
-**验证方法**:
-```javascript
-// 检查 NPC 的 lootTableID 是否正确
-const npcRecord = nativeNpcStore.getNativeEntity(entityID);
-console.log('[DEBUG] NPC lootTableID:', npcRecord.lootTableID);
-
-const lootTable = getNpcLootTable(npcRecord.lootTableID);
-console.log('[DEBUG] Resolved lootTable:', lootTable);
-```
-
-#### 假设 3: 空残骸率配置异常
-
-**依据**: emptyChance 控制空残骸概率
-
-| 船体尺寸 | emptyChance |
-|---------|-------------|
-| Small (驱逐及以下) | 22% |
-| Medium (巡洋舰) | 18% |
-| Large (战列舰) | 8% |
-
-如果所有掉落表都返回空，可能是：
-- lootTable 解析失败返回 null
-- NPC 的 lootTableID 为 null
-
-**验证方法**:
-```javascript
-// 在 rollNpcLootEntries 调用前后
-console.log('[DEBUG] Input lootTable:', lootTable);
-const entries = rollNpcLootEntries(lootTable);
-console.log('[DEBUG] Rolled entries count:', entries.length);
-```
-
-#### 假设 4: isEmpty 标志错误
-
-**依据**: 如果 `buildNativeWreckRuntimeEntity` 中 `isEmpty` 被错误设为 true，客户端可能不显示物品列表
+### 4.1 日志 API
 
 ```javascript
-entity.isEmpty = nativeNpcStore.listNativeWreckItemsForWreck(wreckID).length === 0;
+const log = require(path.join(__dirname, "../../utils/logger"));
+
+log.info("[Tag] key=value");    // 重要状态变更（控制台 + 文件）
+log.debug("[Tag] key=value");   // 详细诊断（仅文件，需 logLevel ≥ 2）
+log.warn("[Tag] key=value");    // 可恢复的失败
+log.err("[Tag] key=value");     // 硬错误
 ```
 
-**潜在问题**: 如果此时物品尚未写入（异步时序问题），isEmpty 会被错误设为 true
+### 4.2 日志标签
 
-#### 假设 5: 客户端-服务器同步问题
+| 标签 | 用途 | 示例 |
+|------|------|------|
+| `[ShipDestruction]` | 舰船击杀/残骸生成 | `log.info("[ShipDestruction] Destroyed ship=123 type=456 wreck=789 system=30000142")` |
+| `[NativeNpc]` | NPC 管理 | `log.warn("[NativeNpc] Pruned invalid transient controller entity=123")` |
+| `[BeltRats]` | 海盗生成 | `log.debug("[BeltRats] spawned system=30000142 belt=456 faction=caldari")` |
 
-v0.12.2 的 `clientSession.js` 变更:
-```javascript
-// v0.12.1
-const unpickledPayload = [1, payloadTuple];
+### 4.3 关键日志点
 
-// v0.12.2
-const unpickledPayload = [0, [1, payloadTuple]];
-```
+| 事件 | 文件 | 日志示例 |
+|------|------|---------|
+| 残骸生成 | `space/shipDestruction.js:569` | `[ShipDestruction] Destroyed ship=X type=Y wreck=Z` |
+| NPC 清理 | `space/npc/nativeNpcService.js:122` | `[NativeNpc] Pruned invalid transient...` |
+| 海盗生成 | `space/npc/beltRatRuntime.js:1377` | `[BeltRats] spawned system=X belt=Y` |
 
-这可能影响广播通知的解析，但不太可能直接影响残骸物品列表。
-
-### 4.5 综合结论
-
-**v0.12.2 的残骸掉落问题不是由掉落算法或残骸创建逻辑的代码变更引起的**。
-
-最可能的原因是:
-
-1. **SQLite 异步持久化路径变更** - 导致残骸物品写入与读取之间的时序问题
-2. **数据库迁移问题** - 如果 v0.12.2 使用了未正确迁移的数据库
-3. **缓存一致性** - 内存缓存与 SQLite 之间的数据同步延迟
-
-### 4.6 建议修复方向
-
-1. 在残骸生成后立即验证物品是否正确写入
-2. 检查 `isEmpty` 标志的设置时机
-3. 确认 `npcWreckItems` 表的持久化状态
-4. 对比两个版本的 SQLite 数据库内容（特别是 npcLootTables 和 npcProfiles 表）
-5. 检查 `transient` 标志是否导致物品未持久化
-
-```javascript
-// 推荐补丁位置: nativeNpcWreckService.js
-// 在 destroyNativeNpcEntityWithWreck 末尾添加验证
-const finalWreckItems = nativeNpcStore.listNativeWreckItemsForWreck(wreckRecord.wreckID);
-if (finalWreckItems.length === 0 && rolledLootEntries.length > 0) {
-  console.error('[LOOT BUG] Items rolled but not persisted!', {
-    wreckID: wreckRecord.wreckID,
-    rolledCount: rolledLootEntries.length,
-    storedCount: finalWreckItems.length
-  });
-}
-```
+> **注意**: `nativeNpcWreckService.js` 和 `nativeNpcStore.js` 本身不含日志。残骸相关日志在 `shipDestruction.js` 中输出。

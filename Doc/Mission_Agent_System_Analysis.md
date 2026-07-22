@@ -1,22 +1,14 @@
-# EveJS 剧情任务 / 代理系统深度分析
+# EveJS 任务 / 代理系统分析
 
-> **版本**: EveJS v0.12.2 (2026-07)
-> **关联问题**: [Issue/002-missing-storyline-missions.md](../Issue/002-missing-storyline-missions.md)
-> **范围**: 剧情任务(Storyline)、代理(Agent)、史诗弧(Epic Arc)、职业代理(Campaign/Career)、教程(NPE/Opportunity)
+> **范围**: 任务代理(Agent)、剧情任务(Storyline)、史诗弧(Epic Arc)、职业代理(Campaign/Career)、教程(NPE)
+>
+> **相关系统**: 掉落系统见 `Doc/Loot_Wreck_System_Analysis.md`，项目总览见 `Doc/EveJS_Project_Overview.md`
 
 ---
 
 ## 一、概述
 
-本文档分析 EveJS 中剧情任务相关系统的**代码、数据、版本变化**，以及 v0.12.1 → v0.12.2 版本间剧情任务"消失"的根因和修复方案。
-
-### 关键结论
-
-1. **代码未被删除** — 所有代理/剧情/Campaign 相关服务文件均存在且正常注册。
-2. **剧情任务记录未删除** — 静态表中仍有 1,249 条 `isStoryline` 任务。
-3. **数据链路被切断（主因）** — v0.12.2 新增的 `production-mission-policy.js` 清洗脚本删除了 eve-survival 模板和引用，导致剧情代理人无法提供任务。
-4. **运行时门控收紧** — `missionAuthority.js` 引入 deny-by-default 策略，普通安全代理仅能白名单提供 4 个 golden 任务。
-5. **修复方案** — 通过环境变量 `EVEJS_ENABLE_COMMUNITY_CONTENT_CLEANING=0` 或命令行参数 `--keep-community-content` 关闭清洗，保留 eve-survival 数据。
+本文档描述 EveJS 中任务/代理系统的**代码架构、数据流、静态数据结构**。
 
 ---
 
@@ -358,8 +350,8 @@ AgentID: 3019356 | agentTypeID: 10 | 派系: Mordu Legion (500016)
 
 | 序号 | Mission ID | 名称 | 类型 |
 |------|-----------|------|------|
-| 1 | 14117 | A Beacon Beckons | encounter |
-| 2 | 14118 | Agent Inquiry | talkToAgent |
+| 1 | 14117 | A Beacon Beckons，信标的指引 | encounter |
+| 2 | 14118 | Agent Inquiry，特工调查 | talkToAgent |
 | 3 | 14122 | Jet-Canning a Janitor | encounter |
 | 4 | 14123 | Chivvying a Chef | encounter |
 | 5 | 14124 | Delivering a Doctor | encounter |
@@ -372,14 +364,28 @@ AgentID: 3019356 | agentTypeID: 10 | 派系: Mordu Legion (500016)
 
 **注意**: 这些任务标记为 `isEpicArc: True`（史诗弧），不是普通 `isStoryline`。它们是顺序解锁的，完成一个后才能进行下一个。
 
-**玩家实际体验** (v0.12.1):
-1. 打开 F11 Journal → 剧情任务标签 → 能看到 Sister Alitura 和任务简介
-2. 接受任务 → 完成任务 → 出现死循环（请求新任务 → 接受/取消 → 回到请求新任务）
-3. 但至少 NPC 可见、可对话、可交互
-
-**玩家实际体验** (v0.12.2):
-1. 打开 F11 Journal → 剧情任务标签 → **完全空白**，无任何内容
+**玩家实际体验**:
+1. 打开 代理人任务 → 剧情任务 → **列表为空，内容空白**
 2. 无法看到任何剧情代理或任务简介
+3. 打开 机遇，能看到剧情任务，且能点击查看任务信息和接受任务
+
+对比官方的任务线会分为几个章节，每章节下有多个任务，显示时会有完整列表
+1. 怜悯的精度，1/7
+   1. 信标的指引
+   2. 特工调查
+   3. 利益相关
+   4. 带回红衣男
+   5. 通知阿里桃拉修女
+   6. 清理看门人
+   7. 被骚扰的厨子
+   8. 接送医生
+   9. ......
+2. 碍事的机器，2/7
+3. 影子傀儡，3/7
+4. 无人机和女皇们，4/7
+5. 基础的变更，5/7
+6. 信任危机，6/7
+7. 深入逼近，7/7
 
 ### 6.5 运行时状态
 
@@ -392,176 +398,58 @@ AgentID: 3019356 | agentTypeID: 10 | 派系: Mordu Legion (500016)
 
 ---
 
-## 七、根因总结
+## 七、构建时数据清洗
 
-### 7.1 主因：模板数据被清空（数据链路切断）
+### 7.1 清洗机制
 
-当前 HEAD 的 `agentAuthority/data.json` 中所有 10,941 个 agent 的 `missionTemplateIDs` 为空（`missionTemplateCount: 0`, `missionPoolCount: 0`）。而 v0.12.1 补充提交 (fc00f8d) 中该值为 640 个模板 / 1.46M 引用，且有 6 个 `missionPoolsByKindAndLevel` 池。
+`tools/DatabaseCreator/production-mission-policy.js` 在构建运行时数据时，根据 `productionMissionPolicy.json` 的配置执行清洗：
 
-服务器运行时读取 `_local/gameStore/data/agentAuthority/data.json`（由 `tools/DatabaseCreator/CreateDatabase.bat` 从静态表生成），该文件同样模板为空 → 代理无任务可提供。
+| 清洗项 | 效果 |
+|--------|------|
+| `goldenSecurityMissions` | 白名单保留 4 个 L1 安全任务 |
+| `disabledMissions` | 移除禁用任务（当前 1 个） |
+| `retiredTemplatePrefixes` | 移除前缀匹配 `eve-survival:` 的模板 |
+| `generatedMissionIDRange` | 移除 ID 在 900000000-901000000 的生成任务 |
 
-### 7.2 次因：运行时门控收紧
+### 7.2 清洗开关
 
-`missionAuthority.js` 引入 deny-by-default 策略（`isOrdinarySecurityAgent` + `isRetiredOrdinaryEncounterMissionForAgent` + `isMissionOfferAllowedForAgent`），普通安全代理仅能白名单提供 4 个 golden 任务 (1182/2504/2925/13735)。
+| 方式 | 命令 | 效果 |
+|------|------|------|
+| 默认 | `CreateDatabase.bat` | 清洗开启 |
+| 环境变量 | `set EVEJS_ENABLE_COMMUNITY_CONTENT_CLEANING=0` | 清洗关闭 |
+| 命令行参数 | `CreateDatabase.bat --keep-community-content` | 清洗关闭 |
 
-### 7.3 第三重过滤：退休模板前缀
-
-`productionMissionPolicy.json` 中 `retiredTemplatePrefixes: ["eve-survival:"]` 会过滤掉几乎所有剧情任务模板（它们都使用 `eve-survival:` 前缀）。即使模板数据被恢复，这一层仍会过滤。
-
-### 7.4 三重过滤叠加效果
+### 7.3 数据流
 
 ```
-玩家访问代理
-  → agentAuthority 中 missionTemplateIDs = [] → 无候选任务  ← 🔴 主因
-  → 即使有候选，isOrdinarySecurityAgent 门控会拒绝非 golden 任务  ← 🟠 次因
-  → 即使通过门控，retiredTemplatePrefixes 会过滤 eve-survival: 模板  ← 🟡 第三重
-  → 结果：玩家看不到任何剧情任务
+staticTables/ (源数据)
+  └─ CreateDatabase.bat
+       └─ database-creator.js
+            └─ sanitizeAuthorityTable()
+                 └─ 基于 productionMissionPolicy.json + 环境变量
+                      └─ _local/gameStore/data/ (运行时数据)
 ```
 
 ---
 
-## 八、修复建议
-
-### 方案 A：恢复数据 + 放宽策略（推荐，最直接）
-
-1. 恢复 `agentAuthority/data.json` 到填充版本（commit `fc00f8d`，含 640 模板 / 1.46M 引用）:
-   ```bash
-   git show fc00f8d:Code/tools/DatabaseCreator/staticTables/agentAuthority/data.json > Code/tools/DatabaseCreator/staticTables/agentAuthority/data.json
-   ```
-2. 重新生成运行时数据:
-   ```bash
-   cd Code
-   tools/DatabaseCreator/CreateDatabase.bat /force
-   ```
-3. 修改 `productionMissionPolicy.json`，将 `eve-survival:` 从 `retiredTemplatePrefixes` 移除或改为更精确过滤（避免误伤所有剧情模板）
-4. 可选：放宽 `missionAuthority.js` 中的门控逻辑（恢复普通安全代理的任务回退池）
-
-### 方案 B：保持策略但修复链路
-
-1. 在 `missionAuthority.js` 中为被退休的普通安全代理添加明确的"允许任务池"（不含 eve-survival:crawler 但含 eve-survival:storyline）
-2. 为剧情任务（StorylineKillMission, StorylineCourierMission 等 contentTemplate）恢复独立于 eve-survival 前缀的模板池
-
-### 方案 C：数据精确修复（最精准但工作量大）
-
-1. 让 `production-mission-policy.js` 区分"剧情任务模板"和"eve-survival 生成任务模板"（按 missionFlavor / contentTemplate 判断）
-2. 为剧情 agent (agentTypeID=6,7,10) 显式保留 `missionTemplateIDs` 和对应 dungeon 模板
-3. 保留 CCP 原版 dungeon 模板，仅移除爬虫生成的低质量内容
-
----
-
-## 九、相关文件索引
+## 八、相关文件索引
 
 ### 代码文件
 
 | 路径 | 功能 |
 |------|------|
-| `Code/server/index.js` | 服务加载入口 |
-| `Code/server/src/services/agent/agentMissionRuntime.js` | 主任务运行时 (~6060行) |
-| `Code/server/src/services/agent/missionAuthority.js` | 任务权限与门控 |
-| `Code/server/src/services/agent/agentMgrService.js` | agentMgr 服务 |
-| `Code/server/src/services/agent/storylineAgentSelector.js` | 剧情代理发现 |
-| `Code/server/src/services/agent/missionRuntimeState.js` | 任务运行时状态 |
-| `Code/server/src/services/agent/epicArcStatusService.js` | 史诗弧状态 |
-| `Code/server/src/services/agent/missionTrackerMgrService.js` | 任务日志 |
-| `Code/server/src/services/campaign/loginCampaignService.js` | 登录活动 |
-| `Code/server/src/services/campaign/crateService.js` | 箱子 |
-| `Code/server/src/services/agency/customAgencyProviderService.js` | 自定义代理 |
-| `Code/server/src/services/account/tutorialSvcService.js` | 职业代理 |
-| `Code/server/src/services/npe/tutorialRuntime.js` | NPE 教程 |
+| `Code/server/src/services/agent/agentMissionRuntime.js` | 主任务运行时 (~6196行) |
+| `Code/server/src/services/agent/missionAuthority.js` | 任务权限与门控 (~933行) |
+| `Code/server/src/services/agent/missionRuntimeState.js` | 任务运行时状态 (~1602行) |
+| `Code/server/src/services/agent/storylineAgentSelector.js` | 剧情代理发现 (~258行) |
 | `Code/server/src/config/productionMissionPolicy.json` | 制造任务策略配置 |
-| `Code/server/src/config/productionMissionPolicy.js` | 策略运行时验证 |
-| `Code/tools/DatabaseCreator/production-mission-policy.js` | 构建时清洗 |
-| `Code/tools/DatabaseCreator/enforce-production-mission-policy.js` | 构建运行器 |
-| `Code/tools/DatabaseCreator/build-scraped-mission-authority.js` | 已退休的抓取器 |
+| `Code/tools/DatabaseCreator/production-mission-policy.js` | 构建时清洗逻辑 |
 
 ### 数据文件
 
-| 路径 | 功能 | 版本差异 |
-|------|------|---------|
-| `Code/tools/DatabaseCreator/staticTables/missionAuthority/data.json` | 静态任务表（2,878 任务, 1,249 storyline） | 稳定 |
-| `Code/tools/DatabaseCreator/staticTables/agentAuthority/data.json` | 静态代理表（10,941 agents） | **fc00f8d: 640 模板 / HEAD: 0 模板** |
-| `Code/tools/DatabaseCreator/staticTables/dungeonAuthority/data.json` | 静态 dungeon 表（5,981 模板） | 稳定 |
-| `Code/_local/gameStore/data/agentAuthority/data.json` | 运行时镜像（服务器实际读取，由 CreateDatabase.bat 生成） | 跟随静态表 |
-| `Code/_local/gameStore/data/missionAuthority/data.json` | 运行时镜像 | 稳定 |
-
-> **重要**: `_local/` 目录和 `server/src/gameStore/data/*/data.json` 均被 `.gitignore` 排除。运行时数据需通过 `tools/DatabaseCreator/CreateDatabase.bat` 从静态表重新生成。
-
-### 文档
-
 | 路径 | 功能 |
 |------|------|
-| `Doc/EveJS_Project_Overview.md` | 项目总览 |
-| `Doc/Service_Modules_Reference.md` | 服务模块参考 |
-| `Doc/Loot_Wreck_System_Analysis.md` | 掉落/残骸系统分析 |
-| `Issue/001-wreck-loot-not-pickable.md` | 残骸无法拾取 |
-| `Issue/002-missing-storyline-missions.md` | 剧情任务消失 (本问题) |
-
----
-
-## 十、EVE 原版对照
-
-| 系统 | EVE 原版 | EveJS 0.12.2 | 状态 |
-|------|---------|-------------|------|
-| 普通安全代理任务 | ✅ | ✅ (仅 4 个 golden) | 部分 |
-| 剧情代理 (Storyline) | ✅ | ✅ 代码存在，数据缺失 | 需修复 |
-| 史诗弧 (Epic Arc) | ✅ | ✅ 代码存在，数据缺失 | 需修复 |
-| 职业代理 (Career) | ✅ | ✅ 代码存在，数据缺失 | 需修复 |
-| 研究代理 (Research) | ✅ | ✅ | 部分 |
-| 教程 (Opportunity) | ❌ 已退役 | ❌ 不存在 | 符合原版 |
-| NPE/AIR 教程 | ✅ | ✅ | 部分 |
-| 登录活动 (Campaign) | ✅ | ✅ | 部分 |
-
----
-
-## 十一、修复方案（2026-07-21）
-
-### 11.1 问题根因
-
-v0.12.2 新增的 `tools/DatabaseCreator/production-mission-policy.js` 清洗脚本会删除：
-- `dungeonAuthority` 中所有 `eve-survival:*` 模板（548 个）
-- `agentAuthority` 中代理人对 eve-survival 模板的引用
-- `missionAuthority` 中 ID 在 900000000-901000000 范围内的生成任务
-
-这导致剧情代理人（Type-6/7/10）的 `missionTemplateIDs` 被清空，无法通过 `getMissionTemplatePool` 获取模板。
-
-### 11.2 修复方式
-
-通过**环境变量**或**命令行参数**控制清洗开关：
-
-```bash
-# 默认：开启清洗（原始行为）
-CreateDatabase.bat
-
-# 关闭清洗：保留 eve-survival 内容
-CreateDatabase.bat --force --keep-community-content
-
-# 或者通过环境变量
-set EVEJS_ENABLE_COMMUNITY_CONTENT_CLEANING=0
-CreateDatabase.bat --force
-```
-
-### 11.3 修改文件
-
-| 文件 | 修改 |
-|------|------|
-| `tools/DatabaseCreator/production-mission-policy.js` | 读取 `EVEJS_ENABLE_COMMUNITY_CONTENT_CLEANING` 环境变量控制清洗开关 |
-| `tools/DatabaseCreator/CreateDatabase.bat` | 支持 `--keep-community-content` 参数 |
-| `server/src/services/agent/agentMissionRuntime.js` | journal Storyline 标签页显示逻辑（显示一个剧情任务） |
-| `server/src/services/agent/missionAuthority.js` | 新增 `getAgentIDToMissionIDs` 导出函数 |
-
-### 11.4 运行时数据生成
-
-```bash
-# 重新生成运行时数据（保留 eve-survival 内容）
-cd Code
-tools\DatabaseCreator\CreateDatabase.bat --force --keep-community-content
-```
-
-### 11.5 验证清单
-
-- [ ] 运行时 `dungeonAuthority` 包含 548 个 eve-survival 模板
-- [ ] 运行时 `agentAuthority` 中剧情代理人的 `missionTemplateIDs` 非空
-- [ ] journal Storyline 标签页显示剧情代理人
-- [ ] 与剧情代理人对话可接受任务
-- [ ] 任务完成后下一个任务自动解锁
-- [ ] 无任务时代理人显示常规对话（非占位任务）
+| `Code/tools/DatabaseCreator/staticTables/missionAuthority/data.json` | 静态任务表（2,878 任务） |
+| `Code/tools/DatabaseCreator/staticTables/agentAuthority/data.json` | 静态代理表（10,941 agents） |
+| `Code/tools/DatabaseCreator/staticTables/dungeonAuthority/data.json` | 静态 dungeon 表（5,981 模板） |
+| `Code/_local/gameStore/data/` | 运行时镜像（gitignored） |
