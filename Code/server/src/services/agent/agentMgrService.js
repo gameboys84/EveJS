@@ -82,11 +82,33 @@ function normalizeMarshalTuple(value, fallback = [null, null]) {
   return buildMarshalTuple(fallback);
 }
 
-function buildDoActionResponsePayload(result) {
+const MISSION_MESSAGE_TOKEN = /\{\[character\]player\.name\}/g;
+
+// Authored mission text from the static tables contains server-side
+// placeholders such as "{[character]player.name}". They are not client
+// localization tokens, so the client prints them literally. Substitute the
+// values we already know before the text leaves the server.
+function renderMissionMessageTokens(text, session) {
+  if (typeof text !== "string" || !text.includes("{[character]")) {
+    return text;
+  }
+  const characterName = String(
+    (session && (session.characterName || session.userName)) || "",
+  ).trim();
+  if (!characterName) {
+    return text;
+  }
+  return text.replace(MISSION_MESSAGE_TOKEN, characterName);
+}
+
+function buildDoActionResponsePayload(result, session) {
   const payload = result && result.data ? result.data : null;
   const agentSays = normalizeMarshalTuple(payload
     ? payload.agentSays
     : ["This agent is unavailable.", null]);
+  if (agentSays.items.length > 0) {
+    agentSays.items[0] = renderMissionMessageTokens(agentSays.items[0], session);
+  }
   return buildMarshalTuple([
     buildMarshalTuple([
       toMarshalSafe(agentSays),
@@ -697,7 +719,7 @@ class AgentMgrService extends BaseService {
               : null;
             dispatcher._sendCallResponse(
               packet,
-              buildDoActionResponsePayload(finalResult),
+              buildDoActionResponsePayload(finalResult, session),
               session,
               responseServiceName,
               responsePerfMeta,
@@ -712,7 +734,7 @@ class AgentMgrService extends BaseService {
           );
           dispatcher._sendCallResponse(
             packet,
-            buildDoActionResponsePayload(finalResult),
+            buildDoActionResponsePayload(finalResult, session),
             session,
             responseServiceName,
             responsePerfMeta,
@@ -725,7 +747,7 @@ class AgentMgrService extends BaseService {
       agentID,
       actionID,
     );
-    return buildDoActionResponsePayload(result);
+    return buildDoActionResponsePayload(result, session);
   }
 
   Handle_GetMissionBriefingInfo(args, session) {
@@ -859,7 +881,7 @@ class AgentMgrService extends BaseService {
     // (movementFunctions.WarpToBookmark -> agents.WarpToLocation, NOT beyonce CmdWarpToStuff).
     // For a deadspace combat mission ("dungeon" role) the target is a point carrying the mission's
     // instanceID. Materialize the mission site (acceleration gate + encounters) here, before warping,
-    // so its contents exist when the player lands — then warp to the materialized site beacon. Without
+    // so its contents exist when the player lands вЂ” then warp to the materialized site beacon. Without
     // this the player warped to empty deadspace coords with nothing spawned.
     const missionInstanceID = normalizePositiveInteger(
       target.metadata && target.metadata.missionInstanceID,
